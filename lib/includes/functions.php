@@ -298,42 +298,71 @@
 		return $ipaddress;
 	}
 	
-	if(!function_exists("time_elapsed_string")):
-		function time_elapsed_string($datetime, $full = false) {
-			$now = new DateTime;
-			$ago = new DateTime($datetime);
-			$diff = $now->diff($ago);
+if(!function_exists("time_elapsed_string")):
+    function time_elapsed_string($datetime, $full = false) {
+        // Fix for null datetime
+        if ($datetime === null) {
+            return _('just now');
+        }
+        
+        $now = new DateTime;
+        $ago = new DateTime($datetime);
+        $diff = $now->diff($ago);
 
-			$diff->w = floor($diff->d / 7);
-			$diff->d -= $diff->w * 7;
+        // Fix for dynamic property 'w' - use array instead
+        $weeks = floor($diff->d / 7);
+        $days = $diff->d - ($weeks * 7);
 
-			$string = array(
-				'y' => _('year'),
-				'm' => _('month'),
-				'w' => _('week'),
-				'd' => _('day'),
-				'h' => _('hour'),
-				'i' => _('minute'),
-				's' => _('second'),
-			);
-			foreach ($string as $k => &$v) {
-				if ($diff->$k) {
-					$v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
-				} else {
-					unset($string[$k]);
-				}
-			}
+        $string = array(
+            'y' => _('year'),
+            'm' => _('month'),
+            'w' => _('week'),
+            'd' => _('day'),
+            'h' => _('hour'),
+            'i' => _('minute'),
+            's' => _('second'),
+        );
+        
+        foreach ($string as $k => &$v) {
+            // Handle weeks separately
+            if ($k === 'w') {
+                if ($weeks) {
+                    $v = $weeks . ' ' . $v . ($weeks > 1 ? 's' : '');
+                } else {
+                    unset($string[$k]);
+                }
+            } 
+            // Handle days separately (using our calculated days)
+            elseif ($k === 'd') {
+                if ($days) {
+                    $v = $days . ' ' . $v . ($days > 1 ? 's' : '');
+                } else {
+                    unset($string[$k]);
+                }
+            }
+            // Handle all other time units normally
+            else {
+                if ($diff->$k) {
+                    $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+                } else {
+                    unset($string[$k]);
+                }
+            }
+        }
 
-			if (!$full) $string = array_slice($string, 0, 1);
-			return $string ? implode(', ', $string) . _(' ago') : _('just now');
-		}
-	endif;
+        if (!$full) {
+            $string = array_slice($string, 0, 1);
+        }
+        
+        return $string ? implode(', ', $string) . _(' ago') : _('just now');
+    }
+endif;
 
-	if(!function_exists("_e")):
-		function _e($text) {
-			echo _($text);
-		}
-	endif;
+if(!function_exists("_e")):
+    function _e($text) {
+        echo _($text);
+    }
+endif;
 
 
 	/**

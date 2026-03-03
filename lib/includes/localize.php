@@ -9,7 +9,7 @@
 			$query = "SELECT * from `options` WHERE `option_name`='language'";
 			$result = $db->query($query) or die($db->error);
 			$row = $result->fetch_array();
-			$option_value = stripslashes($row['option_value']);//this will remove database slashes from values
+			$option_value = isset($row['option_value']) && $row['option_value'] != null ?stripslashes($row['option_value']) : '';//this will remove database slashes from values
 			return $option_value; //This function returns option value.
 		}//get option value function ends here.
 	endif;
@@ -18,7 +18,7 @@
 	//Get language from System.
 	if(!isset($_SESSION["language"])):
 		$language = get_language();
-		
+		 
 		switch ($language) {
 			case "english":
 				$language_code = "language_english";
