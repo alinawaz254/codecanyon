@@ -148,3 +148,36 @@
 		$result = $db->query($query) or die($db->error);
 		echo 'User Meta Table created.<br>';
 	}  //Creating user notes table ends here.
+
+
+	if(if_table_exists("investment_plans") == FALSE) { 
+		$query = 'CREATE TABLE investment_plans (
+			`plan_id` bigint(20) NOT NULL AUTO_INCREMENT,
+			`plan_name` varchar(100) NOT NULL,
+			`total_cycles` int(11) NOT NULL,
+			`commission` decimal(12,2) NOT NULL,
+			`cycle_days` int(11) DEFAULT 35,
+			`created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`plan_id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;';
+		
+		$result = $db->query($query) or die($db->error);
+		echo "Investment Plans Table created.<br>";
+	}
+
+	if(if_table_exists("user_investments") == FALSE) { 
+		$query = 'CREATE TABLE user_investments (
+			`investment_id` bigint(20) NOT NULL AUTO_INCREMENT,
+			`user_id` bigint(20) NOT NULL,
+			`plan_id` bigint(20) NOT NULL,
+			`amount` decimal(12,2) NOT NULL,
+			`issue_date` date NOT NULL,
+			`created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`investment_id`),
+			FOREIGN KEY (`user_id`) REFERENCES users(`user_id`) ON DELETE CASCADE,
+			FOREIGN KEY (`plan_id`) REFERENCES investment_plans(`plan_id`) ON DELETE CASCADE
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;';
+		
+		$result = $db->query($query) or die($db->error);
+		echo "User Investments Table created.<br>";
+	}

@@ -76,6 +76,7 @@
 	require_once('classes/notes.php');
 	require_once('classes/messages.php');
 	require_once('classes/announcements.php');
+	require_once('classes/investments.php');
 	require_once('classes/forms.php');
 	require_once('classes/forms_submission.php');
 
@@ -125,6 +126,7 @@
 		$new_level 			= new Userlevel;
 		$notes_obj 			= new Notes;
 		$announcement_obj 	= new Announcements;
+		$investment_obj     = new Investments;
 		$forms_obj			= new FORMS;
 		
 		if($new_user->get_user_info($_SESSION['user_id'], 'profile_image') == '') { 
