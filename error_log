@@ -1,0 +1,432 @@
+[03-Mar-2026 12:42:35 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php:8
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php(8): mysqli->__construct()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(8): require_once('/home/theappde/...')
+#2 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#3 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php on line 8
+[03-Mar-2026 12:42:37 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php:8
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php(8): mysqli->__construct()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(8): require_once('/home/theappde/...')
+#2 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#3 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php on line 8
+[03-Mar-2026 12:43:54 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php:8
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php(8): mysqli->__construct()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(8): require_once('/home/theappde/...')
+#2 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#3 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php on line 8
+[03-Mar-2026 12:43:54 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php:8
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php(8): mysqli->__construct()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(8): require_once('/home/theappde/...')
+#2 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#3 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php on line 8
+[03-Mar-2026 12:46:05 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php:8
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php(8): mysqli->__construct()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(8): require_once('/home/theappde/...')
+#2 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#3 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php on line 8
+[03-Mar-2026 13:06:57 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php:8
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php(8): mysqli->__construct()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(8): require_once('/home/theappde/...')
+#2 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#3 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php on line 8
+[03-Mar-2026 13:07:25 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php:8
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php(8): mysqli->__construct()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(8): require_once('/home/theappde/...')
+#2 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#3 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php on line 8
+[03-Mar-2026 13:07:25 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php:8
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php(8): mysqli->__construct()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(8): require_once('/home/theappde/...')
+#2 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#3 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php on line 8
+[03-Mar-2026 13:08:08 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php:8
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php(8): mysqli->__construct()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(8): require_once('/home/theappde/...')
+#2 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#3 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php on line 8
+[03-Mar-2026 13:08:59 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php:8
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php(8): mysqli->__construct()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(8): require_once('/home/theappde/...')
+#2 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#3 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php on line 8
+[03-Mar-2026 13:24:56 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php:8
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php(8): mysqli->__construct()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(8): require_once('/home/theappde/...')
+#2 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#3 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php on line 8
+[03-Mar-2026 13:24:56 UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php:8
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php(8): mysqli->__construct()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(8): require_once('/home/theappde/...')
+#2 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#3 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/db_connect.php on line 8
+[03-Mar-2026 13:29:01 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:29:12 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:29:14 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:32:18 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:37:29 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:37:29 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:42:25 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:42:32 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:42:44 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:56:05 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:56:10 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:56:10 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:56:10 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:56:11 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:56:11 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:56:11 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:56:11 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:56:12 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 13:56:12 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 14:07:27 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 14:07:27 Etc/UTC] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'theappde_codecanyon.options' doesn't exist in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php:10
+Stack trace:
+#0 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(10): mysqli->query()
+#1 /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php(20): get_language()
+#2 /home/theappde/codecanyon.theappdemos.com/lib/system_load.php(28): require_once('/home/theappde/...')
+#3 /home/theappde/codecanyon.theappdemos.com/login.php(2): require_once('/home/theappde/...')
+#4 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/lib/includes/localize.php on line 10
+[03-Mar-2026 14:19:49 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:19:49 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:19:49 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:19:49 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:19:49 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:19:49 Etc/UTC] PHP Warning:  Undefined variable $new_level in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:19:49 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_level_info() on null in /home/theappde/codecanyon.theappdemos.com/dashboard.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:29:25 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:25 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:25 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:25 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:25 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:25 Etc/UTC] PHP Warning:  Undefined variable $new_level in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:29:25 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_level_info() on null in /home/theappde/codecanyon.theappdemos.com/dashboard.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:29:30 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:30 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:30 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:30 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:30 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:30 Etc/UTC] PHP Warning:  Undefined variable $new_level in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:29:30 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_level_info() on null in /home/theappde/codecanyon.theappdemos.com/dashboard.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:29:42 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:42 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:42 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:42 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:42 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:42 Etc/UTC] PHP Warning:  Undefined variable $new_level in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:29:42 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_level_info() on null in /home/theappde/codecanyon.theappdemos.com/dashboard.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:29:57 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:57 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:57 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:57 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:57 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:29:57 Etc/UTC] PHP Warning:  Undefined variable $new_level in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:29:57 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_level_info() on null in /home/theappde/codecanyon.theappdemos.com/dashboard.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:31:49 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/users.php on line 101
+[03-Mar-2026 14:32:01 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:32:01 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:32:01 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:32:01 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:32:01 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:32:01 Etc/UTC] PHP Warning:  Undefined variable $new_level in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:32:01 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_level_info() on null in /home/theappde/codecanyon.theappdemos.com/dashboard.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:32:48 Etc/UTC] PHP Warning:  Undefined variable $notes_obj in /home/theappde/codecanyon.theappdemos.com/notes.php on line 54
+[03-Mar-2026 14:32:48 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function wc_add_note_form() on null in /home/theappde/codecanyon.theappdemos.com/notes.php:54
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/notes.php on line 54
+[03-Mar-2026 14:34:24 Etc/UTC] PHP Warning:  Undefined variable $notes_obj in /home/theappde/codecanyon.theappdemos.com/notes.php on line 54
+[03-Mar-2026 14:34:24 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function wc_add_note_form() on null in /home/theappde/codecanyon.theappdemos.com/notes.php:54
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/notes.php on line 54
+[03-Mar-2026 14:38:38 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/users.php on line 101
+[03-Mar-2026 14:41:58 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:41:58 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:41:58 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:41:58 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:41:58 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:41:58 Etc/UTC] PHP Warning:  Undefined variable $new_level in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:41:58 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_level_info() on null in /home/theappde/codecanyon.theappdemos.com/dashboard.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:42:36 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:42:36 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:42:36 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:42:36 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:42:36 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:42:36 Etc/UTC] PHP Warning:  Undefined variable $new_level in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:42:36 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_level_info() on null in /home/theappde/codecanyon.theappdemos.com/dashboard.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:44:00 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/users.php on line 101
+[03-Mar-2026 14:44:06 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:44:06 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:44:06 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:44:06 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:44:06 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:44:06 Etc/UTC] PHP Warning:  Undefined variable $new_level in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:44:06 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_level_info() on null in /home/theappde/codecanyon.theappdemos.com/dashboard.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:44:54 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:44:54 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:44:54 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:44:54 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:44:54 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 14:44:54 Etc/UTC] PHP Warning:  Undefined variable $new_level in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:44:54 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_level_info() on null in /home/theappde/codecanyon.theappdemos.com/dashboard.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 14:51:44 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/users.php on line 101
+[03-Mar-2026 14:54:21 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/users.php on line 101
+[03-Mar-2026 15:05:34 Etc/UTC] PHP Warning:  Undefined variable $announcement_obj in /home/theappde/codecanyon.theappdemos.com/announcements.php on line 23
+[03-Mar-2026 15:05:34 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function list_announcements() on null in /home/theappde/codecanyon.theappdemos.com/announcements.php:23
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/announcements.php on line 23
+[03-Mar-2026 15:09:40 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 15:09:40 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 15:09:40 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 15:09:40 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 15:09:40 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 15:09:40 Etc/UTC] PHP Warning:  Undefined variable $new_level in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 15:09:40 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_level_info() on null in /home/theappde/codecanyon.theappdemos.com/dashboard.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 15:09:54 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 15:09:54 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 15:09:54 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 15:09:54 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 15:09:54 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 15:09:54 Etc/UTC] PHP Warning:  Undefined variable $new_level in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 15:09:54 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_level_info() on null in /home/theappde/codecanyon.theappdemos.com/dashboard.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 15:12:06 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/users.php on line 101
+[03-Mar-2026 15:12:36 Etc/UTC] PHP Warning:  Undefined variable $notes_obj in /home/theappde/codecanyon.theappdemos.com/notes.php on line 54
+[03-Mar-2026 15:12:36 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function wc_add_note_form() on null in /home/theappde/codecanyon.theappdemos.com/notes.php:54
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/notes.php on line 54
+[03-Mar-2026 15:19:53 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 15:19:53 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 15:19:53 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 15:19:53 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 15:19:53 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 15:19:53 Etc/UTC] PHP Warning:  Undefined variable $new_level in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 15:19:53 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_level_info() on null in /home/theappde/codecanyon.theappdemos.com/dashboard.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 15:20:34 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/users.php on line 101
+[03-Mar-2026 15:21:53 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/users.php on line 101
+[03-Mar-2026 15:24:06 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/users.php on line 101
+[03-Mar-2026 16:10:07 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 16:10:07 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 16:10:07 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 16:10:07 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 16:10:07 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 16:10:07 Etc/UTC] PHP Warning:  Undefined variable $new_level in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 16:10:07 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_level_info() on null in /home/theappde/codecanyon.theappdemos.com/dashboard.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 16:10:23 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/users.php on line 101
+[03-Mar-2026 16:10:34 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 16:10:34 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 16:10:34 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 16:10:34 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 16:10:34 Etc/UTC] PHP Warning:  Undefined array key "user_type" in /home/theappde/codecanyon.theappdemos.com/lib/classes/users.php on line 509
+[03-Mar-2026 16:10:34 Etc/UTC] PHP Warning:  Undefined variable $new_level in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
+[03-Mar-2026 16:10:34 Etc/UTC] PHP Fatal error:  Uncaught Error: Call to a member function get_level_info() on null in /home/theappde/codecanyon.theappdemos.com/dashboard.php:126
+Stack trace:
+#0 {main}
+  thrown in /home/theappde/codecanyon.theappdemos.com/dashboard.php on line 126
