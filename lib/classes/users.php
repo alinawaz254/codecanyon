@@ -860,9 +860,20 @@ function match_confirm_code($confirmation_code,$user_id){
 			}
 						
 			$date_of_birth = ( ! empty( $date_of_birth ) ) ? date( "Y-m-d H:i:s", strtotime( $date_of_birth ) ) : '2000-01-01 00:00:00';
+			$all_users                = "SELECT * FROM users WHERE user_type = 'subscriber' ";
+			$result                   = $db->query($all_users);
+			$count                    = $result->num_rows;
+			$auto_generated_user_name = 'BIZ';
 
+			if(strlen($count) > 0 && strlen($count) < 2){
+				$auto_generated_user_name .= '00' . ($count + 1);
+			}elseif (strlen($count) > 1 && strlen($count) < 3) {
+				$auto_generated_user_name .= '0' . ($count + 1);
+			}
+			
+			// $auto_generated_username = 'BIZ' . count();
 			//Running Query to add user.
-			$query = "INSERT into users VALUES(NULL, '".$first_name."', '".$last_name."', '".$gender."', '".$date_of_birth."', '".$address1."', '".$address2."', '".$city."', '".$state."', '".$country."', '".$zip_code."', '".$mobile."', '".$phone."', '".$username."', '".$email."', '".$password_con."', '".$profile_image."', '".$description."', '".$status."', '', '".date('Y-m-d')."', '".$user_type."')";
+			$query = "INSERT into users VALUES(NULL, '".$first_name."', '".$last_name."', '".$gender."', '".$date_of_birth."', '".$address1."', '".$address2."', '".$city."', '".$state."', '".$country."', '".$zip_code."', '".$mobile."', '".$phone."', '".$auto_generated_user_name."', '".$email."', '".$password_con."', '".$profile_image."', '".$description."', '".$status."', '', '".date('Y-m-d')."', '".$user_type."')";
 			$result = $db->query($query) or die($db->error);
 			$user_id = $db->insert_id;
 			

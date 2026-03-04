@@ -51,10 +51,8 @@
 	
 	//add user processing.
 	if( isset( $_POST['add_user'] ) && $_POST['add_user'] == '1' ) { 
-		extract( $_POST );
-		if($username == '') { 
-			$message = _("Username Required");;
-		} else if($email == '') { 
+		extract( $_POST ); 
+		if($email == '') { 
 			$message = _("Email Required");;
 		} else if( $password == '' ){ 
 			$message = _("Password Required");;
@@ -260,14 +258,14 @@
 					</div>
 					<?php endif; ?>
 
-					<div class="form-group row d-flex align-items-center mb-5">
+					<!-- <div class="form-group row d-flex align-items-center mb-5">
 						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="username">
 							<?php _e("Username"); ?>*
 						</label>
 						<div class="col-lg-5">
 							<input type="text" class="form-control" id="username" name="username" placeholder="<?php _e("Username"); ?>" value="<?php echo $new_user->username; ?>" required="required" />
 						</div>
-					</div>
+					</div> -->
 
 					<div class="form-group row d-flex align-items-center mb-5">
 						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="email">

@@ -27,8 +27,8 @@ require_once("lib/includes/header.php");
 ?>
 
 <form method="post">
-
-<select name="user_id" class="form-control" required>
+<label id="user_id"> Select User *</label>
+<select name="user_id" id="user_id" class="form-control" required>
 <option value="">Select User</option>
 <?php
 $result = $db->query("SELECT user_id,username FROM users");
@@ -38,8 +38,8 @@ echo "<option value='{$u['user_id']}' $selected>{$u['username']}</option>";
 }
 ?>
 </select><br>
-
-<select name="plan_id" class="form-control" required>
+<label id="plan_id"> Select Plan *</label>
+<select name="plan_id" id="plan_id" class="form-control" required>
 <option value="">Select Plan</option>
 <?php
 $result = $db->query("SELECT plan_id,plan_name FROM investment_plans");
@@ -50,17 +50,21 @@ echo "<option value='{$p['plan_id']}' $selected>{$p['plan_name']}</option>";
 ?>
 </select><br>
 
+<label id="amount"> Set Amount *</label>
 <input 
 type="number" 
 step="0.01" 
+id="amount"
 name="amount"
 value="<?php echo $investment_obj->amount; ?>" 
 class="form-control" 
 placeholder="Enter Investment Amount" 
 required><br>
 
+<label id="issue_date">Set Starting Date *</label>
 <input 
 type="date" 
+id="issue_date"
 name="issue_date"
 value="<?php echo $investment_obj->issue_date; ?>" 
 class="form-control" 
