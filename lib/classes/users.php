@@ -860,15 +860,19 @@ function match_confirm_code($confirmation_code,$user_id){
 			}
 						
 			$date_of_birth = ( ! empty( $date_of_birth ) ) ? date( "Y-m-d H:i:s", strtotime( $date_of_birth ) ) : '2000-01-01 00:00:00';
-			$all_users                = "SELECT * FROM users WHERE user_type = 'subscriber' ";
+			$all_users                = "SELECT * FROM users WHERE user_type LIKE '%subscriber%'";
 			$result                   = $db->query($all_users);
 			$count                    = $result->num_rows;
 			$auto_generated_user_name = 'BIZ';
 
-			if(strlen($count) > 0 && strlen($count) < 2){
+			if(strlen($count) == 1){
+				$auto_generated_user_name .= '000' . ($count + 1);
+			}elseif (strlen($count) == 2) {
 				$auto_generated_user_name .= '00' . ($count + 1);
-			}elseif (strlen($count) > 1 && strlen($count) < 3) {
+			}elseif (strlen($count) == 3) {
 				$auto_generated_user_name .= '0' . ($count + 1);
+			}elseif (strlen($count) == 4) {
+				$auto_generated_user_name .= ($count + 1);
 			}
 			
 			// $auto_generated_username = 'BIZ' . count();

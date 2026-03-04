@@ -92,11 +92,24 @@ function list_plans(){
 
 function add_investment($user_id,$plan_id,$amount,$issue_date){
     global $db;
+    $search = $db->query("SELECT * FROM investment_plans WHERE plan_id = $plan_id");
+    $plan   = mysqli_fetch_assoc($search);
 
     $db->query("INSERT INTO user_investments 
     (user_id,plan_id,amount,issue_date) 
     VALUES ('$user_id','$plan_id','$amount','$issue_date')");
-
+        
+    $firstCommissionDate = date('Y-m-d', strtotime("+{$plan['cycle_days']} days"));
+    $db->query("INSERT INTO notifications 
+        (sender_id, sender_type, receiver_id, receiver_type, message) 
+        VALUES (
+            {$_SESSION['user_id']},
+            'admin',
+            '$user_id',
+            'subscriber',
+            'You have successfully selected {$plan['plan_name']} plan, your first commission date is $firstCommissionDate'
+        )");
+    
     return "Investment Added Successfully";
 }
 

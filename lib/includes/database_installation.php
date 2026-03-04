@@ -180,4 +180,22 @@
 		
 		$result = $db->query($query) or die($db->error);
 		echo "User Investments Table created.<br>";
+	}	
+	if(if_table_exists("notifications") == FALSE) { 
+		$query = 'CREATE TABLE notifications (
+		    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+		    sender_id BIGINT UNSIGNED NOT NULL,
+		    sender_type ENUM('admin','user') NOT NULL,
+		    receiver_id BIGINT UNSIGNED NOT NULL,
+		    receiver_type ENUM('admin','subscriber') NOT NULL, -- changed ENUM here
+		    message TEXT NOT NULL,
+		    status ENUM('success','danger','warning') DEFAULT 'success',
+		    is_read TINYINT(1) DEFAULT 0,
+		    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+		    INDEX (receiver_id),
+		    INDEX (is_read)
+		)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;';
+				
+		$result = $db->query($query) or die($db->error);
+		echo "Notifications Table created.<br>";
 	}

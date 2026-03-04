@@ -28,10 +28,10 @@ require_once("lib/includes/header.php");
 
 <form method="post">
 <label id="user_id"> Select User *</label>
-<select name="user_id" id="user_id" class="form-control" required>
+<select name="user_id" id="multiple-select-users" multiple class="form-control" required>
 <option value="">Select User</option>
 <?php
-$result = $db->query("SELECT user_id,username FROM users");
+$result = $db->query("SELECT user_id,username FROM users WHERE user_type LIKE '%subscriber%'");
 while($u = $result->fetch_assoc()){
 $selected = ($investment_obj->user_id == $u['user_id']) ? "selected" : "";
 echo "<option value='{$u['user_id']}' $selected>{$u['username']}</option>";

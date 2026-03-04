@@ -166,5 +166,13 @@
     });
 </script>
 <?php endif; ?>
+<script type="text/javascript">
+	var selectStateInputEl = document.querySelector('#multiple-select-users');
+	if(selectStateInputEl) {
+	    const choices = new Choices(selectStateInputEl,{
+            removeItemButton: true,
+	    }); 
+	}
+</script>
 </body>
 </html>
