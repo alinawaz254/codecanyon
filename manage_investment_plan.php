@@ -18,7 +18,7 @@ if(isset($_POST['add_plan'])){
     $message = $investment_obj->add_plan($plan_name,$total_cycles,$commission,$cycle_days);
 }
 
-$page_title = "Manage Investment Plan";
+$page_title = "Manage Investment Package";
 require_once("lib/includes/header.php");
 ?>
 
@@ -35,17 +35,17 @@ require_once("lib/includes/header.php");
     <input type="number" id="commission" step="0.01" name="commission" class="form-control"
     value="<?php echo $investment_obj->commission; ?>" placeholder="Commission"><br>
 
-    <label id="cycle_days"> Each Cycle Days *</label>
+    <!--    <label id="cycle_days"> Each Cycle Days *</label>
     <input type="number" id="cycle_days" name="cycle_days" class="form-control"
-    value="<?php echo $investment_obj->cycle_days ?: 35; ?>" placeholder="Cycle Days"><br>
+    value="<?php echo $investment_obj->cycle_days ?: 35; ?>" placeholder="Cycle Days"><br> -->
 
     <?php if(isset($_POST['edit_plan'])): ?>
     <input type="hidden" name="edit_plan" value="<?=$_POST['edit_plan'];?>">
     <input type="hidden" name="update_plan" value="1">
-    <input type="submit" class="btn btn-primary" value="Update Plan">
+    <input type="submit" class="btn btn-primary" value="Update Package">
     <?php else: ?>
     <input type="hidden" name="add_plan" value="1">
-    <input type="submit" class="btn btn-primary" value="Add Plan">\
+    <input type="submit" class="btn btn-primary" value="Add Package">
     <a href="investment_plans.php" class="btn btn-secondary">View Plans</a>
     <?php endif; ?>
 

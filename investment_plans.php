@@ -6,14 +6,14 @@ if(isset($_POST['delete_plan']) && $_POST['delete_plan'] != ''){
     $message = $investment_obj->delete_plan($_POST['delete_plan']);
 }
 
-$page_title = _("Investment Plans");
+$page_title = _("Investment Packages");
 require_once("lib/includes/header.php");
 ?>
 
 <div class="text-right">
     <p>
         <a href="manage_investment_plan.php" class="btn btn-primary">
-            <?php _e("Add Plan"); ?>
+            <?php _e("Add Package"); ?>
         </a>
     </p>
 </div>

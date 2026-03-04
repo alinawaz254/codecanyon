@@ -20,9 +20,9 @@ function add_plan($name,$cycles,$commission,$cycle_days){
 
     $db->query("INSERT INTO investment_plans 
     (plan_name,total_cycles,commission,cycle_days) 
-    VALUES ('$name','$cycles','$commission','$cycle_days')");
+    VALUES ('$name','$cycles','$commission','35')");
     
-    return "Plan Added Successfully";
+    return "Package Added Successfully";
 }
 
 function set_plan($plan_id){
@@ -44,16 +44,16 @@ function update_plan($plan_id,$name,$cycles,$commission,$cycle_days){
         plan_name='$name',
         total_cycles='$cycles',
         commission='$commission',
-        cycle_days='$cycle_days'
+        cycle_days='35'
         WHERE plan_id='$plan_id'");
     
-    return "Plan Updated Successfully";
+    return "Package Updated Successfully";
 }
 
 function delete_plan($id){
     global $db;
     $db->query("DELETE FROM investment_plans WHERE plan_id='$id'");
-    return "Plan Deleted";
+    return "Package Deleted";
 }
 
 function list_plans(){
@@ -67,7 +67,7 @@ function list_plans(){
         echo "<tr>
         <td>{$row['plan_name']}</td>
         <td>{$row['total_cycles']}</td>
-        <td>{$row['commission']}</td>
+        <td>{$row['commission']}%</td>
         <td>
 
         <form method='post' action='manage_investment_plan.php' style='display:inline'>
@@ -90,25 +90,31 @@ function list_plans(){
 
 /* ================= INVESTMENTS ================= */
 
-function add_investment($user_id,$plan_id,$amount,$issue_date){
+function add_investment($user_id,$plan_ids,$amount,$issue_date){
     global $db;
-    $search = $db->query("SELECT * FROM investment_plans WHERE plan_id = $plan_id");
-    $plan   = mysqli_fetch_assoc($search);
 
-    $db->query("INSERT INTO user_investments 
-    (user_id,plan_id,amount,issue_date) 
-    VALUES ('$user_id','$plan_id','$amount','$issue_date')");
+
+    foreach ($plan_ids as $key => $plan_id) {    
+
+        $search = $db->query("SELECT * FROM investment_plans WHERE plan_id = $plan_id");
+        $plan   = mysqli_fetch_assoc($search);
         
-    $firstCommissionDate = date('Y-m-d', strtotime("+{$plan['cycle_days']} days"));
-    $db->query("INSERT INTO notifications 
-        (sender_id, sender_type, receiver_id, receiver_type, message) 
-        VALUES (
-            {$_SESSION['user_id']},
-            'admin',
-            '$user_id',
-            'subscriber',
-            'You have successfully selected {$plan['plan_name']} plan, your first commission date is $firstCommissionDate'
-        )");
+        $db->query("INSERT INTO user_investments 
+        (user_id,plan_id,amount,issue_date) 
+        VALUES ('$user_id','$plan_id','$amount','$issue_date')");
+            
+        // $firstCommissionDate = date('Y-m-d', strtotime("+{$plan['cycle_days']} days"));
+        $db->query("INSERT INTO notifications 
+            (sender_id, sender_type, receiver_id, receiver_type, message) 
+            VALUES (
+                {$_SESSION['user_id']},
+                'admin',
+                '$user_id',
+                'subscriber',
+                'You have successfully selected your plan'
+            )");
+    }
+
     
     return "Investment Added Successfully";
 }

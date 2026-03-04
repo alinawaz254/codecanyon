@@ -120,7 +120,55 @@
 			<!-- End Basic Buttons -->
 		</div>
 </div><!-- Row ends /-->
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="congratsModal" tabindex="-1" aria-labelledby="congratsModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content border-0 shadow-lg">
+      <!-- Modal Header -->
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="congratsModalLabel">
+          🎉 Congratulations! 🎉
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
 
+      <!-- Modal Body -->
+      <div class="modal-body text-center p-4">
+        <img src="https://img.icons8.com/color/96/000000/ok--v2.png" alt="Congrats Icon" class="mb-3">
+        <h4 class="mb-3">You did it!</h4>
+        <p class="mb-4">Your recent action has been successfully completed. Here are the details:</p>
+        
+        <!-- Details Section -->
+        <ul class="list-group list-group-flush text-start mx-auto" style="max-width: 400px;">
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Task Name
+            <span class="badge bg-primary rounded-pill">Build UI</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Completion Date
+            <span class="badge bg-secondary rounded-pill">04 Mar 2026</span>
+          </li>
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            Status
+            <span class="badge bg-success rounded-pill">Success</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-success btn-lg" data-bs-dismiss="modal">
+          Close & Celebrate 🎉
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Trigger Button Example -->
+<button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#congratsModal">
+  Show Congrats Modal
+</button>
 <!--footer-->
 <?php 
 	require_once('lib/includes/footer.php');

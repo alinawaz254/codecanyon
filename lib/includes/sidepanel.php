@@ -37,8 +37,8 @@
             </a>
 
             <ul id="dropdown-investments" class="collapse list-unstyled pt-0">
-                <li><a href="investment_plans.php"><?php _e("Plans"); ?></a></li>
-                <li><a href="manage_investment_plan.php"><?php _e("Add Plan"); ?></a></li>
+                <li><a href="investment_plans.php"><?php _e("Packages"); ?></a></li>
+                <li><a href="manage_investment_plan.php"><?php _e("Add Package"); ?></a></li>
                 <li><a href="investments.php"><?php _e("Investments"); ?></a></li>
                 <li><a href="manage_investment.php"><?php _e("Add Investment"); ?></a></li>
             </ul>
@@ -78,6 +78,8 @@
                 </ul>
             </li>
             <li><a href="notes.php"><i class="la la-sticky-note"></i><span><?php _e("My Notes"); ?></span></a></li>
+            <li><a href="frontinvestments.php"><i class="la la-money"></i><span><?php _e("Investments"); ?></span></a></li>
+            <li><a href="frontreferrals.php"><i class="la la-list"></i><span><?php _e("My Referrals"); ?></span></a></li>
         </ul>
         <hr>
         <span class="heading"><?php _e("Other Pages"); ?></span>

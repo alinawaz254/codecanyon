@@ -167,12 +167,28 @@
 </script>
 <?php endif; ?>
 <script type="text/javascript">
-	var selectStateInputEl = document.querySelector('#multiple-select-users');
+	var selectStateInputEl = document.querySelector('#multiple-select-plans');
 	if(selectStateInputEl) {
 	    const choices = new Choices(selectStateInputEl,{
             removeItemButton: true,
 	    }); 
 	}
+	$(document).ready(function() {
+		// $('#investment-users').select2();
+		$('#investment-users').select2({
+			width: '100%',
+			placeholder: "Search & Select User",
+			allowClear: true
+		});
+		
+		$('#referral-users').select2({
+			width:'100%',
+			placeholder:"Search & Select Referral User",
+			allowClear:true
+		});		
+
+		// $('#congratsModal').modal('show');
+	});
 </script>
 </body>
 </html>

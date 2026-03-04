@@ -63,7 +63,7 @@
 		} else if($user_type == '0') { 
 			$message = _("User Type Required");;
 		}  else {
-			$received = $new_user->add_user( $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type );
+			$received = $new_user->add_user( $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type,$referral_id);
 
 			$user_id = ( isset( $received['user_id'] ) && ! empty( $received['user_id'] ) ) ? $received['user_id'] : '';
 			$message = ( isset( $received['message'] ) && ! empty( $received['message'] ) ) ? $received['message'] . $user_id : 'unknown';
@@ -89,6 +89,28 @@
 		$_fieldarr[$field]['label']  = get_option( "accountform_setting_". $field ."_field_label" );
 		$_fieldarr[$field]['status'] = get_option( "accountform_setting_". $field ."_update_form" );
 	}
+
+	$auto_generated_user_name = '';
+
+	if(!isset($_POST['edit_user'])){
+
+		$all_users = "SELECT * FROM users WHERE user_type LIKE '%subscriber%'";
+		$result    = $db->query($all_users);
+		$count     = $result->num_rows;
+
+		$auto_generated_user_name = 'BIZ';
+
+		if(strlen($count) == 1){
+			$auto_generated_user_name .= '000' . ($count + 1);
+		}elseif(strlen($count) == 2){
+			$auto_generated_user_name .= '00' . ($count + 1);
+		}elseif(strlen($count) == 3){
+			$auto_generated_user_name .= '0' . ($count + 1);
+		}else{
+			$auto_generated_user_name .= ($count + 1);
+		}
+
+	}	
 ?>
 <div class="row flex-row">
 	<div class="col-12">
@@ -268,6 +290,17 @@
 					</div> -->
 
 					<div class="form-group row d-flex align-items-center mb-5">
+						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="username">
+							<?php _e("Username"); ?>*
+						</label>
+						<div class="col-lg-5">
+							<input type="text" class="form-control" id="username" name="username"
+							value="<?php echo isset($_POST['edit_user']) ? $new_user->username : $auto_generated_user_name; ?>"
+							readonly />							
+						</div>
+					</div>					
+
+					<div class="form-group row d-flex align-items-center mb-5">
 						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="email">
 							<?php _e("Email"); ?>*
 						</label>
@@ -376,6 +409,30 @@
 							</select>
 						</div>
 					</div>
+
+					<div class="form-group row d-flex align-items-center mb-5">
+						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end">
+						Referral User
+						</label>
+						<div class="col-lg-5">
+							<select name="referral_id" id="referral-users" class="form-control" style="width:100%">
+							<option></option>
+
+							<?php
+							$result = $db->query("SELECT user_id,username FROM users WHERE user_type LIKE '%subscriber%'");
+
+							while($u = $result->fetch_assoc()){
+
+							$selected = ($new_user->referral_id == $u['user_id']) ? "selected" : "";
+
+							echo "<option value='{$u['user_id']}' $selected>{$u['username']}</option>";
+
+							}
+							?>
+
+							</select>
+						</div>
+					</div>					
 
 					<?php 
 					if ( isset( $_POST['edit_user'] ) ) {

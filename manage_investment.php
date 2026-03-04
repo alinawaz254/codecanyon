@@ -26,10 +26,26 @@ $page_title = "Manage Investment";
 require_once("lib/includes/header.php");
 ?>
 
+<style>
+    .select2-container .select2-selection--single{
+    height:38px;
+    padding:4px 10px;
+    border:1px solid #ced4da;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered{
+    line-height:28px;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow{
+    height:36px;
+}
+</style>
+
 <form method="post">
-<label id="user_id"> Select User *</label>
-<select name="user_id" id="multiple-select-users" multiple class="form-control" required>
-<option value="">Select User</option>
+<label for="user_id"> Select User *</label>
+<select name="user_id" id="investment-users"  class="form-control "style="width:100%" required>
+<option></option>
 <?php
 $result = $db->query("SELECT user_id,username FROM users WHERE user_type LIKE '%subscriber%'");
 while($u = $result->fetch_assoc()){
@@ -38,8 +54,8 @@ echo "<option value='{$u['user_id']}' $selected>{$u['username']}</option>";
 }
 ?>
 </select><br>
-<label id="plan_id"> Select Plan *</label>
-<select name="plan_id" id="plan_id" class="form-control" required>
+<label for="multiple-select-plans"> Select Plan *</label>
+<select name="plan_id[]" id="multiple-select-plans" multiple class="form-control" required>
 <option value="">Select Plan</option>
 <?php
 $result = $db->query("SELECT plan_id,plan_name FROM investment_plans");
@@ -50,7 +66,7 @@ echo "<option value='{$p['plan_id']}' $selected>{$p['plan_name']}</option>";
 ?>
 </select><br>
 
-<label id="amount"> Set Amount *</label>
+<label for="amount"> Set Amount *</label>
 <input 
 type="number" 
 step="0.01" 
@@ -61,7 +77,7 @@ class="form-control"
 placeholder="Enter Investment Amount" 
 required><br>
 
-<label id="issue_date">Set Starting Date *</label>
+<label for="issue_date">Set Starting Date *</label>
 <input 
 type="date" 
 id="issue_date"
