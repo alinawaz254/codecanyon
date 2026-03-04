@@ -1,9 +1,9 @@
 <?php
 	//Database Connection file. Update with your Database information once you create database from cpanel, or mysql.
 	define ("DB_HOST", "localhost"); //Databse Host.
-	define ("DB_NAME", "codecanyon"); //database Name.
-	define ("DB_USER", "root"); //Databse User.
-	define ("DB_PASS", ""); //database password.
+	define ("DB_NAME", "theappde_codecanyon"); //database Name.
+	define ("DB_USER", "theappde_codecanyon"); //Databse User.
+	define ("DB_PASS", "sB-KwA_F,_IJ^!)n"); //database password.
 
 	$db = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
 
