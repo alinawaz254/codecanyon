@@ -399,6 +399,12 @@ function list_users($user_type) {
 			
 			while($row = $result->fetch_array()) { 
 				extract($row);
+				$referals    = $db->query("SELECT username FROM users WHERE referral_id = $user_id");		
+				$referal_ids = [];	
+				while ($row = $referals->fetch_assoc()) {
+				    $referal_ids[] = $row['username'];
+				}
+
 				$count++;
 				if($count%2 == 0) { 
 					$class = 'even';
@@ -420,16 +426,12 @@ function list_users($user_type) {
 				$content .= $username;
 				$content .= '</td><td>';
 				$content .= $email;
+				$content .= '</td><td>';				
+				$content .= isset($referal_ids) && !empty($referal_ids) ? implode(',', $referal_ids) : 'N\A';
 				$content .= '</td><td>';
 				$content .= ucfirst($status);
 				$content .= '</td><td>';
 				$content .= ucfirst($user_type);
-				$content .= '</td><td>';
-				if($this->get_user_meta($user_id, 'last_login_time') == '') { 
-					$content .= _("Never");
-				} else { 
-					$content .= time_elapsed_string($this->get_user_meta($user_id, 'last_login_time'));
-				}
 				$content .= '</td><td>';
 				$content .= $this->get_user_meta($user_id, 'last_login_ip');
 				$content .= '</td><td>';
