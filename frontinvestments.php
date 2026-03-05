@@ -9,21 +9,47 @@ $page_title = _("My Investments");
 
 require_once("lib/includes/header.php");
 
-$query = "
-SELECT ui.*, ip.plan_name, ip.total_cycles, ip.cycle_days, ip.commission
+// First query to get all investments for the user
+$investment_query = "
+SELECT 
+    ui.investment_id,
+    ui.user_id,
+    ui.plan_id,
+    ui.amount,
+    ui.issue_date,
+    ui.created_at AS investment_created_at,
+    ip.plan_name,
+    ip.total_cycles,
+    ip.cycle_days,
+    ip.commission AS plan_commission
 FROM user_investments ui
-LEFT JOIN investment_plans ip ON ip.plan_id = ui.plan_id
+LEFT JOIN investment_plans ip 
+    ON ip.plan_id = ui.plan_id
 WHERE ui.user_id = '$user_id'
 ORDER BY ui.issue_date DESC
 ";
 
-$result = $db->query($query);
+$investments = $db->query($investment_query);
+$today = date("Y-m-d");
+// $today = "2026-06-19"; // test date
+
 ?>
 
 <style>
+    .badge-success{
+        color: green;
+    }
+    .badge-danger{
+        color: red;
+    }
+    .badge-secondary{
+        color: #ffffff;
+        background: red;
+    }
     .investment-modal {
         border-radius: 10px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        margin-bottom: 25px;
     }
 
     .investment-header {
@@ -63,7 +89,7 @@ $result = $db->query($query);
     }
 
     .info-value {
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 600;
     }
 
@@ -112,32 +138,48 @@ $result = $db->query($query);
                     <?php
                     $modals = "";
 
-                    while ($row = $result->fetch_assoc()):
-                        $amount = $row['amount'];
-                        $cycle_days = $row['cycle_days'];
-                        $total_cycles = $row['total_cycles'];
-                        $commission_percent = $row['commission'];
-                        $commission = ($amount * $commission_percent) / 100;
-                        $issue_date = strtotime($row['issue_date']);
+                    while ($investment = $investments->fetch_assoc()):
+                        $amount             = $investment['amount'];
+                        $cycle_days         = $investment['cycle_days'];
+                        $total_cycles       = $investment['total_cycles'];
+                        $commission_percent = $investment['plan_commission'];
+                        $commission         = ($amount * $commission_percent) / 100;
+                        $issue_date         = strtotime($investment['issue_date']);
 
-                        $expiry_date = date(
-                            "Y-m-d",
-                            strtotime("+" . ($cycle_days * $total_cycles) . " days", $issue_date)
-                        );
+                        $expiry_query = $db->query("
+                        SELECT MAX(comission_expiry_date) as last_date 
+                        FROM user_investment_details 
+                        WHERE investment_id = '".$investment['investment_id']."'
+                        ");
 
-                        $today = date("Y-m-d");
-                        $is_expired = ($today > $expiry_date);
+                        $expiry_row = $expiry_query->fetch_assoc();             
+                        $is_expired = ($today > $expiry_row['last_date']);                        
+                        
+                        $details_query = "
+                        SELECT 
+                            id,
+                            cycle,
+                            comission,
+                            comission_expiry_date,
+                            created_at
+                        FROM user_investment_details 
+                        WHERE investment_id = '" . $investment['investment_id'] . "'
+                        ORDER BY cycle ASC
+                        ";
+                        
+                        $details_result = $db->query($details_query);
+                        $has_details = ($details_result && $details_result->num_rows > 0);
                     ?>
 
-                        <tr <?php if ($is_expired) echo 'style="opacity:0.5"'; ?>>
-                            <td><?php echo $row['plan_name']; ?></td>
+                        <tr <?php if ($is_expired) echo 'style="opacity:0.5;background-color:#f5f5f5;"'; ?>>
+                            <td><?php echo $investment['plan_name']; ?></td>
                             <td><?php echo number_format($amount, 2); ?></td>
-                            <td><?php echo $row['issue_date']; ?></td>
+                            <td><?php echo $investment['issue_date']; ?></td>
 
                             <td>
                                 <button class="btn btn-primary btn-sm"
                                     data-toggle="modal"
-                                    data-target="#investmentModal_<?php echo $row['investment_id']; ?>">
+                                    data-target="#investmentModal_<?php echo $investment['investment_id']; ?>">
                                     View
                                 </button>
 
@@ -148,18 +190,17 @@ $result = $db->query($query);
                         </tr>
 
                         <?php
-                        /* build modal separately */
                         ob_start();
                         ?>
 
                         <div class="modal fade"
-                            id="investmentModal_<?php echo $row['investment_id']; ?>"
+                            id="investmentModal_<?php echo $investment['investment_id']; ?>"
                             tabindex="-1">
                             <div class="modal-dialog modal-lg modal-dialog-centered">
                                 <div class="modal-content investment-modal">
                                     <div class="modal-header investment-header">
                                         <h5 class="modal-title">
-                                            <?php echo $row['plan_name']; ?> Investment Details
+                                            <?php echo $investment['plan_name']; ?> Investment Details
                                         </h5>
 
                                         <button type="button"
@@ -173,7 +214,7 @@ $result = $db->query($query);
                                         <div class="investment-info">
                                             <div>
                                                 <span class="info-label">Package</span>
-                                                <span class="info-value"><?php echo $row['plan_name']; ?></span>
+                                                <span class="info-value"><?php echo $investment['plan_name']; ?></span>
                                             </div>
 
                                             <div>
@@ -183,7 +224,7 @@ $result = $db->query($query);
 
                                             <div>
                                                 <span class="info-label">Date Issued</span>
-                                                <span class="info-value"><?php echo $row['issue_date']; ?></span>
+                                                <span class="info-value"><?php echo $investment['issue_date']; ?></span>
                                             </div>
                                         </div>
 
@@ -195,24 +236,57 @@ $result = $db->query($query);
                                                     <th class="info-value">Cycle</th>
                                                     <th class="info-value">Commission Date</th>
                                                     <th class="info-value">Commission (<?php echo $commission_percent; ?>%)</th>
+                                                    <th class="info-value">Status</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
                                                 <?php
-                                                for ($i = 1; $i <= $total_cycles; $i++) {
-                                                    $cycle_date = date(
-                                                        "Y-m-d",
-                                                        strtotime("+" . ($cycle_days * $i) . " days", $issue_date)
-                                                    );
-                                                ?>
+                                                if ($has_details) {
+                                                    // Loop through actual details from database
+                                                    while ($detail = $details_result->fetch_assoc()) {
+                                                        $is_detail_expired = (strtotime($today) > strtotime($detail['comission_expiry_date']));                                                        
+                                                        ?>
+                                                        <tr <?php if ($is_detail_expired) echo 'style="opacity:0.5"'; ?>>
+                                                            <td class="info-value"><?php echo $detail['cycle']; ?></td>
+                                                            <td class="info-value"><?php echo $detail['comission_expiry_date']; ?></td>
+                                                            <td class="info-value"><?php echo number_format($detail['comission'], 2); ?></td>
+                                                            <td class="info-value">
+                                                                <?php if ($is_detail_expired): ?>
+                                                                    <span class="badge badge-success">✅Taken</span>
+                                                                <?php else: ?>
+                                                                    <span class="badge badge-success">Active</span>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                        </tr>
+                                                        <?php
+                                                    }
+                                                } else {
+                                                    // If no details exist yet, show projected cycles
+                                                    for ($i = 1; $i <= $total_cycles; $i++) {
+                                                        $cycle_date = date(
+                                                            "Y-m-d",
+                                                            strtotime("+" . ($cycle_days * $i) . " days", $issue_date)
+                                                        );
+                                                        $is_future_cycle = ($cycle_date > $today);
+                                                        ?>
 
-                                                    <tr>
-                                                        <td class="info-value"><?php echo $i; ?></td>
-                                                        <td class="info-value"><?php echo $cycle_date; ?></td>
-                                                        <td class="info-value"><?php echo number_format($commission, 2); ?></td>
-                                                    </tr>
+                                                        <tr>
+                                                            <td class="info-value"><?php echo $i; ?></td>
+                                                            <td class="info-value"><?php echo $cycle_date; ?></td>
+                                                            <td class="info-value"><?php echo number_format($commission, 2); ?></td>
+                                                            <td class="info-value">
+                                                                <?php if (!$is_future_cycle && $today <= $cycle_date): ?>
+                                                                    <span class="badge badge-warning">Pending</span>
+                                                                <?php elseif ($today > $cycle_date): ?>
+                                                                    <span class="badge badge-secondary">Expired</span>
+                                                                <?php else: ?>
+                                                                    <span class="badge badge-info">Future</span>
+                                                                <?php endif; ?>
+                                                            </td>
+                                                        </tr>
 
+                                                    <?php } ?>
                                                 <?php } ?>
                                             </tbody>
                                         </table>

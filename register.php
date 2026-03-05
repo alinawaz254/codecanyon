@@ -116,26 +116,22 @@
             <div class="row flex-row h-100 bg-white">
                 <!-- Begin Left Content -->
                 <div class="col-xl-3 col-lg-5 col-md-5 col-sm-12 col-12 no-padding">
-                    <div class="webfulho-bg background-03">
-                        <div class="webfulho-overlay overlay-08"></div>
-                        <div class="authentication-col-content-2 mx-auto text-center">
-                            <div class="logo-centered">
-                                <a href="<?=SITEURL;?>">
-                                    <img src="<?=SITELOGO;?>" alt="logo">
-                                </a>
-                            </div>
-                            <h1><?php _e("PHP login script"); ?></h1>
-                            <span class="description">
-                                <?php _e("If you want to create your new account kindly fill the form in right. If you already have an account then please go to login page."); ?> 
-                            </span>
-                            <ul class="mt-5 justify-content-center">
-                                <li><a href="<?=SITEURL;?>login.php" class="btn btn-lg btn-gradient-01" data-easein="zoomInRight">
-										<?php _e("Sign In"); ?>
-									</a>
-								</li>
-                            </ul>
+
+                    <div class="auth-left-panel">
+                        <div class="auth-left-inner text-center">
+                            <img src="<?=SITELOGO;?>" class="auth-logo">
+
+                            <h1 class="auth-title">Code Canyon</h1>
+
+                            <p class="auth-desc">
+                                If you are already a member please fill the login form.
+                            </p>
+
+							<a href="<?=SITEURL;?>login.php" class="btn btn-lg btn-gradient-01">
+							Sign In
+							</a>
                         </div>
-                    </div>
+                    </div>  					
                 </div>
                 <!-- End Left Content -->
                 <!-- Begin Right Content -->

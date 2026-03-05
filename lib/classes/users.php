@@ -433,8 +433,6 @@ function list_users($user_type) {
 				$content .= '</td><td>';
 				$content .= ucfirst($user_type);
 				$content .= '</td><td>';
-				$content .= $this->get_user_meta($user_id, 'last_login_ip');
-				$content .= '</td><td>';
 				$content .= '<button class="btn btn-default btn-sm pull-left" style="margin-right:5px;" data-toggle="modal" data-target="#modal_'.$user_id.'">'._("Message").'</button>';
 				$content .= '<!-- Modal -->
 <script type="text/javascript">

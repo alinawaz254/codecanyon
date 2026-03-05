@@ -16,10 +16,6 @@ if(isset($_POST['update_investment'])){
 if(isset($_POST['add_investment'])){
     extract($_POST);
     $message = $investment_obj->add_investment($user_id,$plan_id,$amount,$issue_date);
-
-    // optional redirect
-    // header("Location: investments.php?added=1");
-    // exit;
 }
 
 $page_title = "Manage Investment";

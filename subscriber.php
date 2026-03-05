@@ -1,174 +1,163 @@
 <?php
-	require_once("lib/system_load.php");
-	//Including this file we load system.
-	
-	//This loads system.
-	authenticate_user('subscriber');
-	
-	$page_title = _('Subscriber Level Users And Admin users Can access this page only!');
-	require_once('lib/includes/header.php');
+require_once("lib/system_load.php");
+
+authenticate_user('subscriber');
+
+$user_id = (int)$_SESSION['user_id'];
+
+$page_title = "Subscriber Dashboard";
+
+require_once("lib/includes/header.php");
+
+/* COUNTS */
+
+// My Investments
+$investment_count = 0;
+$q = $db->query("SELECT COUNT(*) as total FROM user_investments WHERE user_id='$user_id'");
+if($row = $q->fetch_assoc()){
+$investment_count = $row['total'];
+}
+
+// My Referrals
+$referral_count = 0;
+$q = $db->query("SELECT COUNT(*) as total FROM users WHERE referral_id='$user_id'");
+if($row = $q->fetch_assoc()){
+$referral_count = $row['total'];
+}
+
+// My Notes
+$notes_count = 0;
+$q = $db->query("SELECT COUNT(*) as total FROM notes WHERE user_id='$user_id'");
+if($row = $q->fetch_assoc()){
+$notes_count = $row['total'];
+}
+
+// My Commision
+$total_commission = 0;
+
+$q = $db->query("
+SELECT SUM(uid.comission) as total_commission
+FROM user_investment_details uid
+JOIN user_investments ui 
+ON ui.investment_id = uid.investment_id
+WHERE ui.user_id = '$user_id'
+");
+
+if($row = $q->fetch_assoc()){
+$total_commission = $row['total_commission'] ?? 0;
+}
 ?>
+
 <div class="row flex-row">
-	<div class="col-xl-12">
-		<!-- Basic Buttons -->
-		<div class="widget has-shadow">
-			<div class="widget-header bordered no-actions d-flex align-items-center">
-				<h4><?php _e("How user level pages works!"); ?></h4>
-			</div>
-			<div class="widget-body">
-				<p><?php _e("In sidebar menu Dashboard would be linked to level page automatically. This is subscriber page and dashboard link in sidebar is linked to subscriber.php from database. You can create more user levels as per your needs and create pages like this which are only accessible by admin users and their level access holders. Non loged in users would be redirected to login page."); ?></p>
-				<p><?php _e("This is a default page for subscriber user level, Subscriber user level is deafault level on registration. This page is only accessable when user is signed in and his access level is subscriber. If you are loged in as admin you still can see this page."); ?></p>
-			</div>
-		</div>
-		<!-- End Basic Buttons -->
-	</div><!-- Column Ends /-->
 
-	<div class="col-xl-12">
-			<!-- Basic Buttons -->
-			<div class="widget has-shadow">
-				<div class="widget-header bordered no-actions d-flex align-items-center">
-					<h4><?php _e("How to make more subscriber pages or other level pages"); ?></h4>
-				</div>
-				<div class="widget-body">
-				<p><?php _e("You can put the following code in top of any page that will become a subscriber accessable page. Note: admin can access all pages of all levels."); ?></p>
-<pre class="code php">
-&lt;?php
-	include('system_load.php');
-	//This loads system.
-	
-	authenticate_user('subscriber');
-?&gt;		
-</pre>
-				</div>
-			</div>
-			<!-- End Basic Buttons -->
-		</div>
+<!-- My Investments -->
 
-		<div class="col-xl-12">
-			<!-- Basic Buttons -->
-			<div class="widget has-shadow">
-				<div class="widget-header bordered no-actions d-flex align-items-center">
-					<h4><?php _e("How to make more admin pages"); ?></h4>
-				</div>
-				<div class="widget-body">
-				<p><?php _e("If you want to make a page only accessible for admin users then its very easy just add admin in user authentication function like below.."); ?></p>
-<pre class="code php">
-&lt;?php
-	include('system_load.php');
-	//This loads system.
-	
-	authenticate_user('admin');
-?&gt;		
-</pre>
-				</div>
-			</div>
-			<!-- End Basic Buttons -->
-		</div>
+<div class="col-xl-4 col-md-6 col-sm-6">
+<a href="frontinvestments.php" style="text-decoration:none">
+<div class="widget widget-12 has-shadow">
+<div class="widget-body">
+<div class="media">
 
-
-		<div class="col-xl-12">
-			<!-- Basic Buttons -->
-			<div class="widget has-shadow">
-				<div class="widget-header bordered no-actions d-flex align-items-center">
-					<h4><?php _e("How to make a page accessable to all loged in users."); ?></h4>
-				</div>
-				<div class="widget-body">
-					<p><?php _e("You can use the following code in start of your document that will make your page to accessable all loged in users but only when they are signed in."); ?></p>
-<pre class="code php">
-&lt;?php
-	include('system_load.php');
-	//This loads system.
-	
-	authenticate_user('all');
-?&gt;</pre>
-				</div>
-			</div>
-			<!-- End Basic Buttons -->
-		</div>
-
-		<div class="col-xl-12">
-			<!-- Basic Buttons -->
-			<div class="widget has-shadow">
-				<div class="widget-header bordered no-actions d-flex align-items-center">
-					<h4><?php _e("Partial Access"); ?></h4>
-				</div>
-				<div class="widget-body">
-					<p><?php _e("Partial access can be used to show some parts of a page for different level of users. For example if you want to include a file different for admin users and different for all other users you can do this using partial access function."); ?></p>
-<pre class="code php">
-&lt;?php if(partial_access('admin')): ?&gt;	
-	&lt;p&gt;<?php _e("You are Admin."); ?>&lt;/p&gt;
-&lt;?php elseif(partial_access('subscriber')): ?&gt;
-	&lt;p&gt;<?php _e("You are Subscriber."); ?>&lt;/p&gt;
-&lt;?php elseif(partial_access('all')): ?&gt;
-	&lt;p&gt;<?php _e("You are loged in user."); ?>&lt;/p&gt;
-&lt;?php else: ?&gt; 
-	&lt;p&gt;<?php _e("You are not loged in user."); ?>&lt;/p&gt;
-&lt;?php endif; ?&gt;
-</pre>					
-					<h2><?php _e("Working Example below of above code"); ?></h2>
-					<?php if(partial_access('admin')): ?>	
-						<h3><?php _e("You are Admin."); ?></h3>
-					<?php elseif(partial_access('subscriber')): ?>
-						<h3><?php _e("You are Subscriber."); ?></h3>
-					<?php elseif(partial_access('all')): ?>
-						<h3><?php _e("You are loged in user."); ?></h3>
-					<?php else: ?> 
-						<h3><?php _e("You are not loged in user."); ?></h3>
-					<?php endif; ?>
-				</div>
-			</div>
-			<!-- End Basic Buttons -->
-		</div>
-</div><!-- Row ends /-->
-<!-- Bootstrap Modal -->
-<div class="modal fade" id="congratsModal" tabindex="-1" aria-labelledby="congratsModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content border-0 shadow-lg">
-      <!-- Modal Header -->
-      <div class="modal-header bg-success text-white">
-        <h5 class="modal-title" id="congratsModalLabel">
-          🎉 Congratulations! 🎉
-        </h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-
-      <!-- Modal Body -->
-      <div class="modal-body text-center p-4">
-        <img src="https://img.icons8.com/color/96/000000/ok--v2.png" alt="Congrats Icon" class="mb-3">
-        <h4 class="mb-3">You did it!</h4>
-        <p class="mb-4">Your recent action has been successfully completed. Here are the details:</p>
-        
-        <!-- Details Section -->
-        <ul class="list-group list-group-flush text-start mx-auto" style="max-width: 400px;">
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            Task Name
-            <span class="badge bg-primary rounded-pill">Build UI</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            Completion Date
-            <span class="badge bg-secondary rounded-pill">04 Mar 2026</span>
-          </li>
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            Status
-            <span class="badge bg-success rounded-pill">Success</span>
-          </li>
-        </ul>
-      </div>
-
-      <!-- Modal Footer -->
-      <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-success btn-lg" data-bs-dismiss="modal">
-          Close & Celebrate 🎉
-        </button>
-      </div>
-    </div>
-  </div>
+<div class="align-self-center ml-5 mr-5">
+<i class="la la-money"></i>
 </div>
 
-<!-- Trigger Button Example -->
-<button type="button" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#congratsModal">
-  Show Congrats Modal
-</button>
-<!--footer-->
-<?php 
-	require_once('lib/includes/footer.php');
+<div class="media-body align-self-center">
+<div class="title">My Investments</div>
+<div class="number"><?php echo $investment_count; ?> Investments</div>
+</div>
+
+</div>
+</div>
+</div>
+</a>
+</div>
+
+<!-- My Referrals -->
+
+<div class="col-xl-4 col-md-6 col-sm-6">
+<a href="frontreferrals.php" style="text-decoration:none">
+<div class="widget widget-12 has-shadow">
+<div class="widget-body">
+<div class="media">
+
+<div class="align-self-center ml-5 mr-5">
+<i class="la la-users"></i>
+</div>
+
+<div class="media-body align-self-center">
+<div class="title">My Referrals</div>
+<div class="number"><?php echo $referral_count; ?> Referrals</div>
+</div>
+
+</div>
+</div>
+</div>
+</a>
+</div>
+
+<!-- My Notes -->
+
+<div class="col-xl-4 col-md-6 col-sm-6">
+<a href="notes.php" style="text-decoration:none">
+<div class="widget widget-12 has-shadow">
+<div class="widget-body">
+<div class="media">
+
+<div class="align-self-center ml-5 mr-5">
+<i class="la la-sticky-note"></i>
+</div>
+
+<div class="media-body align-self-center">
+<div class="title">My Notes</div>
+<div class="number"><?php echo $notes_count; ?> Notes</div>
+</div>
+
+</div>
+</div>
+</div>
+</a>
+</div>
+
+<div class="col-xl-4 col-md-6 col-sm-6">
+
+<div class="widget widget-12 has-shadow">
+<div class="widget-body">
+<div class="media">
+
+<div class="align-self-center ml-5 mr-5">
+<i class="la la-dollar"></i>
+</div>
+
+<div class="media-body align-self-center">
+<div class="title">Total Commission</div>
+<div class="number">$<?php echo number_format($total_commission,2); ?></div>
+</div>
+
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="row flex-row mt-4">
+
+<div class="col-xl-12">
+<div class="widget has-shadow">
+
+<div class="widget-header bordered d-flex align-items-center">
+<h4>Welcome</h4>
+</div>
+
+<div class="widget-body">
+<p>This is your subscriber dashboard.</p>
+<p>From here you can manage your investments, referrals and notes.</p>
+</div>
+
+</div>
+</div>
+
+</div>
+
+<?php require_once("lib/includes/footer.php"); ?>

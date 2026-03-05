@@ -22,7 +22,9 @@ $page_title = "Manage Investment Package";
 require_once("lib/includes/header.php");
 ?>
 
-<form method="post">
+<div class="row">
+<div class="col-md-8">
+<form method="post" class="mb-5">
     <label id="plan_name"> Plan Name *</label>
     <input type="text" name="plan_name" id="plan_name" class="form-control"
     value="<?php echo $investment_obj->plan_name; ?>" placeholder="Plan Name"><br>
@@ -50,5 +52,7 @@ require_once("lib/includes/header.php");
     <?php endif; ?>
 
 </form>
+</div>
+</div>
 
 <?php require_once("lib/includes/footer.php"); ?>

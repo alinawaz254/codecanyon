@@ -31,14 +31,22 @@
                 </ul>
             </li>
             <li>
+            <a href="#dropdown-packages" aria-expanded="false" data-toggle="collapse">
+            <i class="la la-file-text"></i>
+            <span><?php _e("Packages"); ?></span>
+            </a>
+
+            <ul id="dropdown-packages" class="collapse list-unstyled pt-0">
+                <li><a href="investment_plans.php"><?php _e("Packages"); ?></a></li>
+                <li><a href="manage_investment_plan.php"><?php _e("Add Package"); ?></a></li>
+            </ul>
+            </li>           
+            <li>
             <a href="#dropdown-investments" aria-expanded="false" data-toggle="collapse">
             <i class="la la-money"></i>
             <span><?php _e("Investments"); ?></span>
             </a>
-
             <ul id="dropdown-investments" class="collapse list-unstyled pt-0">
-                <li><a href="investment_plans.php"><?php _e("Packages"); ?></a></li>
-                <li><a href="manage_investment_plan.php"><?php _e("Add Package"); ?></a></li>
                 <li><a href="investments.php"><?php _e("Investments"); ?></a></li>
                 <li><a href="manage_investment.php"><?php _e("Add Investment"); ?></a></li>
             </ul>
@@ -80,6 +88,7 @@
             <li><a href="notes.php"><i class="la la-sticky-note"></i><span><?php _e("My Notes"); ?></span></a></li>
             <li><a href="frontinvestments.php"><i class="la la-money"></i><span><?php _e("Investments"); ?></span></a></li>
             <li><a href="frontreferrals.php"><i class="la la-list"></i><span><?php _e("My Referrals"); ?></span></a></li>
+            <li><a href="frontrewards.php"><i class="la la-gift"></i><span><?php _e("Rewards"); ?></span></a></li>
         </ul>
         <hr>
         <span class="heading"><?php _e("Other Pages"); ?></span>

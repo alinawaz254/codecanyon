@@ -117,64 +117,74 @@
 		<!-- Form -->
 		<div class="widget has-shadow">
 			<div class="widget-body">
+				<div class="container">
 				<form action="<?php $_SERVER['PHP_SELF']?>" id="add_user" name="user" method="post" enctype="multipart/form-data" role="form">
-
+			
 					<?php if ( ! isset( $_fieldarr['first_name']['status'] ) || $_fieldarr['first_name']['status'] != 'hide' ) : ?>
-					<div class="form-group row d-flex align-items-center mb-5">
-						<?php $_label = ( isset( $_fieldarr['first_name']['label'] ) && ! empty( $_fieldarr['first_name']['label'] ) ) ? $_fieldarr['first_name']['label'] : _( 'First Name' ); ?>
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="first_name"><?php echo $_label ?>*</label>
-						<div class="col-lg-5">
-							<input type="text" name="first_name" id="first_name" class="form-control" value="<?php echo $new_user->first_name; ?>" required="required" />
+					<div class="row">
+					<div class="col-md-6 mb-1">											
+						<div class="form-group row d-flex align-items-center mb-5">
+							<?php $_label = ( isset( $_fieldarr['first_name']['label'] ) && ! empty( $_fieldarr['first_name']['label'] ) ) ? $_fieldarr['first_name']['label'] : _( 'First Name' ); ?>
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="first_name"><?php echo $_label ?>*</label>
+							<div class="col-lg-5">
+								<input type="text" name="first_name" id="first_name" class="form-control" value="<?php echo $new_user->first_name; ?>" required="required" />
+							</div>
 						</div>
-					</div>
+					</div>					
 					<?php endif; ?>
 
 					<?php if ( ! isset( $_fieldarr['last_name']['status'] ) || $_fieldarr['last_name']['status'] != 'hide' ) : ?>
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="last_name">
-						<?php $_label = ( isset( $_fieldarr['last_name']['label'] ) && ! empty( $_fieldarr['last_name']['label'] ) ) ? $_fieldarr['last_name']['label'] : _( 'Last Name' ); ?>
-						<?php echo $_label ?>*
-						</label>
-						<div class="col-lg-5">
-							<input type="text" id="last_name" name="last_name" class="form-control" placeholder="<?php _e("Enter Last Name"); ?>" value="<?php echo $new_user->last_name; ?>" required="required" />
+					<div class="col-md-6 mb-1">						
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="last_name">
+							<?php $_label = ( isset( $_fieldarr['last_name']['label'] ) && ! empty( $_fieldarr['last_name']['label'] ) ) ? $_fieldarr['last_name']['label'] : _( 'Last Name' ); ?>
+							<?php echo $_label ?>*
+							</label>
+							<div class="col-lg-5">
+								<input type="text" id="last_name" name="last_name" class="form-control" placeholder="<?php _e("Enter Last Name"); ?>" value="<?php echo $new_user->last_name; ?>" required="required" />
+							</div>
 						</div>
-					</div>
+					</div>						
 					<?php endif; ?>
 
 					<?php if ( ! isset( $_fieldarr['gender']['status'] ) || $_fieldarr['gender']['status'] != 'hide' ) : ?>
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="gender">
-						<?php $_label = ( isset( $_fieldarr['gender']['label'] ) && ! empty( $_fieldarr['gender']['label'] ) ) ? $_fieldarr['gender']['label'] : _( 'Gender' ); ?>
-						<?php echo $_label ?>
-						</label>
-						<div class="col-lg-5">
-							<select class="custom-select form-control" id="gender" name="gender">
-								<option vale=''><?php _e("Select Gender"); ?></option>
-								<option value="<?php _e("Male"); ?>" <?php if($new_user->gender == _("Male")) { echo 'selected="selected"'; } ?>><?php _e("Male"); ?></option>
-								<option value="<?php _e("Female"); ?>" <?php if($new_user->gender == _("Female")) { echo 'selected="selected"'; } ?>><?php _e("Female"); ?></option>
-							</select>
+					<div class="col-md-6 mb-1">						
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="gender">
+							<?php $_label = ( isset( $_fieldarr['gender']['label'] ) && ! empty( $_fieldarr['gender']['label'] ) ) ? $_fieldarr['gender']['label'] : _( 'Gender' ); ?>
+							<?php echo $_label ?>
+							</label>
+							<div class="col-lg-5">
+								<select class="custom-select form-control" id="gender" name="gender">
+									<option vale=''><?php _e("Select Gender"); ?></option>
+									<option value="<?php _e("Male"); ?>" <?php if($new_user->gender == _("Male")) { echo 'selected="selected"'; } ?>><?php _e("Male"); ?></option>
+									<option value="<?php _e("Female"); ?>" <?php if($new_user->gender == _("Female")) { echo 'selected="selected"'; } ?>><?php _e("Female"); ?></option>
+								</select>
+							</div>
 						</div>
-					</div>
+					</div>						
 					<?php endif; ?>
 
 					<?php if ( ! isset( $_fieldarr['date_of_birth']['status'] ) || $_fieldarr['date_of_birth']['status'] != 'hide' ) : ?>
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="dob">
-						<?php $_label = ( isset( $_fieldarr['date_of_birth']['label'] ) && ! empty( $_fieldarr['date_of_birth']['label'] ) ) ? $_fieldarr['date_of_birth']['label'] : _( 'Date of birth' ); ?>
-						<?php echo $_label ?>
-						</label>
-						<div class="col-lg-5">
-							<div class="form-group">
-								<div class="input-group">
-									<span class="input-group-addon">
-										<i class="la la-calendar"></i>
-									</span>
-										<input type="text" id="dob" name="date_of_birth" class="form-control" 
-										placeholder="<?php _e("Date of Birth"); ?> 2013-12-03" 
-										value="<?php 
-												$dob = ( ! empty( $new_user->date_of_birth ) ) ? date( "m/d/Y", strtotime( $new_user->date_of_birth ) ) : ''; 
-												echo $dob;
-											?>" />
+					<div class="col-md-6 mb-1">						
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="dob">
+							<?php $_label = ( isset( $_fieldarr['date_of_birth']['label'] ) && ! empty( $_fieldarr['date_of_birth']['label'] ) ) ? $_fieldarr['date_of_birth']['label'] : _( 'Date of birth' ); ?>
+							<?php echo $_label ?>
+							</label>
+							<div class="col-lg-5">
+								<div class="form-group">
+									<div class="input-group">
+										<span class="input-group-addon">
+											<i class="la la-calendar"></i>
+										</span>
+											<input type="text" id="dob" name="date_of_birth" class="form-control" 
+											placeholder="<?php _e("Date of Birth"); ?> 2013-12-03" 
+											value="<?php 
+													$dob = ( ! empty( $new_user->date_of_birth ) ) ? date( "m/d/Y", strtotime( $new_user->date_of_birth ) ) : ''; 
+													echo $dob;
+												?>" />
+									</div>
 								</div>
 							</div>
 						</div>
@@ -182,100 +192,116 @@
 					<?php endif; ?>
 
 					<?php if ( ! isset( $_fieldarr['address1']['status'] ) || $_fieldarr['address1']['status'] != 'hide' ) : ?>
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="addOne">
-						<?php $_label = ( isset( $_fieldarr['address1']['label'] ) && ! empty( $_fieldarr['address1']['label'] ) ) ? $_fieldarr['address1']['label'] : _( 'Address' ); ?>
-						<?php echo $_label ?> 1
-						</label>
-						<div class="col-lg-5">
-							<textarea name="address1" id="addOne" class="form-control" placeholder="<?php _e("Address"); ?> 1"><?php echo $new_user->address1; ?></textarea>
+					<div class="col-md-6 mb-1">						
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="addOne">
+							<?php $_label = ( isset( $_fieldarr['address1']['label'] ) && ! empty( $_fieldarr['address1']['label'] ) ) ? $_fieldarr['address1']['label'] : _( 'Address' ); ?>
+							<?php echo $_label ?> 1
+							</label>
+							<div class="col-lg-5">
+								<textarea name="address1" id="addOne" class="form-control" placeholder="<?php _e("Address"); ?> 1"><?php echo $new_user->address1; ?></textarea>
+							</div>
 						</div>
 					</div>
 					<?php endif; ?>
 
 					<?php if ( ! isset( $_fieldarr['address2']['status'] ) || $_fieldarr['address2']['status'] != 'hide' ) : ?>
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="addTwo">
-						<?php $_label = ( isset( $_fieldarr['address2']['label'] ) && ! empty( $_fieldarr['address2']['label'] ) ) ? $_fieldarr['address2']['label'] : _( 'Address' ); ?>
-						<?php echo $_label ?> 2
-						</label>
-						<div class="col-lg-5">
-							<textarea name="address2" id="addTwo" class="form-control" placeholder="<?php _e("Address"); ?> 2"><?php echo $new_user->address2; ?></textarea>
+					<div class="col-md-6 mb-1">						
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="addTwo">
+							<?php $_label = ( isset( $_fieldarr['address2']['label'] ) && ! empty( $_fieldarr['address2']['label'] ) ) ? $_fieldarr['address2']['label'] : _( 'Address' ); ?>
+							<?php echo $_label ?> 2
+							</label>
+							<div class="col-lg-5">
+								<textarea name="address2" id="addTwo" class="form-control" placeholder="<?php _e("Address"); ?> 2"><?php echo $new_user->address2; ?></textarea>
+							</div>
 						</div>
 					</div>
 					<?php endif; ?>
 
 					<?php if ( ! isset( $_fieldarr['city']['status'] ) || $_fieldarr['city']['status'] != 'hide' ) : ?>
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="city">
-						<?php $_label = ( isset( $_fieldarr['city']['label'] ) && ! empty( $_fieldarr['city']['label'] ) ) ? $_fieldarr['city']['label'] : _( 'City' ); ?>
-						<?php echo $_label ?>
-						</label>
-						<div class="col-lg-5">
-							<input type="text" name="city" id="city" class="form-control" placeholder="<?php _e("City"); ?>" value="<?php echo $new_user->city; ?>" />
+					<div class="col-md-6 mb-1">						
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="city">
+							<?php $_label = ( isset( $_fieldarr['city']['label'] ) && ! empty( $_fieldarr['city']['label'] ) ) ? $_fieldarr['city']['label'] : _( 'City' ); ?>
+							<?php echo $_label ?>
+							</label>
+							<div class="col-lg-5">
+								<input type="text" name="city" id="city" class="form-control" placeholder="<?php _e("City"); ?>" value="<?php echo $new_user->city; ?>" />
+							</div>
 						</div>
 					</div>
 					<?php endif; ?>
 
 					<?php if ( ! isset( $_fieldarr['state']['status'] ) || $_fieldarr['state']['status'] != 'hide' ) : ?>
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="state">
-						<?php $_label = ( isset( $_fieldarr['state']['label'] ) && ! empty( $_fieldarr['state']['label'] ) ) ? $_fieldarr['state']['label'] : _( 'State' ); ?>
-						<?php echo $_label ?>
-						</label>
-						<div class="col-lg-5">
-							<input type="text" id="state" name="state" 
-							class="form-control" placeholder="<?php _e("State OR Province"); ?>" value="<?php echo $new_user->state; ?>" />
+					<div class="col-md-6 mb-1">						
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="state">
+							<?php $_label = ( isset( $_fieldarr['state']['label'] ) && ! empty( $_fieldarr['state']['label'] ) ) ? $_fieldarr['state']['label'] : _( 'State' ); ?>
+							<?php echo $_label ?>
+							</label>
+							<div class="col-lg-5">
+								<input type="text" id="state" name="state" 
+								class="form-control" placeholder="<?php _e("State OR Province"); ?>" value="<?php echo $new_user->state; ?>" />
+							</div>
 						</div>
 					</div>
 					<?php endif; ?>
 
 					<?php if ( ! isset( $_fieldarr['zip_code']['status'] ) || $_fieldarr['zip_code']['status'] != 'hide' ) : ?>
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="zipcode">
-						<?php $_label = ( isset( $_fieldarr['zip_code']['label'] ) && ! empty( $_fieldarr['zip_code']['label'] ) ) ? $_fieldarr['zip_code']['label'] : _( 'Zip Code' ); ?>
-						<?php echo $_label ?>
-						</label>
-						<div class="col-lg-5">
-							<input type="text" name="zip_code" id="zipcode" class="form-control" placeholder="<?php _e("Zip Code"); ?>" value="<?php echo $new_user->zip_code; ?>" />
+					<div class="col-md-6 mb-1">						
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="zipcode">
+							<?php $_label = ( isset( $_fieldarr['zip_code']['label'] ) && ! empty( $_fieldarr['zip_code']['label'] ) ) ? $_fieldarr['zip_code']['label'] : _( 'Zip Code' ); ?>
+							<?php echo $_label ?>
+							</label>
+							<div class="col-lg-5">
+								<input type="text" name="zip_code" id="zipcode" class="form-control" placeholder="<?php _e("Zip Code"); ?>" value="<?php echo $new_user->zip_code; ?>" />
+							</div>
 						</div>
 					</div>
 					<?php endif; ?>
 
 					<?php if ( ! isset( $_fieldarr['country']['status'] ) || $_fieldarr['country']['status'] != 'hide' ) : ?>
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="country">
-						<?php $_label = ( isset( $_fieldarr['country']['label'] ) && ! empty( $_fieldarr['country']['label'] ) ) ? $_fieldarr['country']['label'] : _( 'Country' ); ?>
-						<?php echo $_label ?>
-						</label>
-						<div class="col-lg-5">
-							<select class="custom-select form-control" id="country" name="country">
-								<?php countries_dropdown($new_user->country); ?>
-							</select>
+					<div class="col-md-6 mb-1">						
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="country">
+							<?php $_label = ( isset( $_fieldarr['country']['label'] ) && ! empty( $_fieldarr['country']['label'] ) ) ? $_fieldarr['country']['label'] : _( 'Country' ); ?>
+							<?php echo $_label ?>
+							</label>
+							<div class="col-lg-5">
+								<select class="custom-select form-control" id="country" name="country">
+									<?php countries_dropdown($new_user->country); ?>
+								</select>
+							</div>
 						</div>
 					</div>
 					<?php endif; ?>
 
 					<?php if ( ! isset( $_fieldarr['mobile']['status'] ) || $_fieldarr['mobile']['status'] != 'hide' ) : ?>
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="mobile">
-						<?php $_label = ( isset( $_fieldarr['mobile']['label'] ) && ! empty( $_fieldarr['mobile']['label'] ) ) ? $_fieldarr['mobile']['label'] : _( 'Mobile' ); ?>
-						<?php echo $_label ?>
-						</label>
-						<div class="col-lg-5">
-							<input type="text" name="mobile" id="mobile" class="form-control" placeholder="<?php _e("Mobile"); ?>" value="<?php echo $new_user->mobile; ?>" />
+					<div class="col-md-6 mb-1">						
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="mobile">
+							<?php $_label = ( isset( $_fieldarr['mobile']['label'] ) && ! empty( $_fieldarr['mobile']['label'] ) ) ? $_fieldarr['mobile']['label'] : _( 'Mobile' ); ?>
+							<?php echo $_label ?>
+							</label>
+							<div class="col-lg-5">
+								<input type="text" name="mobile" id="mobile" class="form-control" placeholder="<?php _e("Mobile"); ?>" value="<?php echo $new_user->mobile; ?>" />
+							</div>
 						</div>
 					</div>
 					<?php endif; ?>
 
 					<?php if ( ! isset( $_fieldarr['phone']['status'] ) || $_fieldarr['phone']['status'] != 'hide' ) : ?>
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="phone">
-						<?php $_label = ( isset( $_fieldarr['phone']['label'] ) && ! empty( $_fieldarr['phone']['label'] ) ) ? $_fieldarr['phone']['label'] : _( 'Phone' ); ?>
-						<?php echo $_label ?>
-						</label>
-						<div class="col-lg-5">
-							<input type="text" name="phone" id="phone" class="form-control" placeholder="<?php _e("Phone"); ?>" value="<?php echo $new_user->phone; ?>" />
+					<div class="col-md-6 mb-1">						
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="phone">
+							<?php $_label = ( isset( $_fieldarr['phone']['label'] ) && ! empty( $_fieldarr['phone']['label'] ) ) ? $_fieldarr['phone']['label'] : _( 'Phone' ); ?>
+							<?php echo $_label ?>
+							</label>
+							<div class="col-lg-5">
+								<input type="text" name="phone" id="phone" class="form-control" placeholder="<?php _e("Phone"); ?>" value="<?php echo $new_user->phone; ?>" />
+							</div>
 						</div>
 					</div>
 					<?php endif; ?>
@@ -288,96 +314,111 @@
 							<input type="text" class="form-control" id="username" name="username" placeholder="<?php _e("Username"); ?>" value="<?php echo $new_user->username; ?>" required="required" />
 						</div>
 					</div> -->
+					<div class="col-md-6 mb-1">
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="username">
+								<?php _e("Username"); ?>*
+							</label>
+							<div class="col-lg-5">
+								<input type="text" class="form-control" id="username" name="username"
+								value="<?php echo isset($_POST['edit_user']) ? $new_user->username : $auto_generated_user_name; ?>"
+								readonly />							
+							</div>
+						</div>				
+					</div>	
 
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="username">
-							<?php _e("Username"); ?>*
-						</label>
-						<div class="col-lg-5">
-							<input type="text" class="form-control" id="username" name="username"
-							value="<?php echo isset($_POST['edit_user']) ? $new_user->username : $auto_generated_user_name; ?>"
-							readonly />							
-						</div>
-					</div>					
-
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="email">
-							<?php _e("Email"); ?>*
-						</label>
-						<div class="col-lg-5">
-							<input type="email" id="email" class="form-control" name="email" placeholder="<?php _e("Email"); ?>" value="<?php echo $new_user->email; ?>" required="required" />
+					<div class="col-md-6 mb-1">
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="email">
+								<?php _e("Email"); ?>*
+							</label>
+							<div class="col-lg-5">
+								<input type="email" id="email" class="form-control" name="email" placeholder="<?php _e("Email"); ?>" value="<?php echo $new_user->email; ?>" required="required" />
+							</div>
 						</div>
 					</div>
 
 					<?php if(isset($_POST['edit_user'])) { ?> 
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="password">
-							<?php _e("Password"); ?>
-						</label>
-						<div class="col-lg-5">
-							<input type="password" id="password" class="form-control" name="password" placeholder="<?php _e("Password"); ?>" value="" /><small><?php _e("Leave blank if you don't want to change password"); ?></small>
+					<div class="col-md-6 mb-1">					
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="password">
+								<?php _e("Password"); ?>
+							</label>
+							<div class="col-lg-5">
+								<input type="password" id="password" class="form-control" name="password" placeholder="<?php _e("Password"); ?>" value="" /><small><?php _e("Leave blank if you don't want to change password"); ?></small>
+							</div>
 						</div>
 					</div>
 
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="confirmpassword">
-							<?php _e("Confirm Password"); ?>
-						</label>
-						<div class="col-lg-5">
-							<input class="form-control" id="confirmpassword" type="password" name="confirm_password" placeholder="<?php _e("Confirm Password"); ?>" value="" />
+					<div class="col-md-6 mb-1">					
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="confirmpassword">
+								<?php _e("Confirm Password"); ?>
+							</label>
+							<div class="col-lg-5">
+								<input class="form-control" id="confirmpassword" type="password" name="confirm_password" placeholder="<?php _e("Confirm Password"); ?>" value="" />
+							</div>
 						</div>
 					</div>
 					<?php } else {?>
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="password">
-							<?php _e("Password"); ?>*
-						</label>
-						<div class="col-lg-5">
-							<input type="password" id="password" class="form-control" name="password" placeholder="<?php _e("Password"); ?>" value="" />
+					<div class="col-md-6 mb-1">
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="password">
+								<?php _e("Password"); ?>*
+							</label>
+							<div class="col-lg-5">
+								<input type="password" id="password" class="form-control" name="password" placeholder="<?php _e("Password"); ?>" value="" />
+							</div>
 						</div>
 					</div>
 
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="confirmpassword">
-							<?php _e("Confirm Password"); ?>*
-						</label>
-						<div class="col-lg-5">
-							<input class="form-control" id="confirmpassword" type="password" name="confirm_password" placeholder="<?php _e("Confirm Password"); ?>" value="" />
-						</div>
+					<div class="col-md-6 mb-1">					
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="confirmpassword">
+								<?php _e("Confirm Password"); ?>*
+							</label>
+							<div class="col-lg-5">
+								<input class="form-control" id="confirmpassword" type="password" name="confirm_password" placeholder="<?php _e("Confirm Password"); ?>" value="" />
+							</div>
+						</div>	
 					</div>	
 					<?php } ?>
 					
 					<?php if ( ! isset( $_fieldarr['profile_image']['status'] ) || $_fieldarr['profile_image']['status'] != 'hide' ) : ?>
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="cropContaineroutput">
-						<?php $_label = ( isset( $_fieldarr['profile_image']['label'] ) && ! empty( $_fieldarr['profile_image']['label'] ) ) ? $_fieldarr['profile_image']['label'] : _( 'Profile Image' ); ?>
-						<?php echo $_label ?>
-						</label>
-						<div class="col-lg-5">
-							<div class="clearfix"></div>
-							<div class="clearfix"></div>
-							<div class="col-lg-4 ">
-								<div id="cropContaineroutput"></div>
-								<input type="hidden" name="profile_image" id="cropOutput" value="" />
+					<div class="col-md-6 mb-1">						
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="cropContaineroutput">
+							<?php $_label = ( isset( $_fieldarr['profile_image']['label'] ) && ! empty( $_fieldarr['profile_image']['label'] ) ) ? $_fieldarr['profile_image']['label'] : _( 'Profile Image' ); ?>
+							<?php echo $_label ?>
+							</label>
+							<div class="col-lg-5">
+								<div class="clearfix"></div>
+								<div class="clearfix"></div>
+								<div class="col-lg-4 ">
+									<div id="cropContaineroutput"></div>
+									<input type="hidden" name="profile_image" id="cropOutput" value="" />
+								</div>
+								<?php
+									if(isset($new_user->profile_image) && $new_user->profile_image != '') {
+										echo '<a href="'.$new_user->profile_image.'" target="_blank"><img src="'.$new_user->profile_image.'" height="80" class="pull-left img-thumbnail" style="height:80px;" /></a><input type="hidden" name="already_img" value="'.$new_user->profile_image.'">';	
+									}
+								?>
+								<div class="clearfix"></div>
 							</div>
-							<?php
-								if(isset($new_user->profile_image) && $new_user->profile_image != '') {
-									echo '<a href="'.$new_user->profile_image.'" target="_blank"><img src="'.$new_user->profile_image.'" height="80" class="pull-left img-thumbnail" style="height:80px;" /></a><input type="hidden" name="already_img" value="'.$new_user->profile_image.'">';	
-								}
-							?>
-							<div class="clearfix"></div>
 						</div>
 					</div>
 					<?php endif; ?>
 					
 					<?php if ( ! isset( $_fieldarr['description']['status'] ) || $_fieldarr['description']['status'] != 'hide' ) : ?>
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="description">
-						<?php $_label = ( isset( $_fieldarr['description']['label'] ) && ! empty( $_fieldarr['description']['label'] ) ) ? $_fieldarr['description']['label'] : _( 'Description' ); ?>
-						<?php echo $_label ?>
-						</label>
-						<div class="col-lg-5">
-							<textarea name="description" id="description" class="form-control" placeholder="<?php _e("Description"); ?>"><?php echo $new_user->description; ?></textarea>
+					<div class="col-md-6 mb-1">						
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="description">
+							<?php $_label = ( isset( $_fieldarr['description']['label'] ) && ! empty( $_fieldarr['description']['label'] ) ) ? $_fieldarr['description']['label'] : _( 'Description' ); ?>
+							<?php echo $_label ?>
+							</label>
+							<div class="col-lg-5">
+								<textarea name="description" id="description" class="form-control" placeholder="<?php _e("Description"); ?>"><?php echo $new_user->description; ?></textarea>
+							</div>
 						</div>
 					</div>
 					<?php endif; ?>
@@ -386,52 +427,58 @@
 						$userID = ( isset( $_POST['edit_user'] ) ) ? $_POST['edit_user'] : '';
 						echo return_additional_field_options( $userID, 'update' ); ?>
 
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end"><?php _e("Status"); ?>*</label>
-						<div class="col-lg-5">
-							<select name="status" required class="custom-select form-control" id="status" class="required">
-								<option value="0"><?php _e("Select User Status"); ?></option>
-								<option <?php if($new_user->status == 'activate'){echo 'selected="selected"';} ?> value="activate"><?php _e("Active"); ?></option>
-								<option <?php if($new_user->status == 'deactivate'){echo 'selected="selected"';} ?> value="deactivate"><?php _e("Deactive"); ?></option>
-								<option <?php if($new_user->status == 'ban'){echo 'selected="selected"';} ?> value="ban"><?php _e("Ban"); ?></option>
-								<option <?php if($new_user->status == 'suspend'){echo 'selected="selected"';} ?> value="suspend"><?php _e("Suspend"); ?></option>                           	
-							</select>
+					<div class="col-md-6 mb-1">
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end"><?php _e("Status"); ?>*</label>
+							<div class="col-lg-5">
+								<select name="status" required class="custom-select form-control" id="status" class="required">
+									<option value="0"><?php _e("Select User Status"); ?></option>
+									<option <?php if($new_user->status == 'activate'){echo 'selected="selected"';} ?> value="activate"><?php _e("Active"); ?></option>
+									<option <?php if($new_user->status == 'deactivate'){echo 'selected="selected"';} ?> value="deactivate"><?php _e("Deactive"); ?></option>
+									<option <?php if($new_user->status == 'ban'){echo 'selected="selected"';} ?> value="ban"><?php _e("Ban"); ?></option>
+									<option <?php if($new_user->status == 'suspend'){echo 'selected="selected"';} ?> value="suspend"><?php _e("Suspend"); ?></option>                           	
+								</select>
+							</div>
 						</div>
 					</div>
 					
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end"><?php _e("User Type"); ?>*</label>
-						<div class="col-lg-5">
-							<select name="user_type" class="custom-select form-control" required id="user_type" class="required">
-								<option value=""><?php _e("Select User Type"); ?></option>
-								<option <?php if($new_user->user_type == 'admin'){echo 'selected="selected"';} ?> value="admin"><?php _e("Admin"); ?></option>
-								<?php $new_level->userlevel_options($new_user->user_type); ?>                          	
-							</select>
+					<div class="col-md-6 mb-1">					
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end"><?php _e("User Type"); ?>*</label>
+							<div class="col-lg-5">
+								<select name="user_type" class="custom-select form-control" required id="user_type" class="required">
+									<option value=""><?php _e("Select User Type"); ?></option>
+									<option <?php if($new_user->user_type == 'admin'){echo 'selected="selected"';} ?> value="admin"><?php _e("Admin"); ?></option>
+									<?php $new_level->userlevel_options($new_user->user_type); ?>                          	
+								</select>
+							</div>
 						</div>
 					</div>
 
-					<div class="form-group row d-flex align-items-center mb-5">
-						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end">
-						Referral User
-						</label>
-						<div class="col-lg-5">
-							<select name="referral_id" id="referral-users" class="form-control" style="width:100%">
-							<option></option>
+					<div class="col-md-6 mb-1">
+						<div class="form-group row d-flex align-items-center mb-5">
+							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end">
+							Referral User
+							</label>
+							<div class="col-lg-5">
+								<select name="referral_id" id="referral-users" class="form-control" style="width:100%">
+								<option></option>
 
-							<?php
-							$result = $db->query("SELECT user_id,username FROM users WHERE user_type LIKE '%subscriber%'");
+								<?php
+								$result = $db->query("SELECT user_id,username FROM users WHERE user_type LIKE '%subscriber%'");
 
-							while($u = $result->fetch_assoc()){
+								while($u = $result->fetch_assoc()){
 
-							$selected = ($new_user->referral_id == $u['user_id']) ? "selected" : "";
+								$selected = ($new_user->referral_id == $u['user_id']) ? "selected" : "";
 
-							echo "<option value='{$u['user_id']}' $selected>{$u['username']}</option>";
+								echo "<option value='{$u['user_id']}' $selected>{$u['username']}</option>";
 
-							}
-							?>
+								}
+								?>
 
-							</select>
-						</div>
+								</select>
+							</div>
+						</div>					
 					</div>					
 
 					<?php 
@@ -441,10 +488,11 @@
 					} else { 
 						echo '<input type="hidden" name="add_user" value="1" />';
 					} ?>
-					<div class="text-center">
+					<div class="text-left">
 						<input type="submit" value="<?php if(isset($_POST['edit_user'])){ _e("Update User"); } else { _e("Add User");} ?>" class="btn btn-primary" />
 					</div>
 				</form>
+				</div>
 			</div><!-- widget body /-->
 		</div><!-- widget /-->
 	</div><!-- column /-->

@@ -181,3 +181,17 @@
 		$result = $db->query($query) or die($db->error);
 		echo "User Investments Table created.<br>";
 	}
+	if(if_table_exists("user_investment_details") == FALSE) { 
+		$query = 'CREATE TABLE user_investment_details (
+			`id` bigint(20) NOT NULL  AUTO_INCREMENT,
+			`investment_id` bigint(20) NOT NULL,
+			`cycle` int(11) NOT NULL,
+			`comission` decimal(12,2) NOT NULL,
+			`comission_expiry_date` date NOT NULL,
+			`created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
+			PRIMARY KEY (`id`)
+		) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;';
+		
+		$result = $db->query($query) or die($db->error);
+		echo "User Investment Details Table created.<br>";
+	}

@@ -96,23 +96,30 @@ function add_investment($user_id,$plan_ids,$amount,$issue_date){
 
     foreach ($plan_ids as $key => $plan_id) {    
 
-        $search = $db->query("SELECT * FROM investment_plans WHERE plan_id = $plan_id");
-        $plan   = mysqli_fetch_assoc($search);
-        
-        $db->query("INSERT INTO user_investments 
+        $search             = $db->query("SELECT * FROM investment_plans WHERE plan_id = $plan_id");
+        $plan               = mysqli_fetch_assoc($search);
+        $comission          = ($amount * $plan['commission']) / 100;
+        $investment         = $db->query("INSERT INTO user_investments 
         (user_id,plan_id,amount,issue_date) 
         VALUES ('$user_id','$plan_id','$amount','$issue_date')");
+
+        $investment_id = $db->insert_id;
+
+        for ($i=1; $i <= $plan['total_cycles']; $i++) {     
+            // $comission_expiry_date = date(
+            //     "Y-m-d",
+            //     strtotime("+" . ($i * intval($plan['cycle_days'])) . " days")
+            // );
+            $comission_expiry_date = date(
+            "Y-m-d",
+            strtotime($issue_date . " +" . ($i * intval($plan['cycle_days'])) . " days")
+            );            
+
+            $db->query("INSERT INTO user_investment_details 
+            (investment_id,cycle,comission,comission_expiry_date) 
+            VALUES ('$investment_id','$i','$comission','$comission_expiry_date')");
+        }
             
-        // $firstCommissionDate = date('Y-m-d', strtotime("+{$plan['cycle_days']} days"));
-        $db->query("INSERT INTO notifications 
-            (sender_id, sender_type, receiver_id, receiver_type, message) 
-            VALUES (
-                {$_SESSION['user_id']},
-                'admin',
-                '$user_id',
-                'subscriber',
-                'You have successfully selected your plan'
-            )");
     }
 
     
@@ -131,8 +138,39 @@ function set_investment($investment_id){
     $this->issue_date = $row['issue_date'];
 }
 
+// function update_investment($investment_id,$user_id,$plan_id,$amount,$issue_date){
+//     global $db;
+
+//     if (is_array($plan_id)) {
+//         $plan_id = reset($plan_id);
+//     }
+    
+//     $investment_id = intval($investment_id);
+//     $user_id = intval($user_id);
+//     $plan_id = intval($plan_id);
+//     $amount = floatval($amount);    
+
+//     $db->query("UPDATE user_investments SET
+//         user_id='$user_id',
+//         plan_id='$plan_id',
+//         amount='$amount',
+//         issue_date='$issue_date'
+//         WHERE investment_id='$investment_id'");
+
+//     return "Investment Updated Successfully";
+// }
+
 function update_investment($investment_id,$user_id,$plan_id,$amount,$issue_date){
     global $db;
+
+    if (is_array($plan_id)) {
+        $plan_id = reset($plan_id);
+    }
+
+    $investment_id = intval($investment_id);
+    $user_id = intval($user_id);
+    $plan_id = intval($plan_id);
+    $amount = floatval($amount);
 
     $db->query("UPDATE user_investments SET
         user_id='$user_id',
@@ -141,13 +179,40 @@ function update_investment($investment_id,$user_id,$plan_id,$amount,$issue_date)
         issue_date='$issue_date'
         WHERE investment_id='$investment_id'");
 
+    $db->query("DELETE FROM user_investment_details 
+                WHERE investment_id='$investment_id'");
+
+    $plan_query = $db->query("SELECT * FROM investment_plans 
+                              WHERE plan_id='$plan_id'");
+    $plan = $plan_query->fetch_assoc();
+
+    $commission_amount = ($amount * $plan['commission']) / 100;
+
+    for ($i=1; $i <= $plan['total_cycles']; $i++) {
+
+        $expiry_date = date(
+            "Y-m-d",
+            strtotime($issue_date . " +" . ($i * intval($plan['cycle_days'])) . " days")
+        );
+
+        $db->query("INSERT INTO user_investment_details
+        (investment_id,cycle,comission,comission_expiry_date)
+        VALUES
+        ('$investment_id','$i','$commission_amount','$expiry_date')");
+    }
+
     return "Investment Updated Successfully";
 }
 
 function delete_investment($id){
     global $db;
+
+    $id = intval($id);
+
+    $db->query("DELETE FROM user_investment_details WHERE investment_id='$id'");
     $db->query("DELETE FROM user_investments WHERE investment_id='$id'");
-    return "Investment Deleted";
+
+    return "Investment Deleted";    
 }
 
 function list_investments(){

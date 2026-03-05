@@ -77,6 +77,45 @@
 			}
 		?>
     </head>
+    <style>
+        .content-inner{
+            padding-bottom:120px;
+        }
+        .auth-left-panel{
+            background:#000;
+            height:100vh;
+            display:flex;
+            align-items:center;
+            justify-content:center;
+        }
+
+        .auth-left-inner{
+            max-width:260px;
+            color:#fff;
+        }
+
+        .auth-logo{
+            width:120px;
+            margin-bottom:30px;
+        }
+
+        .auth-title{
+            font-size:32px;
+            font-weight:700;
+            margin-bottom:15px;
+        }
+
+        .auth-desc{
+            font-size:14px;
+            opacity:.85;
+            margin-bottom:25px;
+        }
+
+        .authentication-form-2{
+            max-width:420px;
+            padding:40px;
+        }        
+    </style>
     <body id="page-top" class="bg-white">
         <!-- Begin Preloader -->
         <div id="preloader">

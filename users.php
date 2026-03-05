@@ -89,10 +89,9 @@
                           <th><?php _e("Location"); ?></th>
                           <th><?php _e("Username"); ?></th>
                           <th><?php _e("Email"); ?></th>
-                          <th><?php _e("Referal Ids"); ?></th>
+                          <th><?php _e("Referal"); ?></th>
                           <th><?php _e("Status"); ?></th>
                           <th><?php _e("User Type"); ?></th>
-                          <th><?php _e("Last Seen"); ?></th>
                           <th style="min-width:197px;"><?php _e("Action"); ?></th>
                       </tr>
                     </thead>
