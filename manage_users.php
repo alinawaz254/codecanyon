@@ -464,7 +464,7 @@
 							</label>
 							<div class="col-lg-5">
 							<select name="referral_id" id="referral-users" class="form-control" style="width:100%">
-							    <option value="">Select Referrer (Optional)</option>
+							    <option value="0">Select Referrer (Optional)</option>
 							    <?php
 							    // Get the current user's referral_id if editing
 							    $current_referral_id = isset($new_user->referral_id) ? $new_user->referral_id : '';
