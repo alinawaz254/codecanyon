@@ -83,36 +83,29 @@
             color: #ffffff;
             border: 1px solid #bfa14a;
             font-weight: 600;
-            box-shadow: 0 4px 8px rgba(255, 193, 9, 0.4);
+            box-shadow: 0 4px 8px rgb(209 156 0 / 40%);
             transition: background 0.3s ease;
         }
 
         .btn-golden:hover {
-            background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
+            background: linear-gradient(to right, #916b13 0%, #b48817 50%, #ddba51 100%) !important;
             color: #ffffff;
-            box-shadow: 0 6px 12px rgba(255, 218, 68, 0.7);
+            border: 1px solid #f1bc1c; 
         }
-
-        /* Golden Close button */
-        .btn-golden-close {
+        .btn-golden-admin {
             background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
-            width: auto;
             color: #ffffff;
-            border: none;
-            font-size: 15px;
-            height: 35px;
-            padding: 6px 7px;
-            border-radius: 15%;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(191, 161, 74, 0.5);
+            border: 1px solid #bfa14a;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgb(209 156 0 / 40%);
             transition: background 0.3s ease;
         }
 
-        .btn-golden-close:hover {
-            background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
+        .btn-golden-admin:hover {
+            background: linear-gradient(to right, #916b13 0%, #b48817 50%, #ddba51 100%) !important;
             color: #ffffff;
-            box-shadow: 0 6px 12px rgba(255, 218, 68, 0.7);
-        }  
+            border: 1px solid #f1bc1c; 
+        }
 
         .btn-close-investment {
             background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
@@ -150,6 +143,7 @@
         }
 
         .auth-title{
+            color: #ffff;
             font-size:32px;
             font-weight:700;
             margin-bottom:15px;
@@ -164,7 +158,10 @@
         .authentication-form-2{
             max-width:420px;
             padding:40px;
-        }        
+        }
+        .f-links:hover{
+            color: #c29510;
+        }
     </style>
     <body id="page-top" class="bg-white">
         <!-- Begin Preloader -->

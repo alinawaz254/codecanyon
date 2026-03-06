@@ -91,7 +91,7 @@ $result = $db->query($query);
         font-weight: 600;
     }
 
-    .investment-footer {
+    .referral-footer {
         justify-content: flex-end;
         border-top: 0px;
         padding: 7px 9px 8px 8px !important;
@@ -273,8 +273,8 @@ $result = $db->query($query);
                                         </table>
                                     </div>
 
-                                    <div class="modal-footer">
-                                        <button class="btn btn-golden-close" data-dismiss="modal">
+                                    <div class="modal-footer referral-footer">
+                                        <button class="btn btn-golden btn-md" data-dismiss="modal">
                                             Close
                                         </button>
                                     </div>

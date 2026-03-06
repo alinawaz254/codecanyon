@@ -96,15 +96,15 @@
                         <div class="auth-left-inner text-center">
                             <img src="<?=SITELOGO;?>" class="auth-logo">
 
-                            <h1 class="auth-title">Code Canyon</h1>
+                            <h1 class="auth-title"><?=SITE_NAME;?></h1>
 
                             <p class="auth-desc">
                                 If you are already a member please fill the login form.
                             </p>
 
-                            <a href="<?=SITEURL;?>register.php" class="btn btn-lg btn-gradient-01">
+                            <!-- <a href="<?=SITEURL;?>register.php" class="btn btn-primary btn-lg btn-golden-admin">
                                 Sign Up
-                            </a>
+                            </a> -->
                         </div>
                     </div>                    
                 </div>
@@ -144,7 +144,7 @@
                                     </div>
                                     <div class="sign-btn text-center">
                                         <input type="hidden" value="1" name="login_identity" />
-                                        <input type="submit" class="btn btn-lg btn-gradient-01" value="<?php _e("Login"); ?>" />
+                                        <input type="submit" class="btn btn-primary btn-lg btn-golden-admin" value="<?php _e("Login"); ?>" />
                                     </div>
                                 </form>
 

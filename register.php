@@ -121,13 +121,13 @@
                         <div class="auth-left-inner text-center">
                             <img src="<?=SITELOGO;?>" class="auth-logo">
 
-                            <h1 class="auth-title">Code Canyon</h1>
+                            <h1 class="auth-title"><?=SITE_NAME;?></h1>
 
                             <p class="auth-desc">
                                 If you are already a member please fill the login form.
                             </p>
 
-							<a href="<?=SITEURL;?>login.php" class="btn btn-lg btn-gradient-01">
+							<a href="<?=SITEURL;?>login.php" class="btn btn-primary btn-lg btn-golden-admin">
 							Sign In
 							</a>
                         </div>
@@ -212,7 +212,7 @@
 										<input type="hidden" value="1" name="add_user" />
 										<!--Default register user is subscriber, you can change it to any other level you have created-->
 										<input type="hidden" name="user_type" value="<?php echo get_option('register_user_level'); ?>" />
-										<input type="submit" class="btn btn-lg btn-gradient-01" value="<?php _e("Register"); ?>" />
+										<input type="submit" class="btn btn-primary btn-lg btn-golden-admin" value="<?php _e("Register"); ?>" />
 									</div>
 									<!--user type registration ends here.-->
 								</form>

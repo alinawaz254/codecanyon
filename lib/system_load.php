@@ -35,7 +35,7 @@
 	require_once('includes/update.php');
 
 	$site_logo = get_option("site_logo");
-	$site_logo = (empty($site_logo)) ? "assets/img/logo.png" : $site_logo;
+	$site_logo = (empty($site_logo)) ? "assets/images/logo.png" : $site_logo;
 
 	$site_url = get_option("site_url");
 	$site_url = (empty($site_url)) ? "" : $site_url;

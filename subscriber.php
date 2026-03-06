@@ -53,7 +53,7 @@ $total_commission = $row['total_commission'] ?? 0;
 <!-- My Investments -->
 
 <div class="col-xl-4 col-md-6 col-sm-6">
-<a href="frontinvestments.php" style="text-decoration:none">
+<a href="frontinvestments.php" class="f-links" style="text-decoration:none">
 <div class="widget widget-12 has-shadow">
 <div class="widget-body">
 <div class="media">
@@ -76,7 +76,7 @@ $total_commission = $row['total_commission'] ?? 0;
 <!-- My Referrals -->
 
 <div class="col-xl-4 col-md-6 col-sm-6">
-<a href="frontreferrals.php" style="text-decoration:none">
+<a href="frontreferrals.php" class="f-links" style="text-decoration:none">
 <div class="widget widget-12 has-shadow">
 <div class="widget-body">
 <div class="media">
@@ -99,7 +99,7 @@ $total_commission = $row['total_commission'] ?? 0;
 <!-- My Notes -->
 
 <div class="col-xl-4 col-md-6 col-sm-6">
-<a href="notes.php" style="text-decoration:none">
+<a href="notes.php" style="text-decoration:none" class="f-links">
 <div class="widget widget-12 has-shadow">
 <div class="widget-body">
 <div class="media">

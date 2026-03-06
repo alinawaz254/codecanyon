@@ -286,7 +286,7 @@ $today = date("Y-m-d");
                                     </div>
 
                                     <div class="modal-footer investment-footer">
-                                        <button class="btn btn-golden-close"
+                                        <button class="btn btn-golden btn-md"
                                             data-dismiss="modal">
                                             Close
                                         </button>
