@@ -60,21 +60,6 @@ $result = $db->query($query);
         align-items: center;
     }
 
-    .btn-close-investment {
-        background: #ff4d4d;
-        border: none;
-        color: #fff;
-        font-size: 20px;
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        cursor: pointer;
-    }
-
-    .btn-close-investment:hover {
-        background: #ff0000;
-    }
-
     .investment-info {
         display: flex;
         justify-content: space-between;
@@ -185,7 +170,7 @@ $is_expired = ($today > $expiry_row['last_date']);
 
 <td>
 
-<button class="btn btn-primary btn-sm"
+<button class="btn btn-primary btn-sm btn-golden"
 data-toggle="modal"
 data-target="#referralModal_<?php echo $row['investment_id']; ?>_<?php echo $row['referred_user_id']; ?>">
 View Details </button>
@@ -323,7 +308,7 @@ $is_detail_expired = (strtotime($today) > strtotime($cycle_date));
 
 <div class="modal-footer">
 
-<button class="btn btn-danger"
+<button class="btn btn-golden-close"
 data-dismiss="modal">
 Close </button>
 

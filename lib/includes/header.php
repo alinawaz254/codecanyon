@@ -96,10 +96,10 @@
         /* Golden Close button */
         .btn-golden-close {
             background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
+            width: auto;
             color: #ffffff;
             border: none;
-            font-size: 20px;
-            width: 35px;
+            font-size: 15px;
             height: 35px;
             border-radius: 50%;
             cursor: pointer;
@@ -111,7 +111,22 @@
             background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
             color: #ffffff;
             box-shadow: 0 6px 12px rgba(255, 218, 68, 0.7);
-        }    
+        }  
+        
+        .btn-close-investment {
+            background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
+            border: none;
+            color: #fff;
+            font-size: 20px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .btn-close-investment:hover {
+            background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
+        }  
         .content-inner{
             padding-bottom:120px;
         }
