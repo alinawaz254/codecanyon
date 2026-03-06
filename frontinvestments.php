@@ -230,7 +230,15 @@ $today = date("Y-m-d");
                                                 if ($has_details) {
                                                     // Loop through actual details from database
                                                     while ($detail = $details_result->fetch_assoc()) {
-                                                        $is_detail_expired = (strtotime($today) > strtotime($detail['comission_expiry_date']));                                                        
+                                                        $is_detail_expired = (strtotime($today) > strtotime($detail['comission_expiry_date']));  
+
+                                                        // Define the two dates
+                                                        $date1 = new DateTime(date('Y-m-d'));
+                                                        $date2 = new DateTime($detail['comission_expiry_date']);
+
+                                                        // Calculate the difference
+                                                        $interval = $date1->diff($date2);
+
                                                         ?>
                                                         <tr <?php if ($is_detail_expired) echo 'style="opacity:0.5"'; ?>>
                                                             <td class="info-value"><?php echo $detail['cycle']; ?></td>
@@ -238,9 +246,9 @@ $today = date("Y-m-d");
                                                             <td class="info-value"><?php echo number_format($detail['comission'], 2); ?></td>
                                                             <td class="info-value">
                                                                 <?php if ($is_detail_expired): ?>
-                                                                    <span class="badge badge-success">✅Taken</span>
+                                                                    <span class="badge badge-success">Paid</span>
                                                                 <?php else: ?>
-                                                                    <span class="badge badge-success">Active</span>
+                                                                    <span class="badge badge-danger">Unpaid <?php echo '('.$interval->days .' days left to claim)'; ?></span>
                                                                 <?php endif; ?>
                                                             </td>
                                                         </tr>
