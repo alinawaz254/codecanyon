@@ -702,7 +702,7 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 					description = "'.$description.'",
 					status = "'.$status.'",
 					user_type = "'.$user_type.'",
-					referral_id = "'.$referral_id.'"
+					referral_id = "'.$referral_id ?? null.'"
 			WHERE user_id="'.$user_id.'"';
 			} else { 
 			
@@ -735,7 +735,7 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 					description = "'.$description.'",
 					status = "'.$status.'",
 					user_type = "'.$user_type.'",
-					referral_id = "'.$referral_id.'"
+					referral_id = "'.$referral_id ?? null.'"
 			WHERE user_id="'.$user_id.'"';
 			}
 			$result = $db->query($query) or die($db->error);
