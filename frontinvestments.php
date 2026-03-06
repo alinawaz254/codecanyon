@@ -60,22 +60,6 @@ $today = date("Y-m-d");
         justify-content: space-between;
         align-items: center;
     }
-
-    .btn-close-investment {
-        background: #ff4d4d;
-        border: none;
-        color: #fff;
-        font-size: 20px;
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        cursor: pointer;
-    }
-
-    .btn-close-investment:hover {
-        background: #ff0000;
-    }
-
     .investment-info {
         display: flex;
         justify-content: space-between;
@@ -294,7 +278,7 @@ $today = date("Y-m-d");
                                     </div>
 
                                     <div class="modal-footer investment-footer">
-                                        <button class="btn btn-danger"
+                                        <button class="btn btn-golden-close"
                                             data-dismiss="modal">
                                             Close
                                         </button>

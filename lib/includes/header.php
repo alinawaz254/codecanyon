@@ -101,7 +101,8 @@
             border: none;
             font-size: 15px;
             height: 35px;
-            border-radius: 50%;
+            padding: 6px 7px;
+            border-radius: 15%;
             cursor: pointer;
             box-shadow: 0 4px 8px rgba(191, 161, 74, 0.5);
             transition: background 0.3s ease;
@@ -112,7 +113,7 @@
             color: #ffffff;
             box-shadow: 0 6px 12px rgba(255, 218, 68, 0.7);
         }  
-        
+
         .btn-close-investment {
             background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
             border: none;
