@@ -5,7 +5,7 @@
 	//user Authentication.
 	authenticate_user('admin');
 	
-	$first_name = $last_name = $gender = $date_of_birth = $address1 = $address2 = $city = $state = $country = $zip_code = $mobile = $phone = $username = $email = $password = $profile_image = $description = $status = $user_type = '';
+	$first_name = $last_name = $gender = $date_of_birth = $address1 = $address2 = $city = $state = $country = $zip_code = $mobile = $phone = $username = $email = $password = $profile_image = $description = $status = $user_type = $referral_id = '';
 
 	$datepicker = 1;
 	$croppic 	= 1;
@@ -15,7 +15,9 @@
 	}
 
 	//User update submission image processing edit user password setting if not changed.
-	if(isset($_POST['edit_user']) && $_POST['edit_user'] != '') { 
+	if(isset($_POST['edit_user']) && $_POST['edit_user'] != '') {
+
+
 		if(isset($pr_img)) { 
 			$pr_img = $pr_img;
 		} else { 
@@ -39,7 +41,7 @@
 			if($password != $confirm_password){ 
 				$message = _("Password do not match");
 			} else {
-				$message = $new_user->update_user( $_POST['edit_user'], $_SESSION['user_type'], $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password_set, $pr_img, $description, $status, $user_type);
+				$message = $new_user->update_user( $_POST['edit_user'], $_SESSION['user_type'], $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password_set, $pr_img, $description, $status, $user_type,$referral_id);
 				$user_id = $_POST['edit_user'];
 			}
 		}
@@ -458,25 +460,35 @@
 					<div class="col-md-6 mb-1">
 						<div class="form-group row d-flex align-items-center mb-5">
 							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end">
-							Referral User
+							Referred By
 							</label>
 							<div class="col-lg-5">
-								<select name="referral_id" id="referral-users" class="form-control" style="width:100%">
-								<option></option>
-
-								<?php
-								$result = $db->query("SELECT user_id,username FROM users WHERE user_type LIKE '%subscriber%'");
-
-								while($u = $result->fetch_assoc()){
-
-								$selected = ($new_user->referral_id == $u['user_id']) ? "selected" : "";
-
-								echo "<option value='{$u['user_id']}' $selected>{$u['username']}</option>";
-
-								}
-								?>
-
-								</select>
+							<select name="referral_id" id="referral-users" class="form-control" style="width:100%">
+							    <option value="">Select Referrer (Optional)</option>
+							    <?php
+							    // Get the current user's referral_id if editing
+							    $current_referral_id = isset($new_user->referral_id) ? $new_user->referral_id : '';
+							    
+							    $result = $db->query("SELECT user_id, username FROM users ORDER BY username ASC");
+							    
+							    if ($result && $result->num_rows > 0) {
+							        while($u = $result->fetch_assoc()){
+							            // Check if this option should be selected
+							            $selected = ($current_referral_id == $u['user_id']) ? 'selected="selected"' : '';
+							            
+							            // Don't allow user to refer themselves
+							            if (isset($_POST['edit_user']) && $_POST['edit_user'] == $u['user_id']) {
+							                continue; // Skip this option
+							            }
+							            
+							            echo "<option value='" . htmlspecialchars($u['user_id']) . "' $selected>" . 
+							                 htmlspecialchars($u['username']) . "</option>";
+							        }
+							    } else {
+							        echo "<option value=''>No subscribers found</option>";
+							    }
+							    ?>
+							</select>
 							</div>
 						</div>					
 					</div>					

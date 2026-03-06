@@ -52,14 +52,14 @@
             </ul>
             </li>            
         </ul>
-        <hr>
-        <span class="heading"><?php _e("Other Pages"); ?></span>
+        <!-- <hr> -->
+<!--         <span class="heading"><?php _e("Other Pages"); ?></span>
         <ul class="list-unstyled">
             <li><a href="website_labels.php"><i class="la la-share-alt"></i><span><?php _e("Update Language"); ?></span></a></li>
             <li><a href="all.php"><i class="la la-at"></i><span><?php _e("For All Logged In User"); ?></span></a></li>
             <li><a href="subscriber.php"><i class="la la-user"></i><span><?php _e("For Subscriber User Level"); ?></span></a></li>
             <li><a href="admin.php"><i class="la la-user"></i><span><?php _e("For Admin User Level"); ?></span></a></li>
-        </ul>
+        </ul> -->
         <!-- End Main Navigation -->
     </nav>
     <!-- End Side Navbar -->
@@ -90,13 +90,13 @@
             <li><a href="frontreferrals.php"><i class="la la-list"></i><span><?php _e("My Referrals"); ?></span></a></li>
             <li><a href="frontrewards.php"><i class="la la-gift"></i><span><?php _e("Rewards"); ?></span></a></li>
         </ul>
-        <hr>
+<!--         <hr>
         <span class="heading"><?php _e("Other Pages"); ?></span>
         <ul class="list-unstyled">
             <li><a href="all.php"><i class="la la-at"></i><span><?php _e("For All Logged In Users"); ?></span></a></li>
             <li><a href="subscriber.php"><i class="la la-user"></i><span><?php _e("For Subscriber User Level"); ?></span></a></li>
             <li><a href="admin.php"><i class="la la-user"></i><span><?php _e("For Admin User Level"); ?></span></a></li>
-        </ul>
+        </ul> -->
         <!-- End Main Navigation -->
     </nav>
     <!-- End Side Navbar -->

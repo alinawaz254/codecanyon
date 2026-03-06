@@ -20,6 +20,7 @@ class Users {
 	public $description;
 	public $status;
 	public $user_type;
+	public $referral_id;
 
 	function update_user_row( $user_id, $term, $value ) { 
 		global $db;
@@ -399,11 +400,9 @@ function list_users($user_type) {
 			
 			while($row = $result->fetch_array()) { 
 				extract($row);
-				$referals    = $db->query("SELECT username FROM users WHERE referral_id = $user_id");		
-				$referal_ids = [];	
-				while ($row = $referals->fetch_assoc()) {
-				    $referal_ids[] = $row['username'];
-				}
+				$referral_id = intval($row['referral_id']);
+ 				$referal = $db->query("SELECT username FROM users WHERE user_id = " . $referral_id . " LIMIT 1");				
+ 				$ref_row = $referal ? $referal->fetch_assoc() : null;
 
 				$count++;
 				if($count%2 == 0) { 
@@ -427,7 +426,7 @@ function list_users($user_type) {
 				$content .= '</td><td>';
 				$content .= $email;
 				$content .= '</td><td>';				
-				$content .= isset($referal_ids) && !empty($referal_ids) ? implode(',', $referal_ids) : 'N\A';
+				$content .= isset($ref_row) && !empty($ref_row) ? $ref_row['username'] : 'N\A';
 				$content .= '</td><td>';
 				$content .= ucfirst($status);
 				$content .= '</td><td>';
@@ -622,30 +621,31 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 		$result = $db->query($query) or die($db->error);
 		$row = $result->fetch_array();
 		//results ends here.
-		$this->user_id 			= $row['user_id'];
-		$this->first_name 		= $row['first_name'];
-		$this->last_name 		= $row['last_name'];
-		$this->gender 			= $row['gender'];
-		$this->date_of_birth 	= $row['date_of_birth'];
-		$this->address1 		= $row['address1'];
-		$this->address2 		= $row['address2'];
-		$this->city 			= $row['city'];
-		$this->state 			= $row['state'];
-		$this->country 			= $row['country'];
-		$this->zip_code 		= $row['zip_code'];
-		$this->mobile 			= $row['mobile'];
-		$this->phone 			= $row['phone'];
-		$this->username 		= $row['username'];
-		$this->email 			= $row['email'];
-		$this->profile_image 	= $row['profile_image'];
-		$this->description 		= $row['description'];
-		$this->status 			= $row['status'];
-		$this->user_type 		= $row['user_type'];
+		$this->user_id       = $row['user_id'];
+		$this->first_name    = $row['first_name'];
+		$this->last_name     = $row['last_name'];
+		$this->gender        = $row['gender'];
+		$this->date_of_birth = $row['date_of_birth'];
+		$this->address1      = $row['address1'];
+		$this->address2      = $row['address2'];
+		$this->city          = $row['city'];
+		$this->state         = $row['state'];
+		$this->country       = $row['country'];
+		$this->zip_code      = $row['zip_code'];
+		$this->mobile        = $row['mobile'];
+		$this->phone         = $row['phone'];
+		$this->username      = $row['username'];
+		$this->email         = $row['email'];
+		$this->profile_image = $row['profile_image'];
+		$this->description   = $row['description'];
+		$this->status        = $row['status'];
+		$this->user_type     = $row['user_type'];
+		$this->referral_id   = $row['referral_id'];
 	}//level set ends here.
 
-	function update_user($user_id, $user_type_ses, $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type) {
+	function update_user($user_id, $user_type_ses, $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type,$referral_id) {
 		global $db;
-		
+
 		$current_email 		= $this->get_user_info($user_id, 'email');
 		$current_username 	= $this->get_user_info($user_id, 'username');
 		
@@ -677,10 +677,12 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 				exit();
 			}
 		}
+
 		$date_of_birth = (!empty($date_of_birth)) ? date('Y-m-d', strtotime(str_replace('-', '/', $date_of_birth))) : "000-00-00";
 		//updating user info.
 		if($user_type_ses == 'admin') { 
 			if($password == '') {
+
 			$query = 'UPDATE users SET
    	    			first_name = "'.$first_name.'",
 					last_name = "'.$last_name.'",
@@ -699,7 +701,8 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 					profile_image = "'.$profile_image.'",
 					description = "'.$description.'",
 					status = "'.$status.'",
-					user_type = "'.$user_type.'"
+					user_type = "'.$user_type.'",
+					referral_id = "'.$referral_id.'"
 			WHERE user_id="'.$user_id.'"';
 			} else { 
 			
@@ -731,7 +734,8 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 					profile_image = "'.$profile_image.'",
 					description = "'.$description.'",
 					status = "'.$status.'",
-					user_type = "'.$user_type.'"
+					user_type = "'.$user_type.'",
+					referral_id = "'.$referral_id.'"
 			WHERE user_id="'.$user_id.'"';
 			}
 			$result = $db->query($query) or die($db->error);
