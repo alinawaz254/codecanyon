@@ -78,6 +78,40 @@
 		?>
     </head>
     <style>
+        .btn-golden {
+            background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
+            color: #ffffff;
+            border: 1px solid #bfa14a;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(255, 193, 9, 0.4);
+            transition: background 0.3s ease;
+        }
+
+        .btn-golden:hover {
+            background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
+            color: #ffffff;
+            box-shadow: 0 6px 12px rgba(255, 218, 68, 0.7);
+        }
+
+        /* Golden Close button */
+        .btn-golden-close {
+            background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
+            color: #ffffff;
+            border: none;
+            font-size: 20px;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(191, 161, 74, 0.5);
+            transition: background 0.3s ease;
+        }
+
+        .btn-golden-close:hover {
+            background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
+            color: #ffffff;
+            box-shadow: 0 6px 12px rgba(255, 218, 68, 0.7);
+        }    
         .content-inner{
             padding-bottom:120px;
         }

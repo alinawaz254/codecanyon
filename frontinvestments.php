@@ -116,41 +116,6 @@ $today = date("Y-m-d");
         color: white;
     }
 
-    /* Golden View button */
-    .btn-golden {
-        background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
-        color: #ffffff;
-        border: 1px solid #bfa14a;
-        font-weight: 600;
-        box-shadow: 0 4px 8px rgba(255, 193, 9, 0.4);
-        transition: background 0.3s ease;
-    }
-
-    .btn-golden:hover {
-        background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
-        color: #ffffff;
-        box-shadow: 0 6px 12px rgba(255, 218, 68, 0.7);
-    }
-
-    /* Golden Close button */
-    .btn-close-golden {
-        background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
-        color: #ffffff;
-        border: none;
-        font-size: 20px;
-        width: 35px;
-        height: 35px;
-        border-radius: 50%;
-        cursor: pointer;
-        box-shadow: 0 4px 8px rgba(191, 161, 74, 0.5);
-        transition: background 0.3s ease;
-    }
-
-    .btn-close-golden:hover {
-        background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
-        color: #ffffff;
-        box-shadow: 0 6px 12px rgba(255, 218, 68, 0.7);
-    }    
 </style>
 
 <div class="mywidget wc_data">
@@ -240,7 +205,7 @@ $today = date("Y-m-d");
                                         </h5>
 
                                         <button type="button"
-                                            class="btn-close-golden"
+                                            class="btn-close-investment"
                                             data-dismiss="modal">
                                             &times;
                                         </button>
