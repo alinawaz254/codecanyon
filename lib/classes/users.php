@@ -441,7 +441,7 @@ function list_users($user_type) {
 				$content .= '</td><td>';				
 				$content .= isset($ref_row) && !empty($ref_row) ? $ref_row['username'] : 'N\A';
 				$content .= '</td><td>';
-				$content .= ucfirst($status);
+				$content .= $status ? ucfirst($status) : null;
 				$content .= '</td><td>';
 				$content .= ucfirst($user_type);
 				$content .= '</td><td>';

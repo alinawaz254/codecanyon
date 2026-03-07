@@ -78,6 +78,30 @@
 		?>
     </head>
     <style>
+        .side-navbar{
+        background: #000;
+        }
+        .default-sidebar{
+            background: #000;
+        }
+        .default-sidebar>.side-navbar a[aria-expanded="true"] i:hover{
+            color: red !important;
+        }        .default-sidebar>.side-navbar a[aria-expanded="true"] i{
+            color: red !important;
+        }
+        .default-sidebar>.side-navbar ul ul{
+            background-color : #000 !important;
+        }
+        .page-header-title, .alert-secondary-bordered ,th,h2,h3,.btn-shadow, .btn-shadow a,.title{
+            color:#000 !important;
+        }
+        .alert-secondary-bordered{
+            border: 1px solid #eee;
+            box-shadow: 7px 0 0 0 #000 inset;
+        }
+        .dash-lower{
+            background-color : #000 !important;
+        }
         .btn-golden {
             background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
             color: #ffffff;
