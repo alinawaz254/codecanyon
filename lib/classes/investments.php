@@ -106,10 +106,7 @@ function add_investment($user_id,$plan_ids,$amount,$issue_date){
         $investment_id = $db->insert_id;
 
         for ($i=1; $i <= $plan['total_cycles']; $i++) {     
-            // $comission_expiry_date = date(
-            //     "Y-m-d",
-            //     strtotime("+" . ($i * intval($plan['cycle_days'])) . " days")
-            // );
+
             $comission_expiry_date = date(
             "Y-m-d",
             strtotime($issue_date . " +" . ($i * intval($plan['cycle_days'])) . " days")

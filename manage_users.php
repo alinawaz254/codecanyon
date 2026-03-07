@@ -466,7 +466,6 @@
 							<select name="referral_id" id="referral-users" class="form-control" style="width:100%">
 							    <option value="0">Select Referrer (Optional)</option>
 							    <?php
-							    // Get the current user's referral_id if editing
 							    $current_referral_id = isset($new_user->referral_id) ? $new_user->referral_id : '';
 							    
 							    $result = $db->query("SELECT user_id, username FROM users ORDER BY username ASC");
@@ -476,9 +475,8 @@
 							            // Check if this option should be selected
 							            $selected = ($current_referral_id == $u['user_id']) ? 'selected="selected"' : '';
 							            
-							            // Don't allow user to refer themselves
 							            if (isset($_POST['edit_user']) && $_POST['edit_user'] == $u['user_id']) {
-							                continue; // Skip this option
+							                continue; 
 							            }
 							            
 							            echo "<option value='" . htmlspecialchars($u['user_id']) . "' $selected>" . 

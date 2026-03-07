@@ -6,7 +6,7 @@
 		HEADER('LOCATION: dashboard.php');
 	} //If user is loged in redirect to specific page.
 	
-	$first_name = $last_name = $gender = $date_of_birth = $address1 = $address2 = $city = $state = $country = $zip_code = $mobile = $phone = $username = $email = $password = $profile_image = $description = $status = $user_type = '';
+	$first_name = $last_name = $gender = $date_of_birth = $address1 = $address2 = $city = $state = $country = $zip_code = $mobile = $phone = $username = $email = $password = $profile_image = $description = $status = $user_type = $referral_id = '';
 
 	if ( isset( $_POST['add_user'] ) ) {
 		$add_user = $_POST['add_user'];
@@ -68,7 +68,7 @@
 				if(get_option('disable_registration') == '1') { 
 					$message = _("Registration is disabled please contact site admin.");
 				} else {
-					$user_id = $new_user->register_user( $first_name, $last_name, $user_type, $username, $email, $password );
+					$user_id = $new_user->register_user( $first_name, $last_name, $user_type, $username, $email, $password,$referral_id );
 					$message = _("Registration successful please check your mailbox for email activation.");
 
 					//Update fields. 
@@ -195,6 +195,31 @@
 											async defer>
 										</script>
 									<?php } ?>
+
+									<select name="referral_id" id="referral-users" class="form-control" style="width:100%;margin-bottom: 20px;">
+									    <option value="0">Select Referrer (Optional)</option>
+									    <?php
+									    $current_referral_id = isset($new_user->referral_id) ? $new_user->referral_id : '';
+									    
+									    $result = $db->query("SELECT user_id, username FROM users ORDER BY username ASC");
+									    
+									    if ($result && $result->num_rows > 0) {
+									        while($u = $result->fetch_assoc()){
+									            // Check if this option should be selected
+									            $selected = ($current_referral_id == $u['user_id']) ? 'selected="selected"' : '';
+									            
+									            if (isset($_POST['edit_user']) && $_POST['edit_user'] == $u['user_id']) {
+									                continue; 
+									            }
+									            
+									            echo "<option value='" . htmlspecialchars($u['user_id']) . "' $selected>" . 
+									                 htmlspecialchars($u['username']) . "</option>";
+									        }
+									    } else {
+									        echo "<option value=''>No subscribers found</option>";
+									    }
+									    ?>
+									</select>
 
 									<div class="row">
 										<div class="col text-left">

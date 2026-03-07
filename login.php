@@ -102,9 +102,9 @@
                                 If you are already a member please fill the login form.
                             </p>
 
-                            <!-- <a href="<?=SITEURL;?>register.php" class="btn btn-primary btn-lg btn-golden-admin">
+                             <a href="<?=SITEURL;?>register.php" class="btn btn-primary btn-lg btn-golden-admin">
                                 Sign Up
-                            </a> -->
+                            </a> 
                         </div>
                     </div>                    
                 </div>

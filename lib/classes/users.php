@@ -112,8 +112,21 @@ class Users {
 		return isset($row[$term]) ? $row[$term] : "";
 	}//get user email ends here.
 	
-	function register_user( $first_name, $last_name, $user_type, $username, $email, $password ){
+	function register_user( $first_name, $last_name, $user_type, $username, $email, $password,$referral_id ){
 		global $db;
+
+		if($referral_id == 0){
+				$search = $db->query("SELECT user_id FROM users WHERE username LIKE '%BIZ0000%'");
+				$result = $search ? $search->fetch_assoc() : null;
+
+				if($result == null){
+					$db->query("INSERT INTO `users`( `first_name`, `last_name`, `gender`, `date_of_birth`, `address1`, `address2`, `city`, `state`, `country`, `zip_code`, `mobile`, `phone`, `username`, `email`, `password`, `profile_image`, `description`, `status`, `activation_key`, `date_register`, `user_type`, `referral_id`) VALUES (null,null,null,null,null,null,null,null,null,null,null,null,'BIZ0000',null,null,null,null,null,null,null,'subscriber',null)");
+					$referral_id = $db->insert_id;
+				}else{
+						$referral_id = $result['user_id'];
+				}
+		}
+
 		//Check if user already exist
 		$query = "SELECT * from users WHERE email='".$email."'";
 		$result = $db->query($query);
@@ -155,7 +168,7 @@ class Users {
 
 		$user_type = get_option('register_user_level');
 		//adding user into database
-		$query = "INSERT INTO users(first_name,last_name,username,email,password,activation_key,date_register,user_type,status) VALUES ('$first_name', '$last_name', '$username', '$email', '$password', '$activation_key', '$registration_date', '$user_type', '$status')";
+		$query = "INSERT INTO users(first_name,last_name,username,email,password,activation_key,date_register,user_type,status,referral_id) VALUES ('$first_name', '$last_name', '$username', '$email', '$password', '$activation_key', '$registration_date', '$user_type', '$status','$referral_id')";
 		$result = $db->query($query) or die($db->error);
 		$user_id = $db->insert_id;
 		//Email to user
@@ -646,6 +659,18 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 	function update_user($user_id, $user_type_ses, $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type,$referral_id) {
 		global $db;
 
+		if($referral_id == 0){
+				$search = $db->query("SELECT user_id FROM users WHERE username LIKE '%BIZ0000%'");
+				$result = $search ? $search->fetch_assoc() : null;
+
+				if($result == null){
+					$db->query("INSERT INTO `users`( `first_name`, `last_name`, `gender`, `date_of_birth`, `address1`, `address2`, `city`, `state`, `country`, `zip_code`, `mobile`, `phone`, `username`, `email`, `password`, `profile_image`, `description`, `status`, `activation_key`, `date_register`, `user_type`, `referral_id`) VALUES (null,null,null,null,null,null,null,null,null,null,null,null,'BIZ0000',null,null,null,null,null,null,null,'subscriber',null)");
+					$referral_id = $db->insert_id;
+				}else{
+						$referral_id = $result['user_id'];
+				}
+		}
+		
 		$current_email 		= $this->get_user_info($user_id, 'email');
 		$current_username 	= $this->get_user_info($user_id, 'username');
 		
@@ -828,6 +853,18 @@ function match_confirm_code($confirmation_code,$user_id){
 
 	function add_user($first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type,$referral_id) { 
 			global $db;
+
+			if($referral_id == 0){
+				$search = $db->query("SELECT user_id FROM users WHERE username LIKE '%BIZ0000%'");
+				$result = $search ? $search->fetch_assoc() : null;
+
+				if($result == null){
+					$db->query("INSERT INTO `users`( `first_name`, `last_name`, `gender`, `date_of_birth`, `address1`, `address2`, `city`, `state`, `country`, `zip_code`, `mobile`, `phone`, `username`, `email`, `password`, `profile_image`, `description`, `status`, `activation_key`, `date_register`, `user_type`, `referral_id`) VALUES (null,null,null,null,null,null,null,null,null,null,null,null,'BIZ0000',null,null,null,null,null,null,null,'subscriber',null)");
+					$referral_id = $db->insert_id;
+				}else{
+						$referral_id = $result['user_id'];
+				}
+			}
 		
 			$address1 		= $db->real_escape_string($address1);
 			$address2 		= $db->real_escape_string($address2);
