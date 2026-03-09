@@ -3,6 +3,13 @@ if(!defined('ROOT_DIR')) {
 	exit();
 } ?>
 
+<style>
+	@media (max-width: 768px) {
+    .main-footer{
+        display: none;
+    }
+}
+</style>
 <footer class="main-footer sticky footer-type-1">
 	<div class="row">
 		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 d-flex align-items-center justify-content-xl-start justify-content-lg-start justify-content-md-start justify-content-center">

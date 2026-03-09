@@ -99,6 +99,26 @@ $today = date("Y-m-d");
     .modal-title {
         color: white;
     }
+    /* Mobile Modal Fix */
+    @media (max-width:768px){
+
+    .modal-dialog{
+        margin:10px;
+        max-width:95%;
+    }
+
+    .modal-content{
+        max-height:90vh;
+        display:flex;
+        flex-direction:column;
+    }
+
+    .modal-body{
+        overflow-y:auto;
+        overflow-x:auto;
+    }
+
+    }    
 
 </style>
 
@@ -108,7 +128,7 @@ $today = date("Y-m-d");
             <h4>My Investments</h4>
         </div>
 
-        <div class="widget-body">
+        <div class="widget-body table-responsive">
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>

@@ -12,7 +12,7 @@ require_once("lib/includes/header.php");
 
 <div class="text-right">
     <p>
-        <a href="manage_investment_plan.php" class="btn btn-primary">
+        <a href="manage_investment_plan.php" class="btn btn-primary btn-md btn-golden">
             <?php _e("Add Package"); ?>
         </a>
     </p>

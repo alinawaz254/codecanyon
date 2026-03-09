@@ -94,7 +94,7 @@
 						echo '<input type="hidden" name="add_announcement" value="1" />';
 					} ?>
 					<div class="text-center">
-						<input type="submit" value="<?php if(isset($_POST['edit_announcement'])){ _e("Update Announcement"); } else { _e("Add Announcement"); } ?>" class="btn btn-primary" />
+						<input type="submit" value="<?php if(isset($_POST['edit_announcement'])){ _e("Update Announcement"); } else { _e("Add Announcement"); } ?>" class="btn btn-primary btn-md btn-golden" />
 					</div>
 
 				</form>

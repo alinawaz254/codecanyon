@@ -16,7 +16,7 @@
 	<div class="text-right">
 		<p>
 			<?php if(!isset($_GET["update_data"])): ?>
-			<a class="btn btn-primary btn-default" tabindex="-1" data-toggle="modal" data-target=".manage-notes">
+			<a class="btn btn-primary btn-md btn-golden" tabindex="-1" data-toggle="modal" data-target=".manage-notes">
 				<?php 
 					_e("Add Note");
 				?>

@@ -119,12 +119,12 @@
 	</div>
 	<!-- End Row -->
 
-	<div class="row flex-row"> 
+	<!-- <div class="row flex-row"> 
 		<div class="col-lg-12 mt-4 mb-4">
 			<h2><?php _e("User Levels"); ?></h2>
 		</div>
 		<?php $new_level->get_level_info(); ?>
-	</div>    
+	</div>     -->
     <!--============================= Chat Section area Starts Here =====================================-->
     
 	<div class="row flex-row mt-4">

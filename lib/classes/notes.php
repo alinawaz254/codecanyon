@@ -177,7 +177,7 @@ class Notes {
 			$content .= '<div class="widget-options">';
 			$content .= '<ul class="pager wizard text-right">
 							<li class="previous d-inline-block disabled">
-								<a href="?update_data=1&note_id='.$note_id.'" class="btn btn-primary ripple">'._("Edit Note").'</a>
+								<a href="?update_data=1&note_id='.$note_id.'" class="btn btn-primary btn-md btn-golden">'._("Edit Note").'</a>
 							</li>
 							<li class="next d-inline-block">';
 			$content .= '<form method="post" name="delete" onsubmit="return confirm_delete();" action="">';

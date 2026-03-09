@@ -38,60 +38,82 @@ require_once("lib/includes/header.php");
 }
 </style>
 
-<form method="post">
-<label for="user_id"> Select User *</label>
-<select name="user_id" id="investment-users"  class="form-control "style="width:100%" required>
-<option></option>
-<?php
-$result = $db->query("SELECT user_id,username FROM users WHERE user_type LIKE '%subscriber%'");
-while($u = $result->fetch_assoc()){
-$selected = ($investment_obj->user_id == $u['user_id']) ? "selected" : "";
-echo "<option value='{$u['user_id']}' $selected>{$u['username']}</option>";
-}
-?>
-</select><br>
-<label for="multiple-select-plans"> Select Plan *</label>
-<select name="plan_id[]" id="multiple-select-plans" multiple class="form-control" required>
-<option value="">Select Plan</option>
-<?php
-$result = $db->query("SELECT plan_id,plan_name FROM investment_plans");
-while($p = $result->fetch_assoc()){
-$selected = ($investment_obj->plan_id == $p['plan_id']) ? "selected" : "";
-echo "<option value='{$p['plan_id']}' $selected>{$p['plan_name']}</option>";
-}
-?>
-</select><br>
+<div class="row">
+    <div class="col-xl-8 col-lg-8 col-md-10 col-12">
 
-<label for="amount"> Set Amount *</label>
-<input 
-type="number" 
-step="0.01" 
-id="amount"
-name="amount"
-value="<?php echo $investment_obj->amount; ?>" 
-class="form-control" 
-placeholder="Enter Investment Amount" 
-required><br>
+        <form method="post" class="mb-5">
 
-<label for="issue_date">Set Starting Date *</label>
-<input 
-type="date" 
-id="issue_date"
-name="issue_date"
-value="<?php echo $investment_obj->issue_date; ?>" 
-class="form-control" 
-required><br>
+        <div class="row">
+            <div class="col-12 mb-3">
+                <label for="user_id"> Select User *</label>
+                <select name="user_id" id="investment-users"  class="form-control "style="width:100%" required>
+                <option></option>
+                <?php
+                $result = $db->query("SELECT user_id,username FROM users WHERE user_type LIKE '%subscriber%'");
+                while($u = $result->fetch_assoc()){
+                $selected = ($investment_obj->user_id == $u['user_id']) ? "selected" : "";
+                echo "<option value='{$u['user_id']}' $selected>{$u['username']}</option>";
+                }
+                ?>
+                </select>
+            </div>
 
-<?php if(isset($_POST['edit_investment'])): ?>
-<input type="hidden" name="edit_investment" value="<?=$_POST['edit_investment'];?>">
-<input type="hidden" name="update_investment" value="1">
-<input type="submit" class="btn btn-primary" value="Update Investment">
-<?php else: ?>
-<input type="hidden" name="add_investment" value="1">
-<input type="submit" class="btn btn-primary" value="Add Investment">
-<a href="investments.php" class="btn btn-secondary">View Investments</a>
-<?php endif; ?>
+            <div class="col-12 mb-3">
+                <label for="multiple-select-plans"> Select Plan *</label>
+                <select name="plan_id[]" id="multiple-select-plans" multiple class="form-control" required>
+                <option value="">Select Plan</option>
+                <?php
+                $result = $db->query("SELECT plan_id,plan_name FROM investment_plans");
+                while($p = $result->fetch_assoc()){
+                $selected = ($investment_obj->plan_id == $p['plan_id']) ? "selected" : "";
+                echo "<option value='{$p['plan_id']}' $selected>{$p['plan_name']}</option>";
+                }
+                ?>
+                </select>
+            </div>
 
-</form>
+            <div class="col-md-6 col-12 mb-3">
+                <label for="amount"> Set Amount *</label>
+                <input 
+                type="number" 
+                step="0.01" 
+                id="amount"
+                name="amount"
+                value="<?php echo $investment_obj->amount; ?>" 
+                class="form-control" 
+                placeholder="Enter Investment Amount" 
+                required>
+            </div>
 
+            <div class="col-md-6 col-12 mb-3">
+                <label for="issue_date">Set Starting Date *</label>
+                <input 
+                type="date" 
+                id="issue_date"
+                name="issue_date"
+                value="<?php echo $investment_obj->issue_date; ?>" 
+                class="form-control" 
+                required>
+            </div>
+
+        </div>        
+
+        <?php if(isset($_POST['edit_investment'])): ?>
+        <input type="hidden" name="edit_investment" value="<?=$_POST['edit_investment'];?>">
+        <input type="hidden" name="update_investment" value="1">
+        <div class="d-flex gap-2">
+            <input type="submit" class="btn btn-primary btn-md btn-golden" value="Update">
+            <a href="investments.php" class="btn btn-outline-dark">View All</a>
+        </div>
+        <?php else: ?>
+        <input type="hidden" name="add_investment" value="1">
+        <div class="d-flex gap-2">
+            <input type="submit" class="btn btn-primary btn-md btn-golden" value="Add Investment">
+            <a href="investments.php" class="btn btn-outline-dark">View All</a>
+        </div>
+        <?php endif; ?>
+
+        </form>
+    </div>
+</div>
 <?php require_once("lib/includes/footer.php"); ?>

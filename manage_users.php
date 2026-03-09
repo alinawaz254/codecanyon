@@ -499,7 +499,7 @@
 						echo '<input type="hidden" name="add_user" value="1" />';
 					} ?>
 					<div class="text-left">
-						<input type="submit" value="<?php if(isset($_POST['edit_user'])){ _e("Update User"); } else { _e("Add User");} ?>" class="btn btn-primary" />
+						<input type="submit" value="<?php if(isset($_POST['edit_user'])){ _e("Update User"); } else { _e("Add User");} ?>" class="btn btn-primary btn-md btn-golden" />
 					</div>
 				</form>
 				</div>

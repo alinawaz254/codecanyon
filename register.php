@@ -110,6 +110,27 @@
 		$_fieldarr[$field]['label']  = get_option( "accountform_setting_". $field ."_field_label" );
 		$_fieldarr[$field]['status'] = get_option( "accountform_setting_". $field ."_registration_form" );
 	}
+
+	$auto_generated_user_name = '';
+
+	if(!isset($_POST['edit_user'])){
+
+		$all_users = "SELECT * FROM users WHERE user_type LIKE '%subscriber%'";
+		$result    = $db->query($all_users);
+		$count     = $result->num_rows;
+
+		$auto_generated_user_name = 'BIZ';
+
+		if(strlen($count) == 1){
+			$auto_generated_user_name .= '000' . ($count + 1);
+		}elseif(strlen($count) == 2){
+			$auto_generated_user_name .= '00' . ($count + 1);
+		}elseif(strlen($count) == 3){
+			$auto_generated_user_name .= '0' . ($count + 1);
+		}else{
+			$auto_generated_user_name .= ($count + 1);
+		}
+	}	
 ?>
       <!-- Begin Container -->
         <div class="container-fluid no-padding h-100">
@@ -164,11 +185,18 @@
 										}
 									?>
 									<?php echo return_additional_field_options( '', 'registration' ); ?>
-									<div class="group material-input">	
+									<!-- <div class="group material-input">	
 										<input type="text" name="username" id="userName" class="form-control" required="required"/>
 										<label for="userName"><?php _e("Username"); ?>*</label>
-									</div>
-									
+									</div> -->
+									<div class="group material-input">	
+										<input type="text" class="form-control" id="username" name="username"
+										value="<?php echo isset($_POST['edit_user']) ? $new_user->username : $auto_generated_user_name; ?>"
+										readonly />
+										<!-- <label for="userName"><?php _e("Username"); ?>*</label> -->
+									</div>									
+
+																			
 									<div class="group material-input">	
 										<input type="text" name="email" id="email" class="form-control" required="required"/>
 										<label for="email"><?php _e("Email"); ?>*</label>

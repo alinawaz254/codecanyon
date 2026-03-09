@@ -18,9 +18,9 @@
 <div class="text-right">
     <p>
       <a href="manage_users.php" 
-      class="btn btn-primary btn-default"><?php _e("Add New"); ?></a> 
+      class="btn btn-primary btn-md btn-golden"><?php _e("Add New"); ?></a> 
       <a href="#" 
-      class="btn btn-primary btn-default" 
+      class="btn btn-primary btn-md btn-golden" 
       data-toggle="modal" data-target="#modal_all_user">
       <?php _e("Message to All Users"); ?></a><div class="clearfix"></div>
     </p>

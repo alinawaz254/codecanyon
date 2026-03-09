@@ -11,7 +11,7 @@ require_once("lib/includes/header.php");
 ?>
 
 <div class="text-right">
-    <a href="manage_investment.php" class="btn btn-primary">
+    <a href="manage_investment.php" class="btn btn-primary btn-md btn-golden mb-4">
         <?php _e("Add Investment"); ?>
     </a>
 </div>

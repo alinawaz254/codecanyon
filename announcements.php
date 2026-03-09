@@ -15,7 +15,7 @@
 ?>
 <div class="text-right">
     <p>
-    	<a href="manage_announcement.php" class="btn btn-primary btn-default"><?php _e("Add New"); ?></a>
+    	<a href="manage_announcement.php" class="btn btn-primary btn-md btn-golden"><?php _e("Add New"); ?></a>
     </p>
 </div>	
 

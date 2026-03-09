@@ -78,20 +78,64 @@
 		?>
     </head>
     <style>
+        .alert .close {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 0;
+            padding-right: 1.25rem;
+            color: inherit;
+            opacity: 1;
+            background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
+            color: #ffffff;
+            border: 1px solid #bfa14a;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgb(209 156 0 / 40%);
+            transition: background 0.3s ease;
+        }
+        .dt-buttons .btn{
+            background:#d4af37;
+            border:none;
+            color:#fff;
+            padding:6px 14px;
+            border-radius:20px;
+            margin-right:5px;
+        }
+
+        .dt-buttons .btn:hover{
+            background:#c19a2b;
+        }             
         .side-navbar{
         background: #000;
         }
         .default-sidebar{
             background: #000;
         }
-        .default-sidebar>.side-navbar a[aria-expanded="true"] i:hover{
-            color: red !important;
-        }        .default-sidebar>.side-navbar a[aria-expanded="true"] i{
-            color: red !important;
+        .default-sidebar .side-navbar li:hover,
+        .default-sidebar .side-navbar li:focus a{
+            color: #f1bc1cd5 !important;
         }
+
+        .default-sidebar .side-navbar li:hover a i,
+        .default-sidebar .side-navbar li:focus a i{
+            color: #f1bc1c !important;
+        }
+        .default-sidebar>.side-navbar a[aria-expanded="true"] i{
+            color: #f1bc1c !important;
+        }
+
         .default-sidebar>.side-navbar ul ul{
-            background-color : #000 !important;
+            background-color : #1a1818 !important;
         }
+        .default-sidebar>.side-navbar ul ul a:hover{
+            background-color : #464444 !important;
+            color: #fabb00 !important;
+        }
+        .default-sidebar>.side-navbar a[aria-expanded="true"] {
+            background: #0e0e0e;
+            margin: 0 10px 0 10px;
+            border-radius: 4px 4px 0 0;
+        }             
         .page-header-title, .alert-secondary-bordered ,th,h2,h3,.btn-shadow, .btn-shadow a,.title{
             color:#000 !important;
         }

@@ -236,7 +236,7 @@ function list_investments(){
 
         <form method='post' action='manage_investment.php' style='display:inline'>
         <input type='hidden' name='edit_investment' value='{$row['investment_id']}'>
-        <input type='submit' class='btn btn-primary btn-sm' value='Edit'>
+        <input type='submit' class='btn btn-info btn-sm' value='Edit'>
         </form>
 
         <form method='post' style='display:inline'>

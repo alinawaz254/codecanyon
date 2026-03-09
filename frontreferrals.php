@@ -100,6 +100,38 @@ $result = $db->query($query);
     .modal-title {
         color: white;
     }
+    .investment-table{
+    width:100%;
+    }
+
+    /* Mobile Modal Fix */
+    @media (max-width:768px){
+
+    .investment-table{
+    min-width:600px;
+    }
+    .investment-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    }
+    .modal-dialog{
+        margin:10px;
+        max-width:95%;
+    }
+
+    .modal-content{
+        max-height:90vh;
+        display:flex;
+        flex-direction:column;
+    }
+
+    .modal-body{
+        overflow-y:auto;
+        overflow-x:auto;
+    }
+
+    }    
 </style>
 
 <div class="mywidget wc_data">
@@ -108,7 +140,7 @@ $result = $db->query($query);
             <h4>My Referrals</h4>
         </div>
 
-        <div class="widget-body">
+        <div class="widget-body table-responsive">
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
@@ -163,7 +195,7 @@ $result = $db->query($query);
                                 <button class="btn btn-primary btn-sm btn-golden"
                                     data-toggle="modal"
                                     data-target="#referralModal_<?php echo $row['investment_id']; ?>_<?php echo $row['referred_user_id']; ?>">
-                                    View Details
+                                    View
                                 </button>
 
                                 <?php if ($is_expired): ?>

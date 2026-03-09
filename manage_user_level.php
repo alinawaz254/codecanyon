@@ -80,7 +80,7 @@
 					echo '<input type="hidden" name="add_level" value="1" />';
 				} ?>
 				<div class="text-center">
-					<input type="submit" class="btn btn-primary" value="<?php if(isset($_POST['edit_level'])){ _e("Update Level"); } else { _e("Add Level"); } ?>" />
+					<input type="submit" class="btn btn-primary btn-md btn-golden" value="<?php if(isset($_POST['edit_level'])){ _e("Update Level"); } else { _e("Add Level"); } ?>" />
 				</div>
 			</form>
 			</div><!-- widget body /-->
