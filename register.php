@@ -156,7 +156,7 @@
                 </div>
                 <!-- End Left Content -->
                 <!-- Begin Right Content -->
-                <div class="col-xl-9 col-lg-7 col-md-7 col-sm-12 col-12 my-auto no-padding">
+                <div class="col-xl-9 col-lg-7 col-md-7 col-sm-12 col-12 my-auto no-padding mb-5">
                     <!-- Begin Form -->
                     <div class="authentication-form-2 mx-auto">
                         <div class="tab-content" id="animate-tab-content">

@@ -101,6 +101,20 @@
             border-radius:20px;
             margin-right:5px;
         }
+        nav.navbar .user-size.dropdown-menu a.logout {
+            background: #f1bc1c !important;
+            width: 70px;
+            height: 70px;
+            color: #fff;
+            border-radius: 50%;
+            text-align: center !important;
+            padding: 0;
+            line-height: 55px;
+            position: relative;
+            bottom: -20px;
+            font-size: 1.8rem;
+            margin: 10px auto 0;
+        }        
 
         .dt-buttons .btn:hover{
             background:#c19a2b;
