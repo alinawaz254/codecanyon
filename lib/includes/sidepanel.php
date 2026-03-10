@@ -24,32 +24,43 @@
             </li>
             <li><a href="messages.php"><i class="la la-comments"></i><span><?php _e("Messages"); ?> <span class="nb-new badge-rounded info badge-rounded-small"><?php $message_obj->unread_count(); ?></span></span></a></li>
             <li><a href="notes.php"><i class="la la-sticky-note"></i><span><?php _e("My Notes"); ?></span></a></li>
-            <li><a href="#dropdown-announcements" aria-expanded="false" data-toggle="collapse"><i class="la la-bullhorn"></i><span><?php _e("Announcements"); ?></span></a>
+            <li>
+                <a href="#dropdown-announcements" aria-expanded="false" data-toggle="collapse"><i class="la la-bullhorn"></i><span><?php _e("Announcements"); ?></span></a>
                 <ul id="dropdown-announcements" class="collapse list-unstyled pt-0">
                     <li><a href="announcements.php"><?php _e("Announcements"); ?></a></li>
                     <li><a href="manage_announcement.php"><?php _e("Add New"); ?></a></li>
                 </ul>
             </li>
             <li>
-            <a href="#dropdown-packages" aria-expanded="false" data-toggle="collapse">
-            <i class="la la-file-text"></i>
-            <span><?php _e("Packages"); ?></span>
-            </a>
+                <a href="#dropdown-packages" aria-expanded="false" data-toggle="collapse">
+                <i class="la la-file-text"></i>
+                <span><?php _e("Packages"); ?></span>
+                </a>
 
-            <ul id="dropdown-packages" class="collapse list-unstyled pt-0">
-                <li><a href="investment_plans.php"><?php _e("Packages"); ?></a></li>
-                <li><a href="manage_investment_plan.php"><?php _e("Add Package"); ?></a></li>
-            </ul>
+                <ul id="dropdown-packages" class="collapse list-unstyled pt-0">
+                    <li><a href="investment_plans.php"><?php _e("Packages"); ?></a></li>
+                    <li><a href="manage_investment_plan.php"><?php _e("Add Package"); ?></a></li>
+                </ul>
             </li>           
             <li>
-            <a href="#dropdown-investments" aria-expanded="false" data-toggle="collapse">
-            <i class="la la-money"></i>
-            <span><?php _e("Investments"); ?></span>
-            </a>
-            <ul id="dropdown-investments" class="collapse list-unstyled pt-0">
-                <li><a href="investments.php"><?php _e("Investments"); ?></a></li>
-                <li><a href="manage_investment.php"><?php _e("Add Investment"); ?></a></li>
-            </ul>
+                <a href="#dropdown-investments" aria-expanded="false" data-toggle="collapse">
+                <i class="la la-money"></i>
+                <span><?php _e("Investments"); ?></span>
+                </a>
+                <ul id="dropdown-investments" class="collapse list-unstyled pt-0">
+                    <li><a href="investments.php"><?php _e("Investments"); ?></a></li>
+                    <li><a href="manage_investment.php"><?php _e("Add Investment"); ?></a></li>
+                </ul>
+            </li>             
+            <li>
+                <a href="#dropdown-transactions" aria-expanded="false" data-toggle="collapse">
+                <i class="la la-money"></i>
+                <span><?php _e("Transactions"); ?></span>
+                </a>
+                <ul id="dropdown-transactions" class="collapse list-unstyled pt-0">
+                    <li><a href="transactions.php"><?php _e("Transactions"); ?></a></li>
+                    <li><a href="manage_transactions.php"><?php _e("Add Transaction"); ?></a></li>
+                </ul>
             </li>            
         </ul>
         <!-- <hr> -->

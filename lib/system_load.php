@@ -79,6 +79,7 @@
 	require_once('classes/investments.php');
 	require_once('classes/forms.php');
 	require_once('classes/forms_submission.php');
+	require_once('classes/transactions.php');
 
 	$new_user 	= new Users;
 
@@ -122,12 +123,13 @@
 			HEADER('LOCATION: ../index.php');
 		}
 		
-		$message_obj 		= new Messages;
-		$new_level 			= new Userlevel;
-		$notes_obj 			= new Notes;
-		$announcement_obj 	= new Announcements;
-		$investment_obj     = new Investments;
-		$forms_obj			= new FORMS;
+		$message_obj      = new Messages;
+		$new_level        = new Userlevel;
+		$notes_obj        = new Notes;
+		$announcement_obj = new Announcements;
+		$investment_obj   = new Investments;
+		$forms_obj        = new FORMS;
+		$transaction_obj  = new Transactions;
 		
 		if($new_user->get_user_info($_SESSION['user_id'], 'profile_image') == '') { 
 			$profile_img = 'assets/images/user-4.png';

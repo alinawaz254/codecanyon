@@ -76,6 +76,30 @@
                     </ul>
                 </li>
                 <!-- End Messages -->
+                <!-- Begin Messages -->
+                <li class="nav-item dropdown">
+                    <a id="messages" rel="nofollow" data-target="#" href="#" 
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link">
+                        <i class="la la-comments"></i>
+                        <span class="badge-pulse"></span>
+                    </a>
+                    <ul aria-labelledby="notifications" class="dropdown-menu notification">
+                        <li>
+                            <div class="notifications-header">
+                                <div class="title"><?php _e("Messages"); ?> (<?php $message_obj->unread_count(); ?>)</div>
+                                <div class="notifications-overlay"></div>
+                                <img src="assets/img/notifications/01.jpg" alt="Messages" class="img-fluid">
+                            </div>
+                        </li>
+                        <?php $message_obj->message_widget(); ?>
+                        <li>
+                            <a rel="nofollow" href="messages.php" class="dropdown-item all-notifications text-center">
+                                <?php _e("View All Messages"); ?>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- End Messages -->
 
                 <!-- User -->
                 <li class="nav-item dropdown">

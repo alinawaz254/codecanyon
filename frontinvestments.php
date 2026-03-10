@@ -197,13 +197,13 @@ $today = date("Y-m-d");
                                                         $interval = $date1->diff($date2);
 
                                                         ?>
-                                                        <tr <?php if ($is_detail_expired) echo 'style="opacity:0.5"'; ?>>
+                                                        <tr <?php if ($is_detail_expired) ?>>
                                                             <td class="info-value"><?php echo $detail['cycle']; ?></td>
                                                             <td class="info-value"><?php echo $detail['comission_expiry_date']; ?></td>
                                                             <td class="info-value"><?php echo number_format($detail['comission'], 2); ?></td>
                                                             <td class="info-value">
                                                                 <?php if ($is_detail_expired): ?>
-                                                                    <span class="badge badge-success">Paid</span>
+                                                                    <span class="badge badge-success"><a href="#" style="color: green;">Claim Now</a> </span>
                                                                 <?php else: ?>
                                                                     <span class="badge badge-danger">Unpaid <?php echo '('.$interval->days .' days left to claim)'; ?></span>
                                                                 <?php endif; ?>
