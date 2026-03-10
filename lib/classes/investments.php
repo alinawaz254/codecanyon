@@ -214,14 +214,34 @@ function delete_investment($id){
 
 function list_investments(){
     global $db;
+    $modals = ""; 
+
+    // $result = $db->query("
+    //     SELECT ui.*, u.username, p.plan_name 
+    //     FROM user_investments ui
+    //     JOIN users u ON ui.user_id = u.user_id
+    //     JOIN investment_plans p ON ui.plan_id = p.plan_id
+    //     ORDER BY ui.investment_id DESC
+    // ");
 
     $result = $db->query("
-        SELECT ui.*, u.username, p.plan_name 
+        SELECT 
+        ui.investment_id,
+        ui.user_id,
+        ui.plan_id,
+        ui.amount,
+        ui.issue_date,
+        ui.created_at,
+        u.username,
+        p.plan_name,
+        p.total_cycles,
+        p.cycle_days,
+        p.commission
         FROM user_investments ui
         JOIN users u ON ui.user_id = u.user_id
         JOIN investment_plans p ON ui.plan_id = p.plan_id
         ORDER BY ui.investment_id DESC
-    ");
+    ");    
 
     echo '<table class="table">';
     echo '<tr><th>User</th><th>Plan</th><th>Amount</th><th>Issue Date</th><th>Action</th></tr>';
@@ -233,6 +253,12 @@ function list_investments(){
         <td>{$row['amount']}</td>
         <td>{$row['issue_date']}</td>
         <td>
+
+        <button class='btn btn-warning btn-sm'
+        data-toggle='modal'
+        data-target='#adminInvestmentModal_{$row['investment_id']}'>
+        View
+        </button>
 
         <form method='post' action='manage_investment.php' style='display:inline'>
         <input type='hidden' name='edit_investment' value='{$row['investment_id']}'>
@@ -246,9 +272,102 @@ function list_investments(){
 
         </td>
         </tr>";
+
+
+    $details = $db->query("
+    SELECT cycle,comission,comission_expiry_date
+    FROM user_investment_details
+    WHERE investment_id='{$row['investment_id']}'
+    ORDER BY cycle ASC
+    ");
+
+    ob_start();
+    ?>
+
+    <div class="modal fade" id="adminInvestmentModal_<?php echo $row['investment_id']; ?>">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content investment-modal">
+                <div class="modal-header investment-header">
+                    <h5 class="modal-title"><?php echo $row['plan_name']; ?> Investment Details</h5>
+
+                    <button type="button"
+                        class="btn-close-investment"
+                        data-dismiss="modal">
+                        &times;
+                    </button>    
+                </div>
+                <div class="modal-body">
+                    <div class="investment-info">
+                        <div>
+                            <label class="info-label">User</label><br>
+                            <b class="info-value"><?php echo $row['username']; ?></b>
+                        </div>
+                        <div>
+                            <label class="info-label">Amount</label><br>
+                            <b class="info-value"><?php echo number_format($row['amount'],2); ?></b>
+                        </div>
+                        <div>
+                            <label class="info-label">Date Issued On</label><br>
+                            <b class="info-value"><?php echo $row['issue_date']; ?></b>
+                        </div>
+                    </div>
+                    <hr>
+                    <table class="table table-bordered investment-table">
+                        <thead class="">
+                            <tr>
+                                <th>Cycle</th>
+                                <th>Commission Date</th>
+                                <th>Commission</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php while($d = $details->fetch_assoc()){ 
+                            $today    = date("Y-m-d");
+                            $expired  = strtotime($today) > strtotime($d['comission_expiry_date']);
+                            $date1    = new DateTime($today);
+                            $date2    = new DateTime($d['comission_expiry_date']);
+                            $interval = $date1->diff($date2);
+                        ?>
+
+                        <tr>
+                            <td><?php echo $d['cycle']; ?></td>
+                            <td><?php echo $d['comission_expiry_date']; ?></td>
+                            <td><?php echo number_format($d['comission'],2); ?></td>
+                            <td>
+                                <?php if($expired){ ?>
+                                <span class="badge badge-success">Paid</span>
+                                <?php } else { ?>
+                                <span class="badge badge-danger">Unpaid <?php echo '('.$interval->days .' days left to claim)'; ?></span>
+                                <?php } ?>
+                            </td>
+                        </tr>
+
+                        <?php } ?>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="modal-footer investment-footer">
+                    <button class="btn btn-golden btn-md"
+                        data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?php
+
+    $modals .= ob_get_clean();
+
     }
 
-    echo '</table>';
+    echo "</table>";
+
+    echo $modals;
+
 }
 
 }

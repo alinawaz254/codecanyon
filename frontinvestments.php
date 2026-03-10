@@ -36,87 +36,24 @@ $today = date("Y-m-d");
 ?>
 
 <style>
-    .badge-success{
-        color: green;
-    }
-    .badge-danger{
-        color: red;
-    }
-    .badge-secondary{
-        color: #ffffff;
-        background: red;
-    }
-    .investment-modal {
-        border-radius: 10px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        margin-bottom: 25px;
-    }
-
-    .investment-header {
-        background: #2c304d;
-        color: #fff;
-        padding: 15px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .investment-info {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 15px;
-    }
-
-    .info-label {
-        display: block;
-        font-size: 12px;
-        color: #777;
-    }
-
-    .info-value {
-        font-size: 13px;
-        font-weight: 600;
-    }
-
-    .cycles-title {
-        margin: 10px 0 15px 0;
-        font-weight: 600;
-    }
-
-    .investment-table thead {
-        background: #f5f5f5;
-    }
-
-    .investment-table th {
-        font-weight: 600;
-    }
-
-    .investment-footer {
-        justify-content: flex-end;
-        border-top: 0px;
-        padding: 7px 9px 8px 8px !important;
-    }
-    
-    .modal-title {
-        color: white;
-    }
     /* Mobile Modal Fix */
     @media (max-width:768px){
 
-    .modal-dialog{
-        margin:10px;
-        max-width:95%;
-    }
+        .modal-dialog{
+            margin:10px;
+            max-width:95%;
+        }
 
-    .modal-content{
-        max-height:90vh;
-        display:flex;
-        flex-direction:column;
-    }
+        .modal-content{
+            max-height:90vh;
+            display:flex;
+            flex-direction:column;
+        }
 
-    .modal-body{
-        overflow-y:auto;
-        overflow-x:auto;
-    }
+        .modal-body{
+            overflow-y:auto;
+            overflow-x:auto;
+        }
 
     }    
 

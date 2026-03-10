@@ -78,6 +78,62 @@
 		?>
     </head>
     <style>
+        .badge-success{
+            color: green;
+        }
+        .badge-danger{
+            color: red;
+        }
+        .badge-secondary{
+            color: #ffffff;
+            background: red;
+        }
+        .modal-title {
+            color: white;
+        }
+        .investment-modal {
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 25px;
+        }
+        .investment-header {
+            background: #2c304d;
+            color: #fff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .investment-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .info-label {
+            display: block;
+            font-size: 12px;
+            color: #777;
+        }
+
+        .info-value {
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .investment-table thead {
+            background: #f5f5f5;
+        }
+
+        .investment-table th {
+            font-weight: 600;
+        }
+
+        .investment-footer {
+            justify-content: flex-end;
+            border-top: 0px;
+            padding: 7px 9px 8px 8px !important;
+        }
         .alert .close {
             position: absolute;
             top: 50%;
