@@ -404,7 +404,8 @@ class Users {
 
 function list_users($user_type) {
 		global $db;
-	
+		$content = '';
+		$modals  = '';
 		if($user_type == 'admin') { 
 			$query 		= 'SELECT * from users ORDER by first_name ASC';
 			$result 	= $db->query($query) or die($db->error);
@@ -413,10 +414,79 @@ function list_users($user_type) {
 			
 			while($row = $result->fetch_array()) { 
 				extract($row);
+				$user_id = intval($user_id);
 				$referral_id = intval($row['referral_id']);
  				$referal = $db->query("SELECT username FROM users WHERE user_id = " . $referral_id . " LIMIT 1");				
  				$ref_row = $referal ? $referal->fetch_assoc() : null;
+				/* Total Investment */
+				$investment = $db->query("
+				SELECT 
+				COALESCE(SUM(amount),0) AS total
+				FROM user_investments
+				WHERE user_id = $user_id
+				");
 
+				$investment = $investment->fetch_assoc();
+				$total_investment = $investment['total'];
+
+				/* Total Commission */
+
+				$commission = $db->query("
+				SELECT 
+				COALESCE(SUM(uid.comission),0) AS total
+				FROM user_investment_details uid
+				INNER JOIN user_investments ui
+				ON uid.investment_id = ui.investment_id
+				WHERE ui.user_id = $user_id
+				");
+
+				$commission = $commission->fetch_assoc();
+				$total_commission = $commission['total'];
+
+				/* Commission Dates */
+
+				$commission_dates = $db->query("
+				SELECT 
+				uid.comission,
+				uid.created_at
+				FROM user_investment_details uid
+				INNER JOIN user_investments ui
+				ON uid.investment_id = ui.investment_id
+				WHERE ui.user_id = $user_id
+				ORDER BY uid.created_at DESC
+				");
+
+				/* REWARDS CALCULATION */
+
+				$unit_value = 30000;
+
+				$total_query = $db->query("
+				SELECT SUM(amount) as total_investment
+				FROM user_investments
+				WHERE user_id = $user_id
+				");
+
+				$reward_row = $total_query->fetch_assoc();
+				$total_investment_reward = $reward_row['total_investment'] ? $reward_row['total_investment'] : 0;
+
+				$units_achieved = floor($total_investment_reward / $unit_value);
+
+				$levels = [
+				1 => 3,
+				2 => 9,
+				3 => 27,
+				4 => 81,
+				5 => 243,
+				6 => 729
+				];				
+				/* Packages */
+				$packages = $db->query("
+				SELECT DISTINCT p.plan_name
+				FROM user_investments ui
+				INNER JOIN investment_plans p
+				ON ui.plan_id = p.plan_id
+				WHERE ui.user_id = $user_id
+				");
 				$count++;
 				if($count%2 == 0) { 
 					$class = 'even';
@@ -445,7 +515,12 @@ function list_users($user_type) {
 				$content .= '</td><td>';
 				$content .= ucfirst($user_type);
 				$content .= '</td><td>';
-				$content .= '<button class="btn btn-default btn-sm pull-left" style="margin-right:5px;" data-toggle="modal" data-target="#modal_'.$user_id.'">'._("Message").'</button>';
+				if($user_type == 'subscriber'){
+					$content .= '<button class="btn btn-default btn-sm pull-left" data-toggle="modal" data-target="#details_'.$user_id.'">Details</button>';
+				}else{
+					$content .= '<button class="btn btn-default btn-sm pull-left" disabled>No Details</button>';
+				}
+				$content .= '<button class="btn btn-default btn-sm pull-left" style="margin-right:5px;" data-toggle="modal" data-target="#modal_'.$user_id.'">'._("Message").'</button>';			
 				$content .= '<!-- Modal -->
 <script type="text/javascript">
 $(function(){
@@ -466,7 +541,7 @@ $("#message_form_'.$user_id.'").on("submit", function(e){
 	<div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title" id="myModalLabel">'._("Send Message").'</h4>
-		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
       </div>
 	  
       <div class="modal-body">
@@ -496,7 +571,103 @@ $("#message_form_'.$user_id.'").on("submit", function(e){
     </div><!-- /.modal-content -->
    </form>
   </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->';			
+</div><!-- /.modal -->';
+			if($user_type == 'subscriber'){
+				$modals .= '
+
+				<div class="modal fade" id="details_'.$user_id.'" tabindex="-1">
+				<div class="modal-dialog modal-lg">
+				<div class="modal-content investment-modal">
+
+				<div class="modal-header investment-header">
+				<h5 class="modal-title">
+					User '.$username.' Details
+				</h5>				
+				<button type="button" class="btn-close-investment" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class="modal-body">
+
+				<b>Username:</b> '.$username.'<br>
+				<b>Email:</b> '.$email.'<br>
+				<b>Joined:</b> '.(!empty($date_register) ? date("d M Y",strtotime($date_register)) : "N/A").'<br>
+				<b>Referred By:</b> '.($ref_row['username'] ?? 'N/A').'
+
+				<hr>
+
+				<b>Total Investment:</b> $'.number_format($total_investment,2).'<br>
+				<b>Total Commission:</b> $'.number_format($total_commission,2).'
+
+				<hr>
+				<h5>Recent Commissions</h5>
+				<ul>
+				';
+				if($commission_dates && $commission_dates->num_rows > 0){
+					while($c = $commission_dates->fetch_assoc()){
+						$modals .= "<li>$".number_format($c['comission'],2)." - ".date("d M Y",strtotime($c['created_at']))."</li>";
+					}
+				}else{
+					$modals .= "<li>No Commissions</li>";
+				}
+				$modals .= '
+
+				</ul>
+				<hr>
+				<h5>Rewards Progress</h5>
+				<ul>
+				';
+				$remaining_units = $units_achieved;
+
+				foreach ($levels as $level => $required) {
+
+					$units_used = 0;
+
+					if ($remaining_units >= $required) {
+						$units_used = $required;
+						$remaining_units -= $required;
+						$status = "Completed";
+					} elseif ($remaining_units > 0) {
+						$units_used = $remaining_units;
+						$remaining_units = 0;
+						$status = "In Progress ($units_used/$required)";
+					} else {
+						$status = "Ongoing";
+					}
+
+					$modals .= "<li>Level $level - $status</li>";
+				}
+				$modals .= '
+
+				</ul>
+				<hr>									
+				<h5>Investment Packages</h5>
+				<ul>
+				';
+
+				if($packages && $packages->num_rows > 0){
+					while($pkg = $packages->fetch_assoc()){
+						$modals .= '<li>'.$pkg['plan_name'].'</li>';
+					}
+				}else{
+					$modals .= '<li>No Packages</li>';
+				}
+
+				$modals .= '
+
+				</ul>
+
+				</div>
+
+				<div class="modal-footer investment-footer">
+				<button class="btn btn-golden btn-md mb-5" data-dismiss="modal">Close</button>
+				</div>
+
+				</div>
+				</div>
+				</div>
+
+			';
+			}
 				$content .= '<form method="post" name="edit" action="manage_users.php">';
 				$content .= '<input type="hidden" name="edit_user" value="'.$user_id.'">';
 				$content .= '<input type="submit" style="margin-right:5px;" class="btn btn-default btn-sm pull-left" value="'._("Edit").'">';
@@ -513,6 +684,7 @@ $("#message_form_'.$user_id.'").on("submit", function(e){
 			$content = _("You cannot view list of users.");
 		}	
 		echo $content;
+		echo $modals;
 	}//list_levels ends here.
 
 	function get_total_users($condition) { 

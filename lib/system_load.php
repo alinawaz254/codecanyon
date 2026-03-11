@@ -75,6 +75,7 @@
 	require_once('classes/userlevel.php');
 	require_once('classes/notes.php');
 	require_once('classes/messages.php');
+	require_once('classes/notifications.php');
 	require_once('classes/announcements.php');
 	require_once('classes/investments.php');
 	require_once('classes/forms.php');
@@ -124,6 +125,7 @@
 		}
 		
 		$message_obj      = new Messages;
+		$notification_obj = new Notifications;
 		$new_level        = new Userlevel;
 		$notes_obj        = new Notes;
 		$announcement_obj = new Announcements;

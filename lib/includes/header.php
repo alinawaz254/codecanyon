@@ -290,6 +290,83 @@
         .f-links:hover{
             color: #c29510;
         }
+        .notification-body{
+        display:flex;
+        align-items:flex-start;
+        gap:10px;
+        padding:12px 15px;
+        border-bottom:1px solid #f1f1f1;
+        position:relative;
+        }
+
+        .notification-icon{
+        font-size:18px;
+        margin-top:3px;
+        }
+
+        .notification-text{
+        flex:1;
+        font-size:14px;
+        color:#444;
+        line-height:1.4;
+        }
+
+        .notification-time{
+        font-size:11px;
+        color:#999;
+        margin-top:3px;
+        }
+
+        .notification-action{
+        position:absolute;
+        right:10px;
+        top:10px;
+        }
+
+        .notification-action a{
+        color:#aaa;
+        font-size:14px;
+        }
+
+        .notification-action a:hover{
+        color:#ff4d4d;
+        }
+        .badge-pulse{
+        position:absolute;
+        top:5px;
+        right:5px;
+        width:10px;
+        height:10px;
+        border-radius:50%;
+        background:#ff4d4d;
+        animation:pulse 1.5s infinite;
+        }
+
+        @keyframes pulse{
+
+        0%{
+        transform:scale(0.8);
+        opacity:0.8;
+        }
+
+        50%{
+        transform:scale(1.6);
+        opacity:0.3;
+        }
+
+        100%{
+        transform:scale(0.8);
+        opacity:0.8;
+        }
+
+        }
+        .badge-pulse.hidden{
+        display:none;
+        }
+        .notification-scroll{
+        max-height:350px;
+        overflow-y:auto;
+        }                         
     </style>
     <body id="page-top" class="bg-white">
         <!-- Begin Preloader -->

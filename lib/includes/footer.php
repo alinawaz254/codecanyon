@@ -189,6 +189,28 @@
 
 		// $('#congratsModal').modal('show');
 	});
+
+	//notification
+	setInterval(function(){
+
+	fetch("get_notifications.php")
+	.then(response => response.text())
+	.then(count => {
+
+	document.getElementById("notification-count").innerText = count;
+	document.getElementById("notification-count-title").innerText = count;
+
+	let pulse = document.getElementById("notification-pulse");
+
+	if(count > 0){
+	pulse.classList.remove("hidden");
+	}else{
+	pulse.classList.add("hidden");
+	}
+
+	});
+
+	}, 5000);	
 </script>
 </body>
 </html>
