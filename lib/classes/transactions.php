@@ -88,19 +88,19 @@ class Transactions {
                 switch($row['transaction_type']) {
                     case 1:
                         $type_label = _("Withdrawal");
-                        $type_class = 'badge-danger';
+                        $type_class = 'badge text-bg-danger';
                         break;
                     case 2:
                         $type_label = _("Funded");
-                        $type_class = 'badge-success';
+                        $type_class = 'badge text-bg-success';
                         break;
                     case 3:
                         $type_label = _("Commission");
-                        $type_class = 'badge-info';
+                        $type_class = 'badge text-bg-primary';
                         break;
                     default:
                         $type_label = _("Unknown");
-                        $type_class = 'badge-secondary';
+                        $type_class = 'badge text-bg-secondary';
                 }
                 
                 // Format amount with sign based on type
@@ -122,7 +122,7 @@ class Transactions {
                 
                 echo "<tr>";
                 echo "<td><strong>" . htmlspecialchars($user_display) . "</strong><br><small>" . htmlspecialchars($row['email']) . "</small></td>";
-                echo "<td><span class='badge " . $type_class . "'>" . $type_label . "</span></td>";
+                echo "<td><span class='" . $type_class . "'>" . $type_label . "</span></td>";
                 echo "<td class='" . $amount_class . "'><strong>" .$currency.' '. $amount_sign . number_format($row['amount'], 2) . "</strong></td>";
                 
                 // Description column with truncation
@@ -130,7 +130,7 @@ class Transactions {
                 if(!empty($row['description'])) {
                     $desc = htmlspecialchars($row['description']);
                     if(strlen($desc) > 50) {
-                        echo '<span title="' . $desc . '">' . substr($desc, 0, 47) . '...</span>';
+                        echo '<span title="' . $desc . '">' . substr($desc, 0, 55) . '...</span>';
                     } else {
                         echo $desc;
                     }

@@ -100,6 +100,12 @@
             <li><a href="frontinvestments.php"><i class="la la-money"></i><span><?php _e("Investments"); ?></span></a></li>
             <li><a href="frontreferrals.php"><i class="la la-list"></i><span><?php _e("My Referrals"); ?></span></a></li>
             <li><a href="frontrewards.php"><i class="la la-gift"></i><span><?php _e("Rewards"); ?></span></a></li>
+            <li>
+                <a href="front-transactions.php">
+                <i class="la la-money"></i>
+                <span><?php _e("Transactions"); ?></span>
+                </a>
+            </li>  
         </ul>
 <!--         <hr>
         <span class="heading"><?php _e("Other Pages"); ?></span>

@@ -37,17 +37,20 @@ $today = date("Y-m-d");
             $search_record = $db->query("SELECT * FROM user_investment_details WHERE id =" . $_GET['user_investment_detail_id']);
             $db->query("UPDATE user_investment_details SET is_claimed = 1,claimed_date = NOW() WHERE id =".$_GET['user_investment_detail_id']);
             
-            $get_record   = $search_record->fetch_assoc();
-            $user_id      = $get_record['user_id'];
+            $get_record  = $search_record->fetch_assoc();
+            $search_user = $db->query("SELECT * FROM users WHERE user_id = $user_id AND user_type LIKE '%subscriber%'");
+            $user        = $search_user->fetch_assoc();
+            $amount      = $get_record['comission'];
+            $username    = $user['username'];
+            $message     = $db->real_escape_string("$username has collected his commission on $today");
+
+            $db->query("INSERT INTO transactions (user_id,transaction_type,amount,description) VALUES ('$user_id',3,'$amount','$message')");
+
             $search_admin = $db->query("SELECT * FROM users WHERE user_type LIKE '%admin%'");
-            $search_user  = $db->query("SELECT * FROM users WHERE user_id = $user_id AND user_type LIKE '%subscriber%'");
-            $user         = $search_user->fetch_assoc();
-            $username     = $user['username'];
+
             while($row = $search_admin->fetch_assoc()){
 
                 $admin_id = isset($row['user_id']) ?? 0;
-
-                $message = $db->real_escape_string("$username has collected his commission on $today");
 
                 $db->query("INSERT INTO notifications
                 (sender_id, sender_type, receiver_id, receiver_type, message)
@@ -152,7 +155,7 @@ $today = date("Y-m-d");
                                 </button>
 
                                 <?php if ($is_expired): ?>
-                                    <span class="badge badge-secondary ml-2">Inactive</span>
+                                    <span class="badge text-bg-secondary ml-2">Inactive</span>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -235,9 +238,9 @@ $today = date("Y-m-d");
                                                                     </form>
                                                                 <?php
                                                                  elseif(($is_detail_expired && isset($detail['is_claimed']) && $detail['is_claimed'] == 1)): ?>
-                                                                    <span class="badge badge-success">Paid on <?php echo $detail['claimed_date'];?></span>
+                                                                    <span class="badge text-bg-success">Paid on <?php echo $detail['claimed_date'];?></span>
                                                                 <?php else: ?>
-                                                                    <span class="badge badge-danger">Unpaid <?php echo '('.$interval->days .' days left to claim)'; ?></span>
+                                                                    <span class="badge text-bg-danger">Unpaid <?php echo '('.$interval->days .' days left to claim)'; ?></span>
                                                                 <?php endif; ?>
                                                             </td>
                                                         </tr>
@@ -259,11 +262,11 @@ $today = date("Y-m-d");
                                                             <td class="info-value"><?php echo number_format($commission, 2); ?></td>
                                                             <td class="info-value">
                                                                 <?php if (!$is_future_cycle && $today <= $cycle_date): ?>
-                                                                    <span class="badge badge-warning">Pending</span>
+                                                                    <span class="badge text-bg-warning">Pending</span>
                                                                 <?php elseif ($today > $cycle_date): ?>
-                                                                    <span class="badge badge-secondary">Expired</span>
+                                                                    <span class="badge text-bg-secondary">Expired</span>
                                                                 <?php else: ?>
-                                                                    <span class="badge badge-info">Future</span>
+                                                                    <span class="badge text-bg-info">Future</span>
                                                                 <?php endif; ?>
                                                             </td>
                                                         </tr>

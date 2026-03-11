@@ -336,9 +336,9 @@ function list_investments(){
                             <td><?php echo number_format($d['comission'],2); ?></td>
                             <td>
                                 <?php if($expired){ ?>
-                                <span class="badge badge-success">Paid</span>
+                                <span class="badge text-bg-success">Paid</span>
                                 <?php } else { ?>
-                                <span class="badge badge-danger">Unpaid <?php echo '('.$interval->days .' days left to claim)'; ?></span>
+                                <span class="badge text-bg-danger">Unpaid <?php echo '('.$interval->days .' days left to claim)'; ?></span>
                                 <?php } ?>
                             </td>
                         </tr>

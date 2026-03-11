@@ -11,6 +11,34 @@ $page_title = _("My Referrals");
 require_once "lib/includes/header.php";
 
 $today = date("Y-m-d");
+     if(isset($_GET['user_investment_detail_id'])){
+            $search_record = $db->query("SELECT * FROM user_investment_details WHERE id =" . $_GET['user_investment_detail_id']);
+            $db->query("UPDATE user_investment_details SET is_claimed = 1,claimed_date = NOW() WHERE id =".$_GET['user_investment_detail_id']);
+            
+            $get_record  = $search_record->fetch_assoc();
+            $search_user = $db->query("SELECT * FROM users WHERE user_id = $user_id AND user_type LIKE '%subscriber%'");
+            $user        = $search_user->fetch_assoc();
+            $amount      = $get_record['comission'];
+            $username    = $user['username'];
+            $message     = $db->real_escape_string("$username has collected his referral commission on $today");
+
+            $db->query("INSERT INTO transactions (user_id,transaction_type,amount,description) VALUES ('$user_id',3,'$amount','$message')");
+
+            $search_admin = $db->query("SELECT * FROM users WHERE user_type LIKE '%admin%'");
+
+            while($row = $search_admin->fetch_assoc()){
+
+                $admin_id = isset($row['user_id']) ?? 0;
+
+                $db->query("INSERT INTO notifications
+                (sender_id, sender_type, receiver_id, receiver_type, message)
+                VALUES ('$user_id','subscriber','$admin_id','admin','$message')")
+                or die($db->error);
+            }
+
+            header("Location: frontreferrals.php");
+            exit;     
+    }
 // $today = "2026-06-19"; // test date
 
 $query = "
@@ -36,16 +64,6 @@ $result = $db->query($query);
 ?>
 
 <style>
-    .badge-success{
-        color: green;
-    }
-    .badge-danger{
-        color: red;
-    }
-    .badge-secondary{
-        color: #ffffff;
-        background: red;
-    }
     .investment-modal {
         border-radius: 10px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
@@ -167,7 +185,7 @@ $result = $db->query($query);
                                 <td>-</td>
                                 <td>0.00</td>
                                 <td>-</td>
-                                <td><span class='badge badge-secondary'>No Investment</span></td>
+                                <td><span class='badge text-bg-secondary'>No Investment</span></td>
                             </tr>";
                             continue;
                         }
@@ -199,7 +217,7 @@ $result = $db->query($query);
                                 </button>
 
                                 <?php if ($is_expired): ?>
-                                    <span class="badge badge-secondary ml-2">Inactive</span>
+                                    <span class="badge text-bg-secondary ml-2">Inactive</span>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -264,7 +282,10 @@ $result = $db->query($query);
                                             <tbody>
                                                 <?php
                                                 $details_query = "
-                                                    SELECT cycle, comission_expiry_date
+                                                    SELECT cycle, comission_expiry_date,
+                                                    id,
+                                                    is_claimed,
+                                                    claimed_date
                                                     FROM user_investment_details
                                                     WHERE investment_id = '" . $row['investment_id'] . "'
                                                     ORDER BY cycle ASC
@@ -292,10 +313,16 @@ $result = $db->query($query);
                                                         <td class="info-value"><?php echo $cycle_date; ?></td>
                                                         <td class="info-value"><?php echo number_format($commission, 2); ?></td>
                                                         <td class="info-value">
-                                                            <?php if ($is_detail_expired): ?>
-                                                                <span class="badge badge-success">Paid</span>
+                                                            <?php if ($is_detail_expired  && $detail['is_claimed'] == 0): ?>
+                                                                <form action="<?php echo $_SERVER['PHP_SELF']?>" name="claim_investment_form">
+                                                                    <input type="hidden" name="user_investment_detail_id" value="<?php echo $detail['id']; ?>">
+                                                                    <input class="text-white" type="submit" name="claim_ivestment" value="Claim Now" style="background: green;border-radius: 5%;">
+                                                                </form>
+                                                            <?php
+                                                             elseif(($is_detail_expired && isset($detail['is_claimed']) && $detail['is_claimed'] == 1)): ?>
+                                                                <span class="badge text-bg-success">Paid on <?php echo $detail['claimed_date'];?></span>
                                                             <?php else: ?>
-                                                                <span class="badge badge-danger">Unpaid <?php echo '('.$interval->days .' days left to claim)'; ?></span>
+                                                                <span class="badge text-bg-danger">Unpaid <?php echo '('.$interval->days .' days left to claim)'; ?></span>
                                                             <?php endif; ?>
                                                         </td>
                                                     </tr>

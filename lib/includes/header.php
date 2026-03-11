@@ -78,16 +78,6 @@
 		?>
     </head>
     <style>
-        .badge-success{
-            color: green;
-        }
-        .badge-danger{
-            color: red;
-        }
-        .badge-secondary{
-            color: #ffffff;
-            background: red;
-        }
         .modal-title {
             color: white;
         }
