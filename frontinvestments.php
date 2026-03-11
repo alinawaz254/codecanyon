@@ -31,10 +31,34 @@ ORDER BY ui.issue_date DESC
 
 $investments = $db->query($investment_query);
 $today = date("Y-m-d");
-// $today = "2026-06-19"; // test date
+// $today = "2026-05-16"; // test date
 
+     if(isset($_GET['user_investment_detail_id'])){
+            $search_record = $db->query("SELECT * FROM user_investment_details WHERE id =" . $_GET['user_investment_detail_id']);
+            $db->query("UPDATE user_investment_details SET is_claimed = 1,claimed_date = NOW() WHERE id =".$_GET['user_investment_detail_id']);
+            
+            $get_record   = $search_record->fetch_assoc();
+            $user_id      = $get_record['user_id'];
+            $search_admin = $db->query("SELECT * FROM users WHERE user_type LIKE '%admin%'");
+            $search_user  = $db->query("SELECT * FROM users WHERE user_id = $user_id AND user_type LIKE '%subscriber%'");
+            $user         = $search_user->fetch_assoc();
+            $username     = $user['username'];
+            while($row = $search_admin->fetch_assoc()){
+
+                $admin_id = isset($row['user_id']) ?? 0;
+
+                $message = $db->real_escape_string("$username has collected his commission on $today");
+
+                $db->query("INSERT INTO notifications
+                (sender_id, sender_type, receiver_id, receiver_type, message)
+                VALUES ('$user_id','subscriber','$admin_id','admin','$message')")
+                or die($db->error);
+            }
+
+            header("Location: frontinvestments.php");
+            exit;     
+    }
 ?>
-
 <style>
     /* Mobile Modal Fix */
     @media (max-width:768px){
@@ -103,6 +127,8 @@ $today = date("Y-m-d");
                             cycle,
                             comission,
                             comission_expiry_date,
+                            is_claimed,
+                            claimed_date,
                             created_at
                         FROM user_investment_details 
                         WHERE investment_id = '" . $investment['investment_id'] . "'
@@ -202,8 +228,14 @@ $today = date("Y-m-d");
                                                             <td class="info-value"><?php echo $detail['comission_expiry_date']; ?></td>
                                                             <td class="info-value"><?php echo number_format($detail['comission'], 2); ?></td>
                                                             <td class="info-value">
-                                                                <?php if ($is_detail_expired): ?>
-                                                                    <span class="badge badge-success"><a href="#" style="color: green;">Claim Now</a> </span>
+                                                                <?php if ($is_detail_expired  && $detail['is_claimed'] == 0): ?>
+                                                                    <form action="<?php echo $_SERVER['PHP_SELF']?>" name="claim_investment_form">
+                                                                        <input type="hidden" name="user_investment_detail_id" value="<?php echo $detail['id']; ?>">
+                                                                        <input class="text-white" type="submit" name="claim_ivestment" value="Claim Now" style="background: green;border-radius: 5%;">
+                                                                    </form>
+                                                                <?php
+                                                                 elseif(($is_detail_expired && isset($detail['is_claimed']) && $detail['is_claimed'] == 1)): ?>
+                                                                    <span class="badge badge-success">Paid on <?php echo $detail['claimed_date'];?></span>
                                                                 <?php else: ?>
                                                                     <span class="badge badge-danger">Unpaid <?php echo '('.$interval->days .' days left to claim)'; ?></span>
                                                                 <?php endif; ?>

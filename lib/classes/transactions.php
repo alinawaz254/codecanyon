@@ -34,6 +34,7 @@ class Transactions {
     function list_transactions() {
         global $db;
         $modals = ""; 
+        $currency = 'Rs';
 
         $result = $db->query("
             SELECT 
@@ -122,7 +123,7 @@ class Transactions {
                 echo "<tr>";
                 echo "<td><strong>" . htmlspecialchars($user_display) . "</strong><br><small>" . htmlspecialchars($row['email']) . "</small></td>";
                 echo "<td><span class='badge " . $type_class . "'>" . $type_label . "</span></td>";
-                echo "<td class='" . $amount_class . "'><strong>" . $amount_sign . "$" . number_format($row['amount'], 8) . "</strong></td>";
+                echo "<td class='" . $amount_class . "'><strong>" .$currency.' '. $amount_sign . number_format($row['amount'], 2) . "</strong></td>";
                 
                 // Description column with truncation
                 echo "<td>";
@@ -177,7 +178,7 @@ class Transactions {
     
     function generate_transaction_modal($transaction) {
         ob_start();
-        
+        $currency = 'Rs';
         // Set transaction type label
         $type_label = '';
         switch($transaction['transaction_type']) {
@@ -229,7 +230,7 @@ class Transactions {
                                         </p>
                                         <p><strong><?php echo _("Amount:"); ?></strong> 
                                             <span class="<?php echo $amount_class; ?>">
-                                                <?php echo $amount_sign; ?>$<?php echo number_format($transaction['amount'], 8); ?>
+                                                <?php echo $currency .' '. $amount_sign; ?><?php echo number_format($transaction['amount'], 2); ?>
                                             </span>
                                         </p>
                                         <p><strong><?php echo _("Created:"); ?></strong> <?php echo date("F j, Y, g:i a", strtotime($transaction['created_at'])); ?></p>
