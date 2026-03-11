@@ -78,6 +78,7 @@
                     </ul>
                 </li>
                 <!-- End Messages -->
+                <?php if(partial_access("admin")): ?>                 
                 <!-- Begin Notification -->
                 <li class="nav-item dropdown">
 
@@ -123,6 +124,7 @@
 
                 </li>
                 <!-- End Notification -->
+                <?php endif; ?>                 
 
                 <!-- User -->
                 <li class="nav-item dropdown">

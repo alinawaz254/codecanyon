@@ -595,16 +595,16 @@ $("#message_form_'.$user_id.'").on("submit", function(e){
 
 				<hr>
 
-				<b>Total Investment:</b> $'.number_format($total_investment,2).'<br>
-				<b>Total Commission:</b> $'.number_format($total_commission,2).'
+				<b>Total Investment:</b> PKR '.number_format($total_investment,2).'<br>
+				<b>Total Commission:</b> PKR '.number_format($total_commission,2).'
 
 				<hr>
-				<h5>Recent Commissions</h5>
+				<b>Recent Commissions</b>
 				<ul>
 				';
 				if($commission_dates && $commission_dates->num_rows > 0){
 					while($c = $commission_dates->fetch_assoc()){
-						$modals .= "<li>$".number_format($c['comission'],2)." - ".date("d M Y",strtotime($c['created_at']))."</li>";
+						$modals .= "<li>PKR ".number_format($c['comission'],2)." - ".date("d M Y",strtotime($c['created_at']))."</li>";
 					}
 				}else{
 					$modals .= "<li>No Commissions</li>";
@@ -613,7 +613,7 @@ $("#message_form_'.$user_id.'").on("submit", function(e){
 
 				</ul>
 				<hr>
-				<h5>Rewards Progress</h5>
+				<b>Rewards Progress</b>
 				<ul>
 				';
 				$remaining_units = $units_achieved;
@@ -640,7 +640,7 @@ $("#message_form_'.$user_id.'").on("submit", function(e){
 
 				</ul>
 				<hr>									
-				<h5>Investment Packages</h5>
+				<b>Investment Packages</b>
 				<ul>
 				';
 
