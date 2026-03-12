@@ -432,39 +432,69 @@ function list_users($user_type) {
 				/* Total Commission */
 
 				$commission = $db->query("
-				SELECT 
-				COALESCE(SUM(uid.comission),0) AS total
+				SELECT
+				COALESCE(SUM(
+				CASE 
+				WHEN uid.comission_expiry_date <= CURDATE() 
+				THEN uid.comission 
+				END),0) AS total_commission,
+
+				COALESCE(SUM(
+				CASE 
+				WHEN uid.is_claimed = 0 
+				AND uid.comission_expiry_date <= CURDATE()
+				THEN uid.comission 
+				END),0) AS available_commission,
+
+				COALESCE(SUM(
+				CASE 
+				WHEN uid.is_claimed = 1 
+				THEN uid.comission 
+				END),0) AS claimed_commission
+
 				FROM user_investment_details uid
-				INNER JOIN user_investments ui
+				JOIN user_investments ui
 				ON uid.investment_id = ui.investment_id
 				WHERE ui.user_id = $user_id
 				");
 
 				$commission = $commission->fetch_assoc();
-				$total_commission = $commission['total'];
+
+				$total_commission = $commission['total_commission'];
+				$available_commission = $commission['available_commission'];
+				$claimed_commission = $commission['claimed_commission'];
 
 				/* Commission Dates */
 
 				$commission_dates = $db->query("
 				SELECT 
+				p.plan_name,
 				uid.comission,
-				uid.created_at
+				uid.comission_expiry_date
 				FROM user_investment_details uid
-				INNER JOIN user_investments ui
+				JOIN user_investments ui 
 				ON uid.investment_id = ui.investment_id
+				JOIN investment_plans p
+				ON ui.plan_id = p.plan_id
 				WHERE ui.user_id = $user_id
-				ORDER BY uid.created_at DESC
+				ORDER BY uid.comission_expiry_date DESC
 				");
 
 				/* REWARDS CALCULATION */
 
 				$unit_value = 30000;
 
+				// $total_query = $db->query("
+				// SELECT SUM(amount) as total_investment
+				// FROM user_investments
+				// WHERE user_id = $user_id
+				// ");
 				$total_query = $db->query("
-				SELECT SUM(amount) as total_investment
-				FROM user_investments
-				WHERE user_id = $user_id
-				");
+					SELECT SUM(ui.amount) as total_investment
+					FROM user_investments ui
+					JOIN users u ON u.user_id = ui.user_id
+					WHERE u.referral_id = '$user_id'
+				");				
 
 				$reward_row = $total_query->fetch_assoc();
 				$total_investment_reward = $reward_row['total_investment'] ? $reward_row['total_investment'] : 0;
@@ -481,11 +511,14 @@ function list_users($user_type) {
 				];				
 				/* Packages */
 				$packages = $db->query("
-				SELECT DISTINCT p.plan_name
+				SELECT 
+				p.plan_name,
+				SUM(ui.amount) AS total_investment
 				FROM user_investments ui
-				INNER JOIN investment_plans p
+				JOIN investment_plans p 
 				ON ui.plan_id = p.plan_id
 				WHERE ui.user_id = $user_id
+				GROUP BY p.plan_id
 				");
 				$count++;
 				if($count%2 == 0) { 
@@ -596,7 +629,25 @@ $("#message_form_'.$user_id.'").on("submit", function(e){
 				<hr>
 
 				<b>Total Investment:</b> PKR '.number_format($total_investment,2).'<br>
-				<b>Total Commission:</b> PKR '.number_format($total_commission,2).'
+				<b>Total Commission:</b> PKR '.number_format($total_commission,2).'<br>
+				<b>Available Commission:</b> PKR '.number_format($available_commission,2).'<br>
+				<b>Claimed Commission:</b> PKR '.number_format($claimed_commission,2).'<br><br>
+							
+				<b>Investment Packages</b>
+				<ul>
+				';
+
+				if($packages && $packages->num_rows > 0){
+					while($pkg = $packages->fetch_assoc()){
+						$modals .= '<li>'.$pkg['plan_name'].' - PKR '.number_format($pkg['total_investment'],2).'</li>';
+					}
+				}else{
+					$modals .= '<li>No Packages</li>';
+				}
+
+				$modals .= '
+
+				</ul>
 
 				<hr>
 				<b>Recent Commissions</b>
@@ -604,7 +655,7 @@ $("#message_form_'.$user_id.'").on("submit", function(e){
 				';
 				if($commission_dates && $commission_dates->num_rows > 0){
 					while($c = $commission_dates->fetch_assoc()){
-						$modals .= "<li>PKR ".number_format($c['comission'],2)." - ".date("d M Y",strtotime($c['created_at']))."</li>";
+						$modals .= "<li>".$c['plan_name']." — PKR ".number_format($c['comission'],2)." - ".date("d M Y",strtotime($c['comission_expiry_date']))."</li>";
 					}
 				}else{
 					$modals .= "<li>No Commissions</li>";
@@ -636,22 +687,6 @@ $("#message_form_'.$user_id.'").on("submit", function(e){
 
 					$modals .= "<li>Level $level - $status</li>";
 				}
-				$modals .= '
-
-				</ul>
-				<hr>									
-				<b>Investment Packages</b>
-				<ul>
-				';
-
-				if($packages && $packages->num_rows > 0){
-					while($pkg = $packages->fetch_assoc()){
-						$modals .= '<li>'.$pkg['plan_name'].'</li>';
-					}
-				}else{
-					$modals .= '<li>No Packages</li>';
-				}
-
 				$modals .= '
 
 				</ul>

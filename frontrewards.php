@@ -6,7 +6,7 @@ authenticate_user('all');
 
 $user_id = (int)$_SESSION['user_id'];
 
-$page_title = _("Rewards");
+$page_title = _("My Rewards");
 
 require_once("lib/includes/header.php");
 
@@ -14,10 +14,17 @@ require_once("lib/includes/header.php");
 $unit_value = 30000;
 
 /* TOTAL USER INVESTMENT */
+// $total_query = $db->query("
+//     SELECT SUM(amount) as total_investment
+//     FROM user_investments
+//     WHERE user_id = '$user_id'
+// ");
+/* TOTAL Refel USER INVESTMENT */
 $total_query = $db->query("
-    SELECT SUM(amount) as total_investment
-    FROM user_investments
-    WHERE user_id = '$user_id'
+    SELECT SUM(ui.amount) as total_investment
+    FROM user_investments ui
+    JOIN users u ON u.user_id = ui.user_id
+    WHERE u.referral_id = '$user_id'
 ");
 
 $row = $total_query->fetch_assoc();
