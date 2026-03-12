@@ -35,120 +35,97 @@
 			</div>
 			<div class="widget-body">
 				<div class="container">
-					<form action="<?php $_SERVER['PHP_SELF']?>" id="add_transaction" name="transaction" method="post" role="form">
-						
-						<!-- User Selection -->
-						<div class="row">
-							<div class="col-md-12 mb-3">
-								<div class="form-group row d-flex align-items-center mb-5">
-									<label class="col-lg-2 form-control-label d-flex justify-content-lg-end" for="user_id">
-										<?php _e("Select User"); ?>*
-									</label>
-									<div class="col-lg-6">
-										<select name="user_id" id="user_id" class="form-control select2" required style="width:100%">
-											<option value=""><?php _e("-- Select User --"); ?></option>
-											<?php
-											$result = $db->query("SELECT user_id, username, email, first_name, last_name FROM users WHERE user_type LIKE'%subscriber' ORDER BY username ASC");
-											if($result && $result->num_rows > 0) {
-												while($user = $result->fetch_assoc()) {
-													$selected = (isset($_POST['user_id']) && $_POST['user_id'] == $user['user_id']) ? 'selected="selected"' : '';
-													$display_name = $user['username'] ;
-													echo '<option value="' . $user['user_id'] . '" ' . $selected . '>' . htmlspecialchars($display_name) . '</option>';
-												}
-											}
-											?>
-										</select>
-									</div>
-								</div>
-							</div>
-						</div>
+				<form action="<?php $_SERVER['PHP_SELF']?>" id="add_transaction" method="post">
 
-						<!-- Transaction Type -->
-						<div class="row">
-							<div class="col-md-12 mb-3">
-								<div class="form-group row d-flex align-items-center mb-5">
-									<label class="col-lg-2 form-control-label d-flex justify-content-lg-end" for="transaction_type">
-										<?php _e("Transaction Type"); ?>*
-									</label>
-									<div class="col-lg-6">
-										<select name="transaction_type" id="transaction_type" class="custom-select form-control" required>
-											<option value=""><?php _e("-- Select Type --"); ?></option>
-											<option value="1" <?php echo (isset($_POST['transaction_type']) && $_POST['transaction_type'] == '1') ? 'selected="selected"' : ''; ?>>
-												<?php _e("Withdrawal"); ?>
-											</option>
-											<option value="2" <?php echo (isset($_POST['transaction_type']) && $_POST['transaction_type'] == '2') ? 'selected="selected"' : ''; ?>>
-												<?php _e("Funded"); ?>
-											</option>
-											<option value="3" <?php echo (isset($_POST['transaction_type']) && $_POST['transaction_type'] == '3') ? 'selected="selected"' : ''; ?>>
-												<?php _e("Commission"); ?>
-											</option>
-										</select>
-									</div>
-								</div>
-							</div>
-						</div>
+				<div class="row">
 
-						<!-- Amount -->
-						<div class="row">
-							<div class="col-md-12 mb-3">
-								<div class="form-group row d-flex align-items-center mb-5">
-									<label class="col-lg-2 form-control-label d-flex justify-content-lg-end" for="amount">
-										<?php _e("Amount"); ?>*
-									</label>
-									<div class="col-lg-4">
-										<div class="input-group">
-											<div class="input-group-prepend">
-												<span class="input-group-text">$</span>
-											</div>
-											<input type="number" step="0.00000001" min="0" name="amount" id="amount" 
-												   class="form-control" placeholder="0.00000000" 
-												   value="<?php echo isset($_POST['amount']) ? htmlspecialchars($_POST['amount']) : ''; ?>" 
-												   required />
-										</div>
-										<small class="form-text text-muted">
-											<?php _e("Enter amount with up to 8 decimal places"); ?>
-										</small>
-									</div>
-								</div>
-							</div>
-						</div>
+				<div class="col-md-6 mb-4">
+				<label>Select User *</label>
+				<select name="user_id" class="form-control select2" required>
+				<option value="">-- Select User --</option>
 
-						<!-- Description -->
-						<div class="row">
-							<div class="col-md-12 mb-3">
-								<div class="form-group row d-flex align-items-center mb-5">
-									<label class="col-lg-2 form-control-label d-flex justify-content-lg-end" for="description">
-										<?php _e("Description"); ?>
-									</label>
-									<div class="col-lg-6">
-										<textarea name="description" id="description" class="form-control" 
-												  rows="4" placeholder="<?php _e("Enter transaction details here..."); ?>"><?php echo isset($_POST['description']) ? htmlspecialchars($_POST['description']) : ''; ?></textarea>
-									</div>
-								</div>
-							</div>
-						</div>
+				<?php
+				$result = $db->query("SELECT user_id,username FROM users WHERE user_type LIKE'%subscriber' ORDER BY username ASC");
 
-						<!-- Hidden Fields -->
-						<input type="hidden" name="add_transaction" value="1" />
-						
-						<!-- Submit Button -->
-						<div class="row">
-							<div class="col-md-12">
-								<div class="form-group row">
-									<div class="col-lg-2"></div>
-									<div class="col-lg-6">
-										<button type="submit" class="btn btn-primary btn-md btn-golden">
-											<i class="la la-plus-circle"></i> <?php _e("Create Transaction"); ?>
-										</button>
-										<a  href="transactions.php" class="btn btn-secondary btn-md">
-											<i class="la la-door"></i> <?php _e("Cancel"); ?>
-										</a>
-									</div>
-								</div>
-							</div>
-						</div>
+				while($user = $result->fetch_assoc()){
+				?>
+				<option value="<?php echo $user['user_id']; ?>">
+				<?php echo $user['username']; ?>
+				</option>
+				<?php } ?>
 
-					</form>
+				</select>
+				</div>
+
+
+				<div class="col-md-6 mb-4">
+				<label>Transaction Type *</label>
+
+				<select name="transaction_type" class="form-control" required>
+
+				<option value="">-- Select Type --</option>
+				<option value="1">Withdrawal</option>
+				<option value="2">Funded</option>
+				<option value="3">Commission</option>
+
+				</select>
+
+				</div>
+
+				</div>
+
+
+				<div class="row">
+
+				<div class="col-md-6 mb-4">
+
+				<label>Amount *</label>
+
+				<div class="input-group">
+				<div class="input-group-prepend">
+				<span class="input-group-text p-3">PKR</span>
+				</div>
+
+				<input type="number" name="amount" step="0.00000001"
+				class="form-control" required>
+
+				</div>
+
+				</div>
+
+
+				<div class="col-md-6 mb-4">
+
+				<label>Description</label>
+
+				<textarea name="description"
+				class="form-control"
+				rows="3"></textarea>
+
+				</div>
+
+				</div>
+
+
+				<div class="row">
+
+				<div class="col-md-12 text-right">
+
+				<input type="hidden" name="add_transaction" value="1">
+
+				<button type="submit" class="btn btn-golden">
+				Create Transaction
+				</button>
+
+				<a href="transactions.php" class="btn btn-secondary">
+				View All
+				</a>
+
+				</div>
+
+				</div>
+
+				</form>
 				</div>
 			</div><!-- widget body /-->
 		</div><!-- widget /-->

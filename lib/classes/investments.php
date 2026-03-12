@@ -275,10 +275,10 @@ function list_investments(){
 
 
     $details = $db->query("
-    SELECT cycle,comission,comission_expiry_date
-    FROM user_investment_details
-    WHERE investment_id='{$row['investment_id']}'
-    ORDER BY cycle ASC
+        SELECT cycle,comission,comission_expiry_date,is_claimed,claimed_date
+        FROM user_investment_details
+        WHERE investment_id='{$row['investment_id']}'
+        ORDER BY cycle ASC
     ");
 
     ob_start();
@@ -335,11 +335,21 @@ function list_investments(){
                             <td><?php echo $d['comission_expiry_date']; ?></td>
                             <td><?php echo number_format($d['comission'],2); ?></td>
                             <td>
-                                <?php if($expired){ ?>
-                                <span class="badge text-bg-success">Paid</span>
-                                <?php } else { ?>
-                                <span class="badge text-bg-danger">Unpaid <?php echo '('.$interval->days .' days left to claim)'; ?></span>
-                                <?php } ?>
+
+                            <?php if($d['is_claimed'] == 1){ ?>
+
+                            <span class="badge text-bg-success">
+                            Released on <?php echo $d['claimed_date']; ?>
+                            </span>
+
+                            <?php } else { ?>
+
+                            <span class="badge text-bg-danger">
+                            Unpaid (<?php echo $interval->days ?> days left)
+                            </span>
+
+                            <?php } ?>
+
                             </td>
                         </tr>
 

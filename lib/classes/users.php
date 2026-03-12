@@ -449,6 +449,7 @@ function list_users($user_type) {
 				COALESCE(SUM(
 				CASE 
 				WHEN uid.is_claimed = 1 
+				AND uid.comission_expiry_date <= CURDATE()
 				THEN uid.comission 
 				END),0) AS claimed_commission
 
@@ -477,7 +478,7 @@ function list_users($user_type) {
 				JOIN investment_plans p
 				ON ui.plan_id = p.plan_id
 				WHERE ui.user_id = $user_id
-				ORDER BY uid.comission_expiry_date DESC
+				ORDER BY uid.comission_expiry_date ASC
 				");
 
 				/* REWARDS CALCULATION */
@@ -629,9 +630,7 @@ $("#message_form_'.$user_id.'").on("submit", function(e){
 				<hr>
 
 				<b>Total Investment:</b> PKR '.number_format($total_investment,2).'<br>
-				<b>Total Commission:</b> PKR '.number_format($total_commission,2).'<br>
-				<b>Available Commission:</b> PKR '.number_format($available_commission,2).'<br>
-				<b>Claimed Commission:</b> PKR '.number_format($claimed_commission,2).'<br><br>
+				<b>Total Claimed Commission:</b> PKR '.number_format($claimed_commission,2).'<br><br>
 							
 				<b>Investment Packages</b>
 				<ul>

@@ -178,9 +178,6 @@ require_once("lib/includes/header.php");
                                     <i class="la la-folder-open"></i>
                                     <h5><?php _e("No Claimed Transactions Found"); ?></h5>
                                     <p class="text-muted"><?php _e("You haven't claimed any commissions yet."); ?></p>
-                                    <a href="my_investments.php" class="btn btn-golden btn-sm">
-                                        <?php _e("View My Investments"); ?>
-                                    </a>
                                 </div>
                             </td>
                         </tr>
