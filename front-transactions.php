@@ -199,7 +199,7 @@ require_once("lib/includes/header.php");
                         SELECT SUM(uid.comission) as total_commission
                         FROM user_investment_details uid
                         JOIN user_investments ui ON ui.investment_id = uid.investment_id
-                        WHERE ui.user_id = '$user_id' AND uid.is_claimed = 1
+                        WHERE uid.user_id = '$user_id' AND uid.is_claimed = 1
                     ";
                     $total_result = $db->query($total_query);
                     $total_row = $total_result->fetch_assoc();

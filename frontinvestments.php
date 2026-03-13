@@ -30,8 +30,8 @@ ORDER BY ui.issue_date DESC
 ";
 
 $investments = $db->query($investment_query);
-// $today = date("Y-m-d");
-$today = "2026-05-16"; // test date
+$today = date("Y-m-d");
+// $today = "2026-05-16"; // test date
 
      if(isset($_GET['user_investment_detail_id'])){
             $search_record = $db->query("SELECT * FROM user_investment_details WHERE id =" . $_GET['user_investment_detail_id']);
