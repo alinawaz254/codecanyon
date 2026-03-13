@@ -263,6 +263,7 @@ function list_investments(){
         ui.issue_date,
         ui.created_at,
         u.username,
+        u.user_id,
         p.plan_name,
         p.total_cycles,
         p.cycle_days,
@@ -307,7 +308,7 @@ function list_investments(){
     $details = $db->query("
         SELECT cycle,comission,comission_expiry_date,is_claimed,claimed_date
         FROM user_investment_details
-        WHERE investment_id='{$row['investment_id']}'
+        WHERE user_id = '{$row['user_id']}' AND investment_id='{$row['investment_id']}'
         ORDER BY cycle ASC
     ");
 
