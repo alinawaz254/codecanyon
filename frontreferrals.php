@@ -30,8 +30,8 @@ if(isset($_SESSION['error_message'])) {
     unset($_SESSION['error_message']);
 }
 
-// $today = date("Y-m-d");
-$today = '2026-05-11';
+$today = date("Y-m-d");
+// $today = '2026-05-11';
 
 // Handle referral commission claim
 if(isset($_GET['referral_detail_id'])){
@@ -363,7 +363,7 @@ $result = $db->query($query);
                                                     claimed_date,
                                                     comission
                                                     FROM user_investment_details
-                                                    WHERE investment_id = '" . $row['investment_id'] . "'
+                                                    WHERE  user_id = $user_id AND investment_id = '" . $row['investment_id'] . "'
                                                     ORDER BY cycle ASC
                                                 ";
 

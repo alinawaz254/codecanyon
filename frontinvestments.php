@@ -30,8 +30,8 @@ ORDER BY ui.issue_date DESC
 ";
 
 $investments = $db->query($investment_query);
-$today = date("Y-m-d");
-// $today = "2026-05-16"; // test date
+// $today = date("Y-m-d");
+$today = "2026-05-16"; // test date
 
      if(isset($_GET['user_investment_detail_id'])){
             $search_record = $db->query("SELECT * FROM user_investment_details WHERE id =" . $_GET['user_investment_detail_id']);
@@ -127,6 +127,7 @@ $today = date("Y-m-d");
                         $details_query = "
                         SELECT 
                             id,
+                            user_id,
                             cycle,
                             comission,
                             comission_expiry_date,
@@ -134,7 +135,7 @@ $today = date("Y-m-d");
                             claimed_date,
                             created_at
                         FROM user_investment_details 
-                        WHERE investment_id = '" . $investment['investment_id'] . "'
+                        WHERE user_id = $user_id AND investment_id = '" . $investment['investment_id'] . "'
                         ORDER BY cycle ASC
                         ";
                         

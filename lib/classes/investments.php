@@ -96,9 +96,14 @@ function add_investment($user_id,$plan_ids,$amount,$issue_date){
 
     foreach ($plan_ids as $key => $plan_id) {    
 
-        $search             = $db->query("SELECT * FROM investment_plans WHERE plan_id = $plan_id");
-        $plan               = mysqli_fetch_assoc($search);
-        $comission          = ($amount * $plan['commission']) / 100;
+        $search      = $db->query("SELECT * FROM investment_plans WHERE plan_id = $plan_id");
+        $plan        = mysqli_fetch_assoc($search);
+        $comission   = ($amount * $plan['commission']) / 100;
+        $ref_query   = $db->query("SELECT referral_id FROM users WHERE user_id = '$user_id'");
+        $ref_data    = $ref_query->fetch_assoc();
+        $referrer_id = $ref_data['referral_id'] ?? 0;
+
+
         $investment         = $db->query("INSERT INTO user_investments 
         (user_id,plan_id,amount,issue_date) 
         VALUES ('$user_id','$plan_id','$amount','$issue_date')");
@@ -113,8 +118,19 @@ function add_investment($user_id,$plan_ids,$amount,$issue_date){
             );            
 
             $db->query("INSERT INTO user_investment_details 
-            (investment_id,cycle,comission,comission_expiry_date) 
-            VALUES ('$investment_id','$i','$comission','$comission_expiry_date')");
+            (investment_id,user_id,cycle,comission,comission_expiry_date) 
+            VALUES ('$investment_id','$user_id','$i','$comission','$comission_expiry_date')");
+
+            if($referrer_id > 0){
+
+                $referral_commission = ($amount * 1) / 100;
+
+                $db->query("
+                    INSERT INTO user_investment_details 
+                    (investment_id,user_id,cycle,comission,comission_expiry_date) 
+                    VALUES ('$investment_id','$referrer_id','$i','$referral_commission','$comission_expiry_date')
+                ");
+            }
         }
             
     }
@@ -168,6 +184,9 @@ function update_investment($investment_id,$user_id,$plan_id,$amount,$issue_date)
     $user_id = intval($user_id);
     $plan_id = intval($plan_id);
     $amount = floatval($amount);
+    $ref_query   = $db->query("SELECT referral_id FROM users WHERE user_id = '$user_id'");
+    $ref_data    = $ref_query->fetch_assoc();
+    $referrer_id = $ref_data['referral_id'] ?? 0;
 
     $db->query("UPDATE user_investments SET
         user_id='$user_id',
@@ -193,9 +212,20 @@ function update_investment($investment_id,$user_id,$plan_id,$amount,$issue_date)
         );
 
         $db->query("INSERT INTO user_investment_details
-        (investment_id,cycle,comission,comission_expiry_date)
+        (investment_id,user_id,cycle,comission,comission_expiry_date)
         VALUES
-        ('$investment_id','$i','$commission_amount','$expiry_date')");
+        ('$investment_id','$user_id','$i','$commission_amount','$expiry_date')");
+
+        if($referrer_id > 0){
+
+            $referral_commission = ($amount * 1) / 100;
+
+            $db->query("
+                INSERT INTO user_investment_details 
+                (investment_id,user_id,cycle,comission,comission_expiry_date) 
+                VALUES ('$investment_id','$referrer_id','$i','$referral_commission','$comission_expiry_date')
+            ");
+        }
     }
 
     return "Investment Updated Successfully";

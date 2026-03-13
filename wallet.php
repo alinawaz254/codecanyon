@@ -71,7 +71,7 @@ $transactions = $db->query("
             <hr>
 
             <!-- TRANSACTIONS TABLE -->
-
+<!-- 
             <h4>Recent Transactions</h4>
 
             <table class="table table-bordered table-striped">
@@ -139,7 +139,7 @@ $transactions = $db->query("
 
                 </tbody>
 
-            </table>
+            </table> -->
 
         </div>
 

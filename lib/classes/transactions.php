@@ -18,7 +18,7 @@ class Transactions {
             $amount = floatval($amount);
             $description = $db->real_escape_string($description);
             $is_approved = 0;
-            if($transaction_type == 1 || $transaction_type == 4){
+            if($transaction_type == 2 || $transaction_type == 3){
                 $is_approved = 1;
             }
             // Insert transaction into database

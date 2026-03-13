@@ -141,11 +141,12 @@ require_once("lib/includes/header.php");
                             ip.plan_name,
                             uid.cycle,
                             uid.comission as commission_amount,
-                            uid.claimed_date
-                        FROM user_investments ui
+                            uid.claimed_date,
+                            uid.user_id
+                        FROM user_investment_details uid
+                        JOIN user_investments ui ON ui.investment_id = uid.investment_id
                         JOIN investment_plans ip ON ip.plan_id = ui.plan_id
-                        JOIN user_investment_details uid ON uid.investment_id = ui.investment_id
-                        WHERE ui.user_id = '$user_id' 
+                        WHERE uid.user_id = $user_id
                         AND uid.is_claimed = 1
                         ORDER BY uid.claimed_date DESC, ui.investment_id DESC
                     ";
