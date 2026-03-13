@@ -17,11 +17,14 @@ class Transactions {
             $transaction_type = intval($transaction_type);
             $amount = floatval($amount);
             $description = $db->real_escape_string($description);
-            
+            $is_approved = 0;
+            if($transaction_type == 1 || $transaction_type == 4){
+                $is_approved = 1;
+            }
             // Insert transaction into database
             $result = $db->query("INSERT INTO transactions 
-                                  (user_id, transaction_type, amount, description, created_at, updated_at) 
-                                  VALUES ('$user_id', '$transaction_type', '$amount', '$description', NOW(), NOW())");
+                                  (user_id, transaction_type, amount, description,is_approved, created_at, updated_at) 
+                                  VALUES ('$user_id', '$transaction_type', '$amount', '$description','$is_approved', NOW(), NOW())");
         
             if($result) {
                 return "Transaction added successfully.";
@@ -30,6 +33,61 @@ class Transactions {
             }
         }    
     }
+    // function create($request) {
+
+    //     global $db;
+    //     extract($request);
+
+    //     if($user_id == '') {
+    //         return _("User is required");
+    //     }
+
+    //     if($transaction_type == '') {
+    //         return _("Transaction type is required");
+    //     }
+
+    //     if($amount == '' || !is_numeric($amount)) {
+    //         return _("Valid amount is required");
+    //     }
+
+    //     $user_id = intval($user_id);
+    //     $transaction_type = intval($transaction_type);
+    //     $amount = floatval($amount);
+    //     $description = $db->real_escape_string($description);
+
+    //     // Start transaction (important)
+    //     $db->query("START TRANSACTION");
+
+    //     // Insert transaction
+    //     $db->query("
+    //         INSERT INTO transactions
+    //         (user_id,transaction_type,amount,description,created_at,updated_at)
+    //         VALUES('$user_id','$transaction_type','$amount','$description',NOW(),NOW())
+    //     ");
+
+    //     if($transaction_type == 1){
+    //         // Withdrawal
+    //         $db->query("
+    //             UPDATE wallets
+    //             SET balance = balance - $amount
+    //             WHERE user_id='$user_id'
+    //         ");
+    //     }
+
+    //     if($transaction_type == 2 || $transaction_type == 3){
+    //         // Funded OR Commission
+    //         $db->query("
+    //             INSERT INTO wallets(user_id,balance)
+    //             VALUES('$user_id','$amount')
+    //             ON DUPLICATE KEY UPDATE balance = balance + $amount
+    //         ");
+    //     }
+
+    //     $db->query("COMMIT");
+
+    //     return "Transaction added successfully";
+
+    // }    
     
     function list_transactions() {
         global $db;
@@ -337,6 +395,52 @@ class Transactions {
         }
         
         return $stats;
+    }
+
+    function balance($user_id)
+    {
+        global $db;
+
+        $sql = "
+            SELECT 
+                COALESCE(SUM(
+                    CASE 
+                        WHEN transaction_type = 2 THEN amount     
+                        WHEN transaction_type = 3 THEN amount    
+                        WHEN transaction_type = 1 THEN -amount     
+                        WHEN transaction_type = 4 THEN -amount     
+                    END
+                ),0) AS balance
+            FROM transactions
+            WHERE user_id = ?
+            AND is_approved = 1
+        ";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        $balance = (float)$row['balance'];
+
+        // Prevent negative balance display
+        if ($balance < 0) {
+            $balance = 0;
+        }
+
+        // Show k only for exact thousands
+        if ($balance >= 1000 && $balance % 1000 == 0 && $balance < 1000000) {
+            return ($balance / 1000) . 'k';
+        }
+
+        // Show M only for exact millions
+        if ($balance >= 1000000 && $balance % 1000000 == 0) {
+            return ($balance / 1000000) . 'M';
+        }
+
+        return 'PKR '.$balance;
     }
 }
 ?>

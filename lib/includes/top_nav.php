@@ -29,7 +29,25 @@
             <!-- End Logo -->
             <!-- Begin Navbar Menu -->
             <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center pull-right">
-                <!-- Begin Notifications -->
+                <!-- Begin Wallet -->
+                <?php if(partial_access('subscriber')): ?>
+
+                <li class="nav-item">
+                    <a href="wallet.php" class="nav-link">
+
+                        <i class="las la-wallet"></i>
+
+                        <span class="wallet-balance">
+                            <?php echo $transaction_obj->balance($_SESSION["user_id"]); ?>
+                        </span>
+
+                    </a>
+                </li>
+
+                <?php endif; ?>
+                <!-- End Wallet -->
+
+                <!-- Begin Notes -->
                 <li class="nav-item dropdown">
                     <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" class="nav-link">
@@ -51,7 +69,7 @@
                         </li>
                     </ul>
                 </li>
-                <!-- End Notifications -->
+                <!-- End Notes -->
 
                 <!-- Begin Messages -->
                 <li class="nav-item dropdown">
@@ -78,7 +96,7 @@
                     </ul>
                 </li>
                 <!-- End Messages -->
-                <?php if(partial_access("admin")): ?>                 
+                <?php if(partial_access("admin")): ?>
                 <!-- Begin Notification -->
                 <li class="nav-item dropdown">
 
@@ -111,7 +129,7 @@
                         </li>
 
                         <div class="notification-scroll">
-                        <?php $notification_obj->notification_widget(); ?>
+                            <?php $notification_obj->notification_widget(); ?>
                         </div>
 
                         <li class="text-center">
@@ -124,7 +142,7 @@
 
                 </li>
                 <!-- End Notification -->
-                <?php endif; ?>                 
+                <?php endif; ?>
 
                 <!-- User -->
                 <li class="nav-item dropdown">
@@ -173,8 +191,10 @@
                                 <?php _e("Edit Profile"); ?>
                             </a>
                         </li>
-                        <li><a rel="nofollow" href="dashboard.php?logout=1" class="dropdown-item logout text-center"><i
-                                    class="ti-power-off"></i></a></li>
+                        <li>
+                            <a rel="nofollow" href="dashboard.php?logout=1" class="dropdown-item logout text-center"><i
+                                    class="ti-power-off"></i></a>
+                        </li>
                     </ul>
                 </li>
                 <!-- End User -->

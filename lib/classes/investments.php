@@ -359,7 +359,7 @@ function list_investments(){
 
                 </div>
                 <div class="modal-footer investment-footer">
-                    <button class="btn btn-golden btn-md"
+                    <button class="btn btn-golden btn-md mb-5"
                         data-dismiss="modal">
                         Close
                     </button>

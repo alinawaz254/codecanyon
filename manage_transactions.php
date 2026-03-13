@@ -64,7 +64,7 @@
 				<select name="transaction_type" class="form-control" required>
 
 				<option value="">-- Select Type --</option>
-				<option value="1">Withdrawal</option>
+				<!-- <option value="1">Withdrawal</option> -->
 				<option value="2">Funded</option>
 				<option value="3">Commission</option>
 

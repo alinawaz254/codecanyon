@@ -44,7 +44,7 @@ $today = date("Y-m-d");
             $username    = $user['username'];
             $message     = $db->real_escape_string("$username has collected his commission on $today");
 
-            $db->query("INSERT INTO transactions (user_id,transaction_type,amount,description) VALUES ('$user_id',3,'$amount','$message')");
+            $db->query("INSERT INTO transactions (user_id,transaction_type,amount,description,is_approved) VALUES ('$user_id',3,'$amount','$message',1)");
 
             $search_admin = $db->query("SELECT * FROM users WHERE user_type LIKE '%admin%'");
 

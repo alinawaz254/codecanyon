@@ -1,5 +1,4 @@
 <?php
-
 require_once "lib/system_load.php";
 
 authenticate_user('all');
@@ -10,37 +9,97 @@ $page_title = _("My Referrals");
 
 require_once "lib/includes/header.php";
 
-$today = date("Y-m-d");
-     if(isset($_GET['user_investment_detail_id'])){
-            $search_record = $db->query("SELECT * FROM user_investment_details WHERE id =" . $_GET['user_investment_detail_id']);
-            $db->query("UPDATE user_investment_details SET is_claimed = 1,claimed_date = NOW() WHERE id =".$_GET['user_investment_detail_id']);
-            
-            $get_record  = $search_record->fetch_assoc();
-            $search_user = $db->query("SELECT * FROM users WHERE user_id = $user_id AND user_type LIKE '%subscriber%'");
-            $user        = $search_user->fetch_assoc();
-            $amount      = $get_record['comission'];
-            $username    = $user['username'];
-            $message     = $db->real_escape_string("$username has collected his referral commission on $today");
+// Display session messages
+if(isset($_SESSION['success_message'])) {
+    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+            ' . $_SESSION['success_message'] . '
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+          </div>';
+    unset($_SESSION['success_message']);
+}
 
-            $db->query("INSERT INTO transactions (user_id,transaction_type,amount,description) VALUES ('$user_id',3,'$amount','$message')");
+if(isset($_SESSION['error_message'])) {
+    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+            ' . $_SESSION['error_message'] . '
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+          </div>';
+    unset($_SESSION['error_message']);
+}
 
-            $search_admin = $db->query("SELECT * FROM users WHERE user_type LIKE '%admin%'");
+// $today = date("Y-m-d");
+$today = '2026-05-11';
 
-            while($row = $search_admin->fetch_assoc()){
+// Handle referral commission claim
+if(isset($_GET['referral_detail_id'])){
+    $detail_id = (int)$_GET['referral_detail_id'];
+    
+    // Check if already claimed
+    $check_claimed = $db->query("SELECT is_claimed, comission, investment_id FROM user_investment_details WHERE id = $detail_id");
+    $check_result = $check_claimed->fetch_assoc();
+    
+    if($check_result && $check_result['is_claimed'] == 0) {
+        // Get the commission record
+        $search_record = $db->query("SELECT * FROM user_investment_details WHERE id = $detail_id");
+        
+        // Update as claimed
+        $db->query("UPDATE user_investment_details SET is_claimed = 1, claimed_date = NOW() WHERE id = $detail_id");
+        
+        $get_record = $search_record->fetch_assoc();
+        
+        // Get user details
+        $search_user = $db->query("SELECT * FROM users WHERE user_id = $user_id");
+        $user = $search_user->fetch_assoc();
+        
+        $amount = $get_record['comission'];
+        $username = $user['username'];
+        
+        // Get investment details to find which referred user generated this commission
+        $investment_details = $db->query("
+            SELECT ui.user_id as referred_user_id, u.username as referred_username
+            FROM user_investment_details uid
+            JOIN user_investments ui ON uid.investment_id = ui.investment_id
+            JOIN users u ON ui.user_id = u.user_id
+            WHERE uid.id = $detail_id
+        ");
+        $investment_info = $investment_details->fetch_assoc();
+        
+        $referred_username = $investment_info['referred_username'] ?? 'Unknown User';
+        $message = $db->real_escape_string("$username has collected referral commission of $amount from $referred_username on $today");
 
-                $admin_id = isset($row['user_id']) ?? 0;
+        // Insert into transactions (using type 3 for commission as per your schema)
+        $db->query("
+            INSERT INTO transactions 
+            (user_id, transaction_type, amount, description, is_approved, created_at) 
+            VALUES ($user_id, 3, $amount, '$message', 1, NOW())
+        ");
 
-                $db->query("INSERT INTO notifications
-                (sender_id, sender_type, receiver_id, receiver_type, message)
-                VALUES ('$user_id','subscriber','$admin_id','admin','$message')")
-                or die($db->error);
-            }
+        // Notify admins
+        $search_admin = $db->query("SELECT * FROM users WHERE user_type LIKE '%admin%'");
 
-            header("Location: frontreferrals.php");
-            exit;     
+        while($row = $search_admin->fetch_assoc()){
+            $admin_id = $row['user_id'] ?? 0;
+
+            $db->query("
+                INSERT INTO notifications
+                (sender_id, sender_type, receiver_id, receiver_type, message, created_at)
+                VALUES ($user_id, 'subscriber', $admin_id, 'admin', '$message', NOW())
+            ");
+        }
+
+        $_SESSION['success_message'] = "Referral commission claimed successfully!";
+    } else {
+        $_SESSION['error_message'] = "This commission has already been claimed or doesn't exist.";
     }
-// $today = "2026-06-19"; // test date
 
+    header("Location: frontreferrals.php");
+    exit();     
+}
+
+// Query to get referrals
 $query = "
     SELECT 
         u.username,
@@ -83,6 +142,8 @@ $result = $db->query($query);
         display: flex;
         justify-content: space-between;
         margin-bottom: 15px;
+        flex-wrap: wrap;
+        gap: 10px;
     }
 
     .info-label {
@@ -118,37 +179,52 @@ $result = $db->query($query);
     .modal-title {
         color: white;
     }
-    .investment-table{
-    width:100%;
+    
+    .investment-table {
+        width: 100%;
+    }
+
+    .btn-claim {
+        background: #28a745;
+        color: white;
+        border: none;
+        padding: 5px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 13px;
+    }
+    
+    .btn-claim:hover {
+        background: #218838;
     }
 
     /* Mobile Modal Fix */
-    @media (max-width:768px){
+    @media (max-width: 768px) {
+        .investment-table {
+            min-width: 600px;
+        }
+        
+        .investment-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .modal-dialog {
+            margin: 10px;
+            max-width: 95%;
+        }
 
-    .investment-table{
-    min-width:600px;
-    }
-    .investment-info {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 15px;
-    }
-    .modal-dialog{
-        margin:10px;
-        max-width:95%;
-    }
+        .modal-content {
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+        }
 
-    .modal-content{
-        max-height:90vh;
-        display:flex;
-        flex-direction:column;
-    }
-
-    .modal-body{
-        overflow-y:auto;
-        overflow-x:auto;
-    }
-
+        .modal-body {
+            overflow-y: auto;
+            overflow-x: auto;
+        }
     }    
 </style>
 
@@ -185,7 +261,7 @@ $result = $db->query($query);
                                 <td>-</td>
                                 <td>0.00</td>
                                 <td>-</td>
-                                <td><span class='badge text-bg-secondary'>No Investment</span></td>
+                                <td><span class='badge bg-secondary'>No Investment</span></td>
                             </tr>";
                             continue;
                         }
@@ -200,7 +276,6 @@ $result = $db->query($query);
                         ");
 
                         $expiry_row = $expiry_query->fetch_assoc();
-
                         $is_expired = ($today > $expiry_row['last_date']);
                         ?>
 
@@ -213,11 +288,11 @@ $result = $db->query($query);
                                 <button class="btn btn-primary btn-sm btn-golden"
                                     data-toggle="modal"
                                     data-target="#referralModal_<?php echo $row['investment_id']; ?>_<?php echo $row['referred_user_id']; ?>">
-                                    View
+                                    View Commission
                                 </button>
 
                                 <?php if ($is_expired): ?>
-                                    <span class="badge text-bg-secondary ml-2">Inactive</span>
+                                    <span class="badge bg-secondary ml-2">Inactive</span>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -233,7 +308,7 @@ $result = $db->query($query);
                                 <div class="modal-content investment-modal">
                                     <div class="modal-header investment-header">
                                         <h5 class="modal-title">
-                                            <?php echo $row['username']; ?> Investment Details
+                                            <?php echo $row['username']; ?> - Investment Details
                                         </h5>
                                         <button type="button"
                                             class="btn-close-investment"
@@ -267,7 +342,7 @@ $result = $db->query($query);
 
                                         <hr>
 
-                                        <h6>Your Referral Commission: <span class="text-success">1%</span></h6>
+                                        <h6>Your Referral Commission: <span class="text-success">1% (Fixed)</span></h6>
 
                                         <table class="table investment-table">
                                             <thead>
@@ -285,7 +360,8 @@ $result = $db->query($query);
                                                     SELECT cycle, comission_expiry_date,
                                                     id,
                                                     is_claimed,
-                                                    claimed_date
+                                                    claimed_date,
+                                                    comission
                                                     FROM user_investment_details
                                                     WHERE investment_id = '" . $row['investment_id'] . "'
                                                     ORDER BY cycle ASC
@@ -296,33 +372,36 @@ $result = $db->query($query);
                                                 while ($detail = $details_result->fetch_assoc()) {
                                                     $cycle = $detail['cycle'];
                                                     $cycle_date = $detail['comission_expiry_date'];
-
-                                                    $commission = ($amount * 1) / 100;
+                                                    
+                                                    // Commission is already stored in the database
+                                                    $commission = $detail['comission'];
 
                                                     $is_detail_expired = (strtotime($today) > strtotime($cycle_date));
 
                                                     $date1 = new DateTime(date('Y-m-d'));
                                                     $date2 = new DateTime($detail['comission_expiry_date']);
-
-                                                    // Calculate the difference
                                                     $interval = $date1->diff($date2);
+                                                    
+                                                    // Check if commission is ready to claim (expired and not claimed)
+                                                    $can_claim = ($is_detail_expired && $detail['is_claimed'] == 0);
                                                     ?>
 
-                                                    <tr <?php if ($is_detail_expired) echo 'style="opacity:0.5"'; ?>>
+                                                    <tr <?php if ($is_detail_expired && $detail['is_claimed'] == 1) echo 'style="opacity:0.7"'; ?>>
                                                         <td class="info-value"><?php echo $cycle; ?></td>
                                                         <td class="info-value"><?php echo $cycle_date; ?></td>
-                                                        <td class="info-value"><?php echo number_format($commission, 2); ?></td>
+                                                        <td class="info-value">Rs <?php echo number_format($commission, 2); ?></td>
                                                         <td class="info-value">
-                                                            <?php if ($is_detail_expired  && $detail['is_claimed'] == 0): ?>
-                                                                <form action="<?php echo $_SERVER['PHP_SELF']?>" name="claim_investment_form">
-                                                                    <input type="hidden" name="user_investment_detail_id" value="<?php echo $detail['id']; ?>">
-                                                                    <input class="text-white" type="submit" name="claim_ivestment" value="Claim Now" style="background: green;border-radius: 5%;">
+                                                            <?php if ($can_claim): ?>
+                                                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET" style="display: inline;" onsubmit="return confirm('Are you sure you want to claim this referral commission of <?php echo number_format($commission, 2); ?>?');">
+                                                                    <input type="hidden" name="referral_detail_id" value="<?php echo $detail['id']; ?>">
+                                                                    <button type="submit" class="btn-claim">
+                                                                        Claim Now
+                                                                    </button>
                                                                 </form>
-                                                            <?php
-                                                             elseif(($is_detail_expired && isset($detail['is_claimed']) && $detail['is_claimed'] == 1)): ?>
-                                                                <span class="badge text-bg-success">Paid on <?php echo $detail['claimed_date'];?></span>
+                                                            <?php elseif($detail['is_claimed'] == 1): ?>
+                                                                <span class="badge bg-success">Paid on <?php echo date('Y-m-d', strtotime($detail['claimed_date'])); ?></span>
                                                             <?php else: ?>
-                                                                <span class="badge text-bg-danger">Unpaid <?php echo '('.$interval->days .' days left to claim)'; ?></span>
+                                                                <span class="badge bg-danger">Pending (<?php echo $interval->days; ?> days left)</span>
                                                             <?php endif; ?>
                                                         </td>
                                                     </tr>
@@ -360,7 +439,12 @@ require_once "lib/includes/footer.php";
 <script>
 $(document).ready(function(){
     $('.modal').on('show.bs.modal', function(){
-        console.log('Modal opened');
+        console.log('Modal opened: ' + $(this).attr('id'));
     });
+    
+    // Auto-hide alerts after 5 seconds
+    setTimeout(function() {
+        $('.alert').fadeOut('slow');
+    }, 5000);
 });
 </script>

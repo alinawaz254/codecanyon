@@ -49,8 +49,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/choices.js/1.1.6/choices.min.js" integrity="sha512-7PQ3MLNFhvDn/IQy12+1+jKcc1A/Yx4KuL62Bn6+ztkiitRVW1T/7ikAh675pOs3I+8hyXuRknDpTteeptw4Bw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
         <!--select2  -->
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css">
         <!-- select2 js -->
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        
         
         <?php if(isset($datatables) && $datatables == "1"): ?>
         <link rel="stylesheet" href="assets/css/datatables/datatables.min.css">
@@ -366,7 +368,41 @@
         .notification-scroll{
         max-height:350px;
         overflow-y:auto;
-        }                         
+        }
+        .wallet-nav{
+            display:inline-flex;
+            align-items:center;
+            gap:5px;
+            height:40px;
+        }
+
+        .wallet-nav i{
+            font-size:18px;
+        }
+
+        .wallet-balance {
+            color: #28a745;
+            font-weight: 600;
+            font-size: 13px;
+            line-height: 1;
+            white-space: nowrap;
+            position: absolute !important;
+            top: 27px !important;
+            right: 46px !important;
+            border: 3px solid #fff !important;
+        }
+        .wallet-balance:hover{
+            color: #12e744;
+        }
+        @media (max-width: 768px) {
+            .wallet-balance {
+                font-size: 8px;
+                max-width: 90px;
+                position: absolute !important;
+                top: 45px !important;
+                right: 28px !important;
+            }
+        }                            
     </style>
     <body id="page-top" class="bg-white">
         <!-- Begin Preloader -->

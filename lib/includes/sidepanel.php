@@ -61,7 +61,10 @@
                     <li><a href="transactions.php"><?php _e("Transactions"); ?></a></li>
                     <li><a href="manage_transactions.php"><?php _e("Add Transaction"); ?></a></li>
                 </ul>
-            </li>            
+            </li>
+            <li>
+                <a href="withdrawl.php"><i class="la la-user"></i><span><?php _e("Withdrawl Requests"); ?></span></a>
+            </li>             
         </ul>
         <!-- <hr> -->
 <!--         <span class="heading"><?php _e("Other Pages"); ?></span>
@@ -105,7 +108,13 @@
                 <i class="la la-money"></i>
                 <span><?php _e("Transactions log"); ?></span>
                 </a>
-            </li>  
+            </li>
+            <li>
+                <a href="wallet.php">
+                <i class="las la-wallet"></i>
+                <span><?php _e("Biz Wallet"); ?></span>
+                </a>
+            </li>             
         </ul>
 <!--         <hr>
         <span class="heading"><?php _e("Other Pages"); ?></span>
