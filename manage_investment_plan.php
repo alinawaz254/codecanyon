@@ -11,16 +11,34 @@ if(isset($_POST['update_plan'])){
     $message = $investment_obj->update_plan($edit_plan,$plan_name,$total_cycles,$commission,$cycle_days);
     $investment_obj->set_plan($edit_plan);
     $_POST['edit_plan'] = $edit_plan;
+
+    header("Location: manage_investment_plan.php?updated=1");
+    exit;     
 }
 
 if(isset($_POST['add_plan'])){
     extract($_POST);
     $message = $investment_obj->add_plan($plan_name,$total_cycles,$commission,$cycle_days);
+
+    header("Location: manage_investment_plan.php?added=1");
+    exit;     
 }
 
 $page_title = "Manage Investment Package";
 require_once("lib/includes/header.php");
 ?>
+
+<!-- SUCCESS MESSAGE -->
+
+<?php if(isset($_GET['added'])): ?>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">Package Added Successfully<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+</button></div>
+<?php endif; ?>
+
+<?php if(isset($_GET['updated'])): ?>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">Package Updated Successfully<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+</button></div>
+<?php endif; ?>
 
 <div class="row">
     <div class="col-xl-8 col-lg-8 col-md-10 col-12">

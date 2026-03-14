@@ -121,13 +121,15 @@ require_once("lib/includes/header.php");
 
                     <div class="text-center mt-3">
 
-                        <button type="submit" name="send" class="btn btn-primary">
+                        <button type="submit" name="send" class="btn btn-golden btn-md">
 
                             <i class="la la-paper-plane"></i>
                             Send OTP
 
                         </button>
-
+                        <a href="wallet.php" class="btn btn-md btn-secondary">
+                            Back
+                        </a> 
                     </div>
 
                 </form>

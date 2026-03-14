@@ -19,7 +19,8 @@
           $error_message = _("Error approving withdrawal: ") . mysqli_error($db);
       }
 
-      header("Locaion: dashboard.php");
+      header("Location: withdrawl.php");
+      exit;
   }
   
   $page_title = _("Withdrawal Requests"); //You can edit this to change your page title.

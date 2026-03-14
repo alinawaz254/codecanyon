@@ -11,11 +11,21 @@
 	//Add transaction processing
 	if(isset($_POST['add_transaction']) && $_POST['add_transaction'] == '1') {
 		$transaction_obj->create($_POST);
+
+		header("Location: manage_transactions.php?added=1");
+		exit;		
 	}
 	
 	$page_title = _("Add New Transaction");
 	require_once("lib/includes/header.php");
 ?>
+
+<?php if(isset($_GET['added'])): ?>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">Transaction created successfully
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+</button></div>	
+<?php endif; ?>
+
 <div class="row flex-row">
 	<div class="col-12">
 		<!-- Display message if exists -->

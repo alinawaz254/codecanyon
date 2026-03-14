@@ -103,6 +103,7 @@ class Transactions {
                 u.email
             FROM transactions t
             JOIN users u ON t.user_id = u.user_id
+            WHERE t.is_approved = 1
             ORDER BY t.created_at DESC
         ");    
 
@@ -442,5 +443,34 @@ class Transactions {
 
         return 'PKR '.$balance;
     }
+
+    function get_balance($user_id)
+    {
+        global $db;
+
+        $sql = "
+            SELECT 
+            COALESCE(SUM(
+                CASE
+                    WHEN transaction_type = 2 THEN amount
+                    WHEN transaction_type = 3 THEN amount
+                    WHEN transaction_type = 1 THEN -amount
+                    WHEN transaction_type = 4 THEN -amount
+                END
+            ),0) AS balance
+            FROM transactions
+            WHERE user_id = ?
+            AND is_approved = 1
+        ";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i",$user_id);
+        $stmt->execute();
+
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        return (float)$row['balance'];
+    }    
 }
 ?>

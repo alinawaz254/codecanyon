@@ -4,40 +4,60 @@ require_once("lib/system_load.php");
 
 authenticate_user('subscriber');
 
-$page_title = _("Wallet Windraw");
+$page_title = _("Wallet Withdraw");
 
 $user_id = (int)$_SESSION['user_id'];
 
-$msg = "";
-
 if(isset($_POST['withdraw'])){
 
-    $amount = $_POST['amount'];
+    $amount = floatval($_POST['amount']);
 
-    $balance = 0;
+    $balance = $transaction_obj->get_balance($user_id);
+    // $balance = floatval(str_replace(['PKR','k','M',' '],'',$balance));
+
+    if($amount <= 0){
+        header("Location: wallet_withdraw.php?error=invalid");
+        exit;
+    }
 
     if($amount > $balance){
-
-        $msg = "Insufficient balance";
-
-    }else{
-
-        $db->query("
-            INSERT INTO withdraw_requests(user_id,amount,status,created_at)
-            VALUES('$user_id','$amount','pending',NOW())
-        ");
-
-        $msg = "Withdrawal request sent";
-
+        header("Location: wallet_withdraw.php?error=balance");
+        exit;
     }
+
+    $stmt = $db->prepare("
+        INSERT INTO transactions
+        (user_id,transaction_type,amount,description,is_approved,created_at,updated_at)
+        VALUES(?,1,?,'Withdrawal Request',0,NOW(),NOW())
+    ");
+
+    $stmt->bind_param("id",$user_id,$amount);
+    $stmt->execute();
+
+    header("Location: wallet_withdraw.php?success=1");
+    exit;
 }
 
 require_once("lib/includes/header.php");
-
-/* GET WALLET BALANCE */
-$balance = 0;
-
 ?>
+
+<?php if(isset($_GET['success'])): ?>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">Withdrawal request sent successfully
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+</button></div>
+<?php endif; ?>
+
+<?php if(isset($_GET['error']) && $_GET['error']=="balance"): ?>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">Insufficient balance
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+</button></div>
+<?php endif; ?>
+
+<?php if(isset($_GET['error']) && $_GET['error']=="invalid"): ?>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">Invalid amount
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+</button></div>    
+<?php endif; ?>
 
 <style>
 .withdraw-card {
@@ -64,14 +84,8 @@ $balance = 0;
 
                 <div class="alert alert-info text-center">
                     Available Balance:
-                    <strong>PKR <?php number_format($balance,2); ?></strong>
+                    <strong><?php echo $transaction_obj->balance($_SESSION["user_id"]); ?></strong>
                 </div>
-
-                <?php if($msg): ?>
-                <div class="alert alert-success text-center">
-                    <?php echo $msg; ?>
-                </div>
-                <?php endif; ?>
 
                 <form method="post">
 
@@ -80,18 +94,21 @@ $balance = 0;
                         <label>Withdraw Amount</label>
 
                         <input type="number" name="amount" class="form-control" placeholder="Enter withdraw amount"
-                            required>
+                            min="1" step="0.01" required>
 
                     </div>
 
                     <div class="text-center mt-3">
 
-                        <button name="withdraw" class="btn btn-danger">
+                        <button name="withdraw" class="btn btn-golden btn-md">
 
                             <i class="la la-arrow-down"></i>
                             Request Withdraw
 
                         </button>
+                        <a href="wallet.php" class="btn btn-md btn-secondary">
+                            Back
+                        </a>
 
                     </div>
 

@@ -11,16 +11,34 @@ if(isset($_POST['update_investment'])){
     $message = $investment_obj->update_investment($edit_investment,$user_id,$plan_id,$amount,$issue_date);
     $investment_obj->set_investment($edit_investment);
     $_POST['edit_investment'] = $edit_investment;
+
+    header("Location: manage_investment.php?updated=1");
+    exit;    
 }
 
 if(isset($_POST['add_investment'])){
     extract($_POST);
     $message = $investment_obj->add_investment($user_id,$plan_id,$amount,$issue_date);
+
+    header("Location: manage_investment.php?added=1");
+    exit;    
 }
 
 $page_title = "Manage Investment";
 require_once("lib/includes/header.php");
 ?>
+
+<!-- SUCCESS MESSAGE -->
+
+<?php if(isset($_GET['added'])): ?>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">Investment Added Successfully<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+</button></div>
+<?php endif; ?>
+
+<?php if(isset($_GET['updated'])): ?>
+<div class="alert alert-warning alert-dismissible fade show" role="alert">Investment Updated Successfully<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+</button></div>
+<?php endif; ?>
 
 <style>
     .select2-container .select2-selection--single{
@@ -60,7 +78,7 @@ require_once("lib/includes/header.php");
 
             <div class="col-12 mb-3">
                 <label for="multiple-select-plans"> Select Plan *</label>
-                <select name="plan_id[]" id="multiple-select-plans" multiple class="form-control" required>
+                <select name="plan_id[]" id="multiple-select-plans" class="form-control" required>
                 <option value="">Select Plan</option>
                 <?php
                 $result = $db->query("SELECT plan_id,plan_name FROM investment_plans");
