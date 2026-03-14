@@ -902,6 +902,12 @@ endif;
 		}//if ends here.
 	}//function ends here.
 
+	function show_alert($message){
+		echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">'
+			.$message.
+			'<button type="button" class="close" data-dismiss="alert" aria-label="Close"></button>
+			</div>';
+	}	
 	function return_additional_field_options( $user_id, $form_type ) {
 		global $new_user;
 		$user_additional_fields = get_option( '_extra_user_fields' );

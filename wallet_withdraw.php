@@ -82,7 +82,7 @@ require_once("lib/includes/header.php");
 
                 <h3 class="withdraw-title">Wallet Withdraw</h3>
 
-                <div class="alert alert-info text-center">
+                <div class="alert alert-light bg-dark text-center">
                     Available Balance:
                     <strong><?php echo $transaction_obj->balance($_SESSION["user_id"]); ?></strong>
                 </div>

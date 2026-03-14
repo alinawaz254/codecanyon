@@ -58,7 +58,8 @@ require_once("lib/includes/header.php");
                                     <!-- <i class="la la-plus-circle"></i> -->
                                 </div>
                                 <div>
-                                    <h3 class="mb-0 text-success">+$<?php echo number_format($stats['funded'] + $stats['commission'], 2); ?></h3>
+                                    <h3 class="mb-0 text-success">
+                                        +$<?php echo number_format($stats['funded'] + $stats['commission'], 2); ?></h3>
                                     <span class="text-muted"><?php _e("Total Credits"); ?></span>
                                 </div>
                             </div>
@@ -75,7 +76,8 @@ require_once("lib/includes/header.php");
                                     <!-- <i class="la la-minus-circle"></i> -->
                                 </div>
                                 <div>
-                                    <h3 class="mb-0 text-danger">-$<?php echo number_format($stats['withdrawals'], 2); ?></h3>
+                                    <h3 class="mb-0 text-danger">
+                                        -$<?php echo number_format($stats['withdrawals'], 2); ?></h3>
                                     <span class="text-muted"><?php _e("Total Withdrawals"); ?></span>
                                 </div>
                             </div>
@@ -88,12 +90,12 @@ require_once("lib/includes/header.php");
                     <div class="widget-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="d-flex flex-row align-items-center">
-                                <div class="avatar avatar-icon bg-info mr-2">
-                                    <!-- <i class="la la-calendar"></i> -->
-                                </div>
+                                <div class="avatar avatar-icon bg-warning mr-2"></div>
                                 <div>
-                                    <h3 class="mb-0"><?php echo $stats['today_count']; ?></h3>
-                                    <span class="text-muted"><?php _e("Today"); ?></span>
+                                    <h3 class="mb-0 text-warning">
+                                        -$<?php echo number_format($stats['transfers'], 2); ?>
+                                    </h3>
+                                    <span class="text-muted"><?php _e("Total Transfers"); ?></span>
                                 </div>
                             </div>
                         </div>

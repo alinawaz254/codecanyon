@@ -147,16 +147,20 @@ class Transactions {
                 switch($row['transaction_type']) {
                     case 1:
                         $type_label = _("Withdrawal");
-                        $type_class = 'badge text-bg-danger';
+                        $type_class = 'badge bg-danger';
                         break;
                     case 2:
                         $type_label = _("Funded");
-                        $type_class = 'badge text-bg-success';
+                        $type_class = 'badge bg-success';
                         break;
                     case 3:
                         $type_label = _("Commission");
                         $type_class = 'badge text-bg-primary';
                         break;
+                    case 4:
+                        $type_label = _("Transfer");
+                        $type_class = 'badge bg-warning';
+                        break;                        
                     default:
                         $type_label = _("Unknown");
                         $type_class = 'badge text-bg-secondary';
@@ -166,10 +170,11 @@ class Transactions {
                 $amount_sign = '';
                 $amount_class = '';
                 
-                if($row['transaction_type'] == 1) { // Withdrawal
+                if($row['transaction_type'] == 1 || $row['transaction_type'] == 4){
                     $amount_sign = '-';
                     $amount_class = 'text-danger';
-                } else { // Funded or Commission
+                }
+                else{
                     $amount_sign = '+';
                     $amount_class = 'text-success';
                 }
@@ -251,78 +256,89 @@ class Transactions {
         $amount_sign = ($transaction['transaction_type'] == 1) ? '-' : '+';
         $amount_class = ($transaction['transaction_type'] == 1) ? 'text-danger' : 'text-success';
         ?>
-        
-        <div class="modal fade" id="transactionModal_<?php echo $transaction['id']; ?>" tabindex="-1" role="dialog">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="text-dark text-center"><?php echo _("Transaction Details"); ?></h5>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Transaction Info Cards -->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="card mb-3">
-                                    <div class="card-header bg-primary text-white">
-                                        <h6 class="mb-0 text-white"><?php echo _("User Information"); ?></h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <p><strong><?php echo _("Username:"); ?></strong> <?php echo $transaction['username'] ? htmlspecialchars($transaction['username']) : 'N\A'; ?></p>
-                                        <p><strong><?php echo _("Name:"); ?></strong> <?php echo $transaction['first_name'] ? htmlspecialchars($transaction['first_name'] . ' ' . $transaction['last_name']) : 'N\A'; ?></p>
-                                        <p><strong><?php echo _("Email:"); ?></strong> <?php echo $transaction['email'] ? htmlspecialchars($transaction['email']) : 'N\A'; ?></p>
-                                        <p><strong><?php echo _("User ID:"); ?></strong> #<?php echo $transaction['user_id']; ?></p>
-                                    </div>
-                                </div>
+
+<div class="modal fade" id="transactionModal_<?php echo $transaction['id']; ?>" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="text-dark text-center"><?php echo _("Transaction Details"); ?></h5>
+            </div>
+            <div class="modal-body">
+                <!-- Transaction Info Cards -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-header bg-primary text-white">
+                                <h6 class="mb-0 text-white"><?php echo _("User Information"); ?></h6>
                             </div>
-                            <div class="col-md-6">
-                                <div class="card mb-3">
-                                    <div class="card-header bg-info text-white">
-                                        <h6 class="mb-0 text-white"><?php echo _("Transaction Information"); ?></h6>
-                                    </div>
-                                    <div class="card-body">
-                                        <p><strong><?php echo _("Transaction ID:"); ?></strong> #<?php echo $transaction['id']; ?></p>
-                                        <p><strong><?php echo _("Type:"); ?></strong> 
-                                            <span class="text <?php 
+                            <div class="card-body">
+                                <p><strong><?php echo _("Username:"); ?></strong>
+                                    <?php echo $transaction['username'] ? htmlspecialchars($transaction['username']) : 'N\A'; ?>
+                                </p>
+                                <p><strong><?php echo _("Name:"); ?></strong>
+                                    <?php echo $transaction['first_name'] ? htmlspecialchars($transaction['first_name'] . ' ' . $transaction['last_name']) : 'N\A'; ?>
+                                </p>
+                                <p><strong><?php echo _("Email:"); ?></strong>
+                                    <?php echo $transaction['email'] ? htmlspecialchars($transaction['email']) : 'N\A'; ?>
+                                </p>
+                                <p><strong><?php echo _("User ID:"); ?></strong> #<?php echo $transaction['user_id']; ?>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-header bg-info text-white">
+                                <h6 class="mb-0 text-white"><?php echo _("Transaction Information"); ?></h6>
+                            </div>
+                            <div class="card-body">
+                                <p><strong><?php echo _("Transaction ID:"); ?></strong>
+                                    #<?php echo $transaction['id']; ?></p>
+                                <p><strong><?php echo _("Type:"); ?></strong>
+                                    <span class="text <?php 
                                                 echo ($transaction['transaction_type'] == 1) ? 'text-danger' : 
                                                     (($transaction['transaction_type'] == 2) ? 'text-success' : 'text-info'); 
                                             ?>"><?php echo $type_label; ?></span>
-                                        </p>
-                                        <p><strong><?php echo _("Amount:"); ?></strong> 
-                                            <span class="<?php echo $amount_class; ?>">
-                                                <?php echo $currency .' '. $amount_sign; ?><?php echo number_format($transaction['amount'], 2); ?>
-                                            </span>
-                                        </p>
-                                        <p><strong><?php echo _("Created:"); ?></strong> <?php echo date("F j, Y, g:i a", strtotime($transaction['created_at'])); ?></p>
-                                        <p><strong><?php echo _("Last Updated:"); ?></strong> <?php echo date("F j, Y, g:i a", strtotime($transaction['updated_at'])); ?></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Description -->
-                        <div class="card">
-                            <div class="card-header bg-secondary text-white">
-                                <h6 class="mb-0 text-white"><?php echo _("Description"); ?></h6>
-                            </div>
-                            <div class="card-body">
-                                <?php if(!empty($transaction['description'])): ?>
-                                    <p class="mb-0"><?php echo nl2br(htmlspecialchars($transaction['description'])); ?></p>
-                                <?php else: ?>
-                                    <p class="text-muted mb-0"><em><?php echo _("No description provided for this transaction."); ?></em></p>
-                                <?php endif; ?>
+                                </p>
+                                <p><strong><?php echo _("Amount:"); ?></strong>
+                                    <span class="<?php echo $amount_class; ?>">
+                                        <?php echo $currency .' '. $amount_sign; ?><?php echo number_format($transaction['amount'], 2); ?>
+                                    </span>
+                                </p>
+                                <p><strong><?php echo _("Created:"); ?></strong>
+                                    <?php echo date("F j, Y, g:i a", strtotime($transaction['created_at'])); ?></p>
+                                <p><strong><?php echo _("Last Updated:"); ?></strong>
+                                    <?php echo date("F j, Y, g:i a", strtotime($transaction['updated_at'])); ?></p>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-golden" data-dismiss="modal">
-                            <i class="la la-close"></i> <?php echo _("Close"); ?>
-                        </button>
+                </div>
+
+                <!-- Description -->
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <h6 class="mb-0 text-white"><?php echo _("Description"); ?></h6>
+                    </div>
+                    <div class="card-body">
+                        <?php if(!empty($transaction['description'])): ?>
+                        <p class="mb-0"><?php echo nl2br(htmlspecialchars($transaction['description'])); ?></p>
+                        <?php else: ?>
+                        <p class="text-muted mb-0">
+                            <em><?php echo _("No description provided for this transaction."); ?></em></p>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-golden" data-dismiss="modal">
+                    <i class="la la-close"></i> <?php echo _("Close"); ?>
+                </button>
+            </div>
         </div>
-        
-        <?php
+    </div>
+</div>
+
+<?php
         return ob_get_clean();
     }
     
@@ -356,6 +372,7 @@ class Transactions {
             'withdrawals' => 0,
             'funded' => 0,
             'commission' => 0,
+            'transfers' => 0,            
             'today_count' => 0,
             'today_amount' => 0
         );
@@ -372,7 +389,8 @@ class Transactions {
                 SELECT 
                     SUM(CASE WHEN transaction_type = 1 THEN amount ELSE 0 END) as total_withdrawals,
                     SUM(CASE WHEN transaction_type = 2 THEN amount ELSE 0 END) as total_funded,
-                    SUM(CASE WHEN transaction_type = 3 THEN amount ELSE 0 END) as total_commission
+                    SUM(CASE WHEN transaction_type = 3 THEN amount ELSE 0 END) as total_commission,
+                    SUM(CASE WHEN transaction_type = 4 THEN amount ELSE 0 END) as total_transfers                    
                 FROM transactions
             ");
             if($result) {
@@ -380,6 +398,7 @@ class Transactions {
                 $stats['withdrawals'] = $amounts['total_withdrawals'] ?? 0;
                 $stats['funded'] = $amounts['total_funded'] ?? 0;
                 $stats['commission'] = $amounts['total_commission'] ?? 0;
+                $stats['transfers'] = $amounts['total_transfers'] ?? 0;                
             }
             
             // Today's transactions
@@ -449,7 +468,7 @@ class Transactions {
         global $db;
 
         $sql = "
-            SELECT 
+            SELECT
             COALESCE(SUM(
                 CASE
                     WHEN transaction_type = 2 THEN amount
@@ -471,6 +490,50 @@ class Transactions {
         $row = $result->fetch_assoc();
 
         return (float)$row['balance'];
+    }
+    
+    function transfer($sender_id, $receiver_id, $amount)
+    {
+        global $db;
+
+        $amount = floatval($amount);
+
+        if($amount <= 0){
+            return false;
+        }
+
+        $db->begin_transaction();
+
+        try {
+
+            // Sender debit
+            $stmt1 = $db->prepare("
+                INSERT INTO transactions
+                (user_id,transaction_type,amount,is_approved,description,created_at,updated_at)
+                VALUES(?,4,?,1,'Wallet transfer sent',NOW(),NOW())
+            ");
+            $stmt1->bind_param("id",$sender_id,$amount);
+            $stmt1->execute();
+
+
+            // Receiver credit
+            $stmt2 = $db->prepare("
+                INSERT INTO transactions
+                (user_id,transaction_type,amount,is_approved,description,created_at,updated_at)
+                VALUES(?,2,?,1,'Wallet transfer received',NOW(),NOW())
+            ");
+            $stmt2->bind_param("id",$receiver_id,$amount);
+            $stmt2->execute();
+
+            $db->commit();
+
+            return true;
+
+        } catch(Exception $e){
+
+            $db->rollback();
+            return false;
+        }
     }    
 }
 ?>

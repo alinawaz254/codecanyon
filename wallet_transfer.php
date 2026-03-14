@@ -8,67 +8,88 @@ $user_id = (int)$_SESSION['user_id'];
 
 $page_title = _("Wallet Transfer");
 
-$msg = "";
+$transactions_obj = new Transactions();
 
 if(isset($_POST['send'])){
 
     $email  = trim($_POST['email'] ?? '');
     $amount = floatval($_POST['amount'] ?? 0);
-    $user_id = $_SESSION['user_id'];
 
-    // Get wallet balance
-    $balance = $wallet_obj->get_balance($user_id);
+    $balance = $transactions_obj->get_balance($user_id);
 
     if(empty($email) || $amount <= 0){
-        $msg = "Invalid email or amount";
+        header("Location: wallet_transfer.php?error=invalid");
+        exit;
     }
-    elseif($amount > $balance){
-        $msg = "Insufficient wallet balance";
+
+    if($amount > $balance){
+        header("Location: wallet_transfer.php?error=balance");
+        exit;
     }
-    else{
 
-        // Find receiver
-        $q = $db->prepare("SELECT user_id FROM users WHERE email=? LIMIT 1");
-        $q->bind_param("s", $email);
-        $q->execute();
+    // find receiver
+    $q = $db->prepare("SELECT user_id FROM users WHERE email=? LIMIT 1");
+    $q->bind_param("s",$email);
+    $q->execute();
+    $result = $q->get_result();
 
-        $result = $q->get_result();
-
-        if($result->num_rows == 0){
-            $msg = "User not found";
-        }
-        else{
-
-            $r = $result->fetch_assoc();
-            $receiver_id = $r['user_id'];
-
-            // Prevent sending to self
-            if($receiver_id == $user_id){
-                $msg = "You cannot send money to yourself";
-            }
-            else{
-
-                $_SESSION['transfer_receiver'] = $receiver_id;
-                $_SESSION['transfer_amount']   = $amount;
-
-                // Generate OTP
-                $otp = $wallet_obj->send_otp($user_id);
-
-                if($otp){
-
-                    mail($_SESSION['email'], "Wallet OTP", "Your OTP is: ".$otp);
-
-                    header("Location: wallet_transfer_verify.php");
-                    exit;
-                }else{
-                    $msg = "Failed to generate OTP";
-                }
-            }
-        }
+    if($result->num_rows == 0){
+        header("Location: wallet_transfer.php?error=user");
+        exit;
     }
+
+    $row = $result->fetch_assoc();
+    $receiver_id = $row['user_id'];
+
+    if($receiver_id == $user_id){
+        header("Location: wallet_transfer.php?error=self");
+        exit;
+    }
+
+    $_SESSION['transfer_receiver'] = $receiver_id;
+    $_SESSION['transfer_amount']   = $amount;
+
+    // generate OTP
+    $otp = rand(100000,999999);
+
+    $expires = date("Y-m-d H:i:s", time() + 300); // 5 min
+
+    // delete old otp
+    $stmt = $db->prepare("DELETE FROM wallet_otps WHERE user_id=?");
+    $stmt->bind_param("i",$user_id);
+    $stmt->execute();
+
+    // insert new otp
+    $stmt = $db->prepare("INSERT INTO wallet_otps(user_id,otp,expires_at) VALUES(?,?,?)");
+    $stmt->bind_param("iis",$user_id,$otp,$expires);
+    $stmt->execute();
+
+    // send email
+    mail($_SESSION['email'],"Wallet OTP","Your OTP is: ".$otp);
+
+    header("Location: wallet_transfer_verify.php");
+    exit;
 }
 
 require_once("lib/includes/header.php");
+?>
+
+<?php
+if(isset($_GET['error']) && $_GET['error']=="invalid"){
+	show_alert("Withdrawal request Invalid email or amount");
+}
+
+if(isset($_GET['error']) && $_GET['error']=="balance"){
+	show_alert("Withdrawal request Invalid Insufficient wallet balance");
+}
+
+if(isset($_GET['error']) && $_GET['error']=="user"){
+	show_alert("Withdrawal request Invalid Receiver not found");
+}
+
+if(isset($_GET['error']) && $_GET['error']=="self"){
+	show_alert("Withdrawal request Invalid You cannot send money to yourself");
+}
 ?>
 
 <style>
@@ -94,11 +115,10 @@ require_once("lib/includes/header.php");
 
                 <h3 class="transfer-title">Wallet Transfer</h3>
 
-                <?php if($msg): ?>
-                <div class="alert alert-danger">
-                    <?php echo $msg; ?>
+                <!-- Wallet Balance -->
+                <div class="alert alert-light bg-dark text-center">
+                    Balance: <?php echo $transactions_obj->balance($user_id); ?>
                 </div>
-                <?php endif; ?>
 
                 <form method="post">
 
@@ -129,7 +149,7 @@ require_once("lib/includes/header.php");
                         </button>
                         <a href="wallet.php" class="btn btn-md btn-secondary">
                             Back
-                        </a> 
+                        </a>
                     </div>
 
                 </form>
