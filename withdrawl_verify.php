@@ -190,7 +190,7 @@ if(isset($_GET['error']) && $_GET['error']=="failed"){
                             Resend OTP
                         </button>
 
-                        <a href="wallet_withdraw.php" class="btn btn-secondary">
+                        <a href="wallet_withdrawl.php" class="btn btn-secondary">
                             <i class="la la-arrow-left"></i>
                             Back
                         </a>

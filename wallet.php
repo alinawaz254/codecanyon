@@ -60,7 +60,7 @@ $transactions = $db->query("
                         <i class="la la-exchange"></i> Transfer
                     </a>
 
-                    <a href="wallet_withdraw.php" class="btn btn-golden btn-lg">
+                    <a href="wallet_withdrawl.php" class="btn btn-golden btn-lg">
                         <i class="la la-arrow-down"></i> Withdraw
                     </a>
 

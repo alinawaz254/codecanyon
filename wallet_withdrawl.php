@@ -126,7 +126,7 @@ require_once("lib/includes/header.php");
                             Send OTP
 
                         </button>
-                        <a href="withdrawl.php" class="btn btn-md btn-secondary">
+                        <a href="wallet.php" class="btn btn-md btn-secondary">
                             Back
                         </a>
                     </div>
