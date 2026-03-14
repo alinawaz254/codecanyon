@@ -52,7 +52,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css">
         <!-- select2 js -->
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-        
+
         
         <?php if(isset($datatables) && $datatables == "1"): ?>
         <link rel="stylesheet" href="assets/css/datatables/datatables.min.css">

@@ -7,34 +7,46 @@ authenticate_user('subscriber');
 $page_title = _("Wallet Withdraw");
 
 $user_id = (int)$_SESSION['user_id'];
+$transactions_obj = new Transactions();
 
-if(isset($_POST['withdraw'])){
+if(isset($_POST['send'])){
 
-    $amount = floatval($_POST['amount']);
+    $email  = trim($_SESSION['email'] ?? '');
+    $amount = floatval($_POST['amount'] ?? 0);
 
-    $balance = $transaction_obj->get_balance($user_id);
-    // $balance = floatval(str_replace(['PKR','k','M',' '],'',$balance));
+    $balance = $transactions_obj->get_balance($user_id);
 
-    if($amount <= 0){
-        header("Location: wallet_withdraw.php?error=invalid");
+    if(empty($email) || $amount <= 0){
+        header("Location: withdrawl.php?error=invalid");
         exit;
     }
 
     if($amount > $balance){
-        header("Location: wallet_withdraw.php?error=balance");
+        header("Location: withdrawl.php?error=balance");
         exit;
     }
 
-    $stmt = $db->prepare("
-        INSERT INTO transactions
-        (user_id,transaction_type,amount,description,is_approved,created_at,updated_at)
-        VALUES(?,1,?,'Withdrawal Request',0,NOW(),NOW())
-    ");
+    $_SESSION['withdrawl_amount']   = $amount;
 
-    $stmt->bind_param("id",$user_id,$amount);
+    // generate OTP
+    $otp = rand(100000,999999);
+
+    $expires = date("Y-m-d H:i:s", time() + 300); // 5 min
+
+    // delete old otp
+    $stmt = $db->prepare("DELETE FROM wallet_otps WHERE user_id=?");
+    $stmt->bind_param("i",$user_id);
     $stmt->execute();
 
-    header("Location: wallet_withdraw.php?success=1");
+    // insert new otp
+    $stmt = $db->prepare("INSERT INTO wallet_otps(user_id,otp,expires_at) VALUES(?,?,?)");
+    $stmt->bind_param("iis",$user_id,$otp,$expires);
+    $stmt->execute();
+
+    // send email
+    mail($_SESSION['email'],"Withdrawl OTP","Your OTP is: ".$otp);
+
+    header("Location: withdrawl_verify.php");
     exit;
 }
 
@@ -80,7 +92,7 @@ require_once("lib/includes/header.php");
 
             <div class="withdraw-card">
 
-                <h3 class="withdraw-title">Wallet Withdraw</h3>
+                <h3 class="withdraw-title">Wallet Withdrawl</h3>
 
                 <div class="alert alert-light bg-dark text-center">
                     Available Balance:
@@ -88,28 +100,35 @@ require_once("lib/includes/header.php");
                 </div>
 
                 <form method="post">
+<!-- 
+                    <div class="form-group">
+
+                        <label>Your Email</label>
+
+                        <input type="email" name="email" class="form-control" placeholder="Enter receiver email"
+                            required>
+
+                    </div> -->
 
                     <div class="form-group">
 
-                        <label>Withdraw Amount</label>
+                        <label>Withdrawl Amount</label>
 
-                        <input type="number" name="amount" class="form-control" placeholder="Enter withdraw amount"
-                            min="1" step="0.01" required>
+                        <input type="number" name="amount" class="form-control" placeholder="Enter amount" required>
 
                     </div>
 
                     <div class="text-center mt-3">
 
-                        <button name="withdraw" class="btn btn-golden btn-md">
+                        <button type="submit" name="send" class="btn btn-golden btn-md">
 
-                            <i class="la la-arrow-down"></i>
-                            Request Withdraw
+                            <i class="la la-paper-plane"></i>
+                            Send OTP
 
                         </button>
-                        <a href="wallet.php" class="btn btn-md btn-secondary">
+                        <a href="withdrawl.php" class="btn btn-md btn-secondary">
                             Back
                         </a>
-
                     </div>
 
                 </form>

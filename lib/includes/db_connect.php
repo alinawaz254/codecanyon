@@ -10,7 +10,7 @@
 	if($db->connect_errno > 0){
 		die('Unable to connect to database [' . $db->connect_error . ']');
 	}
-
+	
 	function if_table_exists($tablename) {
 		global $db; 
 

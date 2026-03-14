@@ -218,13 +218,13 @@
 											});
 											};
 										</script>
-										<div id="html_element"></div>
+										<div id="html_element" class="mb-3"></div>
 										<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
 											async defer>
 										</script>
 									<?php } ?>
 
-									<select name="referral_id" id="referral-users" class="form-control" style="width:100%;margin-bottom: 20px;">
+									<select name="referral_id" id="referral-users" class="form-control mb-5" style="width:100%;margin-bottom: 20px;">
 									    <option value="0">Select Referrer (Optional)</option>
 									    <?php
 									    $current_referral_id = isset($new_user->referral_id) ? $new_user->referral_id : '';
@@ -249,7 +249,7 @@
 									    ?>
 									</select>
 
-									<div class="row">
+									<div class="row mt-2">
 										<div class="col text-left">
 											<div class="styled-checkbox">
 											<input type="checkbox" id="agreetopolicy" name="privacy_policy" value="1" required="required" />    

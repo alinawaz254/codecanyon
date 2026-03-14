@@ -8,7 +8,7 @@ authenticate_user('subscriber');
 
 $user_id = (int)$_SESSION['user_id'];
 
-$page_title = _("Verify Wallet Transfer");
+$page_title = _("Verify Withdrawl");
 
 $msg = "";
 
@@ -30,12 +30,12 @@ if(isset($_POST['resend'])){
 
     // mail($_SESSION['email'],"Wallet OTP","Your OTP is: ".$otp);
     // send email
-    $subject = "Wallet OTP";
-    $message = "Your Wallet Transfer OTP is: <b>".$otp."</b><br>This OTP will expire in 10 minutes.";
+    $subject = "Withdrawl OTP";
+    $message = "Your Withdrawl OTP is: <b>".$otp."</b><br>This OTP will expire in 10 minutes.";
 
     send_email($_SESSION['email'], $subject, $message);  
 
-    header("Location: wallet_transfer_verify.php?success=resent");
+    header("Location: withdrawl_verify.php?success=resent");
     exit;
 }
 
@@ -47,7 +47,7 @@ if(isset($_POST['verify'])){
     $otp = intval($_POST['otp']);
 
     if($otp == 0){
-        header("Location: wallet_transfer_verify.php?error=empty");
+        header("Location: withdrawl_verify.php?error=empty");
         exit;
     }
 
@@ -64,7 +64,7 @@ if(isset($_POST['verify'])){
     $result = $stmt->get_result();
 
     if($result->num_rows == 0){
-        header("Location: wallet_transfer_verify.php?error=invalid");
+        header("Location: withdrawl_verify.php?error=invalid");
         exit;
     }
 
@@ -73,7 +73,7 @@ if(isset($_POST['verify'])){
     /* check expiry manually */
 
     if(strtotime($row['expires_at']) < time()){
-        header("Location: wallet_transfer_verify.php?error=invalid");
+        header("Location: withdrawl_verify.php?error=invalid");
         exit;
     }
 
@@ -81,19 +81,18 @@ if(isset($_POST['verify'])){
 
     $balance = $transactions_obj->get_balance($user_id);
 
-    if($_SESSION['transfer_amount'] > $balance){
-        header("Location: wallet_transfer_verify.php?error=balance");
+    if($_SESSION['withdrawl_amount'] > $balance){
+        header("Location: withdrawl_verify.php?error=balance");
         exit;
     }
 
-    $success = $transactions_obj->transfer(
+    $success = $transactions_obj->withdrawl(
         $user_id,
-        $_SESSION['transfer_receiver'],
-        $_SESSION['transfer_amount']
+        $_SESSION['withdrawl_amount']
     );
 
     if(!$success){
-        header("Location: wallet_transfer_verify.php?error=failed");
+        header("Location: withdrawl_verify.php?error=failed");
         exit;
     }
 
@@ -103,10 +102,9 @@ if(isset($_POST['verify'])){
     $stmt->bind_param("i",$user_id);
     $stmt->execute();
 
-    unset($_SESSION['transfer_receiver']);
-    unset($_SESSION['transfer_amount']);
+    unset($_SESSION['withdrawl_amount']);
 
-    header("Location: wallet_transfer_verify.php?success=done");
+    header("Location: withdrawl_verify.php?success=done");
     exit;
 }
 
@@ -116,7 +114,7 @@ require_once("lib/includes/header.php");
 <?php
 
 if(isset($_GET['success']) && $_GET['success']=="done"){
-    show_alert("Transfer Successful");
+    show_alert("Withdrawl Successful");
 }
 
 if(isset($_GET['success']) && $_GET['success']=="resent"){
@@ -136,7 +134,7 @@ if(isset($_GET['error']) && $_GET['error']=="balance"){
 }
 
 if(isset($_GET['error']) && $_GET['error']=="failed"){
-    show_alert("Transfer failed");
+    show_alert("Withdrawl failed");
 }
 
 ?>
@@ -162,7 +160,7 @@ if(isset($_GET['error']) && $_GET['error']=="failed"){
 
             <div class="verify-card">
 
-                <h3 class="verify-title">Verify Wallet Transfer</h3>
+                <h3 class="verify-title">Verify Withdrawl</h3>
 
                 <?php if($msg): ?>
                 <div class="alert alert-info text-center">
@@ -184,7 +182,7 @@ if(isset($_GET['error']) && $_GET['error']=="failed"){
 
                         <button name="verify" class="btn btn-success mr-2">
                             <i class="la la-check"></i>
-                            Verify Transfer
+                            Verify Withdrawl
                         </button>
 
                         <button type="submit" name="resend" class="btn btn-warning mr-2">
@@ -192,7 +190,7 @@ if(isset($_GET['error']) && $_GET['error']=="failed"){
                             Resend OTP
                         </button>
 
-                        <a href="wallet_transfer.php" class="btn btn-secondary">
+                        <a href="wallet_withdrawl.php" class="btn btn-secondary">
                             <i class="la la-arrow-left"></i>
                             Back
                         </a>

@@ -25,8 +25,43 @@
 	
 	if(isset($_POST['login_identity']) && $_POST['login_identity'] == '1') { 
 		extract($_POST);
+        if(get_option('activate_captcha')) {    
+            
+            if(isset($_POST['g-recaptcha-response']) && !empty($_POST['g-recaptcha-response'])) {
+                $captcha    = $_POST['g-recaptcha-response'];
+                $secret_key = get_option('secret_key');
+                
+                $url    = 'https://www.google.com/recaptcha/api/siteverify';
+                $data   = ['secret'   => $secret_key,
+                          'response' => $captcha,
+                          'remoteip' => $_SERVER['REMOTE_ADDR']];
+                $options = [
+                    'http' => [
+                        'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                        'method'  => 'POST',
+                        'content' => http_build_query($data) 
+                    ]
+                ];
+                $context    = stream_context_create($options);
+                $result     = file_get_contents($url, false, $context);
+                $response   = json_decode($result, true);
+            
+                if($response['success'] == false) {
+                    // What happens when the CAPTCHA was entered incorrectly
+                    $captcha = '1';
+                } else {
+                    //Captcha Compared and worked well! Go ahead.
+                }
+            } else {
+                // What happens when the CAPTCHA was entered incorrectly
+                $captcha = '1';
+            }
+        }
 
-		if(empty($email)) { 
+        if(isset($captcha) && $captcha == '1') { 
+            $message = _("Captcha is not correct");
+        }
+		elseif(empty($email)) { 
 			$message = _("Email required");
 		} elseif(empty($password)) { 
 			$message = _("Password Required");
@@ -131,7 +166,24 @@
                                         <input type="password" id="passWord" name="password" class="form-control" required="required"/>
                                         <label for="passWord"><?php _e("Password"); ?>*</label>
                                     </div>
-                                    <div class="row">
+                                    <?php 
+                                        //This is captcha code please do not remove it you can deactivate captcha by going admin section general settings. Else form will not work . on other page.
+                                        if(get_option('activate_captcha') == '1') { 
+                                                $sitekey = get_option('site_key'); // you got this from the signup page
+                                    ?>
+                                        <script type="text/javascript">
+                                            var onloadCallback = function() {
+                                            grecaptcha.render('html_element', {
+                                                'sitekey' : '<?php echo $sitekey; ?>'
+                                            });
+                                            };
+                                        </script>
+                                        <div id="html_element" class="mb-5"></div>
+                                        <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+                                            async defer>
+                                        </script>
+                                    <?php } ?>
+                                    <div class="row mt-3">
                                         <div class="col text-left">
                                             <div class="styled-checkbox">
                                                 <input type="checkbox" id="remeber" name="keep_login" value="yes" />    
