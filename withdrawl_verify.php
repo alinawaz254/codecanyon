@@ -28,7 +28,6 @@ if(isset($_POST['resend'])){
     $stmt->bind_param("iis",$user_id,$otp,$expires);
     $stmt->execute();
 
-    // mail($_SESSION['email'],"Wallet OTP","Your OTP is: ".$otp);
     // send email
     $subject = "Withdrawl OTP";
     $message = "Your Withdrawl OTP is: <b>".$otp."</b><br>This OTP will expire in 10 minutes.";
@@ -51,31 +50,45 @@ if(isset($_POST['verify'])){
         exit;
     }
 
-    $stmt = $db->prepare("
-        SELECT id, expires_at 
-        FROM wallet_otps
-        WHERE user_id=? AND otp=?
-        LIMIT 1
-    ");
+    $query = "SELECT * FROM wallet_otps WHERE otp = ".$otp." AND user_id = ".$user_id.  " LIMIT 1";
 
-    $stmt->bind_param("ii",$user_id,$otp);
-    $stmt->execute();
+    $result = $db->query($query);
+    $row    = $result->fetch_assoc();
 
-    $result = $stmt->get_result();
-
-    if($result->num_rows == 0){
-        header("Location: withdrawl_verify.php?error=invalid");
+    if(empty($row)){
+        header("Location: wallet_transfer_verify.php?error=invalid");
         exit;
     }
-
-    $row = $result->fetch_assoc();
-
-    /* check expiry manually */
 
     if(strtotime($row['expires_at']) < time()){
-        header("Location: withdrawl_verify.php?error=invalid");
+        header("Location: wallet_transfer_verify.php?error=invalid");
         exit;
     }
+    // $stmt = $db->prepare("
+    //     SELECT id, expires_at 
+    //     FROM wallet_otps
+    //     WHERE user_id=? AND otp=?
+    //     LIMIT 1
+    // ");
+
+    // $stmt->bind_param("ii",$user_id,$otp);
+    // $stmt->execute();
+
+    // $result = $stmt->get_result();
+
+    // if($result->num_rows == 0){
+    //     header("Location: withdrawl_verify.php?error=invalid");
+    //     exit;
+    // }
+
+    // $row = $result->fetch_assoc();
+
+    // /* check expiry manually */
+
+    // if(strtotime($row['expires_at']) < time()){
+    //     header("Location: withdrawl_verify.php?error=invalid");
+    //     exit;
+    // }
 
     $transactions_obj = new Transactions();
 

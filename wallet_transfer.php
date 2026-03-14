@@ -2,6 +2,8 @@
 
 require_once("lib/system_load.php");
 
+date_default_timezone_set("Asia/Karachi");
+
 authenticate_user('subscriber');
 
 $user_id = (int)$_SESSION['user_id'];
@@ -52,7 +54,7 @@ if(isset($_POST['send'])){
     // generate OTP
     $otp = rand(100000,999999);
 
-    $expires = date("Y-m-d H:i:s", time() + 300); // 5 min
+    $expires = date("Y-m-d H:i:s", strtotime("+10 minutes")); // 5 min
 
     // delete old otp
     $stmt = $db->prepare("DELETE FROM wallet_otps WHERE user_id=?");
@@ -65,7 +67,12 @@ if(isset($_POST['send'])){
     $stmt->execute();
 
     // send email
-    mail($_SESSION['email'],"Wallet OTP","Your OTP is: ".$otp);
+    // send_email($_SESSION['email'],"Wallet OTP","Your OTP is: ".$otp);
+
+    $subject = "Wallet OTP";
+    $message = "Your Wallet Transfer OTP is: <b>".$otp."</b><br>This OTP will expire in 10 minutes.";
+
+    send_email($_SESSION['email'], $subject, $message);     
 
     header("Location: wallet_transfer_verify.php");
     exit;

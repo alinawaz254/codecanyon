@@ -50,27 +50,15 @@ if(isset($_POST['verify'])){
         header("Location: wallet_transfer_verify.php?error=empty");
         exit;
     }
+    $query = "SELECT * FROM wallet_otps WHERE otp = ".$otp." AND user_id = ".$user_id.  " LIMIT 1";
 
-    $stmt = $db->prepare("
-        SELECT id, expires_at 
-        FROM wallet_otps
-        WHERE user_id=? AND otp=?
-        LIMIT 1
-    ");
+    $result = $db->query($query);
+    $row    = $result->fetch_assoc();
 
-    $stmt->bind_param("ii",$user_id,$otp);
-    $stmt->execute();
-
-    $result = $stmt->get_result();
-
-    if($result->num_rows == 0){
+    if(empty($row)){
         header("Location: wallet_transfer_verify.php?error=invalid");
         exit;
     }
-
-    $row = $result->fetch_assoc();
-
-    /* check expiry manually */
 
     if(strtotime($row['expires_at']) < time()){
         header("Location: wallet_transfer_verify.php?error=invalid");
