@@ -553,7 +553,7 @@ class Transactions {
             $stmt1 = $db->prepare("
                 INSERT INTO transactions
                 (user_id,transaction_type,amount,is_approved,description,created_at,updated_at)
-                VALUES(?,1,?,1,'Withdrawl Request',NOW(),NOW())
+                VALUES(?,1,?,0,'Withdrawl Request',NOW(),NOW())
             ");
             $stmt1->bind_param("id",$user_id,$amount);
             $stmt1->execute();
