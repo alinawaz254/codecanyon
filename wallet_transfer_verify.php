@@ -27,7 +27,12 @@ if(isset($_POST['resend'])){
     $stmt->bind_param("iis",$user_id,$otp,$expires);
     $stmt->execute();
 
-    mail($_SESSION['email'],"Wallet OTP","Your OTP is: ".$otp);
+    // mail($_SESSION['email'],"Wallet OTP","Your OTP is: ".$otp);
+    // send email
+    $subject = "Wallet OTP";
+    $message = "Your Wallet Transfer OTP is: <b>".$otp."</b><br>This OTP will expire in 5 minutes.";
+
+    send_email($_SESSION['email'], $subject, $message);  
 
     header("Location: wallet_transfer_verify.php?success=resent");
     exit;
