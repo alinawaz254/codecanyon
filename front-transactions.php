@@ -126,6 +126,7 @@ require_once("lib/includes/header.php");
                         <th><?php _e("Plan Name"); ?></th>
                         <th><?php _e("Invested Amount"); ?></th>
                         <th><?php _e("Commission Earned"); ?></th>
+                        <th><?php _e("Commission Type"); ?></th>
                         <th><?php _e("Invested On"); ?></th>
                         <th><?php _e("Claimed Date"); ?></th>
                     </tr>
@@ -139,10 +140,15 @@ require_once("lib/includes/header.php");
                             ui.amount as invested_amount,
                             ui.issue_date as invested_on,
                             ip.plan_name,
+                            ip.commission as plan_percent,
                             uid.cycle,
                             uid.comission as commission_amount,
                             uid.claimed_date,
-                            uid.user_id
+                            uid.user_id,
+                            CASE 
+                                WHEN ROUND(uid.comission,2) = ROUND(ui.amount * 0.01,2) THEN 'Referral'
+                                ELSE 'Investment'
+                            END as commission_type                            
                         FROM user_investment_details uid
                         JOIN user_investments ui ON ui.investment_id = uid.investment_id
                         JOIN investment_plans ip ON ip.plan_id = ui.plan_id
@@ -166,6 +172,15 @@ require_once("lib/includes/header.php");
                                 <td class="amount-value">
                                     <span class="rupees-symbol">Rs</span> <?php echo number_format($row['commission_amount'], 2); ?>
                                 </td>
+                                <td>
+                                <?php 
+                                if($row['commission_type'] == 'Referral'){
+                                    echo '<span class="badge bg-info">My Referral commission (1%)</span>';
+                                }else{
+                                    echo '<span class="badge bg-success">My Investment commission ('.$row['plan_percent'].'%)</span>';
+                                }
+                                ?>
+                                </td>                               
                                 <td><?php echo date('d M Y', strtotime($row['invested_on'])); ?></td>
                                 <td><?php echo date('d M Y', strtotime($row['claimed_date'])); ?></td>
                             </tr>

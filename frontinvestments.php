@@ -1,6 +1,8 @@
 <?php
 require_once("lib/system_load.php");
 
+date_default_timezone_set("Asia/Karachi");
+
 authenticate_user('all');
 
 $user_id = (int)$_SESSION['user_id'];
@@ -31,7 +33,7 @@ ORDER BY ui.issue_date DESC
 
 $investments = $db->query($investment_query);
 $today = date("Y-m-d");
-// $today = "2026-05-16"; // test date
+// $today = "	2026-05-26"; // test date
 
      if(isset($_GET['user_investment_detail_id'])){
             $search_record = $db->query("SELECT * FROM user_investment_details WHERE id =" . $_GET['user_investment_detail_id']);

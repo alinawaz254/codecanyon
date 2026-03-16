@@ -59,7 +59,7 @@ require_once("lib/includes/header.php");
                                 </div>
                                 <div>
                                     <h3 class="mb-0 text-success">
-                                        +$<?php echo number_format($stats['funded'] + $stats['commission'], 2); ?></h3>
+                                        +PKR <?php echo number_format($stats['funded'] + $stats['commission'], 2); ?></h3>
                                     <span class="text-muted"><?php _e("Total Credits"); ?></span>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@ require_once("lib/includes/header.php");
                                 </div>
                                 <div>
                                     <h3 class="mb-0 text-danger">
-                                        -$<?php echo number_format($stats['withdrawals'], 2); ?></h3>
+                                        -PKR <?php echo number_format($stats['withdrawals'], 2); ?></h3>
                                     <span class="text-muted"><?php _e("Total Withdrawals"); ?></span>
                                 </div>
                             </div>
@@ -93,7 +93,7 @@ require_once("lib/includes/header.php");
                                 <div class="avatar avatar-icon bg-warning mr-2"></div>
                                 <div>
                                     <h3 class="mb-0 text-warning">
-                                        -$<?php echo number_format($stats['transfers'], 2); ?>
+                                        -PKR <?php echo number_format($stats['transfers'], 2); ?>
                                     </h3>
                                     <span class="text-muted"><?php _e("Total Transfers"); ?></span>
                                 </div>

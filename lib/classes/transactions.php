@@ -249,12 +249,20 @@ class Transactions {
             case 1: $type_label = _("Withdrawal"); break;
             case 2: $type_label = _("Funded"); break;
             case 3: $type_label = _("Commission"); break;
+            case 4: $type_label = _("Transfer"); break;
             default: $type_label = _("Unknown");
         }
         
         // Format amount with sign
-        $amount_sign = ($transaction['transaction_type'] == 1) ? '-' : '+';
-        $amount_class = ($transaction['transaction_type'] == 1) ? 'text-danger' : 'text-success';
+        // $amount_sign = ($transaction['transaction_type'] == 1) ? '-' : '+';
+        if($transaction['transaction_type'] == 1 || $transaction['transaction_type'] == 4){
+            $amount_sign = '-';
+            $amount_class = 'text-danger';
+        }else{
+            $amount_sign = '+';
+            $amount_class = 'text-success';
+        }        
+        // $amount_class = ($transaction['transaction_type'] == 1) ? 'text-danger' : 'text-success';
         ?>
 
 <div class="modal fade" id="transactionModal_<?php echo $transaction['id']; ?>" tabindex="-1" role="dialog">
@@ -295,10 +303,25 @@ class Transactions {
                                 <p><strong><?php echo _("Transaction ID:"); ?></strong>
                                     #<?php echo $transaction['id']; ?></p>
                                 <p><strong><?php echo _("Type:"); ?></strong>
-                                    <span class="text <?php 
-                                                echo ($transaction['transaction_type'] == 1) ? 'text-danger' : 
-                                                    (($transaction['transaction_type'] == 2) ? 'text-success' : 'text-info'); 
-                                            ?>"><?php echo $type_label; ?></span>
+                                <span class="<?php 
+                                if($transaction['transaction_type'] == 1){
+                                    echo 'text-danger';
+                                }
+                                elseif($transaction['transaction_type'] == 2){
+                                    echo 'text-success';
+                                }
+                                elseif($transaction['transaction_type'] == 3){
+                                    echo 'text-info';
+                                }
+                                elseif($transaction['transaction_type'] == 4){
+                                    echo 'text-warning';
+                                }
+                                else{
+                                    echo 'text-secondary';
+                                }
+                                ?>">
+                                <?php echo $type_label; ?>
+                                </span>
                                 </p>
                                 <p><strong><?php echo _("Amount:"); ?></strong>
                                     <span class="<?php echo $amount_class; ?>">
@@ -495,6 +518,13 @@ class Transactions {
     function transfer($sender_id, $receiver_id, $amount)
     {
         global $db;
+        // Get sender username
+        $s = $db->query("SELECT username FROM users WHERE user_id = $sender_id");
+        $sender = $s->fetch_assoc()['username'] ?? 'User';
+
+        // Get receiver username
+        $r = $db->query("SELECT username FROM users WHERE user_id = $receiver_id");
+        $receiver = $r->fetch_assoc()['username'] ?? 'User';
 
         $amount = floatval($amount);
 
@@ -510,9 +540,10 @@ class Transactions {
             $stmt1 = $db->prepare("
                 INSERT INTO transactions
                 (user_id,transaction_type,amount,is_approved,description,created_at,updated_at)
-                VALUES(?,4,?,1,'Wallet transfer sent',NOW(),NOW())
+                VALUES(?,4,?,1,?,NOW(),NOW())
             ");
-            $stmt1->bind_param("id",$sender_id,$amount);
+            $desc1 = "Wallet transfer sent to $receiver";
+            $stmt1->bind_param("ids",$sender_id,$amount,$desc1);
             $stmt1->execute();
 
 
@@ -520,9 +551,10 @@ class Transactions {
             $stmt2 = $db->prepare("
                 INSERT INTO transactions
                 (user_id,transaction_type,amount,is_approved,description,created_at,updated_at)
-                VALUES(?,2,?,1,'Wallet transfer received',NOW(),NOW())
+                VALUES(?,2,?,1,?,NOW(),NOW())
             ");
-            $stmt2->bind_param("id",$receiver_id,$amount);
+            $desc2 = "Wallet transfer received from $sender";            
+            $stmt2->bind_param("ids",$receiver_id,$amount,$desc2);
             $stmt2->execute();
 
             $db->commit();
