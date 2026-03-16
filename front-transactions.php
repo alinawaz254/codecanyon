@@ -123,12 +123,10 @@ require_once("lib/includes/header.php");
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th><?php _e("Plan Name"); ?></th>
-                        <th><?php _e("Invested Amount"); ?></th>
-                        <th><?php _e("Commission Earned"); ?></th>
-                        <th><?php _e("Commission Type"); ?></th>
-                        <th><?php _e("Invested On"); ?></th>
-                        <th><?php _e("Claimed Date"); ?></th>
+                        <th><?php _e("Amount"); ?></th>
+                        <th><?php _e("Transaction Type"); ?></th>
+                        <th><?php _e("Description"); ?></th>
+                        <th><?php _e("On"); ?></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -136,53 +134,59 @@ require_once("lib/includes/header.php");
                     // Get only claimed investments
                     $transactions_query = "
                         SELECT 
-                            ui.investment_id,
-                            ui.amount as invested_amount,
-                            ui.issue_date as invested_on,
-                            ip.plan_name,
-                            ip.commission as plan_percent,
-                            uid.cycle,
-                            uid.comission as commission_amount,
-                            uid.claimed_date,
-                            uid.user_id,
-                            CASE 
-                                WHEN ROUND(uid.comission,2) = ROUND(ui.amount * 0.01,2) THEN 'Referral'
-                                ELSE 'Investment'
-                            END as commission_type                            
-                        FROM user_investment_details uid
-                        JOIN user_investments ui ON ui.investment_id = uid.investment_id
-                        JOIN investment_plans ip ON ip.plan_id = ui.plan_id
-                        WHERE uid.user_id = $user_id
-                        AND uid.is_claimed = 1
-                        ORDER BY uid.claimed_date DESC, ui.investment_id DESC
+                        t.user_id,
+                        t.transaction_type,
+                        t.amount,
+                        t.is_approved,
+                        t.description,
+                        t.created_at
+                        FROM transactions t WHERE t.user_id = '$user_id' ORDER BY t.created_at DESC
                     ";
                     
                     $transactions = $db->query($transactions_query);
                     
                     if ($transactions && $transactions->num_rows > 0) {
                         while ($row = $transactions->fetch_assoc()):
+                            $type = null; 
+                            $class = ''; 
+                                switch ($row['transaction_type']) {
+                                    case 1:
+                                        $type = "Withdrawal";
+                                        $class = 'badge text-bg-danger';
+                                        break;                    
+                                    case 2:
+                                        $type = "Funded";
+                                        $class = 'badge text-bg-success';
+                                        break;
+                                    case 3:
+                                        $type = "ROI Commission";
+                                        $class = 'badge text-bg-success';
+                                        break;
+                                    case 4:
+                                        $type = "Transfer";
+                                        $class = 'badge text-light bg-warning';
+                                        break;
+                                    case 5:
+                                        $type = "Referral Commission";
+                                        $class = 'badge text-light bg-info';
+                                        break;
+                                    default:
+                                        $type = "Unknown";
+                                        $class = 'badge text-bg-secondary';
+                                }
                             ?>
                             <tr>
-                                <td>
-                                    <strong><?php echo $row['plan_name']; ?></strong>
-                                </td>
                                 <td class="amount-value">
-                                    <span class="rupees-symbol">Rs</span> <?php echo number_format($row['invested_amount'], 2); ?>
+                                    <span class="rupees-symbol">Rs</span> <?php echo number_format($row['amount'], 2); ?>
+                                </td>                                
+                                <td class="type-value">
+                                    <span class="<?php echo $class ?>"><?php echo $type; ?></span>
+                                </td>                                
+                                <td class="desc-value">
+                                     <?php echo $row['description'] ; ?>
                                 </td>
-                                <td class="amount-value">
-                                    <span class="rupees-symbol">Rs</span> <?php echo number_format($row['commission_amount'], 2); ?>
-                                </td>
-                                <td>
-                                <?php 
-                                if($row['commission_type'] == 'Referral'){
-                                    echo '<span class="badge bg-info">My Referral commission (1%)</span>';
-                                }else{
-                                    echo '<span class="badge bg-success">My Investment commission ('.$row['plan_percent'].'%)</span>';
-                                }
-                                ?>
-                                </td>                               
-                                <td><?php echo date('d M Y', strtotime($row['invested_on'])); ?></td>
-                                <td><?php echo date('d M Y', strtotime($row['claimed_date'])); ?></td>
+                             
+                                <td><?php echo date('d M Y', strtotime($row['created_at'])); ?></td>
                             </tr>
                             <?php
                         endwhile;
@@ -192,7 +196,7 @@ require_once("lib/includes/header.php");
                             <td colspan="5" class="text-center py-4">
                                 <div class="empty-state">
                                     <i class="la la-folder-open"></i>
-                                    <h5><?php _e("No Claimed Transactions Found"); ?></h5>
+                                    <h5><?php _e("No Transactions Found"); ?></h5>
                                     <p class="text-muted"><?php _e("You haven't claimed any commissions yet."); ?></p>
                                 </div>
                             </td>
@@ -211,14 +215,20 @@ require_once("lib/includes/header.php");
                     <?php
                     // Calculate total commission
                     $total_query = "
-                        SELECT SUM(uid.comission) as total_commission
-                        FROM user_investment_details uid
-                        JOIN user_investments ui ON ui.investment_id = uid.investment_id
-                        WHERE uid.user_id = '$user_id' AND uid.is_claimed = 1
+                        SELECT 
+                            COALESCE(SUM(
+                                CASE 
+                                    WHEN transaction_type = 2 THEN amount      
+                                    WHEN transaction_type = 5 THEN amount     
+                                END
+                            ),0) AS total
+                        FROM transactions
+                        WHERE user_id = '$user_id' GROUP BY user_id
                     ";
                     $total_result = $db->query($total_query);
                     $total_row = $total_result->fetch_assoc();
-                    echo number_format($total_row['total_commission'] ?? 0, 2);
+
+                    echo number_format($total_row['total'] ?? 0, 2);
                     ?>
                 </span>
             </div>

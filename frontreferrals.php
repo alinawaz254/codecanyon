@@ -30,8 +30,8 @@ if(isset($_SESSION['error_message'])) {
     unset($_SESSION['error_message']);
 }
 
-$today = date("Y-m-d");
-// $today = '2026-05-11';
+// $today = date("Y-m-d");
+$today = '2026-08-21';
 
 // Handle referral commission claim
 if(isset($_GET['referral_detail_id'])){
@@ -74,7 +74,7 @@ if(isset($_GET['referral_detail_id'])){
         $db->query("
             INSERT INTO transactions 
             (user_id, transaction_type, amount, description, is_approved, created_at) 
-            VALUES ($user_id, 3, $amount, '$message', 1, NOW())
+            VALUES ($user_id, 5, $amount, '$message', 1, NOW())
         ");
 
         // Notify admins
@@ -279,21 +279,23 @@ $result = $db->query($query);
                         $is_expired = ($today > $expiry_row['last_date']);
                         ?>
 
-                        <tr <?php if ($is_expired) echo 'style="opacity:0.5;background:#f5f5f5;"'; ?>>
+                        <tr <?php if ($is_expired) echo 'style="opacity:0.6;background:#f5f5f5;"'; ?>>
                             <td><?php echo $row['username']; ?></td>
                             <td><?php echo $row['plan_name']; ?></td>
                             <td><?php echo number_format($amount, 2); ?></td>
                             <td><?php echo $row['issue_date']; ?></td>
                             <td>
+                                <?php if ($is_expired): ?>
+                                    <button class="btn btn-sm btn-success ml-2">Release</button>
+                                    <button class="btn btn-sm btn-warning ml-2">Re-Invest</button>
+                                <?php else : ?>
                                 <button class="btn btn-primary btn-sm btn-golden"
                                     data-toggle="modal"
                                     data-target="#referralModal_<?php echo $row['investment_id']; ?>_<?php echo $row['referred_user_id']; ?>">
                                     View Commission
                                 </button>
-
-                                <?php if ($is_expired): ?>
-                                    <span class="badge bg-secondary ml-2">Inactive</span>
                                 <?php endif; ?>
+
                             </td>
                         </tr>
 

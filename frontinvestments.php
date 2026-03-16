@@ -32,8 +32,8 @@ ORDER BY ui.issue_date DESC
 ";
 
 $investments = $db->query($investment_query);
-$today = date("Y-m-d");
-// $today = "	2026-05-26"; // test date
+// $today = date("Y-m-d");
+$today = "2026-07-28"; // test date
 
      if(isset($_GET['user_investment_detail_id'])){
             $search_record = $db->query("SELECT * FROM user_investment_details WHERE id =" . $_GET['user_investment_detail_id']);
@@ -62,6 +62,50 @@ $today = date("Y-m-d");
 
             header("Location: frontinvestments.php");
             exit;     
+    }
+
+    if(isset($_GET['re_invest_amount'])){
+        $plan_id    = (int) $_GET['plan_id'];
+        $amount     = (float) $_GET['re_invest_amount'];
+        $query      = $db->query("SELECT * FROM plans WHERE plan_id = " . $plan_id);
+        $plan       = $query->fetch_assoc();
+
+        if(!$plan){
+            echo "Invalid plan";
+        }
+        $issue_date  = today('Y-m-d');
+        $comission   = ($amount * $plan['commission']) / 100;
+        $ref_query   = $db->query("SELECT referral_id FROM users WHERE user_id = '$user_id'");
+        $ref_data    = $ref_query->fetch_assoc();
+        $referrer_id = $ref_data['referral_id'] ?? 0;
+        
+        $db->query("INSERT INTO user_investments (user_id,plan_id,amount,issue_date) VALUES ('$user_id','$plan_id','$amount','$issue_date')");
+
+        $investment_id = $db->insert_id;
+
+        for ($i=1; $i <= $plan['total_cycles']; $i++) {     
+
+            $comission_expiry_date = date(
+            "Y-m-d",
+            strtotime($issue_date . " +" . ($i * intval($plan['cycle_days'])) . " days")
+            );            
+
+            $db->query("INSERT INTO user_investment_details 
+            (investment_id,user_id,cycle,comission,comission_expiry_date) 
+            VALUES ('$investment_id','$user_id','$i','$comission','$comission_expiry_date')");
+
+            if($referrer_id > 0){
+
+                $referral_commission = ($amount * 1) / 100;
+
+                $db->query("
+                    INSERT INTO user_investment_details 
+                    (investment_id,user_id,cycle,comission,comission_expiry_date) 
+                    VALUES ('$investment_id','$referrer_id','$i','$referral_commission','$comission_expiry_date')
+                ");
+            }
+        }
+
     }
 ?>
 <style>
@@ -111,6 +155,7 @@ $today = date("Y-m-d");
 
                     while ($investment = $investments->fetch_assoc()):
                         $amount             = $investment['amount'];
+                        $plan_id            = $investment['plan_id'];
                         $cycle_days         = $investment['cycle_days'];
                         $total_cycles       = $investment['total_cycles'];
                         $commission_percent = $investment['plan_commission'];
@@ -124,8 +169,7 @@ $today = date("Y-m-d");
                         ");
 
                         $expiry_row = $expiry_query->fetch_assoc();             
-                        $is_expired = ($today > $expiry_row['last_date']);                        
-                        
+                        $is_expired = ($today > $expiry_row['last_date']);      
                         $details_query = "
                         SELECT 
                             id,
@@ -145,20 +189,25 @@ $today = date("Y-m-d");
                         $has_details = ($details_result && $details_result->num_rows > 0);
                     ?>
 
-                        <tr <?php if ($is_expired) echo 'style="opacity:0.5;background-color:#f5f5f5;"'; ?>>
+                        <tr <?php if ($is_expired) echo 'style="opacity:0.6;background-color:#f5f5f5;"'; ?>>
                             <td><?php echo $investment['plan_name']; ?></td>
                             <td><?php echo number_format($amount, 2); ?></td>
                             <td><?php echo $investment['issue_date']; ?></td>
 
                             <td>
+                                <?php if ($is_expired): ?>
+                                    <span class="badge text-bg-secondary ml-2">Inactive</span>
+                                    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET">
+                                        <input type="hidden" name="re_invest_amount" value="<?php echo $amount ?>">
+                                        <input type="hidden" name="plan_id" value="<?php echo $plan_id ?>">
+                                        <button type="submit" class="btn btn-sm btn-warning ml-2">Re-Invest</button>
+                                    </form>
+                                <?php else : ?>
                                 <button class="btn btn-golden btn-sm"
                                     data-toggle="modal"
                                     data-target="#investmentModal_<?php echo $investment['investment_id']; ?>">
                                     View
                                 </button>
-
-                                <?php if ($is_expired): ?>
-                                    <span class="badge text-bg-secondary ml-2">Inactive</span>
                                 <?php endif; ?>
                             </td>
                         </tr>

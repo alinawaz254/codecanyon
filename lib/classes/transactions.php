@@ -18,7 +18,7 @@ class Transactions {
             $amount = floatval($amount);
             $description = $db->real_escape_string($description);
             $is_approved = 0;
-            if($transaction_type == 2 || $transaction_type == 3){
+            if($transaction_type == 2){
                 $is_approved = 1;
             }
             // Insert transaction into database
@@ -33,62 +33,7 @@ class Transactions {
             }
         }    
     }
-    // function create($request) {
 
-    //     global $db;
-    //     extract($request);
-
-    //     if($user_id == '') {
-    //         return _("User is required");
-    //     }
-
-    //     if($transaction_type == '') {
-    //         return _("Transaction type is required");
-    //     }
-
-    //     if($amount == '' || !is_numeric($amount)) {
-    //         return _("Valid amount is required");
-    //     }
-
-    //     $user_id = intval($user_id);
-    //     $transaction_type = intval($transaction_type);
-    //     $amount = floatval($amount);
-    //     $description = $db->real_escape_string($description);
-
-    //     // Start transaction (important)
-    //     $db->query("START TRANSACTION");
-
-    //     // Insert transaction
-    //     $db->query("
-    //         INSERT INTO transactions
-    //         (user_id,transaction_type,amount,description,created_at,updated_at)
-    //         VALUES('$user_id','$transaction_type','$amount','$description',NOW(),NOW())
-    //     ");
-
-    //     if($transaction_type == 1){
-    //         // Withdrawal
-    //         $db->query("
-    //             UPDATE wallets
-    //             SET balance = balance - $amount
-    //             WHERE user_id='$user_id'
-    //         ");
-    //     }
-
-    //     if($transaction_type == 2 || $transaction_type == 3){
-    //         // Funded OR Commission
-    //         $db->query("
-    //             INSERT INTO wallets(user_id,balance)
-    //             VALUES('$user_id','$amount')
-    //             ON DUPLICATE KEY UPDATE balance = balance + $amount
-    //         ");
-    //     }
-
-    //     $db->query("COMMIT");
-
-    //     return "Transaction added successfully";
-
-    // }    
-    
     function list_transactions() {
         global $db;
         $modals = ""; 
@@ -100,7 +45,7 @@ class Transactions {
                 u.username,
                 u.first_name,
                 u.last_name,
-                u.email
+                u.email           
             FROM transactions t
             JOIN users u ON t.user_id = u.user_id
             WHERE t.is_approved = 1
@@ -143,27 +88,30 @@ class Transactions {
                 // Set transaction type label and class
                 $type_label = '';
                 $type_class = '';
-                
-                switch($row['transaction_type']) {
+                switch ($row['transaction_type']) {
                     case 1:
-                        $type_label = _("Withdrawal");
-                        $type_class = 'badge bg-danger';
-                        break;
+                        $type = "Withdrawal";
+                        $class = 'badge text-bg-danger';
+                        break;                    
                     case 2:
-                        $type_label = _("Funded");
-                        $type_class = 'badge bg-success';
+                        $type = "Funded";
+                        $class = 'badge text-bg-success';
                         break;
                     case 3:
-                        $type_label = _("Commission");
-                        $type_class = 'badge text-bg-primary';
+                        $type = "ROI Commission";
+                        $class = 'badge text-bg-success';
                         break;
                     case 4:
-                        $type_label = _("Transfer");
-                        $type_class = 'badge bg-warning';
-                        break;                        
+                        $type = "Transfer";
+                        $class = 'badge text-light bg-warning';
+                        break;
+                    case 5:
+                        $type = "Referral Commission";
+                        $class = 'badge text-light bg-info';
+                        break;
                     default:
-                        $type_label = _("Unknown");
-                        $type_class = 'badge text-bg-secondary';
+                        $type = "Unknown";
+                        $class = 'badge text-bg-secondary';
                 }
                 
                 // Format amount with sign based on type
@@ -186,7 +134,7 @@ class Transactions {
                 
                 echo "<tr>";
                 echo "<td><strong>" . htmlspecialchars($user_display) . "</strong><br><small>" . htmlspecialchars($row['email']) . "</small></td>";
-                echo "<td><span class='" . $type_class . "'>" . $type_label . "</span></td>";
+                echo "<td><span class='" . $class . "'>" . $type . "</span></td>";
                 echo "<td class='" . $amount_class . "'><strong>" .$currency.' '. $amount_sign . number_format($row['amount'], 2) . "</strong></td>";
                 
                 // Description column with truncation
@@ -248,8 +196,9 @@ class Transactions {
         switch($transaction['transaction_type']) {
             case 1: $type_label = _("Withdrawal"); break;
             case 2: $type_label = _("Funded"); break;
-            case 3: $type_label = _("Commission"); break;
+            case 3: $type_label = _("ROI Commission"); break;
             case 4: $type_label = _("Transfer"); break;
+            case 5: $type_label = _("Referral Commission"); break;
             default: $type_label = _("Unknown");
         }
         
@@ -303,23 +252,29 @@ class Transactions {
                                 <p><strong><?php echo _("Transaction ID:"); ?></strong>
                                     #<?php echo $transaction['id']; ?></p>
                                 <p><strong><?php echo _("Type:"); ?></strong>
-                                <span class="<?php 
-                                if($transaction['transaction_type'] == 1){
-                                    echo 'text-danger';
-                                }
-                                elseif($transaction['transaction_type'] == 2){
-                                    echo 'text-success';
-                                }
-                                elseif($transaction['transaction_type'] == 3){
-                                    echo 'text-info';
-                                }
-                                elseif($transaction['transaction_type'] == 4){
-                                    echo 'text-warning';
-                                }
-                                else{
-                                    echo 'text-secondary';
-                                }
-                                ?>">
+                                <?php
+                                $class = null;
+                                    switch ($transaction['transaction_type']) {
+                                        case 1:
+                                            $class = 'badge text-bg-danger';
+                                            break;                    
+                                        case 2:
+                                            $class = 'badge text-bg-success';
+                                            break;
+                                        case 3:
+                                            $class = 'badge text-bg-success';
+                                            break;
+                                        case 4:
+                                            $class = 'badge text-light bg-warning';
+                                            break;
+                                        case 5:
+                                            $class = 'badge text-light bg-info';
+                                            break;
+                                        default:
+                                            $class = 'badge text-bg-secondary';
+                                    }
+                                ?>
+                                <span class="<?php echo $class; ?>">
                                 <?php echo $type_label; ?>
                                 </span>
                                 </p>
@@ -394,7 +349,8 @@ class Transactions {
             'total' => 0,
             'withdrawals' => 0,
             'funded' => 0,
-            'commission' => 0,
+            'roi_commission' => 0,
+            'referral_commission' => 0,
             'transfers' => 0,            
             'today_count' => 0,
             'today_amount' => 0
@@ -412,16 +368,18 @@ class Transactions {
                 SELECT 
                     SUM(CASE WHEN transaction_type = 1 THEN amount ELSE 0 END) as total_withdrawals,
                     SUM(CASE WHEN transaction_type = 2 THEN amount ELSE 0 END) as total_funded,
-                    SUM(CASE WHEN transaction_type = 3 THEN amount ELSE 0 END) as total_commission,
-                    SUM(CASE WHEN transaction_type = 4 THEN amount ELSE 0 END) as total_transfers                    
+                    SUM(CASE WHEN transaction_type = 3 THEN amount ELSE 0 END) as total_roi_commission,
+                    SUM(CASE WHEN transaction_type = 4 THEN amount ELSE 0 END) as total_transfers,
+                    SUM(CASE WHEN transaction_type = 5 THEN amount ELSE 0 END) as total_referral_commission
                 FROM transactions
             ");
             if($result) {
                 $amounts = $result->fetch_assoc();
                 $stats['withdrawals'] = $amounts['total_withdrawals'] ?? 0;
                 $stats['funded'] = $amounts['total_funded'] ?? 0;
-                $stats['commission'] = $amounts['total_commission'] ?? 0;
+                $stats['roi_commission'] = $amounts['total_roi_commission'] ?? 0;
                 $stats['transfers'] = $amounts['total_transfers'] ?? 0;                
+                $stats['referral_commission'] = $amounts['total_referral_commission'] ?? 0;                
             }
             
             // Today's transactions
@@ -452,6 +410,7 @@ class Transactions {
                         WHEN transaction_type = 3 THEN amount    
                         WHEN transaction_type = 1 THEN -amount     
                         WHEN transaction_type = 4 THEN -amount     
+                        WHEN transaction_type = 5 THEN amount     
                     END
                 ),0) AS balance
             FROM transactions
@@ -498,6 +457,7 @@ class Transactions {
                     WHEN transaction_type = 3 THEN amount
                     WHEN transaction_type = 1 THEN -amount
                     WHEN transaction_type = 4 THEN -amount
+                    WHEN transaction_type = 5 THEN amount     
                 END
             ),0) AS balance
             FROM transactions
