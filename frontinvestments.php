@@ -67,18 +67,18 @@ $today = "2026-07-28"; // test date
     if(isset($_GET['re_invest_amount'])){
         $plan_id    = (int) $_GET['plan_id'];
         $amount     = (float) $_GET['re_invest_amount'];
-        $query      = $db->query("SELECT * FROM plans WHERE plan_id = " . $plan_id);
+        $query      = $db->query("SELECT * FROM investment_plans WHERE plan_id = " . $plan_id);
         $plan       = $query->fetch_assoc();
 
         if(!$plan){
             echo "Invalid plan";
         }
-        $issue_date  = today('Y-m-d');
+        $issue_date  = date('Y-m-d');
         $comission   = ($amount * $plan['commission']) / 100;
         $ref_query   = $db->query("SELECT referral_id FROM users WHERE user_id = '$user_id'");
         $ref_data    = $ref_query->fetch_assoc();
         $referrer_id = $ref_data['referral_id'] ?? 0;
-        
+
         $db->query("INSERT INTO user_investments (user_id,plan_id,amount,issue_date) VALUES ('$user_id','$plan_id','$amount','$issue_date')");
 
         $investment_id = $db->insert_id;
@@ -105,6 +105,9 @@ $today = "2026-07-28"; // test date
                 ");
             }
         }
+        
+        header("Location: frontinvestments.php");
+        exit;     
 
     }
 ?>
