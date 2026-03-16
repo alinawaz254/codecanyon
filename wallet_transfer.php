@@ -14,12 +14,13 @@ $transactions_obj = new Transactions();
 
 if(isset($_POST['send'])){
 
-    $email  = trim($_POST['email'] ?? '');
+    // $email  = trim($_POST['email'] ?? '');
+    $identity = trim($_POST['email'] ?? '');
     $amount = floatval($_POST['amount'] ?? 0);
 
     $balance = $transactions_obj->get_balance($user_id);
 
-    if(empty($email) || $amount <= 0){
+    if(empty($identity) || $amount <= 0){
         header("Location: wallet_transfer.php?error=invalid");
         exit;
     }
@@ -30,10 +31,14 @@ if(isset($_POST['send'])){
     }
 
     // find receiver
-    $q = $db->prepare("SELECT user_id FROM users WHERE email=? LIMIT 1");
-    $q->bind_param("s",$email);
+    // $q = $db->prepare("SELECT user_id FROM users WHERE email=? LIMIT 1");
+    // $q->bind_param("s",$email);
+    // $q->execute();
+    // $result = $q->get_result();
+    $q = $db->prepare("SELECT user_id FROM users WHERE email=? OR username=? LIMIT 1");
+    $q->bind_param("ss",$identity,$identity);
     $q->execute();
-    $result = $q->get_result();
+    $result = $q->get_result();    
 
     if($result->num_rows == 0){
         header("Location: wallet_transfer.php?error=user");
@@ -83,7 +88,7 @@ require_once("lib/includes/header.php");
 
 <?php
 if(isset($_GET['error']) && $_GET['error']=="invalid"){
-	show_alert("Withdrawal request Invalid email or amount");
+	show_alert("Withdrawal request Invalid email or username or amount");
 }
 
 if(isset($_GET['error']) && $_GET['error']=="balance"){
@@ -129,11 +134,11 @@ if(isset($_GET['error']) && $_GET['error']=="self"){
 
                 <form method="post">
 
-                    <div class="form-group">
+                    <div class="form-group mb-3">
 
-                        <label>Receiver Email</label>
+                        <label>Login ID</label>
 
-                        <input type="email" name="email" class="form-control" placeholder="Enter receiver email"
+                        <input type="text" name="email" class="form-control" placeholder="Enter Your Login ID"
                             required>
 
                     </div>
