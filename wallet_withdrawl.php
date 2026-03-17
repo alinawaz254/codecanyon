@@ -17,14 +17,15 @@ if(isset($_POST['send'])){
     $amount = floatval($_POST['amount'] ?? 0);
 
     $balance = $transactions_obj->get_balance($user_id);
-
-    if(empty($email) || $amount <= 0){
-        header("Location: withdrawl.php?error=invalid");
+    
+    if($amount <= 0){
+        header("Location: Wallet_withdrawl.php?error=invalid");
         exit;
     }
 
     if($amount > $balance){
-        header("Location: withdrawl.php?error=balance");
+
+        header("Location: Wallet_withdrawl.php?error=balance");
         exit;
     }
 
@@ -102,7 +103,7 @@ require_once("lib/includes/header.php");
 
                 <div class="alert alert-light bg-dark text-center">
                     Available Balance:
-                    <strong><?php echo $transaction_obj->balance($_SESSION["user_id"]); ?></strong>
+                    <strong><?php echo $transaction_obj->display_balance($_SESSION["user_id"]); ?></strong>
                 </div>
 
                 <form method="post">

@@ -218,7 +218,7 @@ require_once("lib/includes/header.php");
                         SELECT 
                             COALESCE(SUM(
                                 CASE 
-                                    WHEN transaction_type = 2 THEN amount      
+                                    WHEN transaction_type = 3 THEN amount      
                                     WHEN transaction_type = 5 THEN amount     
                                 END
                             ),0) AS total

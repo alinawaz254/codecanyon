@@ -398,9 +398,12 @@ class Transactions {
         return $stats;
     }
 
-    function balance($user_id)
+    function display_balance($user_id)
     {
         global $db;
+        $investment_sql = $db->query("SELECT amount FROM user_investments WHERE user_id = '$user_id'");
+        $invested_data  = $investment_sql->fetch_assoc();
+        $investement    = $invested_data['amount'];
 
         $sql = "
             SELECT 
@@ -424,9 +427,7 @@ class Transactions {
 
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
-
-        $balance = (float)$row['balance'];
-
+        $balance = $investement + (float)$row['balance'];
         // Prevent negative balance display
         if ($balance < 0) {
             $balance = 0;
@@ -449,30 +450,34 @@ class Transactions {
     {
         global $db;
 
+        $investment_sql = $db->query("SELECT amount FROM user_investments WHERE user_id = '$user_id'");
+        $invested_data  = $investment_sql->fetch_assoc();
+        $investement    = $invested_data['amount'];
+
         $sql = "
-            SELECT
-            COALESCE(SUM(
-                CASE
-                    WHEN transaction_type = 2 THEN amount
-                    WHEN transaction_type = 3 THEN amount
-                    WHEN transaction_type = 1 THEN -amount
-                    WHEN transaction_type = 4 THEN -amount
-                    WHEN transaction_type = 5 THEN amount     
-                END
-            ),0) AS balance
+            SELECT 
+                COALESCE(SUM(
+                    CASE 
+                        WHEN transaction_type = 2 THEN amount     
+                        WHEN transaction_type = 3 THEN amount    
+                        WHEN transaction_type = 1 THEN -amount     
+                        WHEN transaction_type = 4 THEN -amount     
+                        WHEN transaction_type = 5 THEN amount     
+                    END
+                ),0) AS balance
             FROM transactions
             WHERE user_id = ?
             AND is_approved = 1
         ";
 
         $stmt = $db->prepare($sql);
-        $stmt->bind_param("i",$user_id);
+        $stmt->bind_param("i", $user_id);
         $stmt->execute();
 
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-
-        return (float)$row['balance'];
+        $result  = $stmt->get_result();
+        $row     = $result->fetch_assoc();
+        $balance = $investement + (float)$row['balance'];
+        return $balance;
     }
     
     function transfer($sender_id, $receiver_id, $amount)

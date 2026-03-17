@@ -129,7 +129,7 @@ if(isset($_GET['error']) && $_GET['error']=="self"){
 
                 <!-- Wallet Balance -->
                 <div class="alert alert-light bg-dark text-center">
-                    Balance: <?php echo $transactions_obj->balance($user_id); ?>
+                    Balance: <?php echo $transactions_obj->display_balance($user_id); ?>
                 </div>
 
                 <form method="post">

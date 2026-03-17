@@ -51,7 +51,7 @@ $transactions = $db->query("
                 <h2 class="page-header-title">Biz Wallet</h2>
 
                 <div class="wallet-page-balance">
-                    <?php echo $transaction_obj->balance($_SESSION["user_id"]); ?>
+                    <?php echo $transaction_obj->display_balance($_SESSION["user_id"]); ?>
                 </div>
 
                 <div class="wallet-actions mt-3">

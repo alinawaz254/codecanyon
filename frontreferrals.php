@@ -30,8 +30,8 @@ if(isset($_SESSION['error_message'])) {
     unset($_SESSION['error_message']);
 }
 
-// $today = date("Y-m-d");
-$today = '2026-08-21';
+$today = date("Y-m-d");
+// $today = '	2026-07-15';
 
 // Handle referral commission claim
 if(isset($_GET['referral_detail_id'])){
@@ -286,8 +286,7 @@ $result = $db->query($query);
                             <td><?php echo $row['issue_date']; ?></td>
                             <td>
                                 <?php if ($is_expired): ?>
-                                    <button class="btn btn-sm btn-success ml-2">Release</button>
-                                    <button class="btn btn-sm btn-warning ml-2">Re-Invest</button>
+                                    <button class="btn btn-sm btn-success ml-2">In-Active</button>
                                 <?php else : ?>
                                 <button class="btn btn-primary btn-sm btn-golden"
                                     data-toggle="modal"

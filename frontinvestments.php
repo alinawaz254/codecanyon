@@ -32,8 +32,8 @@ ORDER BY ui.issue_date DESC
 ";
 
 $investments = $db->query($investment_query);
-$today = date("Y-m-d");
-// $today = "2026-07-28"; // test date
+// $today = date("Y-m-d");
+$today = "2026-07-28"; // test date
 
      if(isset($_GET['user_investment_detail_id'])){
             $search_record = $db->query("SELECT * FROM user_investment_details WHERE id =" . $_GET['user_investment_detail_id']);
@@ -109,6 +109,59 @@ $today = date("Y-m-d");
         header("Location: frontinvestments.php");
         exit;     
 
+    }
+
+    if (isset($_GET['release_investment_id'])) {
+
+        $investment_id = (int) $_GET['release_investment_id'];
+
+        $details_query = $db->query("
+            SELECT * 
+            FROM user_investment_details 
+            WHERE is_claimed = 0 
+            AND user_id = $user_id 
+            AND investment_id = $investment_id
+        ");
+
+        $get_user  = $db->query("SELECT username FROM users WHERE user_id = $user_id");
+        $user_data = $get_user->fetch_assoc();
+        $user      = $user_data['username'];
+
+        $commission_amount = 0;
+
+        while ($row = $details_query->fetch_assoc()) {
+            $commission_amount += $row['comission'];
+        }
+        print_r($commission_amount);
+        if ($commission_amount > 0) {
+
+            // Update once
+            $db->query("
+                UPDATE user_investment_details 
+                SET is_claimed = 1, claimed_date = '$today' 
+                WHERE user_id = $user_id 
+                AND investment_id = $investment_id
+            ");
+        }            
+        $message = $db->real_escape_string("$user has collected his commission on $today");
+
+        $check = $db->query("
+            SELECT id 
+            FROM transactions 
+            WHERE user_id = $user_id 
+            AND created_at LIKE '%$today%'
+        ");
+
+        if ($check->num_rows == 0) {
+            $db->query("
+                INSERT INTO transactions 
+                (user_id, transaction_type, amount, is_approved, description) 
+                VALUES ($user_id, 3, $commission_amount, 1, '$message')
+            ");
+        }
+
+        header("Location: frontinvestments.php");
+        exit;
     }
 ?>
 <style>
@@ -204,6 +257,10 @@ $today = date("Y-m-d");
                                         <input type="hidden" name="re_invest_amount" value="<?php echo $amount ?>">
                                         <input type="hidden" name="plan_id" value="<?php echo $plan_id ?>">
                                         <button type="submit" class="btn btn-sm btn-warning ml-2">Re-Invest</button>
+                                    </form>
+                                    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET">
+                                        <input type="hidden" name="release_investment_id" value="<?php echo $investment['investment_id'] ?>">
+                                        <button type="submit" class="btn btn-sm btn-success ml-2">Release</button>
                                     </form>
                                 <?php else : ?>
                                 <button class="btn btn-golden btn-sm"

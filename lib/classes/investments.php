@@ -151,27 +151,6 @@ function set_investment($investment_id){
     $this->issue_date = $row['issue_date'];
 }
 
-// function update_investment($investment_id,$user_id,$plan_id,$amount,$issue_date){
-//     global $db;
-
-//     if (is_array($plan_id)) {
-//         $plan_id = reset($plan_id);
-//     }
-    
-//     $investment_id = intval($investment_id);
-//     $user_id = intval($user_id);
-//     $plan_id = intval($plan_id);
-//     $amount = floatval($amount);    
-
-//     $db->query("UPDATE user_investments SET
-//         user_id='$user_id',
-//         plan_id='$plan_id',
-//         amount='$amount',
-//         issue_date='$issue_date'
-//         WHERE investment_id='$investment_id'");
-
-//     return "Investment Updated Successfully";
-// }
 
 function update_investment($investment_id,$user_id,$plan_id,$amount,$issue_date){
     global $db;
@@ -245,14 +224,6 @@ function delete_investment($id){
 function list_investments(){
     global $db;
     $modals = ""; 
-
-    // $result = $db->query("
-    //     SELECT ui.*, u.username, p.plan_name 
-    //     FROM user_investments ui
-    //     JOIN users u ON ui.user_id = u.user_id
-    //     JOIN investment_plans p ON ui.plan_id = p.plan_id
-    //     ORDER BY ui.investment_id DESC
-    // ");
 
     $result = $db->query("
         SELECT 

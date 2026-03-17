@@ -38,7 +38,7 @@
                         <i class="las la-wallet"></i>
 
                         <span class="wallet-balance">
-                            <?php echo $transaction_obj->balance($_SESSION["user_id"]); ?>
+                            <?php echo $transaction_obj->display_balance($_SESSION["user_id"]); ?>
                         </span>
 
                     </a>
