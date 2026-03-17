@@ -64,7 +64,17 @@
             </li>
             <li>
                 <a href="withdrawl.php"><i class="la la-user"></i><span><?php _e("Withdrawl Requests"); ?></span></a>
-            </li>             
+            </li>
+            <li>
+                <a href="#dropdown-videos" aria-expanded="false" data-toggle="collapse">
+                <i class="la la-video"></i>
+                <span><?php _e("Videos"); ?></span>
+                </a>
+                <ul id="dropdown-videos" class="collapse list-unstyled pt-0">
+                    <li><a href="videos.php"><?php _e("Videos"); ?></a></li>
+                    <li><a href="manage_video.php"><?php _e("Add Video"); ?></a></li>
+                </ul>
+            </li>                       
         </ul>
         <!-- <hr> -->
 <!--         <span class="heading"><?php _e("Other Pages"); ?></span>

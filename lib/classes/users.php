@@ -662,33 +662,6 @@ $("#message_form_'.$user_id.'").on("submit", function(e){
 				$modals .= '
 
 				</ul>
-				<hr>
-				<b>Rewards Progress</b>
-				<ul>
-				';
-				$remaining_units = $units_achieved;
-
-				foreach ($levels as $level => $required) {
-
-					$units_used = 0;
-
-					if ($remaining_units >= $required) {
-						$units_used = $required;
-						$remaining_units -= $required;
-						$status = "Completed";
-					} elseif ($remaining_units > 0) {
-						$units_used = $remaining_units;
-						$remaining_units = 0;
-						$status = "In Progress ($units_used/$required)";
-					} else {
-						$status = "Ongoing";
-					}
-
-					$modals .= "<li>Level $level - $status</li>";
-				}
-				$modals .= '
-
-				</ul>
 
 				</div>
 
