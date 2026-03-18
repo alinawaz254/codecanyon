@@ -593,7 +593,8 @@
                 background: #ccc;
             }
 
-        }     
+        } 
+            /* ===== end css ===== */           
     </style>
     <body id="page-top" class="bg-white">
         <!-- Begin Preloader -->
