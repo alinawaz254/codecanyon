@@ -1,0 +1,1743 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Login Script V 4.0\n"
+"POT-Creation-Date: 2020-02-02 07:17+0500\n"
+"PO-Revision-Date: 2020-02-03 08:53+0500\n"
+"Last-Translator: \n"
+"Language-Team: Webful Creations <ateeq@webfulcreations.com>\n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.4\n"
+"X-Poedit-Basepath: ../../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _;_e\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: all.php:7
+msgid "Accessible only loged in users All types"
+msgstr "Accesible solo usuarios registrados Todos los tipos"
+
+#: all.php:8
+msgid "Page accessable for all loged in users of anytype."
+msgstr ""
+"Página accesible para todos los usuarios registrados de cualquier tipo."
+
+#: all.php:13
+msgid "All users page"
+msgstr "Página de todos los usuarios"
+
+#: all.php:14
+msgid ""
+"This page is for all loged in users they can access only when they are loged "
+"in."
+msgstr ""
+"Esta página es para todos los usuarios registrados que pueden acceder solo "
+"cuando están conectados."
+
+#: all.php:15 subscriber.php:25
+msgid "How to make a page accessable to all loged in users."
+msgstr ""
+"Cómo hacer que una página sea accesible para todos los usuarios registrados."
+
+#: all.php:16 subscriber.php:26
+msgid ""
+"You can use the following code in start of your document that will make your "
+"page to accessable all loged in users but only when they are signed in."
+msgstr ""
+"Puede usar el siguiente código al comienzo de su documento que hará que su "
+"página sea accesible para todos los usuarios registrados pero solo cuando "
+"hayan iniciado sesión."
+
+#: all.php:26 subscriber.php:14
+msgid "How to make more subscriber pages"
+msgstr "Cómo hacer más páginas de suscriptores"
+
+#: all.php:27 subscriber.php:15
+msgid ""
+"You can put the following code in top of any page that will become a "
+"subscriber accessable page. Note: admin can access all pages of all levels."
+msgstr ""
+"Puede poner el siguiente código en la parte superior de cualquier página que "
+"se convierta en una página accesible para suscriptores. Nota: el "
+"administrador puede acceder a todas las páginas de todos los niveles."
+
+#: all.php:37 subscriber.php:36
+msgid "Partial Access"
+msgstr "Acceso parcial"
+
+#: all.php:40 all.php:52 subscriber.php:39 subscriber.php:51
+msgid "You are Admin."
+msgstr "Usted es administrador."
+
+#: all.php:42 all.php:54 subscriber.php:41 subscriber.php:53
+msgid "You are Subscriber."
+msgstr "Usted es suscriptor."
+
+#: all.php:44 all.php:56 subscriber.php:43 subscriber.php:55
+msgid "You are loged in user."
+msgstr "Usted ha iniciado sesión usuario."
+
+#: all.php:46 all.php:58 subscriber.php:45 subscriber.php:57
+msgid "You are not loged in user."
+msgstr "No has iniciado sesión usuario."
+
+#: all.php:50 subscriber.php:49
+msgid "Working Example below"
+msgstr "Ejemplo de trabajo a continuación"
+
+#: announcements.php:13 dashboard.php:109 lib/includes/admin_nav.php:52
+#: lib/includes/admin_nav.php:55 lib/includes/top_bar.php:85
+msgid "Announcements"
+msgstr "Anuncios"
+
+#: announcements.php:18 lib/includes/admin_nav.php:58 user_levels.php:18
+#: users.php:16
+msgid "Add New"
+msgstr "Añadir nuevo"
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "none()"
+msgstr "ninguno()"
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "Edge"
+msgstr "Borde"
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "Chrome"
+msgstr "Cromo"
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "IE"
+msgstr "ES DECIR"
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "Opera"
+msgstr "Ópera"
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "Safari"
+msgstr "Safari"
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "iOS"
+msgstr "iOS"
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "Linux"
+msgstr "Linux"
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "OSX"
+msgstr "OSX"
+
+#: dashboard.php:24
+msgid "Welcome to Dashboard"
+msgstr "Bienvenido a Dashboard"
+
+#: dashboard.php:36
+msgid "Total Users"
+msgstr "Usuarios totales"
+
+#: dashboard.php:48
+msgid "Active Users"
+msgstr "Usuarios activos"
+
+#: dashboard.php:60
+msgid "Deactive Users"
+msgstr "Desactivar usuarios"
+
+#: dashboard.php:72
+msgid "Ban Users"
+msgstr "Prohibir usuarios"
+
+#: dashboard.php:84
+msgid "Suspend Users"
+msgstr "Suspender usuarios"
+
+#: dashboard.php:110
+msgid "Recent Announcements"
+msgstr "Anuncios Recientes"
+
+#: dashboard.php:121
+msgid "View All"
+msgstr "Ver todo"
+
+#: dashboard.php:131
+#, fuzzy
+#| msgid "Recent Announcements"
+msgid "Recent Logins"
+msgstr "Anuncios Recientes"
+
+#: edit_profile.php:34 edit_profile.php:42 manage_users.php:26
+#: manage_users.php:34 manage_users.php:57
+msgid "Password do not match"
+msgstr "La contraseña no coincide"
+
+#: edit_profile.php:58
+msgid "Edit your profile"
+msgstr "Edite su perfil"
+
+#: edit_profile.php:65 lib/includes/sidebar.php:20 manage_users.php:73
+#: register.php:94
+msgid "First Name"
+msgstr "Nombre de pila"
+
+#: edit_profile.php:66 manage_users.php:74
+msgid "Enter First Name"
+msgstr "Ingrese nombre"
+
+#: edit_profile.php:70 lib/includes/sidebar.php:23 manage_users.php:78
+#: manage_users.php:79 register.php:98
+msgid "Last Name"
+msgstr "Apellido"
+
+#: edit_profile.php:71
+msgid "Enter Last Name"
+msgstr "Introduzca el apellido"
+
+#: edit_profile.php:75 lib/includes/collapseuserinfo.php:36 manage_users.php:83
+msgid "Gender"
+msgstr "Género"
+
+#: edit_profile.php:77 manage_users.php:85
+msgid "Select Gender"
+msgstr "Seleccione género"
+
+#: edit_profile.php:78 manage_users.php:86
+msgid "Male"
+msgstr "Masculino"
+
+#: edit_profile.php:79 manage_users.php:87
+msgid "Female"
+msgstr "Hembra"
+
+#: edit_profile.php:84 edit_profile.php:85 lib/includes/collapseuserinfo.php:39
+#: manage_users.php:92 manage_users.php:93
+msgid "Date of Birth"
+msgstr "Fecha de nacimiento"
+
+#: edit_profile.php:89 edit_profile.php:90 edit_profile.php:94
+#: edit_profile.php:95 manage_users.php:97 manage_users.php:98
+#: manage_users.php:102 manage_users.php:103
+msgid "Address"
+msgstr "Habla a"
+
+#: edit_profile.php:99 edit_profile.php:100 manage_users.php:107
+#: manage_users.php:108
+msgid "City"
+msgstr "Ciudad"
+
+#: edit_profile.php:104 edit_profile.php:105 manage_users.php:112
+#: manage_users.php:113
+msgid "State OR Province"
+msgstr "Estado o Provincia"
+
+#: edit_profile.php:109 edit_profile.php:110 manage_users.php:117
+#: manage_users.php:118
+msgid "Country"
+msgstr "País"
+
+#: edit_profile.php:114 edit_profile.php:115 manage_users.php:122
+#: manage_users.php:123
+msgid "Zip Code"
+msgstr "Código postal"
+
+#: edit_profile.php:119 edit_profile.php:120 manage_users.php:127
+#: manage_users.php:128
+msgid "Mobile"
+msgstr "Móvil"
+
+#: edit_profile.php:124 edit_profile.php:125 manage_users.php:132
+#: manage_users.php:133
+msgid "Phone"
+msgstr "Teléfono"
+
+#: edit_profile.php:129 edit_profile.php:130 lib/classes/users.php:126
+#: lib/classes/users.php:180 lib/classes/users.php:391
+#: lib/classes/users.php:812 lib/classes/users.php:830
+#: lib/includes/sidebar.php:26 manage_users.php:137 manage_users.php:138
+#: register.php:102 users.php:78
+msgid "Username"
+msgstr "Nombre de usuario"
+
+#: edit_profile.php:134 edit_profile.php:135 lib/classes/users.php:125
+#: lib/classes/users.php:166 lib/classes/users.php:179
+#: lib/classes/users.php:391 lib/classes/users.php:811
+#: lib/includes/sidebar.php:29 manage_users.php:142 manage_users.php:143
+#: register.php:106 users.php:79
+msgid "Email"
+msgstr "Email"
+
+#: edit_profile.php:139 edit_profile.php:140 lib/classes/users.php:167
+#: lib/classes/users.php:797 login.php:94 login.php:95 manage_users.php:147
+#: manage_users.php:148 manage_users.php:157 manage_users.php:158
+#: register.php:110
+msgid "Password"
+msgstr "Contraseña"
+
+#: edit_profile.php:140
+msgid "Leave blank if you don't want to change password"
+msgstr "Déjelo en blanco si no desea cambiar la contraseña"
+
+#: edit_profile.php:144 edit_profile.php:145 forgot.php:63 manage_users.php:152
+#: manage_users.php:153 manage_users.php:162 manage_users.php:163
+msgid "Confirm Password"
+msgstr "Confirmar contraseña"
+
+#: edit_profile.php:149 manage_users.php:167
+msgid "Profile Image"
+msgstr "Imagen de perfil"
+
+#: edit_profile.php:165 edit_profile.php:166 manage_users.php:182
+#: manage_users.php:183
+msgid "Description"
+msgstr "Descripción"
+
+#: edit_profile.php:170
+msgid "Send Email on new message"
+msgstr "Enviar correo electrónico en nuevo mensaje"
+
+#: edit_profile.php:175 manage_users.php:212
+msgid "Update User"
+msgstr "Actualizar usuario"
+
+#: forgot.php:24
+msgid "Password Doesn't Match"
+msgstr "La contraseña no coincide"
+
+#: forgot.php:32
+msgid "Forgot Password!"
+msgstr "¡Se te olvidó tu contraseña!"
+
+#: forgot.php:40
+msgid "Please enter your email address or username to recover your password."
+msgstr ""
+"Ingrese su dirección de correo electrónico o nombre de usuario para "
+"recuperar su contraseña."
+
+#: forgot.php:41 login.php:89 login.php:90 messages.php:57
+msgid "Email or Username"
+msgstr "Correo electrónico o nombre de usuario"
+
+#: forgot.php:45 forgot.php:68
+msgid "Reset Password"
+msgstr "Restablecer la contraseña"
+
+#: forgot.php:59
+msgid "New Password"
+msgstr "Nueva contraseña"
+
+#: forgot.php:82
+msgid "Already Have an Account?"
+msgstr "¿Ya tienes una cuenta?"
+
+#: forgot.php:82 lib/includes/non_loged_in_top_bar.php:16 register.php:163
+msgid "Sign In"
+msgstr "Registrarse"
+
+#: forgot.php:83 login.php:155
+msgid "Not a member yet?"
+msgstr "¿No eres miembro todavía?"
+
+#: forgot.php:83 login.php:155
+msgid "Sign Up"
+msgstr "Regístrate"
+
+#: general_settings.php:15
+msgid "Site URL Required"
+msgstr "URL del sitio requerida"
+
+#: general_settings.php:17
+msgid "Email From Required"
+msgstr "Correo electrónico requerido"
+
+#: general_settings.php:19
+msgid "Reply To Required"
+msgstr "Responder a requerido"
+
+#: general_settings.php:91
+msgid "Settings saved."
+msgstr "Configuración guardada."
+
+#: general_settings.php:97 lib/includes/top_bar.php:79
+msgid "General Settings"
+msgstr "Configuración general"
+
+#: general_settings.php:104
+msgid "Site URL"
+msgstr "URL del sitio"
+
+#: general_settings.php:105
+msgid "Please include / at end of site url e.g http://localhost/"
+msgstr ""
+"Incluya / al final de la URL del sitio, por ejemplo, http: // localhost /"
+
+#: general_settings.php:109
+msgid "Site Name"
+msgstr "Nombre del sitio"
+
+#: general_settings.php:114
+msgid "Page to redirect on logout"
+msgstr "Página para redirigir al cerrar sesión"
+
+#: general_settings.php:119
+msgid "Site Language"
+msgstr "Idioma del sitio"
+
+#: general_settings.php:119
+msgid ""
+"You can easily add more languages if they ar enot available. By updating .po "
+"files we are available for support."
+msgstr ""
+"Puede agregar fácilmente más idiomas si no están disponibles. Al actualizar "
+"archivos .po estamos disponibles para soporte."
+
+#: general_settings.php:121 general_settings.php:133
+msgid "English"
+msgstr "Inglesa"
+
+#: general_settings.php:122 general_settings.php:137
+msgid "Spanish"
+msgstr "Española"
+
+#: general_settings.php:123 general_settings.php:139
+msgid "Dutch"
+msgstr "Holandesa"
+
+#: general_settings.php:124 general_settings.php:135
+msgid "French"
+msgstr "Francesa"
+
+#: general_settings.php:125 general_settings.php:141
+msgid "German"
+msgstr "Alemana"
+
+#: general_settings.php:126 general_settings.php:143
+msgid "Italian"
+msgstr "Italiana"
+
+#: general_settings.php:131
+msgid "Enable Multilanguage"
+msgstr "Habilitar multilenguaje"
+
+#: general_settings.php:133
+msgid "Enable English"
+msgstr "Habilitar inglés"
+
+#: general_settings.php:135
+msgid "Enable French"
+msgstr "Habilitar francés"
+
+#: general_settings.php:137
+msgid "Enable Spanish"
+msgstr "Habilitar español"
+
+#: general_settings.php:139
+msgid "Enable Dutch"
+msgstr "Habilitar holandés"
+
+#: general_settings.php:141
+msgid "Enable German"
+msgstr "Habilitar alemán"
+
+#: general_settings.php:143
+msgid "Enable Italian"
+msgstr "Habilitar italiano"
+
+#: general_settings.php:148
+msgid "Password Hash"
+msgstr "Hash de contraseña"
+
+#: general_settings.php:148
+msgid ""
+"Please note if you change password hashing all users would require to reset "
+"their password. As we do not save original passwords so script cannot auto "
+"generate new passwords."
+msgstr ""
+"Tenga en cuenta que si cambia el hash de contraseña, todos los usuarios "
+"deberán restablecer su contraseña. Como no guardamos las contraseñas "
+"originales, el script no puede generar automáticamente nuevas contraseñas."
+
+#: general_settings.php:156 general_settings.php:157
+msgid "Disable Registration"
+msgstr "Deshabilitar registro"
+
+#: general_settings.php:161 general_settings.php:162
+msgid "Disable Login"
+msgstr "Desactivar inicio de sesión"
+
+#: general_settings.php:166 general_settings.php:167
+msgid "Notify User Group On New Registration"
+msgstr "Notificar al grupo de usuarios sobre el nuevo registro"
+
+#: general_settings.php:171
+msgid "Default Register User Type"
+msgstr "Tipo de usuario de registro predeterminado"
+
+#: general_settings.php:173
+msgid "Select Default User Type"
+msgstr "Seleccionar tipo de usuario predeterminado"
+
+#: general_settings.php:179
+msgid "Session Timeout in Minutes"
+msgstr "Tiempo de espera de la sesión en minutos"
+
+#: general_settings.php:184
+msgid "Maximum Wrong Login Attempts"
+msgstr "Intentos máximos de inicio de sesión incorrecto"
+
+#: general_settings.php:189
+msgid "Lock time on Wrong Login Attempts in minutes"
+msgstr ""
+"Tiempo de bloqueo en intentos de inicio de sesión incorrectos en minutos"
+
+#: general_settings.php:199
+msgid "Google Login Settings"
+msgstr "Configuración de inicio de sesión de Google"
+
+#: general_settings.php:208 general_settings.php:209
+msgid "Activate Google Login"
+msgstr "Activar inicio de sesión de Google"
+
+#: general_settings.php:215
+msgid "Google Client ID"
+msgstr "ID de cliente de Google"
+
+#: general_settings.php:222
+msgid "Google Client Secret"
+msgstr "Secreto de cliente de Google"
+
+#: general_settings.php:229
+msgid ""
+"Enter Redirect URI. Should be your Login page login.php full URL With http:"
+msgstr ""
+"Ingrese Redirect URI. Debe ser su página de inicio de sesión URL completa de "
+"login.php con http:"
+
+#: general_settings.php:251
+msgid "Facebook Login Settings"
+msgstr "Configuración de inicio de sesión de Facebook"
+
+#: general_settings.php:259
+msgid "Activate Facebook Login"
+msgstr "Activar inicio de sesión de Facebook"
+
+#: general_settings.php:263
+msgid "Facebook API Key"
+msgstr "Clave API de Facebook"
+
+#: general_settings.php:264
+msgid ""
+"Please go to http://facebook.com/developers/ Register new app add your "
+"website url to its Web URL make your app live. And get your API key from "
+"dashboard."
+msgstr ""
+"Vaya a http://facebook.com/developers/ Registre una nueva aplicación, "
+"agregue la URL de su sitio web a su URL web y haga que su aplicación "
+"funcione. Y obtenga su clave API del tablero."
+
+#: general_settings.php:276
+msgid "Email Settings"
+msgstr "Ajustes del correo electrónico"
+
+#: general_settings.php:283
+msgid "Email settings used for the system will send Emails to users."
+msgstr ""
+"La configuración de correo electrónico utilizada para el sistema enviará "
+"correos electrónicos a los usuarios."
+
+#: general_settings.php:287
+msgid "Email From"
+msgstr "Email de"
+
+#: general_settings.php:292
+msgid "Reply To"
+msgstr "Responder a"
+
+#: general_settings.php:296
+msgid "Activate User Without email Verification?"
+msgstr "¿Activar usuario sin verificación de correo electrónico?"
+
+#: general_settings.php:297
+msgid ""
+"You can check this box to disable verification of email for registration."
+msgstr ""
+"Puede marcar esta casilla para deshabilitar la verificación de correo "
+"electrónico para el registro."
+
+#: general_settings.php:309
+msgid "Captcha Settings"
+msgstr "Configuración de Captcha"
+
+#: general_settings.php:315
+msgid "Captcha Settings Please"
+msgstr "Configuración de Captcha por favor"
+
+#: general_settings.php:315
+msgid "Sign up to google reCaptcha"
+msgstr "Regístrese en google reCaptcha"
+
+#: general_settings.php:315
+msgid "Get your site key and secret key."
+msgstr "Obtenga su clave de sitio y clave secreta."
+
+#: general_settings.php:317
+msgid "Activate Captcha"
+msgstr "Activa Captcha"
+
+#: general_settings.php:322
+msgid "Site Key"
+msgstr "Clave del sitio"
+
+#: general_settings.php:327
+msgid "Secret Key"
+msgstr "Llave secreta"
+
+#: general_settings.php:338
+msgid "Save"
+msgstr "Salvar"
+
+#: lib/classes/announcements.php:57
+msgid "Announcement Updated"
+msgstr "Anuncio actualizado"
+
+#: lib/classes/announcements.php:75 lib/classes/userlevel.php:149
+#: lib/classes/users.php:417 user_levels.php:27
+msgid "Edit"
+msgstr "Editar"
+
+#: lib/classes/announcements.php:79 lib/classes/notes.php:174
+#: lib/classes/userlevel.php:154 lib/classes/users.php:421 user_levels.php:28
+msgid "Delete"
+msgstr "Eliminar"
+
+#: lib/classes/announcements.php:115
+msgid "Announcement Added"
+msgstr "Anuncio agregado"
+
+#: lib/classes/announcements.php:123
+msgid "Announcement Deleted"
+msgstr "Anuncio eliminado"
+
+#: lib/classes/forms.php:228
+msgid "Update key is required with update field TRUE"
+msgstr ""
+"La clave de actualización es necesaria con el campo de actualización "
+"VERDADERO"
+
+#: lib/classes/forms.php:253
+msgid "Sorry forms fields have nothing. Or its not array."
+msgstr ""
+"Lo sentimos, los campos de formularios no tienen nada. O no es una matriz."
+
+#: lib/classes/forms.php:271
+msgid "Field name is required"
+msgstr "Primer nombre requerido"
+
+#: lib/classes/forms.php:283
+msgid "This type of field is not supported yet."
+msgstr "Este tipo de campo aún no es compatible."
+
+#: lib/classes/forms.php:295
+msgid "No data in select options array"
+msgstr "No hay datos en la matriz de opciones de selección"
+
+#: lib/classes/forms.php:352
+msgid "Title is required for label"
+msgstr "Se requiere título para la etiqueta"
+
+#: lib/classes/forms.php:374
+msgid "Name and value for hidden fields cannot be empty."
+msgstr "El nombre y el valor de los campos ocultos no pueden estar vacíos."
+
+#: lib/classes/forms.php:387
+msgid "Submit"
+msgstr "Enviar"
+
+#: lib/classes/forms.php:402
+msgid "Sorry cannot retrive the data some field sent was empty."
+msgstr ""
+"Lo sentimos, no se pueden recuperar los datos que algún campo enviado estaba "
+"vacío."
+
+#: lib/classes/forms.php:451
+msgid "Select "
+msgstr "Seleccione "
+
+#: lib/classes/forms_submission.php:53
+msgid ""
+"Either you have not declared the Update Field and its key or you have not "
+"stated INSERT TRUE check array."
+msgstr ""
+"O no ha declarado el campo Actualizar y su clave o no ha declarado INSERTAR "
+"VERDADERO conjunto de verificación."
+
+#: lib/classes/forms_submission.php:69 lib/classes/forms_submission.php:175
+msgid "Table name is not defined and its required"
+msgstr "El nombre de la tabla no está definido y es obligatorio"
+
+#: lib/classes/forms_submission.php:74 lib/classes/forms_submission.php:180
+msgid "Who are you to insert something in table."
+msgstr "¿Quién eres para insertar algo en la tabla?."
+
+#: lib/classes/forms_submission.php:79 lib/classes/forms_submission.php:186
+msgid "Table does not match in db."
+msgstr "La tabla no coincide en db."
+
+#: lib/classes/forms_submission.php:90 lib/classes/forms_submission.php:198
+msgid ""
+"No Match in column names and fields names of form sent. Please check array "
+"of form generation and make sure they match the column names in database."
+msgstr ""
+"Sin coincidencia en los nombres de columna y campos de formulario enviado. "
+"Verifique la matriz de generación de formularios y asegúrese de que "
+"coincidan con los nombres de columna en la base de datos."
+
+#: lib/classes/forms_submission.php:154 lib/classes/forms_submission.php:265
+msgid "Duplicate data found. "
+msgstr "Datos duplicados encontrados. "
+
+#: lib/classes/forms_submission.php:287
+msgid "Provided data is empty cannot check duplicate"
+msgstr "Si los datos están vacíos, no se puede verificar duplicado"
+
+#: lib/classes/forms_submission.php:317 lib/classes/forms_submission.php:352
+msgid "Array to generate query is empty."
+msgstr "La matriz para generar la consulta está vacía."
+
+#: lib/classes/forms_submission.php:339
+msgid "You have successfuly added data into database."
+msgstr "Ha agregado datos con éxito a la base de datos."
+
+#: lib/classes/forms_submission.php:372
+msgid "Updated Record!"
+msgstr "Registro actualizado!"
+
+#: lib/classes/forms_submission.php:399 lib/classes/forms_submission.php:419
+msgid "No table name exists to check."
+msgstr "No existe un nombre de tabla para verificar."
+
+#: lib/classes/messages.php:41
+msgid "Me"
+msgstr "Yo"
+
+#: lib/classes/messages.php:64
+msgid "From"
+msgstr "Desde"
+
+#: lib/classes/messages.php:65 lib/classes/userlevel.php:122
+#: lib/classes/users.php:390
+msgid "To"
+msgstr "A"
+
+#: lib/classes/messages.php:86
+msgid "Send a reply"
+msgstr "Enviar una respuesta"
+
+#: lib/classes/messages.php:253 lib/classes/messages.php:290
+msgid "Message sent success"
+msgstr "Mensaje enviado correctamente"
+
+#: lib/classes/messages.php:292
+msgid "No user to message"
+msgstr "Ningún usuario para enviar mensajes"
+
+#: lib/classes/messages.php:322
+msgid "Message Sent Successful"
+msgstr "Mensaje enviado con éxito"
+
+#: lib/classes/messages.php:357
+msgid "Message to all"
+msgstr "Mensaje a todos"
+
+#: lib/classes/messages.php:392
+msgid "Message Sent to All"
+msgstr "Mensaje enviado a todos"
+
+#: lib/classes/notes.php:37
+msgid "Note Updated"
+msgstr "Nota actualizada"
+
+#: lib/classes/notes.php:50 notes.php:20 notes.php:37
+msgid "Add Note"
+msgstr "Añadir la nota"
+
+#: lib/classes/notes.php:59 lib/classes/notes.php:120
+msgid "Note Title"
+msgstr "Título de la nota"
+
+#: lib/classes/notes.php:63 lib/classes/notes.php:124
+msgid "Your Note Title"
+msgstr "El título de tu nota"
+
+#: lib/classes/notes.php:64 lib/classes/notes.php:125
+msgid "Enter Note Title"
+msgstr "Ingrese el título de la nota"
+
+#: lib/classes/notes.php:72 lib/classes/notes.php:132 lib/includes/Demo
+#: Array/form_field_and_values.php:32
+msgid "Note Detail"
+msgstr "Detalle de nota"
+
+#: lib/classes/notes.php:76 lib/classes/notes.php:136 lib/includes/Demo
+#: Array/form_field_and_values.php:36
+msgid "Your Note Detail"
+msgstr "Detalle de su nota"
+
+#: lib/classes/notes.php:100 lib/includes/formprocessing.php:15
+msgid "You are doing something you don't have access to do."
+msgstr "Estás haciendo algo a lo que no tienes acceso."
+
+#: lib/classes/notes.php:110 notes.php:39
+msgid "Update Note"
+msgstr "Nota de actualización"
+
+#: lib/classes/notes.php:171
+msgid "Edit Note"
+msgstr "Editar nota"
+
+#: lib/classes/notes.php:178
+msgid "Date"
+msgstr "Fecha"
+
+#: lib/classes/notes.php:193
+msgid "Note Added"
+msgstr "Nota agregada"
+
+#: lib/classes/notes.php:201
+msgid "Note Deleted"
+msgstr "Nota eliminada"
+
+#: lib/classes/userlevel.php:41
+msgid "User level updated"
+msgstr "Nivel de usuario actualizado"
+
+#: lib/classes/userlevel.php:53
+msgid "User level cannot be added"
+msgstr "No se puede agregar el nivel de usuario"
+
+#: lib/classes/userlevel.php:62
+msgid "Level added successfuly"
+msgstr "Nivel agregado exitosamente"
+
+#: lib/classes/userlevel.php:94 lib/classes/userlevel.php:132
+#: lib/classes/users.php:363 lib/classes/users.php:400 messages.php:67
+#: messages.php:105 user_levels.php:26 user_levels.php:38 user_levels.php:75
+#: users.php:54
+msgid "Message"
+msgstr "Mensaje"
+
+#: lib/classes/userlevel.php:115 lib/classes/userlevel.php:140
+#: lib/classes/users.php:383 lib/classes/users.php:409 messages.php:50
+#: messages.php:73 user_levels.php:58 user_levels.php:83 users.php:37
+#: users.php:61
+msgid "Send Message"
+msgstr "Enviar mensaje"
+
+#: lib/classes/userlevel.php:127 lib/classes/users.php:395 messages.php:62
+#: user_levels.php:70 users.php:49
+msgid "Subject"
+msgstr "Tema"
+
+#: lib/classes/userlevel.php:139 lib/classes/users.php:408 messages.php:77
+#: notes.php:61 user_levels.php:82 users.php:60
+msgid "Close"
+msgstr "Cerca"
+
+#: lib/classes/userlevel.php:162
+msgid "You cannot view list of levels."
+msgstr "No puede ver la lista de niveles."
+
+#: lib/classes/userlevel.php:173
+msgid "User level deleted"
+msgstr "Nivel de usuario eliminado"
+
+#: lib/classes/userlevel.php:175
+msgid "User level cannot delete"
+msgstr "El nivel de usuario no puede eliminar"
+
+#: lib/classes/userlevel.php:217 manage_announcement.php:59
+#: manage_users.php:200
+msgid "Admin"
+msgstr "Administración"
+
+#: lib/classes/userlevel.php:255
+msgid "Cannot view this list"
+msgstr "No se puede ver esta lista"
+
+#: lib/classes/users.php:67
+msgid "Email cannot be added "
+msgstr "No se puede agregar correo electrónico "
+
+#: lib/classes/users.php:67
+msgid "already exists."
+msgstr "ya existe."
+
+#: lib/classes/users.php:77
+msgid "Username cannot be added"
+msgstr "No se puede agregar el nombre de usuario"
+
+#: lib/classes/users.php:77 lib/classes/users.php:467 lib/classes/users.php:763
+msgid "Already exists."
+msgstr "Ya existe."
+
+#: lib/classes/users.php:108
+msgid "Thank you for registration."
+msgstr "Gracias por registrarte."
+
+#: lib/classes/users.php:109
+msgid "Your username is"
+msgstr "Tu nombre de usuario es"
+
+#: lib/classes/users.php:110
+msgid ""
+"Kindly click the link below to confirm your account and start using our "
+"services."
+msgstr ""
+"Haga clic en el siguiente enlace para confirmar su cuenta y comenzar a usar "
+"nuestros servicios."
+
+#: lib/classes/users.php:111 lib/classes/users.php:739
+msgid "Confirm Email Address"
+msgstr "Confirmar el correo"
+
+#: lib/classes/users.php:112 lib/classes/users.php:740
+msgid "Thank you again. Please contact us if you need any assistance."
+msgstr "Gracias de nuevo. Por favor contáctenos si necesita ayuda."
+
+#: lib/classes/users.php:116
+msgid "Confirm your email id."
+msgstr "Confirme su identificación de correo electrónico."
+
+#: lib/classes/users.php:122
+msgid "New user registration"
+msgstr "Registro de nuevo usuario"
+
+#: lib/classes/users.php:123 lib/classes/users.php:809
+msgid "New user on your user group."
+msgstr "Nuevo usuario en su grupo de usuarios."
+
+#: lib/classes/users.php:124 lib/classes/users.php:178
+#: lib/classes/users.php:810 lib/classes/users.php:829
+msgid "Name"
+msgstr "Nombre"
+
+#: lib/classes/users.php:131
+msgid "Registration successful"
+msgstr "Registro exitoso"
+
+#: lib/classes/users.php:164 lib/classes/users.php:170
+msgid "Thank you for registration"
+msgstr "Gracias por registrarte"
+
+#: lib/classes/users.php:165
+msgid ""
+"You can use facebook login or following login information to access our "
+"system."
+msgstr ""
+"Puede usar el inicio de sesión de Facebook o la siguiente información de "
+"inicio de sesión para acceder a nuestro sistema."
+
+#: lib/classes/users.php:176 lib/classes/users.php:808
+msgid "New user registration."
+msgstr "Registro de nuevo usuario."
+
+#: lib/classes/users.php:177
+msgid "New user in your user group."
+msgstr "Nuevo usuario en su grupo de usuarios."
+
+#: lib/classes/users.php:192 lib/classes/users.php:267
+msgid ""
+"Your account is not activated yet please confirm your Email address to "
+"activate your account!"
+msgstr ""
+"Su cuenta aún no está activada, por favor confirme su dirección de correo "
+"electrónico para activar su cuenta!"
+
+#: lib/classes/users.php:210
+msgid "Your account is ban or suspend. Please contact site admin."
+msgstr ""
+"Su cuenta está prohibida o suspendida. Por favor, póngase en contacto con el "
+"administrador del sitio."
+
+#: lib/classes/users.php:214 lib/classes/users.php:300
+msgid "Couldn't find email."
+msgstr "No se pudo encontrar el correo electrónico."
+
+#: lib/classes/users.php:236
+msgid "You are locked cause of maximum login attempts."
+msgstr "Estás bloqueado debido a los intentos máximos de inicio de sesión."
+
+#: lib/classes/users.php:286
+msgid "You cannot login your account is ban or suspend. Contact site admin."
+msgstr ""
+"No puede iniciar sesión, su cuenta está prohibida o suspendida. Póngase en "
+"contacto con el administrador del sitio."
+
+#: lib/classes/users.php:289
+msgid "Password doesn't match."
+msgstr "La contraseña no coincide."
+
+#: lib/classes/users.php:311
+msgid "User deleted successfuly"
+msgstr "Usuario eliminado con éxito"
+
+#: lib/classes/users.php:313
+msgid "Cannot delete user"
+msgstr "No se puede eliminar el usuario"
+
+#: lib/classes/users.php:356
+msgid "Never"
+msgstr "Nunca"
+
+#: lib/classes/users.php:428
+msgid "You cannot view list of users."
+msgstr "No puede ver la lista de usuarios."
+
+#: lib/classes/users.php:446
+msgid "You are not allowed to view this list."
+msgstr "No tiene permiso para ver esta lista."
+
+#: lib/classes/users.php:467 lib/classes/users.php:763
+msgid "Email cannot be added"
+msgstr "No se puede agregar correo electrónico"
+
+#: lib/classes/users.php:480 lib/classes/users.php:602
+msgid "Username couldn't be added"
+msgstr "No se pudo agregar el nombre de usuario"
+
+#: lib/classes/users.php:480
+msgid "Already exists"
+msgstr "Ya existe"
+
+#: lib/classes/users.php:535
+msgid "User updated successfuly."
+msgstr "Usuario actualizado con éxito."
+
+#: lib/classes/users.php:546
+msgid "You are trying to do something which you are not allowed to do."
+msgstr "Estás tratando de hacer algo que no tienes permitido hacer."
+
+#: lib/classes/users.php:589
+msgid "This email cannot be used"
+msgstr "Este correo electrónico no se puede usar"
+
+#: lib/classes/users.php:589
+msgid "already exists in our system."
+msgstr "ya existe en nuestro sistema."
+
+#: lib/classes/users.php:602
+msgid "username already exists."
+msgstr "nombre de usuario ya existe."
+
+#: lib/classes/users.php:663
+msgid "User updated successful."
+msgstr "Usuario actualizado con éxito."
+
+#: lib/classes/users.php:665
+msgid "You are trying to do something you are not allowed for."
+msgstr "Estás tratando de hacer algo que no tienes permitido."
+
+#: lib/classes/users.php:688
+msgid "Your Password has been reset please use new password to login."
+msgstr ""
+"Su contraseña se ha restablecido, utilice una nueva contraseña para iniciar "
+"sesión."
+
+#: lib/classes/users.php:690
+msgid "Your activation key is expired and password cannot be reset."
+msgstr ""
+"Su clave de activación ha caducado y la contraseña no se puede restablecer."
+
+#: lib/classes/users.php:705
+msgid ""
+"Your account has been suspended. Please contact the administrator for help."
+msgstr ""
+"Tu cuenta ha sido suspendida. Por favor, póngase en contacto con el "
+"administrador para obtener ayuda."
+
+#: lib/classes/users.php:710
+msgid ""
+"Congratulations! You are activated successfully now you can use email and "
+"password to login and use our services."
+msgstr ""
+"¡Felicidades! Está activado correctamente ahora puede usar el correo "
+"electrónico y la contraseña para iniciar sesión y usar nuestros servicios."
+
+#: lib/classes/users.php:713
+msgid "Your account cannot be activated."
+msgstr "Su cuenta no puede ser activada."
+
+#: lib/classes/users.php:729
+msgid "Email is not in our system."
+msgstr "El correo electrónico no está en nuestro sistema."
+
+#: lib/classes/users.php:737
+msgid "Reset your password."
+msgstr "Restablecer su contraseña."
+
+#: lib/classes/users.php:738
+msgid "Kindly click the link below to reset your password."
+msgstr "Haga clic en el siguiente enlace para restablecer su contraseña."
+
+#: lib/classes/users.php:743
+msgid "Password reset instructions"
+msgstr "Instrucciones de restablecimiento de contraseña"
+
+#: lib/classes/users.php:747
+msgid "Password recovery email sent please check mail for details."
+msgstr ""
+"Correo electrónico de recuperación de contraseña enviado por favor revise el "
+"correo para más detalles."
+
+#: lib/classes/users.php:773
+msgid "Username couldn't add"
+msgstr "Nombre de usuario no pudo agregar"
+
+#: lib/classes/users.php:773
+msgid "User already exists"
+msgstr "El usuario ya existe"
+
+#: lib/classes/users.php:793
+msgid "Your account have been registered."
+msgstr "Su cuenta ha sido registrada."
+
+#: lib/classes/users.php:794
+msgid "Please use the following details to sign in on our website."
+msgstr ""
+"Utilice los siguientes detalles para iniciar sesión en nuestro sitio web."
+
+#: lib/classes/users.php:795
+msgid "Confirm Email Address."
+msgstr "Confirmar el correo."
+
+#: lib/classes/users.php:796
+msgid "Email OR Username"
+msgstr "Correo electrónico o nombre de usuario"
+
+#: lib/classes/users.php:801
+msgid "Registration Details"
+msgstr "Detalles de registro"
+
+#: lib/classes/users.php:817
+msgid "User added details are sent on email"
+msgstr "Los detalles agregados por el usuario se envían por correo electrónico"
+
+#: lib/classes/users.php:827
+msgid "Login Time"
+msgstr "Hora de inicio de sesión"
+
+#: lib/classes/users.php:828
+msgid "IP"
+msgstr "IP"
+
+#: lib/classes/users.php:831 manage_announcement.php:53 manage_users.php:197
+#: users.php:81
+msgid "User Type"
+msgstr "Tipo de usuario"
+
+#: lib/includes/Demo Array/form_field_and_values.php:37
+msgid "Enter Note Detail"
+msgstr "Introducir detalle de nota"
+
+#: lib/includes/admin_nav.php:20 lib/includes/non_admin_nav.php:22
+#: lib/includes/non_admin_nav.php:24
+msgid "Dashboard"
+msgstr "Tablero"
+
+#: lib/includes/admin_nav.php:24 lib/includes/admin_nav.php:27
+msgid "Users"
+msgstr "Los usuarios"
+
+#: lib/includes/admin_nav.php:30 manage_users.php:212
+msgid "Add User"
+msgstr "Agregar usuario"
+
+#: lib/includes/admin_nav.php:35 lib/includes/admin_nav.php:37
+msgid "User Levels"
+msgstr "Niveles de usuario"
+
+#: lib/includes/admin_nav.php:38 manage_user_level.php:23
+msgid "Add User Level"
+msgstr "Agregar nivel de usuario"
+
+#: lib/includes/admin_nav.php:45 lib/includes/non_admin_nav.php:30
+#: lib/includes/top_bar.php:66 lib/includes/top_bar.php:107
+msgid "Messages"
+msgstr "Mensajes"
+
+#: lib/includes/admin_nav.php:49 lib/includes/non_admin_nav.php:42
+#: lib/includes/top_bar.php:72 lib/includes/top_bar.php:113 notes.php:12
+msgid "My Notes"
+msgstr "Mis notas"
+
+#: lib/includes/admin_nav.php:63
+msgid "Update Language"
+msgstr "Actualizar idioma"
+
+#: lib/includes/admin_nav.php:66 lib/includes/non_admin_nav.php:46
+msgid "For All Logged In Users"
+msgstr "Para todos los usuarios registrados"
+
+#: lib/includes/admin_nav.php:69
+msgid "For Subscriber User Levels"
+msgstr "Para niveles de usuario de suscriptor"
+
+#: lib/includes/collapseuserinfo.php:23 lib/includes/sidebar.php:38
+#: lib/includes/top_bar.php:91 lib/includes/top_bar.php:120
+msgid "Edit Profile"
+msgstr "Editar perfil"
+
+#: lib/includes/collapseuserinfo.php:31
+msgid "Basic Information"
+msgstr "Información básica"
+
+#: lib/includes/collapseuserinfo.php:42
+msgid "Your IP"
+msgstr "Tu dirección Ip"
+
+#: lib/includes/collapseuserinfo.php:53
+msgid "About me!"
+msgstr "¡Sobre mí!"
+
+#: lib/includes/footer.php:9
+msgid "Copyright"
+msgstr "Derechos de autor"
+
+#: lib/includes/footer.php:10
+msgid "All Rights Reserved"
+msgstr "Todos los derechos reservados"
+
+#: lib/includes/footer.php:10
+msgid "Powered By"
+msgstr "Energizado por"
+
+#: lib/includes/footer.php:62
+msgid "Confirm delete this cannot be undone."
+msgstr "Confirme que eliminar esto no se puede deshacer."
+
+#: lib/includes/functions.php:72
+msgid "Admin already exists"
+msgstr "El administrador ya existe"
+
+#: lib/includes/functions.php:231
+msgid "year"
+msgstr "año"
+
+#: lib/includes/functions.php:232
+msgid "month"
+msgstr "mes"
+
+#: lib/includes/functions.php:233
+msgid "week"
+msgstr "semana"
+
+#: lib/includes/functions.php:234
+msgid "day"
+msgstr "día"
+
+#: lib/includes/functions.php:235
+msgid "hour"
+msgstr "hora"
+
+#: lib/includes/functions.php:236
+msgid "minute"
+msgstr "minuto"
+
+#: lib/includes/functions.php:237
+msgid "second"
+msgstr "segundo"
+
+#: lib/includes/functions.php:248
+msgid " ago"
+msgstr " hace"
+
+#: lib/includes/functions.php:248
+msgid "just now"
+msgstr "justo ahora"
+
+#: lib/includes/functions.php:312
+msgid "Nothing uploaded"
+msgstr "Nada subido"
+
+#: lib/includes/functions.php:320
+msgid "Filesize is not correct it should equal to 2 MB or less than 2 MB."
+msgstr ""
+"El tamaño del archivo no es correcto, debe ser igual a 2 MB o inferior a 2 "
+"MB."
+
+#: lib/includes/functions.php:333
+msgid "Sorry this file type is not supported we accept only. Jpeg, Gif, PNG"
+msgstr ""
+"Lo sentimos, este tipo de archivo no es compatible, solo aceptamos. JPEG, "
+"GIF, PNG"
+
+#: lib/includes/functions.php:342
+msgid "Problem could not move file to destination."
+msgstr "El problema no pudo mover el archivo al destino."
+
+#: lib/includes/functions.php:348
+msgid "Problem: Possible file upload attack. Filename: "
+msgstr "Problema: posible ataque de carga de archivos. Nombre del archivo: "
+
+#: lib/includes/messageprocess.php:9 lib/includes/messageprocess.php:19
+#: lib/includes/messageprocess.php:29 lib/includes/messageprocess.php:39
+#: messages.php:12
+msgid "Message is empty!"
+msgstr "El mensaje esta vacio!"
+
+#: lib/includes/non_admin_nav.php:12
+msgid "View User Detail"
+msgstr "El mensaje esta vacio"
+
+#: lib/includes/non_admin_nav.php:25 lib/includes/top_bar.php:97
+#: lib/includes/top_bar.php:126
+msgid "Logout"
+msgstr "Cerrar sesión"
+
+#: lib/includes/non_admin_nav.php:33 messages.php:84
+msgid "Inbox"
+msgstr "Bandeja de entrada"
+
+#: lib/includes/non_admin_nav.php:36
+msgid "Sent Items"
+msgstr "Elementos enviados"
+
+#: lib/includes/non_admin_nav.php:49
+msgid "For Subscriber Level Users"
+msgstr "Para usuarios de nivel de suscriptor"
+
+#: lib/includes/non_loged_in_top_bar.php:12
+msgid "Join Now"
+msgstr "Únete ahora"
+
+#: lib/includes/non_loged_in_top_bar.php:17 register.php:145
+msgid "Register"
+msgstr "Registrarse"
+
+#: lib/includes/sidebar.php:6
+msgid "Your Profile"
+msgstr "Tu perfil"
+
+#: lib/includes/sidebar.php:17
+msgid "User ID"
+msgstr "ID de usuario"
+
+#: lib/includes/sidebar.php:32 manage_users.php:186 users.php:80
+msgid "Status"
+msgstr "Estado"
+
+#: lib/includes/sidebar.php:35
+msgid "Type"
+msgstr "Tipo"
+
+#: lib/includes/socialloginprocess.php:22 login.php:36
+msgid "Login disabled. Please contact site admin."
+msgstr ""
+"Inicio de sesión deshabilitado. Por favor, póngase en contacto con el "
+"administrador del sitio."
+
+#: lib/includes/top_bar.php:20
+msgid "All Messages"
+msgstr "Todos los mensajes"
+
+#: lib/includes/top_bar.php:42
+msgid "View All Notes"
+msgstr "Ver todas las notas"
+
+#: login.php:26 register.php:60
+msgid "Email required"
+msgstr "Correo electronico (requerido"
+
+#: login.php:28 manage_users.php:55
+msgid "Password Required"
+msgstr "Se requiere contraseña"
+
+#: login.php:62
+msgid "Login Success"
+msgstr "Inicio de sesión exitoso"
+
+#: login.php:70
+msgid "Password or Email doesn't Match"
+msgstr "La contraseña o el correo electrónico no coinciden"
+
+#: login.php:75
+msgid "Login to your account"
+msgstr "Ingrese a su cuenta"
+
+#: login.php:99
+msgid "Remember me"
+msgstr "Recuérdame"
+
+#: login.php:103
+msgid "Login"
+msgstr "Iniciar sesión"
+
+#: login.php:107
+msgid "Login with Facebook"
+msgstr "Iniciar sesión con Facebook"
+
+#: login.php:154
+msgid "Forgot password?"
+msgstr "¿Se te olvidó tu contraseña?"
+
+#: login.php:154
+msgid "Recover Password"
+msgstr "Recuperar contraseña"
+
+#: manage_announcement.php:23
+msgid "Title Required"
+msgstr "Título requerido"
+
+#: manage_announcement.php:25
+msgid "Detail Required"
+msgstr "Detalle requerido"
+
+#: manage_announcement.php:32 manage_announcement.php:85
+msgid "Edit Announcement"
+msgstr "Editar anuncio"
+
+#: manage_announcement.php:34 manage_announcement.php:85
+msgid "Add Announcement"
+msgstr "Añadir anuncio"
+
+#: manage_announcement.php:43 manage_announcement.php:44
+msgid "Announcement Title"
+msgstr "Título del anuncio"
+
+#: manage_announcement.php:48 manage_announcement.php:49
+msgid "Announcement Detail"
+msgstr "Detalle de anuncio"
+
+#: manage_announcement.php:56
+msgid "All users"
+msgstr "Todos los usuarios"
+
+#: manage_announcement.php:66
+msgid "Announcement Status"
+msgstr "Estado del anuncio"
+
+#: manage_announcement.php:69
+msgid "Activate"
+msgstr "Activar"
+
+#: manage_announcement.php:72
+msgid "Deactivate"
+msgstr "Desactivar"
+
+#: manage_user_level.php:23
+msgid "Edit User Level"
+msgstr "Editar nivel de usuario"
+
+#: manage_user_level.php:29 manage_user_level.php:30 user_levels.php:23
+msgid "Level Name"
+msgstr "Nombre de nivel"
+
+#: manage_user_level.php:34 manage_user_level.php:35 user_levels.php:24
+msgid "Level Description"
+msgstr "Descripción del nivel"
+
+#: manage_user_level.php:39
+msgid "Page Name"
+msgstr "Nombre de la página"
+
+#: manage_user_level.php:40
+msgid ""
+"This would be default page where user of stated level redirected after login."
+msgstr ""
+"Esta sería la página predeterminada donde el usuario del nivel indicado "
+"redirige después de iniciar sesión."
+
+#: manage_user_level.php:40
+msgid "User Level Page"
+msgstr "Página de nivel de usuario"
+
+#: manage_user_level.php:40
+msgid ""
+"e.g manager.php this would be default page for user types of entered name. "
+"You can use ../manager.php if your file is one directory back of this script."
+msgstr ""
+"por ejemplo manager.php, esta sería la página predeterminada para los tipos "
+"de usuario del nombre ingresado. Puede usar ../manager.php si su archivo "
+"está un directorio atrás de este script."
+
+#: manage_user_level.php:43
+msgid ""
+"To make a page password secure and accessable by entered level name users "
+"let's say you created user level manager and setup default page manager.php. "
+"Now you want to secure manager_2.php with password but manager user level "
+"users can access and admins we need to put."
+msgstr ""
+"Para hacer que una contraseña de página sea segura y accesible para los "
+"usuarios de nombre de nivel ingresados, digamos que creó el administrador de "
+"nivel de usuario y configuró el administrador de página predeterminado.php. "
+"Ahora desea proteger manager_2.php con contraseña, pero los usuarios de "
+"nivel de usuario administrador pueden acceder y los administradores que "
+"necesitamos poner."
+
+#: manage_user_level.php:46
+msgid "Please make sure this file loads properly."
+msgstr "Asegúrese de que este archivo se cargue correctamente."
+
+#: manage_user_level.php:48
+msgid "//This loads system."
+msgstr "// Esto carga el sistema."
+
+#: manage_user_level.php:53
+msgid ""
+"PHP code in start of manager.php and manager_2.php Both files will need "
+"login and user level manager."
+msgstr ""
+"Código PHP al inicio de manager.php y manager_2.php Ambos archivos "
+"necesitarán inicio de sesión y administrador de nivel de usuario."
+
+#: manage_user_level.php:62
+msgid "Update Level"
+msgstr "Nivel de actualización"
+
+#: manage_user_level.php:62
+msgid "Add Level"
+msgstr "Agregar nivel"
+
+#: manage_users.php:49
+msgid "First Name Required"
+msgstr "Primer nombre (requerido"
+
+#: manage_users.php:51
+msgid "Username Required"
+msgstr "Nombre de usuario (requerido"
+
+#: manage_users.php:53
+msgid "Email Required"
+msgstr "Correo electronico (requerido"
+
+#: manage_users.php:59
+msgid "User Status Required"
+msgstr "Estado de usuario requerido"
+
+#: manage_users.php:61
+msgid "User Type Required"
+msgstr "Tipo de usuario requerido"
+
+#: manage_users.php:67
+msgid "Edit User"
+msgstr "Editar Usuario"
+
+#: manage_users.php:67
+msgid "Add New User"
+msgstr "Añadir nuevo usuario"
+
+#: manage_users.php:148
+msgid "Leave blank if you don't want to change password."
+msgstr "Déjelo en blanco si no desea cambiar la contraseña."
+
+#: manage_users.php:188
+msgid "Select User Status"
+msgstr "Seleccionar estado del usuario"
+
+#: manage_users.php:189
+msgid "Active"
+msgstr "Activa"
+
+#: manage_users.php:190
+msgid "Deactive"
+msgstr "Deactive"
+
+#: manage_users.php:191
+msgid "Ban"
+msgstr "Prohibir"
+
+#: manage_users.php:192
+msgid "Suspend"
+msgstr "Suspender"
+
+#: manage_users.php:199
+msgid "Select User Type"
+msgstr "Seleccionar tipo de usuario"
+
+#: messages.php:16
+msgid "My Messages"
+msgstr "Mis mensajes"
+
+#: messages.php:17
+msgid "Manage Your Messages"
+msgstr "Administra tus mensajes"
+
+#: messages.php:23
+msgid "New Message"
+msgstr "Nuevo mensaje"
+
+#: messages.php:57 user_levels.php:65 users.php:44
+msgid "Message To"
+msgstr "Mensaje para"
+
+#: messages.php:88
+msgid "Sent"
+msgstr "Expedida"
+
+#: messages.php:103
+msgid "Pic"
+msgstr "Foto"
+
+#: messages.php:104
+msgid "Message From"
+msgstr "Mensaje de"
+
+#: notes.php:24
+msgid "Go Back"
+msgstr "Regresa"
+
+#: register.php:54
+msgid "Captcha is not correct"
+msgstr "Captcha no es correcto"
+
+#: register.php:56
+msgid "First name required"
+msgstr "Primer nombre (requerido"
+
+#: register.php:58
+msgid "Username required"
+msgstr "Nombre de usuario (requerido"
+
+#: register.php:62
+msgid "Incorrect email format"
+msgstr "Formato de correo electrónico incorrecto"
+
+#: register.php:64
+msgid "Password required"
+msgstr "Se requiere contraseña"
+
+#: register.php:66
+msgid "You didn't agree with our privacy policy."
+msgstr "No estuvo de acuerdo con nuestra política de privacidad."
+
+#: register.php:68
+msgid "User type is empty"
+msgstr "El tipo de usuario está vacío"
+
+#: register.php:71
+msgid "Registration is disabled please contact site admin."
+msgstr ""
+"El registro está deshabilitado, póngase en contacto con el administrador del "
+"sitio."
+
+#: register.php:81
+msgid "Register Yourself!"
+msgstr "¡Regístrese usted mismo!"
+
+#: register.php:140
+msgid "You agree with our privacy policy"
+msgstr "Usted acepta nuestra política de privacidad"
+
+#: register.php:150
+msgid "Register With Facebook"
+msgstr "Registrarse con Facebook"
+
+#: register.php:163
+msgid "Already have an account?"
+msgstr "¿Ya tienes una cuenta?"
+
+#: subscriber.php:6
+msgid "Subscriber Level Users And Admin users Can access this page only!"
+msgstr ""
+"¡Los usuarios de nivel de suscriptor y los usuarios administradores solo "
+"pueden acceder a esta página!"
+
+#: subscriber.php:11
+msgid ""
+"In sidebar menu Dashboard would be linked to level page automatically. This "
+"is subscriber page and dashboard link in sidebar is linked to subscriber.php "
+"from database. You can create more user levels as per your needs and create "
+"pages like this which are only accessible by admin users and their level "
+"access holders. Non loged in users would be redirected to login page."
+msgstr ""
+"En el menú de la barra lateral, el Panel se vincularía a la página de nivel "
+"automáticamente. Esta es la página del suscriptor y el enlace del tablero en "
+"la barra lateral está vinculado a subscriber.php desde la base de datos. "
+"Puede crear más niveles de usuario según sus necesidades y crear páginas "
+"como esta a las que solo pueden acceder los usuarios administradores y sus "
+"titulares de acceso de nivel. Los usuarios no registrados se redirigen a la "
+"página de inicio de sesión."
+
+#: subscriber.php:12
+msgid ""
+"This is a default page for subscriber user level, Subscriber user level is "
+"deafault level on registration. This page is only accessable when user is "
+"signed in and his access level is subscriber. If you are loged in as admin "
+"you still can see this page."
+msgstr ""
+"Esta es una página predeterminada para el nivel de usuario del suscriptor, "
+"el nivel de usuario del suscriptor es el nivel predeterminado en el "
+"registro. Esta página solo es accesible cuando el usuario ha iniciado sesión "
+"y su nivel de acceso es suscriptor. Si ha iniciado sesión como "
+"administrador, aún puede ver esta página."
+
+#: user_levels.php:13
+msgid "Manage User Levels"
+msgstr "Gestionar niveles de usuario"
+
+#: user_levels.php:22
+msgid "ID"
+msgstr "CARNÉ DE IDENTIDAD"
+
+#: user_levels.php:25
+msgid "Level Page Name"
+msgstr "Nombre de la página de nivel"
+
+#: user_levels.php:35
+msgid "Default Admins Level"
+msgstr "Nivel de administradores predeterminado"
+
+#: user_levels.php:66
+msgid "All Admin Users"
+msgstr "Todos los usuarios administradores"
+
+#: users.php:12
+msgid "Manage Users"
+msgstr "Administrar usuarios"
+
+#: users.php:16
+msgid "Message to All Users"
+msgstr "Mensaje a todos los usuarios"
+
+#: users.php:45
+msgid "Message All Users"
+msgstr "Mensaje a todos los usuarios"
+
+#: users.php:76
+msgid "Full Name"
+msgstr "Nombre completo"
+
+#: users.php:77
+msgid "Location"
+msgstr "Ubicación"
+
+#: users.php:82
+msgid "Last Seen"
+msgstr "Ultima vez visto"
+
+#: users.php:83
+msgid "Last Login IP"
+msgstr "Última IP de inicio de sesión"
+
+#: users.php:84
+msgid "Action"
+msgstr "Acción"
+
+#: website_labels.php:9
+msgid "Website Labels"
+msgstr "Etiquetas del sitio web"
+
+#: website_labels.php:13
+msgid ""
+"Manage website labels or translation by translating login_script.pot into "
+"your own language going to root /locale directory. Then setup new language "
+"through General Settings"
+msgstr ""
+"Administre las etiquetas o la traducción del sitio web traduciendo "
+"login_script.pot a su propio idioma yendo al directorio raíz / local. Luego "
+"configure un nuevo idioma a través de la Configuración general"

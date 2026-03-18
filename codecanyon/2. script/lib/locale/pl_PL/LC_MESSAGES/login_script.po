@@ -1,0 +1,1813 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Login Script V 4.0\n"
+"POT-Creation-Date: 2020-02-15 12:02+0500\n"
+"PO-Revision-Date: 2021-05-25 05:06+0500\n"
+"Last-Translator: \n"
+"Language-Team: Webful Creations <ateeq@webfulcreations.com>\n"
+"Language: pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.4.3\n"
+"X-Poedit-Basepath: ../../../..\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-KeywordsList: _;_e\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: login_script/locale/nl_NL\n"
+"X-Poedit-SearchPath-1: .\n"
+
+#: login_script/all.php:7
+msgid "Accessible only loged in users All types"
+msgstr "Toegankelijk alleen ingelogde gebruikers Alle typen"
+
+#: login_script/all.php:8
+msgid "Page accessable for all loged in users of anytype."
+msgstr "Pagina toegankelijk voor alle ingelogde gebruikers van elk type."
+
+#: login_script/all.php:13
+msgid "All users page"
+msgstr "Alle gebruikerspagina"
+
+#: login_script/all.php:14
+msgid ""
+"This page is for all loged in users they can access only when they are loged "
+"in."
+msgstr ""
+"Deze pagina is voor alle ingelogde gebruikers die alleen toegang hebben als "
+"ze zijn ingelogd."
+
+#: login_script/all.php:15 login_script/subscriber.php:25
+msgid "How to make a page accessable to all loged in users."
+msgstr "Hoe een pagina toegankelijk te maken voor alle ingelogde gebruikers."
+
+#: login_script/all.php:16 login_script/subscriber.php:26
+msgid ""
+"You can use the following code in start of your document that will make your "
+"page to accessable all loged in users but only when they are signed in."
+msgstr ""
+"U kunt de volgende code gebruiken aan het begin van uw document, waardoor uw "
+"pagina toegankelijk is voor alle aangemelde gebruikers, maar alleen wanneer "
+"ze zijn aangemeld."
+
+#: login_script/all.php:26 login_script/subscriber.php:14
+msgid "How to make more subscriber pages"
+msgstr "Meer abonneepagina's maken"
+
+#: login_script/all.php:27 login_script/subscriber.php:15
+msgid ""
+"You can put the following code in top of any page that will become a "
+"subscriber accessable page. Note: admin can access all pages of all levels."
+msgstr ""
+"U kunt de volgende code boven aan elke pagina plaatsen die een voor abonnees "
+"toegankelijke pagina wordt. Opmerking: admin heeft toegang tot alle pagina's "
+"van alle niveaus."
+
+#: login_script/all.php:37 login_script/subscriber.php:36
+msgid "Partial Access"
+msgstr "Gedeeltelijke toegang"
+
+#: login_script/all.php:40 login_script/all.php:52
+#: login_script/subscriber.php:39 login_script/subscriber.php:51
+msgid "You are Admin."
+msgstr "U bent beheerder."
+
+#: login_script/all.php:42 login_script/all.php:54
+#: login_script/subscriber.php:41 login_script/subscriber.php:53
+msgid "You are Subscriber."
+msgstr "U bent abonnee."
+
+#: login_script/all.php:44 login_script/all.php:56
+#: login_script/subscriber.php:43 login_script/subscriber.php:55
+msgid "You are loged in user."
+msgstr "U bent ingelogd gebruiker."
+
+#: login_script/all.php:46 login_script/all.php:58
+#: login_script/subscriber.php:45 login_script/subscriber.php:57
+msgid "You are not loged in user."
+msgstr "U bent niet ingelogd als gebruiker."
+
+#: login_script/all.php:50 login_script/subscriber.php:49
+msgid "Working Example below"
+msgstr "Werkend voorbeeld hieronder"
+
+#: login_script/announcements.php:13 login_script/dashboard.php:109
+#: login_script/lib/includes/admin_nav.php:52
+#: login_script/lib/includes/admin_nav.php:55
+#: login_script/lib/includes/top_bar.php:85
+msgid "Announcements"
+msgstr "Mededelingen"
+
+#: login_script/announcements.php:18 login_script/lib/includes/admin_nav.php:58
+#: login_script/user_levels.php:18 login_script/users.php:16
+msgid "Add New"
+msgstr "Nieuw toevoegen"
+
+#: login_script/assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "none()"
+msgstr "geen()"
+
+#: login_script/assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "Edge"
+msgstr "Rand"
+
+#: login_script/assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "Chrome"
+msgstr "Chrome"
+
+#: login_script/assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "IE"
+msgstr "IE"
+
+#: login_script/assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "Opera"
+msgstr "Opera"
+
+#: login_script/assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "Safari"
+msgstr "Safari"
+
+#: login_script/assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "iOS"
+msgstr "iOS"
+
+#: login_script/assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "Linux"
+msgstr "Linux"
+
+#: login_script/assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "OSX"
+msgstr "OSX"
+
+#: login_script/dashboard.php:24
+msgid "Welcome to Dashboard"
+msgstr "Welkom bij Dashboard"
+
+#: login_script/dashboard.php:36
+msgid "Total Users"
+msgstr "Totaal aantal gebruikers"
+
+#: login_script/dashboard.php:48
+msgid "Active Users"
+msgstr "Actieve gebruikers"
+
+#: login_script/dashboard.php:60
+msgid "Deactive Users"
+msgstr "Gebruikers deactiveren"
+
+#: login_script/dashboard.php:72
+msgid "Ban Users"
+msgstr "Gebruikers verbieden"
+
+#: login_script/dashboard.php:84
+msgid "Suspend Users"
+msgstr "Gebruikers blokkeren"
+
+#: login_script/dashboard.php:110
+msgid "Recent Announcements"
+msgstr "Recente mededelingen"
+
+#: login_script/dashboard.php:121
+msgid "View All"
+msgstr "Bekijk alles"
+
+#: login_script/dashboard.php:131
+msgid "Recent Logins"
+msgstr "Recente aanmeldingen"
+
+#: login_script/edit_profile.php:34 login_script/edit_profile.php:42
+#: login_script/manage_users.php:26 login_script/manage_users.php:34
+#: login_script/manage_users.php:57
+msgid "Password do not match"
+msgstr "Wachtwoord komt niet overeen"
+
+#: login_script/edit_profile.php:58
+msgid "Edit your profile"
+msgstr "pas je profiel aan"
+
+#: login_script/edit_profile.php:65 login_script/lib/includes/sidebar.php:20
+#: login_script/manage_users.php:73 login_script/register.php:94
+msgid "First Name"
+msgstr "Voornaam"
+
+#: login_script/edit_profile.php:66 login_script/manage_users.php:74
+msgid "Enter First Name"
+msgstr "Vul voornaam in"
+
+#: login_script/edit_profile.php:70 login_script/lib/includes/sidebar.php:23
+#: login_script/manage_users.php:78 login_script/manage_users.php:79
+#: login_script/register.php:98
+msgid "Last Name"
+msgstr "Achternaam"
+
+#: login_script/edit_profile.php:71
+msgid "Enter Last Name"
+msgstr "Voer achternaam in"
+
+#: login_script/edit_profile.php:75
+#: login_script/lib/includes/collapseuserinfo.php:36
+#: login_script/manage_users.php:83
+msgid "Gender"
+msgstr "Geslacht"
+
+#: login_script/edit_profile.php:77 login_script/manage_users.php:85
+msgid "Select Gender"
+msgstr "Selecteer geslacht"
+
+#: login_script/edit_profile.php:78 login_script/manage_users.php:86
+msgid "Male"
+msgstr "Mannetje"
+
+#: login_script/edit_profile.php:79 login_script/manage_users.php:87
+msgid "Female"
+msgstr "Vrouw"
+
+#: login_script/edit_profile.php:84 login_script/edit_profile.php:85
+#: login_script/lib/includes/collapseuserinfo.php:39
+#: login_script/manage_users.php:92 login_script/manage_users.php:93
+msgid "Date of Birth"
+msgstr "Geboortedatum"
+
+#: login_script/edit_profile.php:89 login_script/edit_profile.php:90
+#: login_script/edit_profile.php:94 login_script/edit_profile.php:95
+#: login_script/manage_users.php:97 login_script/manage_users.php:98
+#: login_script/manage_users.php:102 login_script/manage_users.php:103
+msgid "Address"
+msgstr "Adres"
+
+#: login_script/edit_profile.php:99 login_script/edit_profile.php:100
+#: login_script/manage_users.php:107 login_script/manage_users.php:108
+msgid "City"
+msgstr "stad"
+
+#: login_script/edit_profile.php:104 login_script/edit_profile.php:105
+#: login_script/manage_users.php:112 login_script/manage_users.php:113
+msgid "State OR Province"
+msgstr "Staat of provincie"
+
+#: login_script/edit_profile.php:109 login_script/edit_profile.php:110
+#: login_script/manage_users.php:117 login_script/manage_users.php:118
+msgid "Country"
+msgstr "land"
+
+#: login_script/edit_profile.php:114 login_script/edit_profile.php:115
+#: login_script/manage_users.php:122 login_script/manage_users.php:123
+msgid "Zip Code"
+msgstr "Postcode"
+
+#: login_script/edit_profile.php:119 login_script/edit_profile.php:120
+#: login_script/manage_users.php:127 login_script/manage_users.php:128
+msgid "Mobile"
+msgstr "mobiel"
+
+#: login_script/edit_profile.php:124 login_script/edit_profile.php:125
+#: login_script/manage_users.php:132 login_script/manage_users.php:133
+msgid "Phone"
+msgstr "Telefoon"
+
+#: login_script/edit_profile.php:129 login_script/edit_profile.php:130
+#: login_script/lib/classes/users.php:126
+#: login_script/lib/classes/users.php:180
+#: login_script/lib/classes/users.php:391
+#: login_script/lib/classes/users.php:812
+#: login_script/lib/classes/users.php:830
+#: login_script/lib/includes/sidebar.php:26 login_script/manage_users.php:137
+#: login_script/manage_users.php:138 login_script/register.php:102
+#: login_script/users.php:78
+msgid "Username"
+msgstr "Gebruikersnaam"
+
+#: login_script/edit_profile.php:134 login_script/edit_profile.php:135
+#: login_script/lib/classes/users.php:125
+#: login_script/lib/classes/users.php:166
+#: login_script/lib/classes/users.php:179
+#: login_script/lib/classes/users.php:391
+#: login_script/lib/classes/users.php:811
+#: login_script/lib/includes/sidebar.php:29 login_script/manage_users.php:142
+#: login_script/manage_users.php:143 login_script/register.php:106
+#: login_script/users.php:79
+msgid "Email"
+msgstr "E-mail"
+
+#: login_script/edit_profile.php:139 login_script/edit_profile.php:140
+#: login_script/lib/classes/users.php:167
+#: login_script/lib/classes/users.php:797 login_script/login.php:94
+#: login_script/login.php:95 login_script/manage_users.php:147
+#: login_script/manage_users.php:148 login_script/manage_users.php:157
+#: login_script/manage_users.php:158 login_script/register.php:110
+msgid "Password"
+msgstr "Wachtwoord"
+
+#: login_script/edit_profile.php:140
+msgid "Leave blank if you don't want to change password"
+msgstr "Laat dit veld leeg als u het wachtwoord niet wilt wijzigen"
+
+#: login_script/edit_profile.php:144 login_script/edit_profile.php:145
+#: login_script/forgot.php:63 login_script/manage_users.php:152
+#: login_script/manage_users.php:153 login_script/manage_users.php:162
+#: login_script/manage_users.php:163
+msgid "Confirm Password"
+msgstr "bevestig wachtwoord"
+
+#: login_script/edit_profile.php:149 login_script/manage_users.php:167
+msgid "Profile Image"
+msgstr "Profielfoto"
+
+#: login_script/edit_profile.php:165 login_script/edit_profile.php:166
+#: login_script/manage_users.php:182 login_script/manage_users.php:183
+msgid "Description"
+msgstr "Beschrijving"
+
+#: login_script/edit_profile.php:170
+msgid "Send Email on new message"
+msgstr "Stuur e-mail op nieuw bericht"
+
+#: login_script/edit_profile.php:175 login_script/manage_users.php:212
+msgid "Update User"
+msgstr "Gebruiker bijwerken"
+
+#: login_script/forgot.php:24
+msgid "Password Doesn't Match"
+msgstr "Wachtwoord komt niet overeen"
+
+#: login_script/forgot.php:32
+msgid "Forgot Password!"
+msgstr "Wachtwoord vergeten!"
+
+#: login_script/forgot.php:40
+msgid "Please enter your email address or username to recover your password."
+msgstr ""
+"Voer uw e-mailadres of gebruikersnaam in om uw wachtwoord te herstellen."
+
+#: login_script/forgot.php:41 login_script/login.php:89
+#: login_script/login.php:90 login_script/messages.php:57
+msgid "Email or Username"
+msgstr "E-mail of gebruikersnaam"
+
+#: login_script/forgot.php:45 login_script/forgot.php:68
+msgid "Reset Password"
+msgstr "Reset wachtwoord"
+
+#: login_script/forgot.php:59
+msgid "New Password"
+msgstr "nieuw paswoord"
+
+#: login_script/forgot.php:82
+msgid "Already Have an Account?"
+msgstr "Heb je al een account?"
+
+#: login_script/forgot.php:82
+#: login_script/lib/includes/non_loged_in_top_bar.php:16
+#: login_script/register.php:163
+msgid "Sign In"
+msgstr "Inloggen"
+
+#: login_script/forgot.php:83 login_script/login.php:155
+msgid "Not a member yet?"
+msgstr "Ben je nog geen lid?"
+
+#: login_script/forgot.php:83 login_script/login.php:155
+msgid "Sign Up"
+msgstr "Inschrijven"
+
+#: login_script/general_settings.php:15
+msgid "Site URL Required"
+msgstr "Site-URL vereist"
+
+#: login_script/general_settings.php:17
+msgid "Email From Required"
+msgstr "E-mail van vereist"
+
+#: login_script/general_settings.php:19
+msgid "Reply To Required"
+msgstr "Antwoord vereist"
+
+#: login_script/general_settings.php:91
+msgid "Settings saved."
+msgstr "Instellingen opgeslagen."
+
+#: login_script/general_settings.php:97
+#: login_script/lib/includes/top_bar.php:79
+msgid "General Settings"
+msgstr "Algemene instellingen"
+
+#: login_script/general_settings.php:104
+msgid "Site URL"
+msgstr "Site-URL"
+
+#: login_script/general_settings.php:105
+msgid "Please include / at end of site url e.g http://localhost/"
+msgstr ""
+"Geef / aan het einde van de site-URL op, bijvoorbeeld http: // localhost /"
+
+#: login_script/general_settings.php:109
+msgid "Site Name"
+msgstr "Site naam"
+
+#: login_script/general_settings.php:114
+msgid "Page to redirect on logout"
+msgstr "Pagina om te leiden bij uitloggen"
+
+#: login_script/general_settings.php:119
+msgid "Site Language"
+msgstr "Taal van de site"
+
+#: login_script/general_settings.php:119
+msgid ""
+"You can easily add more languages if they ar enot available. By updating .po "
+"files we are available for support."
+msgstr ""
+"U kunt eenvoudig meer talen toevoegen als deze niet beschikbaar zijn. Door "
+"het bijwerken van .po-bestanden zijn we beschikbaar voor ondersteuning."
+
+#: login_script/general_settings.php:121 login_script/general_settings.php:133
+msgid "English"
+msgstr "Engels"
+
+#: login_script/general_settings.php:122 login_script/general_settings.php:137
+msgid "Spanish"
+msgstr "Spaans"
+
+#: login_script/general_settings.php:123 login_script/general_settings.php:139
+msgid "Dutch"
+msgstr "Nederlands"
+
+#: login_script/general_settings.php:124 login_script/general_settings.php:135
+msgid "French"
+msgstr "Frans"
+
+#: login_script/general_settings.php:125 login_script/general_settings.php:141
+msgid "German"
+msgstr "Duitse"
+
+#: login_script/general_settings.php:126 login_script/general_settings.php:143
+msgid "Italian"
+msgstr "Italiaans"
+
+#: login_script/general_settings.php:131
+msgid "Enable Multilanguage"
+msgstr "Meertalig inschakelen"
+
+#: login_script/general_settings.php:133
+msgid "Enable English"
+msgstr "Engels inschakelen"
+
+#: login_script/general_settings.php:135
+msgid "Enable French"
+msgstr "Frans inschakelen"
+
+#: login_script/general_settings.php:137
+msgid "Enable Spanish"
+msgstr "Schakel Spaans in"
+
+#: login_script/general_settings.php:139
+msgid "Enable Dutch"
+msgstr "Nederlands inschakelen"
+
+#: login_script/general_settings.php:141
+msgid "Enable German"
+msgstr "Duits inschakelen"
+
+#: login_script/general_settings.php:143
+msgid "Enable Italian"
+msgstr "Italiaans inschakelen"
+
+#: login_script/general_settings.php:148
+msgid "Password Hash"
+msgstr "Wachtwoord Hash"
+
+#: login_script/general_settings.php:148
+msgid ""
+"Please note if you change password hashing all users would require to reset "
+"their password. As we do not save original passwords so script cannot auto "
+"generate new passwords."
+msgstr ""
+"Als u wachtwoordhashing wijzigt, moeten alle gebruikers hun wachtwoord "
+"opnieuw instellen. Omdat we geen originele wachtwoorden opslaan, kan het "
+"script geen nieuwe wachtwoorden automatisch genereren."
+
+#: login_script/general_settings.php:156 login_script/general_settings.php:157
+msgid "Disable Registration"
+msgstr "Schakel registratie uit"
+
+#: login_script/general_settings.php:161 login_script/general_settings.php:162
+msgid "Disable Login"
+msgstr "Login uitschakelen"
+
+#: login_script/general_settings.php:166 login_script/general_settings.php:167
+msgid "Notify User Group On New Registration"
+msgstr "Gebruikersgroep op de hoogte brengen van nieuwe registratie"
+
+#: login_script/general_settings.php:171
+msgid "Default Register User Type"
+msgstr "Standaard register gebruikerstype"
+
+#: login_script/general_settings.php:173
+msgid "Select Default User Type"
+msgstr "Selecteer Standaard gebruikerstype"
+
+#: login_script/general_settings.php:179
+msgid "Session Timeout in Minutes"
+msgstr "Sessie time-out in minuten"
+
+#: login_script/general_settings.php:184
+msgid "Maximum Wrong Login Attempts"
+msgstr "Maximale verkeerde inlogpogingen"
+
+#: login_script/general_settings.php:189
+msgid "Lock time on Wrong Login Attempts in minutes"
+msgstr "Sluit tijd op verkeerde inlogpogingen in minuten"
+
+#: login_script/general_settings.php:199
+msgid "Google Login Settings"
+msgstr "Google Login-instellingen"
+
+#: login_script/general_settings.php:208 login_script/general_settings.php:209
+msgid "Activate Google Login"
+msgstr "Activeer Google Login"
+
+#: login_script/general_settings.php:215
+msgid "Google Client ID"
+msgstr "Google-client-ID"
+
+#: login_script/general_settings.php:222
+msgid "Google Client Secret"
+msgstr "Google Client Secret"
+
+#: login_script/general_settings.php:229
+msgid ""
+"Enter Redirect URI. Should be your Login page login.php full URL With http:"
+msgstr ""
+"Voer de omleidings-URI in. Moet je inlogpagina zijn login.php volledige URL "
+"met http:"
+
+#: login_script/general_settings.php:251
+msgid "Facebook Login Settings"
+msgstr "Facebook-inloginstellingen"
+
+#: login_script/general_settings.php:259
+msgid "Activate Facebook Login"
+msgstr "Activeer Facebook Login"
+
+#: login_script/general_settings.php:263
+msgid "Facebook API Key"
+msgstr "Facebook API-sleutel"
+
+#: login_script/general_settings.php:264
+msgid ""
+"Please go to http://facebook.com/developers/ Register new app add your "
+"website url to its Web URL make your app live. And get your API key from "
+"dashboard."
+msgstr ""
+"Ga naar http://facebook.com/developers/ Registreer nieuwe app voeg uw "
+"website-url toe aan de web-URL om uw app live te maken. En haal uw API-"
+"sleutel van het dashboard."
+
+#: login_script/general_settings.php:276
+msgid "Email Settings"
+msgstr "Email instellingen"
+
+#: login_script/general_settings.php:283
+msgid "Email settings used for the system will send Emails to users."
+msgstr ""
+"E-mailinstellingen die voor het systeem worden gebruikt, sturen e-mails naar "
+"gebruikers."
+
+#: login_script/general_settings.php:287
+msgid "Email From"
+msgstr "E-mail van"
+
+#: login_script/general_settings.php:292
+msgid "Reply To"
+msgstr "Antwoord aan"
+
+#: login_script/general_settings.php:296
+msgid "Activate User Without email Verification?"
+msgstr "Gebruiker activeren zonder e-mailverificatie?"
+
+#: login_script/general_settings.php:297
+msgid ""
+"You can check this box to disable verification of email for registration."
+msgstr ""
+"U kunt dit vakje aanvinken om verificatie van e-mail voor registratie uit te "
+"schakelen."
+
+#: login_script/general_settings.php:309
+msgid "Captcha Settings"
+msgstr "Captcha-instellingen"
+
+#: login_script/general_settings.php:315
+msgid "Captcha Settings Please"
+msgstr "Captcha-instellingen alstublieft"
+
+#: login_script/general_settings.php:315
+msgid "Sign up to google reCaptcha"
+msgstr "Sign up to google reCaptcha"
+
+#: login_script/general_settings.php:315
+msgid "Get your site key and secret key."
+msgstr "Ontvang uw sitesleutel en geheime sleutel."
+
+#: login_script/general_settings.php:317
+msgid "Activate Captcha"
+msgstr "Activeer Captcha"
+
+#: login_script/general_settings.php:322
+msgid "Site Key"
+msgstr "Sitesleutel"
+
+#: login_script/general_settings.php:327
+msgid "Secret Key"
+msgstr "Geheime sleutel"
+
+#: login_script/general_settings.php:338
+msgid "Save"
+msgstr "Opslaan"
+
+#: login_script/lib/classes/announcements.php:57
+msgid "Announcement Updated"
+msgstr "Aankondiging bijgewerkt"
+
+#: login_script/lib/classes/announcements.php:75
+#: login_script/lib/classes/userlevel.php:149
+#: login_script/lib/classes/users.php:417 login_script/user_levels.php:27
+msgid "Edit"
+msgstr "Bewerk"
+
+#: login_script/lib/classes/announcements.php:79
+#: login_script/lib/classes/notes.php:174
+#: login_script/lib/classes/userlevel.php:154
+#: login_script/lib/classes/users.php:421 login_script/user_levels.php:28
+msgid "Delete"
+msgstr "Delete"
+
+#: login_script/lib/classes/announcements.php:115
+msgid "Announcement Added"
+msgstr "Aankondiging toegevoegd"
+
+#: login_script/lib/classes/announcements.php:123
+msgid "Announcement Deleted"
+msgstr "Aankondiging verwijderd"
+
+#: login_script/lib/classes/forms.php:228
+msgid "Update key is required with update field TRUE"
+msgstr "Updatesleutel is vereist met updateveld TRUE"
+
+#: login_script/lib/classes/forms.php:253
+msgid "Sorry forms fields have nothing. Or its not array."
+msgstr "Sorry formulieren velden hebben niets. Of het is geen array."
+
+#: login_script/lib/classes/forms.php:271
+msgid "Field name is required"
+msgstr "Veldnaam is verplicht"
+
+#: login_script/lib/classes/forms.php:283
+msgid "This type of field is not supported yet."
+msgstr "Dit type veld wordt nog niet ondersteund."
+
+#: login_script/lib/classes/forms.php:295
+msgid "No data in select options array"
+msgstr "Geen gegevens in geselecteerde opties array"
+
+#: login_script/lib/classes/forms.php:352
+msgid "Title is required for label"
+msgstr "Titel is vereist voor label"
+
+#: login_script/lib/classes/forms.php:374
+msgid "Name and value for hidden fields cannot be empty."
+msgstr "Naam en waarde voor verborgen velden mogen niet leeg zijn."
+
+#: login_script/lib/classes/forms.php:387
+msgid "Submit"
+msgstr "voorleggen"
+
+#: login_script/lib/classes/forms.php:402
+msgid "Sorry cannot retrive the data some field sent was empty."
+msgstr ""
+"Sorry kan de gegevens niet ophalen. Sommige verzonden velden waren leeg."
+
+#: login_script/lib/classes/forms.php:451
+msgid "Select "
+msgstr "kiezen"
+
+#: login_script/lib/classes/forms_submission.php:57
+msgid ""
+"Either you have not declared the Update Field and its key or you have not "
+"stated INSERT TRUE check array."
+msgstr ""
+"Ofwel u hebt het Update-veld en de sleutel ervan niet aangegeven of u hebt "
+"geen WAARDE checkarray INGEVOEGD."
+
+#: login_script/lib/classes/forms_submission.php:73
+#: login_script/lib/classes/forms_submission.php:179
+msgid "Table name is not defined and its required"
+msgstr "De tabelnaam is niet gedefinieerd en is vereist"
+
+#: login_script/lib/classes/forms_submission.php:78
+#: login_script/lib/classes/forms_submission.php:184
+msgid "Who are you to insert something in table."
+msgstr "Wie ben jij om iets in de tabel in te voegen."
+
+#: login_script/lib/classes/forms_submission.php:83
+#: login_script/lib/classes/forms_submission.php:190
+msgid "Table does not match in db."
+msgstr "Tabel komt niet overeen in db."
+
+#: login_script/lib/classes/forms_submission.php:94
+#: login_script/lib/classes/forms_submission.php:202
+msgid ""
+"No Match in column names and fields names of form sent. Please check array "
+"of form generation and make sure they match the column names in database."
+msgstr ""
+"Geen overeenkomst in kolomnamen en veldnamen van verzonden formulier. "
+"Controleer de reeks formulieren genereren en zorg ervoor dat ze overeenkomen "
+"met de kolomnamen in de database."
+
+#: login_script/lib/classes/forms_submission.php:158
+#: login_script/lib/classes/forms_submission.php:269
+msgid "Duplicate data found. "
+msgstr "Dubbele gegevens gevonden."
+
+#: login_script/lib/classes/forms_submission.php:291
+msgid "Provided data is empty cannot check duplicate"
+msgstr "Op voorwaarde dat de gegevens leeg zijn, kan dit niet controleren"
+
+#: login_script/lib/classes/forms_submission.php:321
+#: login_script/lib/classes/forms_submission.php:356
+msgid "Array to generate query is empty."
+msgstr "Matrix om query te genereren is leeg."
+
+#: login_script/lib/classes/forms_submission.php:343
+msgid "You have successfuly added data into database."
+msgstr "U hebt met succes gegevens toegevoegd aan de database."
+
+#: login_script/lib/classes/forms_submission.php:376
+msgid "Updated Record!"
+msgstr "Bijgewerkt record!"
+
+#: login_script/lib/classes/forms_submission.php:403
+#: login_script/lib/classes/forms_submission.php:423
+msgid "No table name exists to check."
+msgstr "Er bestaat geen tabelnaam om te controleren."
+
+#: login_script/lib/classes/messages.php:41
+msgid "Me"
+msgstr "Me"
+
+#: login_script/lib/classes/messages.php:64
+msgid "From"
+msgstr "Van"
+
+#: login_script/lib/classes/messages.php:65
+#: login_script/lib/classes/userlevel.php:122
+#: login_script/lib/classes/users.php:390
+msgid "To"
+msgstr "Naar"
+
+#: login_script/lib/classes/messages.php:86
+msgid "Send a reply"
+msgstr "Stuur een antwoord"
+
+#: login_script/lib/classes/messages.php:253
+#: login_script/lib/classes/messages.php:290
+msgid "Message sent success"
+msgstr "Bericht verzonden succes"
+
+#: login_script/lib/classes/messages.php:292
+msgid "No user to message"
+msgstr "Geen gebruiker voor bericht"
+
+#: login_script/lib/classes/messages.php:322
+msgid "Message Sent Successful"
+msgstr "Bericht succesvol verzonden"
+
+#: login_script/lib/classes/messages.php:357
+msgid "Message to all"
+msgstr "Bericht aan iedereen"
+
+#: login_script/lib/classes/messages.php:392
+msgid "Message Sent to All"
+msgstr "Bericht aan iedereen"
+
+#: login_script/lib/classes/notes.php:37
+msgid "Note Updated"
+msgstr "Opmerking bijgewerkt"
+
+#: login_script/lib/classes/notes.php:50 login_script/notes.php:20
+#: login_script/notes.php:37
+msgid "Add Note"
+msgstr "Opmerking bijgewerkt"
+
+#: login_script/lib/classes/notes.php:59 login_script/lib/classes/notes.php:120
+msgid "Note Title"
+msgstr "Opmerking titel"
+
+#: login_script/lib/classes/notes.php:63 login_script/lib/classes/notes.php:124
+msgid "Your Note Title"
+msgstr "Titel van uw notitie"
+
+#: login_script/lib/classes/notes.php:64 login_script/lib/classes/notes.php:125
+msgid "Enter Note Title"
+msgstr "Titel van uw notitie"
+
+#: login_script/lib/classes/notes.php:72 login_script/lib/classes/notes.php:132
+#: login_script/lib/includes/Demo Array/form_field_and_values.php:32
+msgid "Note Detail"
+msgstr "Opmerking detail"
+
+#: login_script/lib/classes/notes.php:76 login_script/lib/classes/notes.php:136
+#: login_script/lib/includes/Demo Array/form_field_and_values.php:36
+msgid "Your Note Detail"
+msgstr "Uw notitie detail"
+
+#: login_script/lib/classes/notes.php:100
+#: login_script/lib/includes/formprocessing.php:15
+msgid "You are doing something you don't have access to do."
+msgstr "Je doet iets waar je geen toegang toe hebt."
+
+#: login_script/lib/classes/notes.php:110 login_script/notes.php:39
+msgid "Update Note"
+msgstr "Opmerking bijwerken"
+
+#: login_script/lib/classes/notes.php:171
+msgid "Edit Note"
+msgstr "Notitie bewerken"
+
+#: login_script/lib/classes/notes.php:178
+msgid "Date"
+msgstr "Datum"
+
+#: login_script/lib/classes/notes.php:193
+msgid "Note Added"
+msgstr "Opmerking toegevoegd"
+
+#: login_script/lib/classes/notes.php:201
+msgid "Note Deleted"
+msgstr "Notitie verwijderd"
+
+#: login_script/lib/classes/userlevel.php:41
+msgid "User level updated"
+msgstr "Gebruikersniveau bijgewerkt"
+
+#: login_script/lib/classes/userlevel.php:53
+msgid "User level cannot be added"
+msgstr "Gebruikersniveau kan niet worden toegevoegd"
+
+#: login_script/lib/classes/userlevel.php:62
+msgid "Level added successfuly"
+msgstr "Niveau succesvol toegevoegd"
+
+#: login_script/lib/classes/userlevel.php:94
+#: login_script/lib/classes/userlevel.php:132
+#: login_script/lib/classes/users.php:363
+#: login_script/lib/classes/users.php:400 login_script/messages.php:67
+#: login_script/messages.php:105 login_script/user_levels.php:26
+#: login_script/user_levels.php:38 login_script/user_levels.php:75
+#: login_script/users.php:54
+msgid "Message"
+msgstr "Bericht"
+
+#: login_script/lib/classes/userlevel.php:115
+#: login_script/lib/classes/userlevel.php:140
+#: login_script/lib/classes/users.php:383
+#: login_script/lib/classes/users.php:409 login_script/messages.php:50
+#: login_script/messages.php:73 login_script/user_levels.php:58
+#: login_script/user_levels.php:83 login_script/users.php:37
+#: login_script/users.php:61
+msgid "Send Message"
+msgstr "Bericht versturen"
+
+#: login_script/lib/classes/userlevel.php:127
+#: login_script/lib/classes/users.php:395 login_script/messages.php:62
+#: login_script/user_levels.php:70 login_script/users.php:49
+msgid "Subject"
+msgstr "Onderwerpen"
+
+#: login_script/lib/classes/userlevel.php:139
+#: login_script/lib/classes/users.php:408 login_script/messages.php:77
+#: login_script/notes.php:61 login_script/user_levels.php:82
+#: login_script/users.php:60
+msgid "Close"
+msgstr "Dichtbij"
+
+#: login_script/lib/classes/userlevel.php:162
+msgid "You cannot view list of levels."
+msgstr "U kunt geen lijst met niveaus bekijken."
+
+#: login_script/lib/classes/userlevel.php:173
+msgid "User level deleted"
+msgstr "Gebruikersniveau verwijderd"
+
+#: login_script/lib/classes/userlevel.php:175
+msgid "User level cannot delete"
+msgstr "Gebruikersniveau kan niet worden verwijderd"
+
+#: login_script/lib/classes/userlevel.php:217
+#: login_script/manage_announcement.php:59 login_script/manage_users.php:200
+msgid "Admin"
+msgstr "beheerder"
+
+#: login_script/lib/classes/userlevel.php:255
+msgid "Cannot view this list"
+msgstr "Kan deze lijst niet bekijken"
+
+#: login_script/lib/classes/users.php:67
+msgid "Email cannot be added "
+msgstr "Email kan niet worden toegevoegd"
+
+#: login_script/lib/classes/users.php:67
+msgid "already exists."
+msgstr "bestaat al."
+
+#: login_script/lib/classes/users.php:77
+msgid "Username cannot be added"
+msgstr "Gebruikersnaam kan niet worden toegevoegd"
+
+#: login_script/lib/classes/users.php:77 login_script/lib/classes/users.php:467
+#: login_script/lib/classes/users.php:763
+msgid "Already exists."
+msgstr "Bestaat al."
+
+#: login_script/lib/classes/users.php:108
+msgid "Thank you for registration."
+msgstr "Bedankt voor uw registratie."
+
+#: login_script/lib/classes/users.php:109
+msgid "Your username is"
+msgstr "jouw gebruikersnaam is"
+
+#: login_script/lib/classes/users.php:110
+msgid ""
+"Kindly click the link below to confirm your account and start using our "
+"services."
+msgstr ""
+"Klik op de onderstaande link om uw account te bevestigen en onze services te "
+"gebruiken."
+
+#: login_script/lib/classes/users.php:111
+#: login_script/lib/classes/users.php:739
+msgid "Confirm Email Address"
+msgstr "e-mailadres bevestigen"
+
+#: login_script/lib/classes/users.php:112
+#: login_script/lib/classes/users.php:740
+msgid "Thank you again. Please contact us if you need any assistance."
+msgstr "Nogmaals bedankt. Neem contact met ons op als u hulp nodig heeft."
+
+#: login_script/lib/classes/users.php:116
+msgid "Confirm your email id."
+msgstr "Bevestig uw e-mailadres."
+
+#: login_script/lib/classes/users.php:122
+msgid "New user registration"
+msgstr "Nieuwe gebruiker registratie"
+
+#: login_script/lib/classes/users.php:123
+#: login_script/lib/classes/users.php:809
+msgid "New user on your user group."
+msgstr "Nieuwe gebruiker in uw gebruikersgroep."
+
+#: login_script/lib/classes/users.php:124
+#: login_script/lib/classes/users.php:178
+#: login_script/lib/classes/users.php:810
+#: login_script/lib/classes/users.php:829
+msgid "Name"
+msgstr "Naam"
+
+#: login_script/lib/classes/users.php:131
+msgid "Registration successful"
+msgstr "registratie gelukt"
+
+#: login_script/lib/classes/users.php:164
+#: login_script/lib/classes/users.php:170
+msgid "Thank you for registration"
+msgstr "Bedankt voor uw registratie"
+
+#: login_script/lib/classes/users.php:165
+msgid ""
+"You can use facebook login or following login information to access our "
+"system."
+msgstr ""
+"U kunt Facebook-login of volgende login-informatie gebruiken om toegang te "
+"krijgen tot ons systeem."
+
+#: login_script/lib/classes/users.php:176
+#: login_script/lib/classes/users.php:808
+msgid "New user registration."
+msgstr "Nieuwe gebruiker registratie."
+
+#: login_script/lib/classes/users.php:177
+msgid "New user in your user group."
+msgstr "Nieuwe gebruiker in uw gebruikersgroep."
+
+#: login_script/lib/classes/users.php:192
+#: login_script/lib/classes/users.php:267
+msgid ""
+"Your account is not activated yet please confirm your Email address to "
+"activate your account!"
+msgstr ""
+"Uw account is nog niet geactiveerd. Bevestig uw e-mailadres om uw account te "
+"activeren!"
+
+#: login_script/lib/classes/users.php:210
+msgid "Your account is ban or suspend. Please contact site admin."
+msgstr ""
+"Uw account is verbannen of geschorst. Neem contact op met de sitebeheerder."
+
+#: login_script/lib/classes/users.php:214
+#: login_script/lib/classes/users.php:300
+msgid "Couldn't find email."
+msgstr "Kan e-mail niet vinden."
+
+#: login_script/lib/classes/users.php:236
+msgid "You are locked cause of maximum login attempts."
+msgstr "U bent vergrendeld vanwege maximale aanmeldingspogingen."
+
+#: login_script/lib/classes/users.php:286
+msgid "You cannot login your account is ban or suspend. Contact site admin."
+msgstr ""
+"U kunt niet inloggen. Uw account is verbannen of geschorst. Neem contact op "
+"met de sitebeheerder."
+
+#: login_script/lib/classes/users.php:289
+msgid "Password doesn't match."
+msgstr "Wachtwoord komt niet overeen."
+
+#: login_script/lib/classes/users.php:311
+msgid "User deleted successfuly"
+msgstr "Gebruiker succesvol verwijderd"
+
+#: login_script/lib/classes/users.php:313
+msgid "Cannot delete user"
+msgstr "Kan gebruiker niet verwijderen"
+
+#: login_script/lib/classes/users.php:356
+msgid "Never"
+msgstr "Nooit"
+
+#: login_script/lib/classes/users.php:428
+msgid "You cannot view list of users."
+msgstr "U kunt geen lijst met gebruikers bekijken."
+
+#: login_script/lib/classes/users.php:446
+msgid "You are not allowed to view this list."
+msgstr "U mag deze lijst niet bekijken."
+
+#: login_script/lib/classes/users.php:467
+#: login_script/lib/classes/users.php:763
+msgid "Email cannot be added"
+msgstr "Email kan niet worden toegevoegd"
+
+#: login_script/lib/classes/users.php:480
+#: login_script/lib/classes/users.php:602
+msgid "Username couldn't be added"
+msgstr "Gebruikersnaam kan niet worden toegevoegd"
+
+#: login_script/lib/classes/users.php:480
+msgid "Already exists"
+msgstr "Bestaat al"
+
+#: login_script/lib/classes/users.php:535
+msgid "User updated successfuly."
+msgstr "Gebruiker succesvol bijgewerkt."
+
+#: login_script/lib/classes/users.php:546
+msgid "You are trying to do something which you are not allowed to do."
+msgstr "Je probeert iets te doen wat je niet mag doen."
+
+#: login_script/lib/classes/users.php:589
+msgid "This email cannot be used"
+msgstr "Deze e-mail kan niet worden gebruikt"
+
+#: login_script/lib/classes/users.php:589
+msgid "already exists in our system."
+msgstr "bestaat al in ons systeem."
+
+#: login_script/lib/classes/users.php:602
+msgid "username already exists."
+msgstr "Gebruikersnaam bestaat al."
+
+#: login_script/lib/classes/users.php:663
+msgid "User updated successful."
+msgstr "Gebruiker bijgewerkt succesvol."
+
+#: login_script/lib/classes/users.php:665
+msgid "You are trying to do something you are not allowed for."
+msgstr "Je probeert iets te doen waar je niet voor mag."
+
+#: login_script/lib/classes/users.php:688
+msgid "Your Password has been reset please use new password to login."
+msgstr ""
+"Uw wachtwoord is opnieuw ingesteld. Gebruik een nieuw wachtwoord om in te "
+"loggen."
+
+#: login_script/lib/classes/users.php:690
+msgid "Your activation key is expired and password cannot be reset."
+msgstr ""
+"Uw activeringssleutel is verlopen en het wachtwoord kan niet opnieuw worden "
+"ingesteld."
+
+#: login_script/lib/classes/users.php:705
+msgid ""
+"Your account has been suspended. Please contact the administrator for help."
+msgstr "Uw account is opgeschort. Neem contact op met de beheerder voor hulp."
+
+#: login_script/lib/classes/users.php:710
+msgid ""
+"Congratulations! You are activated successfully now you can use email and "
+"password to login and use our services."
+msgstr ""
+"Gefeliciteerd! U bent succesvol geactiveerd nu kunt u e-mail en wachtwoord "
+"gebruiken om in te loggen en onze services te gebruiken."
+
+#: login_script/lib/classes/users.php:713
+msgid "Your account cannot be activated."
+msgstr "Uw account kan niet worden geactiveerd."
+
+#: login_script/lib/classes/users.php:729
+msgid "Email is not in our system."
+msgstr "Email staat niet in ons systeem."
+
+#: login_script/lib/classes/users.php:737
+msgid "Reset your password."
+msgstr "Stel je wachtwoord opnieuw in."
+
+#: login_script/lib/classes/users.php:738
+msgid "Kindly click the link below to reset your password."
+msgstr "Klik op de onderstaande link om uw wachtwoord opnieuw in te stellen."
+
+#: login_script/lib/classes/users.php:743
+msgid "Password reset instructions"
+msgstr "Instructies voor het opnieuw instellen van het wachtwoord"
+
+#: login_script/lib/classes/users.php:747
+msgid "Password recovery email sent please check mail for details."
+msgstr ""
+"E-mail voor wachtwoordherstel verzonden. Controleer e-mail voor meer "
+"informatie."
+
+#: login_script/lib/classes/users.php:773
+msgid "Username couldn't add"
+msgstr "Gebruikersnaam kon niet toevoegen"
+
+#: login_script/lib/classes/users.php:773
+msgid "User already exists"
+msgstr "Gebruiker bestaat al"
+
+#: login_script/lib/classes/users.php:793
+msgid "Your account have been registered."
+msgstr "Uw account is geregistreerd."
+
+#: login_script/lib/classes/users.php:794
+msgid "Please use the following details to sign in on our website."
+msgstr "Gebruik de volgende gegevens om in te loggen op onze website."
+
+#: login_script/lib/classes/users.php:795
+msgid "Confirm Email Address."
+msgstr "E-mailadres bevestigen."
+
+#: login_script/lib/classes/users.php:796
+msgid "Email OR Username"
+msgstr "E-mail of gebruikersnaam"
+
+#: login_script/lib/classes/users.php:801
+msgid "Registration Details"
+msgstr "Registratie details"
+
+#: login_script/lib/classes/users.php:817
+msgid "User added details are sent on email"
+msgstr "Door de gebruiker toegevoegde details worden per e-mail verzonden"
+
+#: login_script/lib/classes/users.php:827
+msgid "Login Time"
+msgstr "Login tijd"
+
+#: login_script/lib/classes/users.php:828
+msgid "IP"
+msgstr "IP"
+
+#: login_script/lib/classes/users.php:831
+#: login_script/manage_announcement.php:53 login_script/manage_users.php:197
+#: login_script/users.php:81
+msgid "User Type"
+msgstr "Gebruikerstype"
+
+#: login_script/lib/includes/Demo Array/form_field_and_values.php:37
+msgid "Enter Note Detail"
+msgstr "Voer notitiedetail in"
+
+#: login_script/lib/includes/admin_nav.php:20
+#: login_script/lib/includes/non_admin_nav.php:22
+#: login_script/lib/includes/non_admin_nav.php:24
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: login_script/lib/includes/admin_nav.php:24
+#: login_script/lib/includes/admin_nav.php:27
+msgid "Users"
+msgstr "gebruikers"
+
+#: login_script/lib/includes/admin_nav.php:30 login_script/manage_users.php:212
+msgid "Add User"
+msgstr "Voeg gebruiker toe"
+
+#: login_script/lib/includes/admin_nav.php:35
+#: login_script/lib/includes/admin_nav.php:37
+msgid "User Levels"
+msgstr "Gebruikersniveaus"
+
+#: login_script/lib/includes/admin_nav.php:38
+#: login_script/manage_user_level.php:23
+msgid "Add User Level"
+msgstr "Gebruikersniveau toevoegen"
+
+#: login_script/lib/includes/admin_nav.php:45
+#: login_script/lib/includes/non_admin_nav.php:30
+#: login_script/lib/includes/top_bar.php:66
+#: login_script/lib/includes/top_bar.php:107
+msgid "Messages"
+msgstr "berichten"
+
+#: login_script/lib/includes/admin_nav.php:49
+#: login_script/lib/includes/non_admin_nav.php:42
+#: login_script/lib/includes/top_bar.php:72
+#: login_script/lib/includes/top_bar.php:113 login_script/notes.php:12
+msgid "My Notes"
+msgstr "Mijn notities"
+
+#: login_script/lib/includes/admin_nav.php:63
+msgid "Update Language"
+msgstr "Update taal"
+
+#: login_script/lib/includes/admin_nav.php:66
+#: login_script/lib/includes/non_admin_nav.php:46
+msgid "For All Logged In Users"
+msgstr "Voor alle ingelogde gebruikers"
+
+#: login_script/lib/includes/admin_nav.php:69
+msgid "For Subscriber User Levels"
+msgstr "Voor gebruikersniveaus van abonnees"
+
+#: login_script/lib/includes/collapseuserinfo.php:23
+#: login_script/lib/includes/sidebar.php:38
+#: login_script/lib/includes/top_bar.php:91
+#: login_script/lib/includes/top_bar.php:120
+msgid "Edit Profile"
+msgstr "Bewerk profiel"
+
+#: login_script/lib/includes/collapseuserinfo.php:31
+msgid "Basic Information"
+msgstr "Basis informatie"
+
+#: login_script/lib/includes/collapseuserinfo.php:42
+msgid "Your IP"
+msgstr "Jouw IP"
+
+#: login_script/lib/includes/collapseuserinfo.php:53
+msgid "About me!"
+msgstr "Over mij!"
+
+#: login_script/lib/includes/footer.php:9
+msgid "Copyright"
+msgstr "Over mij!"
+
+#: login_script/lib/includes/footer.php:10
+msgid "All Rights Reserved"
+msgstr "Alle rechten voorbehouden"
+
+#: login_script/lib/includes/footer.php:10
+msgid "Powered By"
+msgstr "Aangedreven door"
+
+#: login_script/lib/includes/footer.php:62
+msgid "Confirm delete this cannot be undone."
+msgstr "Bevestig verwijderen. Dit kan niet ongedaan worden gemaakt."
+
+#: login_script/lib/includes/functions.php:72
+msgid "Admin already exists"
+msgstr "Beheerder bestaat al"
+
+#: login_script/lib/includes/functions.php:231
+msgid "year"
+msgstr "jaar"
+
+#: login_script/lib/includes/functions.php:232
+msgid "month"
+msgstr "maand"
+
+#: login_script/lib/includes/functions.php:233
+msgid "week"
+msgstr "week"
+
+#: login_script/lib/includes/functions.php:234
+msgid "day"
+msgstr "week"
+
+#: login_script/lib/includes/functions.php:235
+msgid "hour"
+msgstr "uur"
+
+#: login_script/lib/includes/functions.php:236
+msgid "minute"
+msgstr "minuut"
+
+#: login_script/lib/includes/functions.php:237
+msgid "second"
+msgstr "tweede"
+
+#: login_script/lib/includes/functions.php:248
+msgid " ago"
+msgstr "geleden"
+
+#: login_script/lib/includes/functions.php:248
+msgid "just now"
+msgstr "net nu"
+
+#: login_script/lib/includes/functions.php:312
+msgid "Nothing uploaded"
+msgstr "Niets geüpload"
+
+#: login_script/lib/includes/functions.php:320
+msgid "Filesize is not correct it should equal to 2 MB or less than 2 MB."
+msgstr ""
+"Bestandsgrootte is niet correct, deze moet gelijk zijn aan 2 MB of minder "
+"dan 2 MB."
+
+#: login_script/lib/includes/functions.php:333
+msgid "Sorry this file type is not supported we accept only. Jpeg, Gif, PNG"
+msgstr ""
+"Sorry, dit bestandstype wordt niet ondersteund, we accepteren alleen. Jpeg, "
+"Gif, PNG"
+
+#: login_script/lib/includes/functions.php:342
+msgid "Problem could not move file to destination."
+msgstr "Probleem kan bestand niet naar bestemming verplaatsen."
+
+#: login_script/lib/includes/functions.php:348
+msgid "Problem: Possible file upload attack. Filename: "
+msgstr ""
+"Probleem: mogelijke aanval voor het uploaden van bestanden. Bestandsnaam:"
+
+#: login_script/lib/includes/messageprocess.php:9
+#: login_script/lib/includes/messageprocess.php:19
+#: login_script/lib/includes/messageprocess.php:29
+#: login_script/lib/includes/messageprocess.php:39 login_script/messages.php:12
+msgid "Message is empty!"
+msgstr "Bericht is leeg!"
+
+#: login_script/lib/includes/non_admin_nav.php:12
+msgid "View User Detail"
+msgstr "Bekijk gebruikersdetail"
+
+#: login_script/lib/includes/non_admin_nav.php:25
+#: login_script/lib/includes/top_bar.php:97
+#: login_script/lib/includes/top_bar.php:126
+msgid "Logout"
+msgstr "Uitloggen"
+
+#: login_script/lib/includes/non_admin_nav.php:33 login_script/messages.php:84
+msgid "Inbox"
+msgstr "Postvak IN"
+
+#: login_script/lib/includes/non_admin_nav.php:36
+msgid "Sent Items"
+msgstr "Verzonden items"
+
+#: login_script/lib/includes/non_admin_nav.php:49
+msgid "For Subscriber Level Users"
+msgstr "Voor gebruikers op abonneeniveau"
+
+#: login_script/lib/includes/non_loged_in_top_bar.php:12
+msgid "Join Now"
+msgstr "Doe nu mee"
+
+#: login_script/lib/includes/non_loged_in_top_bar.php:17
+#: login_script/register.php:145
+msgid "Register"
+msgstr "Registreren"
+
+#: login_script/lib/includes/sidebar.php:6
+msgid "Your Profile"
+msgstr "Jouw profiel"
+
+#: login_script/lib/includes/sidebar.php:17
+msgid "User ID"
+msgstr "gebruikersnaam"
+
+#: login_script/lib/includes/sidebar.php:32 login_script/manage_users.php:186
+#: login_script/users.php:80
+msgid "Status"
+msgstr "Toestand"
+
+#: login_script/lib/includes/sidebar.php:35
+msgid "Type"
+msgstr "Type"
+
+#: login_script/lib/includes/socialloginprocess.php:22
+#: login_script/login.php:36
+msgid "Login disabled. Please contact site admin."
+msgstr "Inloggen uitgeschakeld. Neem contact op met de sitebeheerder."
+
+#: login_script/lib/includes/top_bar.php:20
+msgid "All Messages"
+msgstr "Alle berichten"
+
+#: login_script/lib/includes/top_bar.php:42
+msgid "View All Notes"
+msgstr "Bekijk alle notities"
+
+#: login_script/login.php:26 login_script/register.php:60
+msgid "Email required"
+msgstr "Email (verplicht"
+
+#: login_script/login.php:28 login_script/manage_users.php:55
+msgid "Password Required"
+msgstr "Wachtwoord benodigd"
+
+#: login_script/login.php:62
+msgid "Login Success"
+msgstr "Succesvol ingelogd"
+
+#: login_script/login.php:70
+msgid "Password or Email doesn't Match"
+msgstr "Wachtwoord of e-mail komen niet overeen"
+
+#: login_script/login.php:75
+msgid "Login to your account"
+msgstr "Log in op jouw account"
+
+#: login_script/login.php:99
+msgid "Remember me"
+msgstr "Onthoud me"
+
+#: login_script/login.php:103
+msgid "Login"
+msgstr "Log in"
+
+#: login_script/login.php:107
+msgid "Login with Facebook"
+msgstr "Inloggen met Facebook"
+
+#: login_script/login.php:154
+msgid "Forgot password?"
+msgstr "Wachtwoord vergeten?"
+
+#: login_script/login.php:154
+msgid "Recover Password"
+msgstr "Herstel wachtwoord"
+
+#: login_script/manage_announcement.php:23
+msgid "Title Required"
+msgstr "Titel verplicht"
+
+#: login_script/manage_announcement.php:25
+msgid "Detail Required"
+msgstr "Detail vereist"
+
+#: login_script/manage_announcement.php:32
+#: login_script/manage_announcement.php:85
+msgid "Edit Announcement"
+msgstr "Aankondiging bewerken"
+
+#: login_script/manage_announcement.php:34
+#: login_script/manage_announcement.php:85
+msgid "Add Announcement"
+msgstr "Aankondiging toevoegen"
+
+#: login_script/manage_announcement.php:43
+#: login_script/manage_announcement.php:44
+msgid "Announcement Title"
+msgstr "Titel aankondiging"
+
+#: login_script/manage_announcement.php:48
+#: login_script/manage_announcement.php:49
+msgid "Announcement Detail"
+msgstr "Aankondigingsdetail"
+
+#: login_script/manage_announcement.php:56
+msgid "All users"
+msgstr "Alle gebruikers"
+
+#: login_script/manage_announcement.php:66
+msgid "Announcement Status"
+msgstr "Aankondigingsstatus"
+
+#: login_script/manage_announcement.php:69
+msgid "Activate"
+msgstr "Activeren"
+
+#: login_script/manage_announcement.php:72
+msgid "Deactivate"
+msgstr "deactiveren"
+
+#: login_script/manage_user_level.php:23
+msgid "Edit User Level"
+msgstr "Gebruikersniveau bewerken"
+
+#: login_script/manage_user_level.php:29 login_script/manage_user_level.php:30
+#: login_script/user_levels.php:23
+msgid "Level Name"
+msgstr "Niveau naam"
+
+#: login_script/manage_user_level.php:34 login_script/manage_user_level.php:35
+#: login_script/user_levels.php:24
+msgid "Level Description"
+msgstr "Niveaubeschrijving"
+
+#: login_script/manage_user_level.php:39
+msgid "Page Name"
+msgstr "Paginanaam"
+
+#: login_script/manage_user_level.php:40
+msgid ""
+"This would be default page where user of stated level redirected after login."
+msgstr ""
+"Dit zou de standaardpagina zijn waar gebruikers van het opgegeven niveau "
+"omgeleid worden na inloggen."
+
+#: login_script/manage_user_level.php:40
+msgid "User Level Page"
+msgstr "Pagina gebruikersniveau"
+
+#: login_script/manage_user_level.php:40
+msgid ""
+"e.g manager.php this would be default page for user types of entered name. "
+"You can use ../manager.php if your file is one directory back of this script."
+msgstr ""
+"bijv. manager.php dit zou de standaardpagina zijn voor gebruikerstypes met "
+"de ingevoerde naam. U kunt ../manager.php gebruiken als uw bestand één map "
+"achter in dit script staat."
+
+#: login_script/manage_user_level.php:43
+msgid ""
+"To make a page password secure and accessable by entered level name users "
+"let's say you created user level manager and setup default page manager.php. "
+"Now you want to secure manager_2.php with password but manager user level "
+"users can access and admins we need to put."
+msgstr ""
+"Om een ​​paginawachtwoord veilig en toegankelijk te maken voor ingevoerde "
+"gebruikers met niveau-namen, laten we zeggen dat u gebruikersniveau-manager "
+"hebt gemaakt en de standaardpagina-manager manager.php hebt ingesteld. Nu "
+"wilt u manager_2.php beveiligen met een wachtwoord, maar gebruikers op "
+"beheerdersniveau hebben toegang en beheerders die we moeten plaatsen."
+
+#: login_script/manage_user_level.php:46
+msgid "Please make sure this file loads properly."
+msgstr "Zorg ervoor dat dit bestand correct wordt geladen."
+
+#: login_script/manage_user_level.php:48
+msgid "//This loads system."
+msgstr "// Dit laadt systeem."
+
+#: login_script/manage_user_level.php:53
+msgid ""
+"PHP code in start of manager.php and manager_2.php Both files will need "
+"login and user level manager."
+msgstr ""
+"PHP-code aan het begin van manager.php en manager_2.php Beide bestanden "
+"moeten zich aanmelden en manager op gebruikersniveau."
+
+#: login_script/manage_user_level.php:62
+msgid "Update Level"
+msgstr "Update niveau"
+
+#: login_script/manage_user_level.php:62
+msgid "Add Level"
+msgstr "Niveau toevoegen"
+
+#: login_script/manage_users.php:49
+msgid "First Name Required"
+msgstr "Voornaam (verplicht"
+
+#: login_script/manage_users.php:51
+msgid "Username Required"
+msgstr "Gebruikersnaam (verplicht"
+
+#: login_script/manage_users.php:53
+msgid "Email Required"
+msgstr "Email (verplicht"
+
+#: login_script/manage_users.php:59
+msgid "User Status Required"
+msgstr "Gebruikersstatus vereist"
+
+#: login_script/manage_users.php:61
+msgid "User Type Required"
+msgstr "Gebruikerstype Vereist"
+
+#: login_script/manage_users.php:67
+msgid "Edit User"
+msgstr "bewerk gebruiker"
+
+#: login_script/manage_users.php:67
+msgid "Add New User"
+msgstr "Voeg een nieuwe gebruiker toe"
+
+#: login_script/manage_users.php:148
+msgid "Leave blank if you don't want to change password."
+msgstr "Laat dit veld leeg als u het wachtwoord niet wilt wijzigen."
+
+#: login_script/manage_users.php:188
+msgid "Select User Status"
+msgstr "Selecteer Gebruikersstatus"
+
+#: login_script/manage_users.php:189
+msgid "Active"
+msgstr "Actief"
+
+#: login_script/manage_users.php:190
+msgid "Deactive"
+msgstr "deactive"
+
+#: login_script/manage_users.php:191
+msgid "Ban"
+msgstr "ban"
+
+#: login_script/manage_users.php:192
+msgid "Suspend"
+msgstr "opschorten"
+
+#: login_script/manage_users.php:199
+msgid "Select User Type"
+msgstr "Selecteer Gebruikerstype"
+
+#: login_script/messages.php:16
+msgid "My Messages"
+msgstr "Mijn berichten"
+
+#: login_script/messages.php:17
+msgid "Manage Your Messages"
+msgstr "Beheer uw berichten"
+
+#: login_script/messages.php:23
+msgid "New Message"
+msgstr "Nieuw bericht"
+
+#: login_script/messages.php:57 login_script/user_levels.php:65
+#: login_script/users.php:44
+msgid "Message To"
+msgstr "Bericht naar"
+
+#: login_script/messages.php:88
+msgid "Sent"
+msgstr "Verzonden"
+
+#: login_script/messages.php:103
+msgid "Pic"
+msgstr "pic"
+
+#: login_script/messages.php:104
+msgid "Message From"
+msgstr "Bericht van"
+
+#: login_script/notes.php:24
+msgid "Go Back"
+msgstr "Ga terug"
+
+#: login_script/register.php:54
+msgid "Captcha is not correct"
+msgstr "Captcha is niet correct"
+
+#: login_script/register.php:56
+msgid "First name required"
+msgstr "Voornaam (verplicht"
+
+#: login_script/register.php:58
+msgid "Username required"
+msgstr "Gebruikersnaam (verplicht"
+
+#: login_script/register.php:62
+msgid "Incorrect email format"
+msgstr "Onjuist e-mailformaat"
+
+#: login_script/register.php:64
+msgid "Password required"
+msgstr "wachtwoord benodigd"
+
+#: login_script/register.php:66
+msgid "You didn't agree with our privacy policy."
+msgstr "U bent het niet eens met ons privacybeleid."
+
+#: login_script/register.php:68
+msgid "User type is empty"
+msgstr "Gebruikerstype is leeg"
+
+#: login_script/register.php:71
+msgid "Registration is disabled please contact site admin."
+msgstr "Registratie is uitgeschakeld, neem contact op met de sitebeheerder."
+
+#: login_script/register.php:81
+msgid "Register Yourself!"
+msgstr "Registreer jezelf!"
+
+#: login_script/register.php:140
+msgid "You agree with our privacy policy"
+msgstr "U gaat akkoord met ons privacybeleid"
+
+#: login_script/register.php:150
+msgid "Register With Facebook"
+msgstr "Registreren bij Facebook"
+
+#: login_script/register.php:163
+msgid "Already have an account?"
+msgstr "Heb je al een account?"
+
+#: login_script/subscriber.php:6
+msgid "Subscriber Level Users And Admin users Can access this page only!"
+msgstr ""
+"Gebruikers op abonneeniveau en beheerders hebben alleen toegang tot deze "
+"pagina!"
+
+#: login_script/subscriber.php:11
+msgid ""
+"In sidebar menu Dashboard would be linked to level page automatically. This "
+"is subscriber page and dashboard link in sidebar is linked to subscriber.php "
+"from database. You can create more user levels as per your needs and create "
+"pages like this which are only accessible by admin users and their level "
+"access holders. Non loged in users would be redirected to login page."
+msgstr ""
+"In het zijbalkmenu zou Dashboard automatisch worden gekoppeld aan niveau-"
+"pagina. Dit is een abonneepagina en de dashboardlink in de zijbalk is "
+"gekoppeld aan subscriber.php uit de database. U kunt naar wens meer "
+"gebruikersniveaus maken en pagina's zoals deze maken die alleen toegankelijk "
+"zijn voor beheerders en hun houders van toegangsniveaus. Niet ingelogde "
+"gebruikers worden doorgestuurd naar de inlogpagina."
+
+#: login_script/subscriber.php:12
+msgid ""
+"This is a default page for subscriber user level, Subscriber user level is "
+"deafault level on registration. This page is only accessable when user is "
+"signed in and his access level is subscriber. If you are loged in as admin "
+"you still can see this page."
+msgstr ""
+"Dit is een standaardpagina voor het gebruikersniveau van de abonnee, het "
+"gebruikersniveau van de abonnee is het doofslagniveau bij registratie. Deze "
+"pagina is alleen toegankelijk als de gebruiker is aangemeld en zijn "
+"toegangsniveau abonnee is. Als u als beheerder bent aangemeld, kunt u deze "
+"pagina nog steeds zien."
+
+#: login_script/user_levels.php:13
+msgid "Manage User Levels"
+msgstr "Beheer gebruikersniveaus"
+
+#: login_script/user_levels.php:22
+msgid "ID"
+msgstr "ID"
+
+#: login_script/user_levels.php:25
+msgid "Level Page Name"
+msgstr "Niveau paginanaam"
+
+#: login_script/user_levels.php:35
+msgid "Default Admins Level"
+msgstr "Standaard beheerdersniveau"
+
+#: login_script/user_levels.php:66
+msgid "All Admin Users"
+msgstr "Alle beheerders"
+
+#: login_script/users.php:12
+msgid "Manage Users"
+msgstr "Gebruikers beheren"
+
+#: login_script/users.php:16
+msgid "Message to All Users"
+msgstr "Bericht aan alle gebruikers"
+
+#: login_script/users.php:45
+msgid "Message All Users"
+msgstr "Bericht alle gebruikers"
+
+#: login_script/users.php:76
+msgid "Full Name"
+msgstr "Voor-en achternaam"
+
+#: login_script/users.php:77
+msgid "Location"
+msgstr "Plaats"
+
+#: login_script/users.php:82
+msgid "Last Seen"
+msgstr "Laatst gezien"
+
+#: login_script/users.php:83
+msgid "Last Login IP"
+msgstr "Laatste login IP"
+
+#: login_script/users.php:84
+msgid "Action"
+msgstr "Actie"
+
+#: login_script/website_labels.php:9
+msgid "Website Labels"
+msgstr "Website Labels"
+
+#: login_script/website_labels.php:13
+msgid ""
+"Manage website labels or translation by translating login_script.pot into "
+"your own language going to root /locale directory. Then setup new language "
+"through General Settings"
+msgstr ""
+"Beheer websitelabels of vertaling door login_script.pot te vertalen naar uw "
+"eigen taal die naar de root / locale-directory gaat. Stel vervolgens een "
+"nieuwe taal in via Algemene instellingen"

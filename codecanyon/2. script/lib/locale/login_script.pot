@@ -1,0 +1,2743 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Login Script V 4.0\n"
+"POT-Creation-Date: 2024-01-18 15:08+0500\n"
+"PO-Revision-Date: 2017-09-02 13:52+0500\n"
+"Last-Translator: \n"
+"Language-Team: Webful Creations <ateeq@webfulcreations.com>\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.4.2\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Poedit-KeywordsList: _;_e\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: lib\n"
+"X-Poedit-SearchPath-1: .\n"
+
+#: admin.php:8
+msgid "Admin level page only accessible for admin users!"
+msgstr ""
+
+#: admin.php:17
+msgid "How admin user level pages works!"
+msgstr ""
+
+#: admin.php:20
+msgid ""
+"When you login as admin you are redirected to dashboard.php while the other "
+"user levels would be redirected to their mentioned page in their user level. "
+"For example subscribers would redirect to subscriber.php as that is the page "
+"defined with level page."
+msgstr ""
+
+#: admin.php:21
+msgid ""
+"To secure a page only for admin users please use methods mentioned below."
+msgstr ""
+
+#: admin.php:31 all.php:71 subscriber.php:51
+msgid "How to make more admin pages"
+msgstr ""
+
+#: admin.php:34 all.php:74 subscriber.php:54
+msgid ""
+"If you want to make a page only accessible for admin users then its very "
+"easy just add admin in user authentication function like below.."
+msgstr ""
+
+#: admin.php:52 subscriber.php:30
+msgid "How to make more subscriber pages or other level pages"
+msgstr ""
+
+#: admin.php:55 all.php:53 subscriber.php:33
+msgid ""
+"You can put the following code in top of any page that will become a "
+"subscriber accessable page. Note: admin can access all pages of all levels."
+msgstr ""
+
+#: admin.php:73 all.php:30 subscriber.php:73
+msgid "How to make a page accessable to all loged in users."
+msgstr ""
+
+#: admin.php:76 all.php:33 subscriber.php:76
+msgid ""
+"You can use the following code in start of your document that will make your "
+"page to accessable all loged in users but only when they are signed in."
+msgstr ""
+
+#: admin.php:93 all.php:92 subscriber.php:93
+msgid "Partial Access"
+msgstr ""
+
+#: admin.php:96 all.php:95 subscriber.php:96
+msgid ""
+"Partial access can be used to show some parts of a page for different level "
+"of users. For example if you want to include a file different for admin "
+"users and different for all other users you can do this using partial access "
+"function."
+msgstr ""
+
+#: admin.php:99 admin.php:110 all.php:98 all.php:109 subscriber.php:99
+#: subscriber.php:110
+msgid "You are Admin."
+msgstr ""
+
+#: admin.php:101 admin.php:112 all.php:100 all.php:111 subscriber.php:101
+#: subscriber.php:112
+msgid "You are Subscriber."
+msgstr ""
+
+#: admin.php:103 admin.php:114 all.php:102 all.php:113 subscriber.php:103
+#: subscriber.php:114
+msgid "You are loged in user."
+msgstr ""
+
+#: admin.php:105 admin.php:116 all.php:104 all.php:115 subscriber.php:105
+#: subscriber.php:116
+msgid "You are not loged in user."
+msgstr ""
+
+#: admin.php:108 all.php:107 subscriber.php:108
+msgid "Working Example below of above code"
+msgstr ""
+
+#: all.php:8
+msgid "Accessible only loged in users All types"
+msgstr ""
+
+#: all.php:9
+msgid "Page accessable for all loged in users of anytype."
+msgstr ""
+
+#: all.php:17
+msgid "All users page"
+msgstr ""
+
+#: all.php:20
+msgid ""
+"This page is for all loged in users they can access only when they are loged "
+"in. This page can be accessed by all types or level of users when they are "
+"loged in."
+msgstr ""
+
+#: all.php:50
+msgid "How to make more subscriber pages"
+msgstr ""
+
+#: announcements.php:13 dashboard.php:136 lib/includes/sidepanel.php:27
+#: lib/includes/sidepanel.php:29 lib/includes/top_nav.php:108
+msgid "Announcements"
+msgstr ""
+
+#: announcements.php:18 lib/includes/sidepanel.php:30 user_levels.php:23
+#: users.php:21
+msgid "Add New"
+msgstr ""
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "opera"
+msgstr ""
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "firefox"
+msgstr ""
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "win"
+msgstr ""
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "android"
+msgstr ""
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "mac os x"
+msgstr ""
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "linux"
+msgstr ""
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "sunos"
+msgstr ""
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "freebsd"
+msgstr ""
+
+#: assets/js/tinymce/plugins/lists/plugin.min.js:9
+msgid "cros"
+msgstr ""
+
+#: assets/js/tinymce/plugins/paste/plugin.min.js:9
+msgid "b"
+msgstr ""
+
+#: assets/js/tinymce/plugins/paste/plugin.min.js:9
+msgid "i"
+msgstr ""
+
+#: dashboard.php:24
+msgid "Welcome to Dashboard"
+msgstr ""
+
+#: dashboard.php:39
+msgid "Total Users"
+msgstr ""
+
+#: dashboard.php:40 dashboard.php:58 dashboard.php:76 dashboard.php:94
+#: dashboard.php:112 lib/classes/userlevel.php:217
+#: lib/classes/userlevel.php:246 lib/includes/sidepanel.php:13
+msgid "Users"
+msgstr ""
+
+#: dashboard.php:57
+msgid "Active Users"
+msgstr ""
+
+#: dashboard.php:75
+msgid "Deactive Users"
+msgstr ""
+
+#: dashboard.php:93
+msgid "Ban Users"
+msgstr ""
+
+#: dashboard.php:111
+msgid "Suspend Users"
+msgstr ""
+
+#: dashboard.php:124 lib/includes/sidepanel.php:19
+#: lib/includes/sidepanel.php:21
+msgid "User Levels"
+msgstr ""
+
+#: dashboard.php:137
+msgid "Recent Announcements"
+msgstr ""
+
+#: dashboard.php:156
+msgid "Recent Logins"
+msgstr ""
+
+#: edit_profile.php:30 edit_profile.php:38 manage_users.php:30
+#: manage_users.php:38 manage_users.php:61
+msgid "Password do not match"
+msgstr ""
+
+#: edit_profile.php:54
+msgid "Edit your profile"
+msgstr ""
+
+#: edit_profile.php:66 manage_users.php:83 register.php:129
+msgid "First Name"
+msgstr ""
+
+#: edit_profile.php:69 manage_users.php:86
+msgid "Enter First Name"
+msgstr ""
+
+#: edit_profile.php:75 manage_users.php:92 register.php:134
+msgid "Last Name"
+msgstr ""
+
+#: edit_profile.php:78 manage_users.php:95
+msgid "Enter Last Name"
+msgstr ""
+
+#: edit_profile.php:84 manage_users.php:101
+msgid "Gender"
+msgstr ""
+
+#: edit_profile.php:88 manage_users.php:105
+msgid "Select Gender"
+msgstr ""
+
+#: edit_profile.php:89 manage_users.php:106
+msgid "Male"
+msgstr ""
+
+#: edit_profile.php:90 manage_users.php:107
+msgid "Female"
+msgstr ""
+
+#: edit_profile.php:97 edit_profile.php:106 manage_users.php:114
+#: manage_users.php:123
+msgid "Date of Birth"
+msgstr ""
+
+#: edit_profile.php:118 edit_profile.php:121 edit_profile.php:127
+#: edit_profile.php:130 manage_users.php:135 manage_users.php:138
+#: manage_users.php:144 manage_users.php:147
+msgid "Address"
+msgstr ""
+
+#: edit_profile.php:136 edit_profile.php:139 manage_users.php:153
+#: manage_users.php:156
+msgid "City"
+msgstr ""
+
+#: edit_profile.php:145 edit_profile.php:149 manage_users.php:162
+#: manage_users.php:166
+msgid "State OR Province"
+msgstr ""
+
+#: edit_profile.php:155 manage_users.php:172
+msgid "Zip/Postal Code"
+msgstr ""
+
+#: edit_profile.php:158 manage_users.php:175
+msgid "Zip Code"
+msgstr ""
+
+#: edit_profile.php:164 manage_users.php:181
+msgid "Country"
+msgstr ""
+
+#: edit_profile.php:175 edit_profile.php:178 manage_users.php:192
+#: manage_users.php:195
+msgid "Mobile"
+msgstr ""
+
+#: edit_profile.php:184 edit_profile.php:187 manage_users.php:201
+#: manage_users.php:204
+msgid "Phone"
+msgstr ""
+
+#: edit_profile.php:193 edit_profile.php:196 lib/classes/users.php:126
+#: lib/classes/users.php:184 lib/classes/users.php:409
+#: lib/classes/users.php:834 lib/classes/users.php:852 manage_users.php:210
+#: manage_users.php:213 register.php:139 users.php:90
+msgid "Username"
+msgstr ""
+
+#: edit_profile.php:202 edit_profile.php:205 lib/classes/users.php:125
+#: lib/classes/users.php:170 lib/classes/users.php:183
+#: lib/classes/users.php:409 lib/classes/users.php:833 manage_users.php:219
+#: manage_users.php:222 register.php:144 users.php:91
+msgid "Email"
+msgstr ""
+
+#: edit_profile.php:211 edit_profile.php:214 lib/classes/users.php:171
+#: lib/classes/users.php:819 login.php:136 manage_users.php:229
+#: manage_users.php:232 manage_users.php:247 manage_users.php:250
+#: register.php:149
+msgid "Password"
+msgstr ""
+
+#: edit_profile.php:214 manage_users.php:232
+msgid "Leave blank if you don't want to change password"
+msgstr ""
+
+#: edit_profile.php:220 edit_profile.php:223 forgot.php:95 manage_users.php:238
+#: manage_users.php:241 manage_users.php:256 manage_users.php:259
+msgid "Confirm Password"
+msgstr ""
+
+#: edit_profile.php:229 manage_users.php:266
+msgid "Profile Image"
+msgstr ""
+
+#: edit_profile.php:249 edit_profile.php:252 manage_users.php:286
+#: manage_users.php:289
+msgid "Description"
+msgstr ""
+
+#: edit_profile.php:258
+msgid "Send Email on new message"
+msgstr ""
+
+#: edit_profile.php:267 manage_users.php:326
+msgid "Update User"
+msgstr ""
+
+#: forgot.php:22
+msgid "Password Doesn't Match"
+msgstr ""
+
+#: forgot.php:30
+msgid "Forgot Password!"
+msgstr ""
+
+#: forgot.php:46 login.php:102 register.php:98
+msgid "PHP login script"
+msgstr ""
+
+#: forgot.php:48 login.php:104
+msgid ""
+"If you are already a member please fill the login form and if you don't have "
+"an account yet click signup below."
+msgstr ""
+
+#: forgot.php:52 login.php:108
+msgid "Sign Up"
+msgstr ""
+
+#: forgot.php:55 login.php:123 register.php:104
+msgid "Sign In"
+msgstr ""
+
+#: forgot.php:70
+msgid "Reset your password"
+msgstr ""
+
+#: forgot.php:76
+msgid "Please enter your email address or username to recover your password."
+msgstr ""
+
+#: forgot.php:80 login.php:132 messages.php:63
+msgid "Email or Username"
+msgstr ""
+
+#: forgot.php:84 forgot.php:100
+msgid "Reset Password"
+msgstr ""
+
+#: forgot.php:91
+msgid "New Password"
+msgstr ""
+
+#: general_settings.php:12
+msgid "Site URL Required"
+msgstr ""
+
+#: general_settings.php:14
+msgid "Email From Required"
+msgstr ""
+
+#: general_settings.php:16
+msgid "Reply To Required"
+msgstr ""
+
+#: general_settings.php:96
+msgid "Settings saved."
+msgstr ""
+
+#: general_settings.php:102 lib/includes/top_nav.php:113
+msgid "General Settings"
+msgstr ""
+
+#: general_settings.php:114
+msgid "Site URL"
+msgstr ""
+
+#: general_settings.php:116
+msgid "Please include / at end of site url e.g http://localhost/"
+msgstr ""
+
+#: general_settings.php:121
+msgid "Site Name"
+msgstr ""
+
+#: general_settings.php:128
+msgid "Page to redirect on logout"
+msgstr ""
+
+#: general_settings.php:135
+msgid "Site Language"
+msgstr ""
+
+#: general_settings.php:138 general_settings.php:153
+msgid "English"
+msgstr ""
+
+#: general_settings.php:139 general_settings.php:155
+msgid "Spanish"
+msgstr ""
+
+#: general_settings.php:140 general_settings.php:156
+msgid "Dutch"
+msgstr ""
+
+#: general_settings.php:141 general_settings.php:154
+msgid "French"
+msgstr ""
+
+#: general_settings.php:142 general_settings.php:157
+msgid "German"
+msgstr ""
+
+#: general_settings.php:143 general_settings.php:158
+msgid "Italian"
+msgstr ""
+
+#: general_settings.php:144 general_settings.php:159
+msgid "Thai"
+msgstr ""
+
+#: general_settings.php:146
+msgid ""
+"You can easily add more languages if they ar enot available. By updating .po "
+"files we are available for support."
+msgstr ""
+
+#: general_settings.php:151
+msgid "Enable Multilanguage"
+msgstr ""
+
+#: general_settings.php:153
+msgid "Enable English"
+msgstr ""
+
+#: general_settings.php:154
+msgid "Enable French"
+msgstr ""
+
+#: general_settings.php:155
+msgid "Enable Spanish"
+msgstr ""
+
+#: general_settings.php:156
+msgid "Enable Dutch"
+msgstr ""
+
+#: general_settings.php:157
+msgid "Enable German"
+msgstr ""
+
+#: general_settings.php:158
+msgid "Enable Italian"
+msgstr ""
+
+#: general_settings.php:159
+msgid "Enable Thai"
+msgstr ""
+
+#: general_settings.php:164
+msgid "Password Hash"
+msgstr ""
+
+#: general_settings.php:170
+msgid ""
+"Please note if you change password hashing all users would require to reset "
+"their password. As we do not save original passwords so script cannot auto "
+"generate new passwords."
+msgstr ""
+
+#: general_settings.php:175 general_settings.php:177
+msgid "Disable Registration"
+msgstr ""
+
+#: general_settings.php:182 general_settings.php:184
+msgid "Disable Login"
+msgstr ""
+
+#: general_settings.php:189 general_settings.php:191
+msgid "Notify User Group On New Registration"
+msgstr ""
+
+#: general_settings.php:196
+msgid "Default Register User Type"
+msgstr ""
+
+#: general_settings.php:199
+msgid "Select Default User Type"
+msgstr ""
+
+#: general_settings.php:206
+msgid "Session Timeout in Minutes"
+msgstr ""
+
+#: general_settings.php:213
+msgid "Maximum Wrong Login Attempts"
+msgstr ""
+
+#: general_settings.php:220
+msgid "Lock time on Wrong Login Attempts in minutes"
+msgstr ""
+
+#: general_settings.php:232
+msgid "Google Login Settings"
+msgstr ""
+
+#: general_settings.php:236 general_settings.php:237
+msgid "Activate Google Login"
+msgstr ""
+
+#: general_settings.php:243
+msgid "Google Client ID"
+msgstr ""
+
+#: general_settings.php:250
+msgid "Google Client Secret"
+msgstr ""
+
+#: general_settings.php:257
+msgid ""
+"Enter Redirect URI. Should be your Login page login.php full URL With http:"
+msgstr ""
+
+#: general_settings.php:271
+msgid "Facebook Login Settings"
+msgstr ""
+
+#: general_settings.php:275
+msgid "Activate Facebook Login"
+msgstr ""
+
+#: general_settings.php:279
+msgid "Facebook API Key"
+msgstr ""
+
+#: general_settings.php:280
+msgid ""
+"Please go to http://facebook.com/developers/ Register new app add your "
+"website url to its Web URL make your app live. And get your API key from "
+"dashboard."
+msgstr ""
+
+#: general_settings.php:285
+msgid "Email Settings"
+msgstr ""
+
+#: general_settings.php:288
+msgid "Email settings used for the system will send Emails to users."
+msgstr ""
+
+#: general_settings.php:291
+msgid "Email From"
+msgstr ""
+
+#: general_settings.php:296
+msgid "Reply To"
+msgstr ""
+
+#: general_settings.php:300
+msgid "Activate User Without email Verification?"
+msgstr ""
+
+#: general_settings.php:301
+msgid ""
+"You can check this box to disable verification of email for registration."
+msgstr ""
+
+#: general_settings.php:307
+msgid "SMTP Settings"
+msgstr ""
+
+#: general_settings.php:310
+msgid ""
+"Activate and add accurate SMTP details to send email through SMTP instead of "
+"using local mail server."
+msgstr ""
+
+#: general_settings.php:313
+msgid "Activate SMTP?"
+msgstr ""
+
+#: general_settings.php:314
+msgid "Emails will be sent through SMTP if checked."
+msgstr ""
+
+#: general_settings.php:318
+msgid "SMTP Host"
+msgstr ""
+
+#: general_settings.php:323
+msgid "SMTP Port e.g 25 or 587"
+msgstr ""
+
+#: general_settings.php:328
+msgid "SMTP Username"
+msgstr ""
+
+#: general_settings.php:333
+msgid "SMTP Password"
+msgstr ""
+
+#: general_settings.php:337
+msgid "Last SMTP Response"
+msgstr ""
+
+#: general_settings.php:345
+msgid "Captcha Settings"
+msgstr ""
+
+#: general_settings.php:348
+msgid "Captcha Settings Please"
+msgstr ""
+
+#: general_settings.php:348
+msgid "Sign up to google reCaptcha"
+msgstr ""
+
+#: general_settings.php:348
+msgid "Get your site key and secret key."
+msgstr ""
+
+#: general_settings.php:350
+msgid "Activate Captcha"
+msgstr ""
+
+#: general_settings.php:355
+msgid "Site Key"
+msgstr ""
+
+#: general_settings.php:360
+msgid "Secret Key"
+msgstr ""
+
+#: general_settings.php:372
+msgid "Save"
+msgstr ""
+
+#: lib/classes/announcements.php:68
+msgid "Announcement Updated"
+msgstr ""
+
+#: lib/classes/announcements.php:96 lib/classes/users.php:435
+msgid "Edit"
+msgstr ""
+
+#: lib/classes/announcements.php:102 lib/classes/notes.php:185
+#: lib/classes/users.php:439
+msgid "Delete"
+msgstr ""
+
+#: lib/classes/announcements.php:139
+msgid "Announcement Added"
+msgstr ""
+
+#: lib/classes/announcements.php:147
+msgid "Announcement Deleted"
+msgstr ""
+
+#: lib/classes/forms.php:228
+msgid "Update key is required with update field TRUE"
+msgstr ""
+
+#: lib/classes/forms.php:253
+msgid "Sorry forms fields have nothing. Or its not array."
+msgstr ""
+
+#: lib/classes/forms.php:271
+msgid "Field name is required"
+msgstr ""
+
+#: lib/classes/forms.php:283
+msgid "This type of field is not supported yet."
+msgstr ""
+
+#: lib/classes/forms.php:295
+msgid "No data in select options array"
+msgstr ""
+
+#: lib/classes/forms.php:352
+msgid "Title is required for label"
+msgstr ""
+
+#: lib/classes/forms.php:374
+msgid "Name and value for hidden fields cannot be empty."
+msgstr ""
+
+#: lib/classes/forms.php:387
+msgid "Submit"
+msgstr ""
+
+#: lib/classes/forms.php:402
+msgid "Sorry cannot retrive the data some field sent was empty."
+msgstr ""
+
+#: lib/classes/forms_submission.php:57
+msgid ""
+"Either you have not declared the Update Field and its key or you have not "
+"stated INSERT TRUE check array."
+msgstr ""
+
+#: lib/classes/forms_submission.php:73 lib/classes/forms_submission.php:182
+msgid "Table name is not defined and its required"
+msgstr ""
+
+#: lib/classes/forms_submission.php:78 lib/classes/forms_submission.php:187
+msgid "Who are you to insert something in table."
+msgstr ""
+
+#: lib/classes/forms_submission.php:83 lib/classes/forms_submission.php:193
+msgid "Table does not match in db."
+msgstr ""
+
+#: lib/classes/forms_submission.php:94 lib/classes/forms_submission.php:205
+msgid ""
+"No Match in column names and fields names of form sent. Please check array "
+"of form generation and make sure they match the column names in database."
+msgstr ""
+
+#: lib/classes/forms_submission.php:161 lib/classes/forms_submission.php:277
+msgid "Duplicate data found. "
+msgstr ""
+
+#: lib/classes/forms_submission.php:299
+msgid "Provided data is empty cannot check duplicate"
+msgstr ""
+
+#: lib/classes/forms_submission.php:341 lib/classes/forms_submission.php:376
+msgid "Array to generate query is empty."
+msgstr ""
+
+#: lib/classes/forms_submission.php:363
+msgid "You have successfuly added data into database."
+msgstr ""
+
+#: lib/classes/forms_submission.php:396
+msgid "Updated Record!"
+msgstr ""
+
+#: lib/classes/forms_submission.php:423 lib/classes/forms_submission.php:443
+msgid "No table name exists to check."
+msgstr ""
+
+#: lib/classes/messages.php:47
+msgid "Me"
+msgstr ""
+
+#: lib/classes/messages.php:70
+msgid "From"
+msgstr ""
+
+#: lib/classes/messages.php:71 lib/classes/userlevel.php:122
+#: lib/classes/users.php:408
+msgid "To"
+msgstr ""
+
+#: lib/classes/messages.php:92
+msgid "Send a reply"
+msgstr ""
+
+#: lib/classes/messages.php:267 lib/classes/messages.php:314
+#: lib/classes/messages.php:356 lib/classes/messages.php:405
+#: lib/classes/messages.php:450
+msgid "Hi"
+msgstr ""
+
+#: lib/classes/messages.php:268
+msgid "You have received a message reply from"
+msgstr ""
+
+#: lib/classes/messages.php:273 lib/classes/messages.php:320
+msgid "Message sent success"
+msgstr ""
+
+#: lib/classes/messages.php:315 lib/classes/messages.php:357
+#: lib/classes/messages.php:406 lib/classes/messages.php:451
+msgid "You have received a message from"
+msgstr ""
+
+#: lib/classes/messages.php:322
+msgid "No user to message"
+msgstr ""
+
+#: lib/classes/messages.php:362
+msgid "Message Sent Successful"
+msgstr ""
+
+#: lib/classes/messages.php:411
+msgid "Message to all"
+msgstr ""
+
+#: lib/classes/messages.php:456
+msgid "Message Sent to All"
+msgstr ""
+
+#: lib/classes/notes.php:37
+msgid "Note Updated"
+msgstr ""
+
+#: lib/classes/notes.php:50 notes.php:21 notes.php:38
+msgid "Add Note"
+msgstr ""
+
+#: lib/classes/notes.php:59 lib/classes/notes.php:120
+msgid "Note Title"
+msgstr ""
+
+#: lib/classes/notes.php:63 lib/classes/notes.php:124
+msgid "Your Note Title"
+msgstr ""
+
+#: lib/classes/notes.php:64 lib/classes/notes.php:125
+msgid "Enter Note Title"
+msgstr ""
+
+#: lib/classes/notes.php:72 lib/classes/notes.php:132
+#: ⁨lib/includes/Demo Array/form_field_and_values.php⁩:32
+msgid "Note Detail"
+msgstr ""
+
+#: lib/classes/notes.php:76 lib/classes/notes.php:136
+#: ⁨lib/includes/Demo Array/form_field_and_values.php⁩:36
+msgid "Your Note Detail"
+msgstr ""
+
+#: lib/classes/notes.php:100 lib/includes/formprocessing.php:15
+msgid "You are doing something you don't have access to do."
+msgstr ""
+
+#: lib/classes/notes.php:110 notes.php:40
+msgid "Update Note"
+msgstr ""
+
+#: lib/classes/notes.php:174
+msgid "Date"
+msgstr ""
+
+#: lib/classes/notes.php:180
+msgid "Edit Note"
+msgstr ""
+
+#: lib/classes/notes.php:206
+msgid "Note Added"
+msgstr ""
+
+#: lib/classes/notes.php:214
+msgid "Note Deleted"
+msgstr ""
+
+#: lib/classes/userlevel.php:41
+msgid "User level updated"
+msgstr ""
+
+#: lib/classes/userlevel.php:53
+msgid "User level cannot be added"
+msgstr ""
+
+#: lib/classes/userlevel.php:62
+msgid "Level added successfuly"
+msgstr ""
+
+#: lib/classes/userlevel.php:94 lib/classes/userlevel.php:132
+#: lib/classes/users.php:381 lib/classes/users.php:418 messages.php:73
+#: messages.php:117 user_levels.php:40 user_levels.php:51 user_levels.php:88
+#: users.php:65
+msgid "Message"
+msgstr ""
+
+#: lib/classes/userlevel.php:115 lib/classes/userlevel.php:140
+#: lib/classes/users.php:401 lib/classes/users.php:427 messages.php:56
+#: messages.php:79 user_levels.php:71 user_levels.php:96 users.php:48
+#: users.php:72
+msgid "Send Message"
+msgstr ""
+
+#: lib/classes/userlevel.php:127 lib/classes/users.php:413 messages.php:68
+#: user_levels.php:83 users.php:60
+msgid "Subject"
+msgstr ""
+
+#: lib/classes/userlevel.php:139 lib/classes/users.php:426 messages.php:83
+#: notes.php:62 user_levels.php:95 users.php:71
+msgid "Close"
+msgstr ""
+
+#: lib/classes/userlevel.php:161
+msgid "You cannot view list of levels."
+msgstr ""
+
+#: lib/classes/userlevel.php:172
+msgid "User level deleted"
+msgstr ""
+
+#: lib/classes/userlevel.php:174
+msgid "User level cannot delete"
+msgstr ""
+
+#: lib/classes/userlevel.php:216 manage_announcement.php:68
+#: manage_users.php:311
+msgid "Admin"
+msgstr ""
+
+#: lib/classes/userlevel.php:222 lib/classes/userlevel.php:251
+msgid "Redirects to"
+msgstr ""
+
+#: lib/classes/userlevel.php:259
+msgid "Cannot view this list"
+msgstr ""
+
+#: lib/classes/users.php:67
+msgid "Email cannot be added "
+msgstr ""
+
+#: lib/classes/users.php:67
+msgid "already exists."
+msgstr ""
+
+#: lib/classes/users.php:77
+msgid "Username cannot be added"
+msgstr ""
+
+#: lib/classes/users.php:77 lib/classes/users.php:485 lib/classes/users.php:783
+msgid "Already exists."
+msgstr ""
+
+#: lib/classes/users.php:108
+msgid "Thank you for registration."
+msgstr ""
+
+#: lib/classes/users.php:109
+msgid "Your username is"
+msgstr ""
+
+#: lib/classes/users.php:110
+msgid ""
+"Kindly click the link below to confirm your account and start using our "
+"services."
+msgstr ""
+
+#: lib/classes/users.php:111 lib/classes/users.php:759
+msgid "Confirm Email Address"
+msgstr ""
+
+#: lib/classes/users.php:112 lib/classes/users.php:760
+msgid "Thank you again. Please contact us if you need any assistance."
+msgstr ""
+
+#: lib/classes/users.php:116
+msgid "Confirm your email id."
+msgstr ""
+
+#: lib/classes/users.php:122
+msgid "New user registration"
+msgstr ""
+
+#: lib/classes/users.php:123 lib/classes/users.php:181
+msgid "New user in your user group."
+msgstr ""
+
+#: lib/classes/users.php:124 lib/classes/users.php:182
+#: lib/classes/users.php:832 lib/classes/users.php:851
+msgid "Name"
+msgstr ""
+
+#: lib/classes/users.php:135
+msgid "Registration successful please check your mailbox for email activation."
+msgstr ""
+
+#: lib/classes/users.php:168 lib/classes/users.php:174
+msgid "Thank you for registration"
+msgstr ""
+
+#: lib/classes/users.php:169
+msgid ""
+"You can use facebook login or following login information to access our "
+"system."
+msgstr ""
+
+#: lib/classes/users.php:180 lib/classes/users.php:830
+msgid "New user registration."
+msgstr ""
+
+#: lib/classes/users.php:198 lib/classes/users.php:284
+msgid ""
+"Your account is not activated yet please confirm your Email address to "
+"activate your account!"
+msgstr ""
+
+#: lib/classes/users.php:216
+msgid "Your account is ban or suspend. Please contact site admin."
+msgstr ""
+
+#: lib/classes/users.php:220 lib/classes/users.php:318
+msgid "Couldn't find email."
+msgstr ""
+
+#: lib/classes/users.php:229
+msgid "Email and password both are required fields."
+msgstr ""
+
+#: lib/classes/users.php:253
+msgid "You are locked cause of maximum login attempts."
+msgstr ""
+
+#: lib/classes/users.php:303
+msgid "You cannot login your account is ban or suspend. Contact site admin."
+msgstr ""
+
+#: lib/classes/users.php:306
+msgid "Password does not match."
+msgstr ""
+
+#: lib/classes/users.php:329
+msgid "User deleted successfuly"
+msgstr ""
+
+#: lib/classes/users.php:331
+msgid "Cannot delete user"
+msgstr ""
+
+#: lib/classes/users.php:374
+msgid "Never"
+msgstr ""
+
+#: lib/classes/users.php:446
+msgid "You cannot view list of users."
+msgstr ""
+
+#: lib/classes/users.php:464
+msgid "You are not allowed to view this list."
+msgstr ""
+
+#: lib/classes/users.php:485 lib/classes/users.php:783
+msgid "Email cannot be added"
+msgstr ""
+
+#: lib/classes/users.php:498 lib/classes/users.php:621
+msgid "Username couldn't be added"
+msgstr ""
+
+#: lib/classes/users.php:498
+msgid "Already exists"
+msgstr ""
+
+#: lib/classes/users.php:554
+msgid "User updated successfuly."
+msgstr ""
+
+#: lib/classes/users.php:565
+msgid "You are trying to do something which you are not allowed to do."
+msgstr ""
+
+#: lib/classes/users.php:608
+msgid "This email cannot be used"
+msgstr ""
+
+#: lib/classes/users.php:608
+msgid "already exists in our system."
+msgstr ""
+
+#: lib/classes/users.php:621
+msgid "username already exists."
+msgstr ""
+
+#: lib/classes/users.php:683
+msgid "User updated successful."
+msgstr ""
+
+#: lib/classes/users.php:685
+msgid "You are trying to do something you are not allowed for."
+msgstr ""
+
+#: lib/classes/users.php:708
+msgid "Your Password has been reset please use new password to login."
+msgstr ""
+
+#: lib/classes/users.php:710
+msgid "Your activation key is expired and password cannot be reset."
+msgstr ""
+
+#: lib/classes/users.php:725
+msgid ""
+"Your account has been suspended. Please contact the administrator for help."
+msgstr ""
+
+#: lib/classes/users.php:730
+msgid ""
+"Congratulations! You are activated successfully now you can use email and "
+"password to login and use our services."
+msgstr ""
+
+#: lib/classes/users.php:733
+msgid "Your account cannot be activated."
+msgstr ""
+
+#: lib/classes/users.php:749
+msgid "Email is not in our system."
+msgstr ""
+
+#: lib/classes/users.php:757
+msgid "Reset your password."
+msgstr ""
+
+#: lib/classes/users.php:758
+msgid "Kindly click the link below to reset your password."
+msgstr ""
+
+#: lib/classes/users.php:763
+msgid "Password reset instructions"
+msgstr ""
+
+#: lib/classes/users.php:767
+msgid "Password recovery email sent please check mail for details."
+msgstr ""
+
+#: lib/classes/users.php:793
+msgid "Username couldn't add"
+msgstr ""
+
+#: lib/classes/users.php:793
+msgid "User already exists"
+msgstr ""
+
+#: lib/classes/users.php:815
+msgid "Your account have been registered."
+msgstr ""
+
+#: lib/classes/users.php:816
+msgid "Please use the following details to sign in on our website."
+msgstr ""
+
+#: lib/classes/users.php:817
+msgid "Confirm Email Address."
+msgstr ""
+
+#: lib/classes/users.php:818
+msgid "Email OR Username"
+msgstr ""
+
+#: lib/classes/users.php:823
+msgid "Registration Details"
+msgstr ""
+
+#: lib/classes/users.php:831
+msgid "New user on your user group."
+msgstr ""
+
+#: lib/classes/users.php:839
+msgid "User added details are sent on email"
+msgstr ""
+
+#: lib/classes/users.php:849
+msgid "Login Time"
+msgstr ""
+
+#: lib/classes/users.php:850
+msgid "IP"
+msgstr ""
+
+#: lib/classes/users.php:853 manage_announcement.php:61 manage_users.php:307
+#: users.php:93
+msgid "User Type"
+msgstr ""
+
+#: ⁨lib/includes/Demo Array/form_field_and_values.php⁩:37
+msgid "Enter Note Detail"
+msgstr ""
+
+#: ⁨lib/includes/Demo Array/form_field_and_values.php⁩:159
+msgid "Select Parent"
+msgstr ""
+
+#: lib/includes/footer.php:85
+msgid "Confirm delete this cannot be undone."
+msgstr ""
+
+#: lib/includes/footer_bar.php:12
+msgid "Copyright"
+msgstr ""
+
+#: lib/includes/footer_bar.php:13
+msgid "All Rights Reserved"
+msgstr ""
+
+#: lib/includes/footer_bar.php:13
+msgid "Powered By"
+msgstr ""
+
+#: lib/includes/functions.php:79
+msgid "Admin already exists"
+msgstr ""
+
+#: lib/includes/functions.php:230
+msgid "Missing SMTP Host"
+msgstr ""
+
+#: lib/includes/functions.php:235
+msgid "Missing SMTP Port"
+msgstr ""
+
+#: lib/includes/functions.php:240
+msgid "Missing SMTP Username"
+msgstr ""
+
+#: lib/includes/functions.php:245
+msgid "Missing SMTP Password"
+msgstr ""
+
+#: lib/includes/functions.php:250
+msgid "Missing email from"
+msgstr ""
+
+#: lib/includes/functions.php:259 lib/includes/functions.php:264
+msgid "Mailto is missing"
+msgstr ""
+
+#: lib/includes/functions.php:311
+msgid "year"
+msgstr ""
+
+#: lib/includes/functions.php:312
+msgid "month"
+msgstr ""
+
+#: lib/includes/functions.php:313
+msgid "week"
+msgstr ""
+
+#: lib/includes/functions.php:314
+msgid "day"
+msgstr ""
+
+#: lib/includes/functions.php:315
+msgid "hour"
+msgstr ""
+
+#: lib/includes/functions.php:316
+msgid "minute"
+msgstr ""
+
+#: lib/includes/functions.php:317
+msgid "second"
+msgstr ""
+
+#: lib/includes/functions.php:328
+msgid " ago"
+msgstr ""
+
+#: lib/includes/functions.php:328
+msgid "just now"
+msgstr ""
+
+#: lib/includes/functions.php:395
+msgid "Nothing uploaded"
+msgstr ""
+
+#: lib/includes/functions.php:542
+msgid "Select Country"
+msgstr ""
+
+#: lib/includes/functions.php:543
+msgid "Afghanistan"
+msgstr ""
+
+#: lib/includes/functions.php:544
+msgid "Albania"
+msgstr ""
+
+#: lib/includes/functions.php:545
+msgid "Algeria"
+msgstr ""
+
+#: lib/includes/functions.php:546
+msgid "American Samoa"
+msgstr ""
+
+#: lib/includes/functions.php:547
+msgid "Andorra"
+msgstr ""
+
+#: lib/includes/functions.php:548
+msgid "Angola"
+msgstr ""
+
+#: lib/includes/functions.php:549
+msgid "Anguilla"
+msgstr ""
+
+#: lib/includes/functions.php:550
+msgid "Antarctica"
+msgstr ""
+
+#: lib/includes/functions.php:551
+msgid "Antigua and Barbuda"
+msgstr ""
+
+#: lib/includes/functions.php:552
+msgid "Argentina"
+msgstr ""
+
+#: lib/includes/functions.php:553
+msgid "Armenia"
+msgstr ""
+
+#: lib/includes/functions.php:554
+msgid "Aruba"
+msgstr ""
+
+#: lib/includes/functions.php:555
+msgid "Australia"
+msgstr ""
+
+#: lib/includes/functions.php:556
+msgid "Austria"
+msgstr ""
+
+#: lib/includes/functions.php:557
+msgid "Azerbaijan"
+msgstr ""
+
+#: lib/includes/functions.php:558
+msgid "Bahamas"
+msgstr ""
+
+#: lib/includes/functions.php:559
+msgid "Bahrain"
+msgstr ""
+
+#: lib/includes/functions.php:560
+msgid "Bangladesh"
+msgstr ""
+
+#: lib/includes/functions.php:561
+msgid "Barbados"
+msgstr ""
+
+#: lib/includes/functions.php:562
+msgid "Belarus"
+msgstr ""
+
+#: lib/includes/functions.php:563
+msgid "Belgium"
+msgstr ""
+
+#: lib/includes/functions.php:564
+msgid "Belize"
+msgstr ""
+
+#: lib/includes/functions.php:565
+msgid "Benin"
+msgstr ""
+
+#: lib/includes/functions.php:566
+msgid "Bermuda"
+msgstr ""
+
+#: lib/includes/functions.php:567
+msgid "Bhutan"
+msgstr ""
+
+#: lib/includes/functions.php:568
+msgid "Bolivia"
+msgstr ""
+
+#: lib/includes/functions.php:569
+msgid "Bosnia and Herzegovina"
+msgstr ""
+
+#: lib/includes/functions.php:570
+msgid "Botswana"
+msgstr ""
+
+#: lib/includes/functions.php:571
+msgid "Bouvet Island"
+msgstr ""
+
+#: lib/includes/functions.php:572
+msgid "Brazil"
+msgstr ""
+
+#: lib/includes/functions.php:573
+msgid "British Indian Ocean Territory"
+msgstr ""
+
+#: lib/includes/functions.php:574
+msgid "Brunei Darussalam"
+msgstr ""
+
+#: lib/includes/functions.php:575
+msgid "Bulgaria"
+msgstr ""
+
+#: lib/includes/functions.php:576
+msgid "Burkina Faso"
+msgstr ""
+
+#: lib/includes/functions.php:577
+msgid "Burundi"
+msgstr ""
+
+#: lib/includes/functions.php:578
+msgid "Cambodia"
+msgstr ""
+
+#: lib/includes/functions.php:579
+msgid "Cameroon"
+msgstr ""
+
+#: lib/includes/functions.php:580
+msgid "Canada"
+msgstr ""
+
+#: lib/includes/functions.php:581
+msgid "Cape Verde"
+msgstr ""
+
+#: lib/includes/functions.php:582
+msgid "Cayman Islands"
+msgstr ""
+
+#: lib/includes/functions.php:583
+msgid "Central African Republic"
+msgstr ""
+
+#: lib/includes/functions.php:584
+msgid "Chad"
+msgstr ""
+
+#: lib/includes/functions.php:585
+msgid "Chile"
+msgstr ""
+
+#: lib/includes/functions.php:586
+msgid "China"
+msgstr ""
+
+#: lib/includes/functions.php:587
+msgid "Christmas Island"
+msgstr ""
+
+#: lib/includes/functions.php:588
+msgid "Cocos (Keeling) Islands"
+msgstr ""
+
+#: lib/includes/functions.php:589
+msgid "Colombia"
+msgstr ""
+
+#: lib/includes/functions.php:590
+msgid "Comoros"
+msgstr ""
+
+#: lib/includes/functions.php:591
+msgid "Congo"
+msgstr ""
+
+#: lib/includes/functions.php:592
+msgid "Congo, the Democratic Republic of the"
+msgstr ""
+
+#: lib/includes/functions.php:593
+msgid "Cook Islands"
+msgstr ""
+
+#: lib/includes/functions.php:594
+msgid "Costa Rica"
+msgstr ""
+
+#: lib/includes/functions.php:595
+msgid "Cote D'Ivoire"
+msgstr ""
+
+#: lib/includes/functions.php:596
+msgid "Croatia"
+msgstr ""
+
+#: lib/includes/functions.php:597
+msgid "Cuba"
+msgstr ""
+
+#: lib/includes/functions.php:598
+msgid "Cyprus"
+msgstr ""
+
+#: lib/includes/functions.php:599
+msgid "Czech Republic"
+msgstr ""
+
+#: lib/includes/functions.php:600
+msgid "Denmark"
+msgstr ""
+
+#: lib/includes/functions.php:601
+msgid "Djibouti"
+msgstr ""
+
+#: lib/includes/functions.php:602
+msgid "Dominica"
+msgstr ""
+
+#: lib/includes/functions.php:603
+msgid "Dominican Republic"
+msgstr ""
+
+#: lib/includes/functions.php:604
+msgid "Ecuador"
+msgstr ""
+
+#: lib/includes/functions.php:605
+msgid "Egypt"
+msgstr ""
+
+#: lib/includes/functions.php:606
+msgid "El Salvador"
+msgstr ""
+
+#: lib/includes/functions.php:607
+msgid "Equatorial Guinea"
+msgstr ""
+
+#: lib/includes/functions.php:608
+msgid "Eritrea"
+msgstr ""
+
+#: lib/includes/functions.php:609
+msgid "Estonia"
+msgstr ""
+
+#: lib/includes/functions.php:610
+msgid "Ethiopia"
+msgstr ""
+
+#: lib/includes/functions.php:611
+msgid "Falkland Islands (Malvinas)"
+msgstr ""
+
+#: lib/includes/functions.php:612
+msgid "Faroe Islands"
+msgstr ""
+
+#: lib/includes/functions.php:613
+msgid "Fiji"
+msgstr ""
+
+#: lib/includes/functions.php:614
+msgid "Finland"
+msgstr ""
+
+#: lib/includes/functions.php:615
+msgid "France"
+msgstr ""
+
+#: lib/includes/functions.php:616
+msgid "French Guiana"
+msgstr ""
+
+#: lib/includes/functions.php:617
+msgid "French Polynesia"
+msgstr ""
+
+#: lib/includes/functions.php:618
+msgid "French Southern Territories"
+msgstr ""
+
+#: lib/includes/functions.php:619
+msgid "Gabon"
+msgstr ""
+
+#: lib/includes/functions.php:620
+msgid "Gambia"
+msgstr ""
+
+#: lib/includes/functions.php:621
+msgid "Georgia"
+msgstr ""
+
+#: lib/includes/functions.php:622
+msgid "Germany"
+msgstr ""
+
+#: lib/includes/functions.php:623
+msgid "Ghana"
+msgstr ""
+
+#: lib/includes/functions.php:624
+msgid "Gibraltar"
+msgstr ""
+
+#: lib/includes/functions.php:625
+msgid "Greece"
+msgstr ""
+
+#: lib/includes/functions.php:626
+msgid "Greenland"
+msgstr ""
+
+#: lib/includes/functions.php:627
+msgid "Grenada"
+msgstr ""
+
+#: lib/includes/functions.php:628
+msgid "Guadeloupe"
+msgstr ""
+
+#: lib/includes/functions.php:629
+msgid "Guam"
+msgstr ""
+
+#: lib/includes/functions.php:630
+msgid "Guatemala"
+msgstr ""
+
+#: lib/includes/functions.php:631
+msgid "Guinea"
+msgstr ""
+
+#: lib/includes/functions.php:632
+msgid "Guinea-Bissau"
+msgstr ""
+
+#: lib/includes/functions.php:633
+msgid "Guyana"
+msgstr ""
+
+#: lib/includes/functions.php:634
+msgid "Haiti"
+msgstr ""
+
+#: lib/includes/functions.php:635
+msgid "Heard Island and Mcdonald Islands"
+msgstr ""
+
+#: lib/includes/functions.php:636
+msgid "Holy See (Vatican City State)"
+msgstr ""
+
+#: lib/includes/functions.php:637
+msgid "Honduras"
+msgstr ""
+
+#: lib/includes/functions.php:638
+msgid "Hong Kong"
+msgstr ""
+
+#: lib/includes/functions.php:639
+msgid "Hungary"
+msgstr ""
+
+#: lib/includes/functions.php:640
+msgid "Iceland"
+msgstr ""
+
+#: lib/includes/functions.php:641
+msgid "India"
+msgstr ""
+
+#: lib/includes/functions.php:642
+msgid "Indonesia"
+msgstr ""
+
+#: lib/includes/functions.php:643
+msgid "Iran, Islamic Republic"
+msgstr ""
+
+#: lib/includes/functions.php:644
+msgid "Iraq"
+msgstr ""
+
+#: lib/includes/functions.php:645
+msgid "Ireland"
+msgstr ""
+
+#: lib/includes/functions.php:646
+msgid "Israel"
+msgstr ""
+
+#: lib/includes/functions.php:647
+msgid "Italy"
+msgstr ""
+
+#: lib/includes/functions.php:648
+msgid "Jamaica"
+msgstr ""
+
+#: lib/includes/functions.php:649
+msgid "Japan"
+msgstr ""
+
+#: lib/includes/functions.php:650
+msgid "Jordan"
+msgstr ""
+
+#: lib/includes/functions.php:651
+msgid "Kazakhstan"
+msgstr ""
+
+#: lib/includes/functions.php:652
+msgid "Kenya"
+msgstr ""
+
+#: lib/includes/functions.php:653
+msgid "Kiribati"
+msgstr ""
+
+#: lib/includes/functions.php:654
+msgid "Korea, Democratic People's Republic"
+msgstr ""
+
+#: lib/includes/functions.php:655
+msgid "Korea, Republic of"
+msgstr ""
+
+#: lib/includes/functions.php:656
+msgid "Kuwait"
+msgstr ""
+
+#: lib/includes/functions.php:657
+msgid "Kyrgyzstan"
+msgstr ""
+
+#: lib/includes/functions.php:658
+msgid "Lao People's Democratic Republic"
+msgstr ""
+
+#: lib/includes/functions.php:659
+msgid "Latvia"
+msgstr ""
+
+#: lib/includes/functions.php:660
+msgid "Lebanon"
+msgstr ""
+
+#: lib/includes/functions.php:661
+msgid "Lesotho"
+msgstr ""
+
+#: lib/includes/functions.php:662
+msgid "Liberia"
+msgstr ""
+
+#: lib/includes/functions.php:663
+msgid "Libyan Arab Jamahiriya"
+msgstr ""
+
+#: lib/includes/functions.php:664
+msgid "Liechtenstein"
+msgstr ""
+
+#: lib/includes/functions.php:665
+msgid "Lithuania"
+msgstr ""
+
+#: lib/includes/functions.php:666
+msgid "Luxembourg"
+msgstr ""
+
+#: lib/includes/functions.php:667
+msgid "Macao"
+msgstr ""
+
+#: lib/includes/functions.php:668
+msgid "Macedonia, the Former Yugoslav Republic of"
+msgstr ""
+
+#: lib/includes/functions.php:669
+msgid "Madagascar"
+msgstr ""
+
+#: lib/includes/functions.php:670
+msgid "Malawi"
+msgstr ""
+
+#: lib/includes/functions.php:671
+msgid "Malaysia"
+msgstr ""
+
+#: lib/includes/functions.php:672
+msgid "Maldives"
+msgstr ""
+
+#: lib/includes/functions.php:673
+msgid "Mali"
+msgstr ""
+
+#: lib/includes/functions.php:674
+msgid "Malta"
+msgstr ""
+
+#: lib/includes/functions.php:675
+msgid "Marshall Islands"
+msgstr ""
+
+#: lib/includes/functions.php:676
+msgid "Martinique"
+msgstr ""
+
+#: lib/includes/functions.php:677
+msgid "Mauritania"
+msgstr ""
+
+#: lib/includes/functions.php:678
+msgid "Mauritius"
+msgstr ""
+
+#: lib/includes/functions.php:679
+msgid "Mayotte"
+msgstr ""
+
+#: lib/includes/functions.php:680
+msgid "Mexico"
+msgstr ""
+
+#: lib/includes/functions.php:681
+msgid "Micronesia, Federated States of"
+msgstr ""
+
+#: lib/includes/functions.php:682
+msgid "Moldova, Republic of"
+msgstr ""
+
+#: lib/includes/functions.php:683
+msgid "Monaco"
+msgstr ""
+
+#: lib/includes/functions.php:684
+msgid "Mongolia"
+msgstr ""
+
+#: lib/includes/functions.php:685
+msgid "Montserrat"
+msgstr ""
+
+#: lib/includes/functions.php:686
+msgid "Morocco"
+msgstr ""
+
+#: lib/includes/functions.php:687
+msgid "Mozambique"
+msgstr ""
+
+#: lib/includes/functions.php:688
+msgid "Myanmar"
+msgstr ""
+
+#: lib/includes/functions.php:689
+msgid "Namibia"
+msgstr ""
+
+#: lib/includes/functions.php:690
+msgid "Nauru"
+msgstr ""
+
+#: lib/includes/functions.php:691
+msgid "Nepal"
+msgstr ""
+
+#: lib/includes/functions.php:692
+msgid "Netherlands"
+msgstr ""
+
+#: lib/includes/functions.php:693
+msgid "Netherlands Antilles"
+msgstr ""
+
+#: lib/includes/functions.php:694
+msgid "New Caledonia"
+msgstr ""
+
+#: lib/includes/functions.php:695
+msgid "New Zealand"
+msgstr ""
+
+#: lib/includes/functions.php:696
+msgid "Nicaragua"
+msgstr ""
+
+#: lib/includes/functions.php:697
+msgid "Niger"
+msgstr ""
+
+#: lib/includes/functions.php:698
+msgid "Nigeria"
+msgstr ""
+
+#: lib/includes/functions.php:699
+msgid "Niue"
+msgstr ""
+
+#: lib/includes/functions.php:700
+msgid "Norfolk Island"
+msgstr ""
+
+#: lib/includes/functions.php:701
+msgid "Northern Mariana Islands"
+msgstr ""
+
+#: lib/includes/functions.php:702
+msgid "Norway"
+msgstr ""
+
+#: lib/includes/functions.php:703
+msgid "Oman"
+msgstr ""
+
+#: lib/includes/functions.php:704
+msgid "Pakistan"
+msgstr ""
+
+#: lib/includes/functions.php:705
+msgid "Palau"
+msgstr ""
+
+#: lib/includes/functions.php:706
+msgid "Palestine"
+msgstr ""
+
+#: lib/includes/functions.php:707
+msgid "Panama"
+msgstr ""
+
+#: lib/includes/functions.php:708
+msgid "Papua New Guinea"
+msgstr ""
+
+#: lib/includes/functions.php:709
+msgid "Paraguay"
+msgstr ""
+
+#: lib/includes/functions.php:710
+msgid "Peru"
+msgstr ""
+
+#: lib/includes/functions.php:711
+msgid "Philippines"
+msgstr ""
+
+#: lib/includes/functions.php:712
+msgid "Pitcairn"
+msgstr ""
+
+#: lib/includes/functions.php:713
+msgid "Poland"
+msgstr ""
+
+#: lib/includes/functions.php:714
+msgid "Portugal"
+msgstr ""
+
+#: lib/includes/functions.php:715
+msgid "Puerto Rico"
+msgstr ""
+
+#: lib/includes/functions.php:716
+msgid "Qatar"
+msgstr ""
+
+#: lib/includes/functions.php:717
+msgid "Reunion"
+msgstr ""
+
+#: lib/includes/functions.php:718
+msgid "Romania"
+msgstr ""
+
+#: lib/includes/functions.php:719
+msgid "Russian Federation"
+msgstr ""
+
+#: lib/includes/functions.php:720
+msgid "Rwanda"
+msgstr ""
+
+#: lib/includes/functions.php:721
+msgid "Saint Helena"
+msgstr ""
+
+#: lib/includes/functions.php:722
+msgid "Saint Kitts and Nevis"
+msgstr ""
+
+#: lib/includes/functions.php:723
+msgid "Saint Lucia"
+msgstr ""
+
+#: lib/includes/functions.php:724
+msgid "Saint Pierre and Miquelon"
+msgstr ""
+
+#: lib/includes/functions.php:725
+msgid "Saint Vincent and the Grenadines"
+msgstr ""
+
+#: lib/includes/functions.php:726
+msgid "Samoa"
+msgstr ""
+
+#: lib/includes/functions.php:727
+msgid "San Marino"
+msgstr ""
+
+#: lib/includes/functions.php:728
+msgid "Sao Tome and Principe"
+msgstr ""
+
+#: lib/includes/functions.php:729
+msgid "Saudi Arabia"
+msgstr ""
+
+#: lib/includes/functions.php:730
+msgid "Senegal"
+msgstr ""
+
+#: lib/includes/functions.php:731
+msgid "Serbia and Montenegro"
+msgstr ""
+
+#: lib/includes/functions.php:732
+msgid "Seychelles"
+msgstr ""
+
+#: lib/includes/functions.php:733
+msgid "Sierra Leone"
+msgstr ""
+
+#: lib/includes/functions.php:734
+msgid "Singapore"
+msgstr ""
+
+#: lib/includes/functions.php:735
+msgid "Slovakia"
+msgstr ""
+
+#: lib/includes/functions.php:736
+msgid "Slovenia"
+msgstr ""
+
+#: lib/includes/functions.php:737
+msgid "Solomon Islands"
+msgstr ""
+
+#: lib/includes/functions.php:738
+msgid "Somalia"
+msgstr ""
+
+#: lib/includes/functions.php:739
+msgid "South Africa"
+msgstr ""
+
+#: lib/includes/functions.php:740
+msgid "South Georgia and the South Sandwich Islands"
+msgstr ""
+
+#: lib/includes/functions.php:741
+msgid "Spain"
+msgstr ""
+
+#: lib/includes/functions.php:742
+msgid "Sri Lanka"
+msgstr ""
+
+#: lib/includes/functions.php:743
+msgid "Sudan"
+msgstr ""
+
+#: lib/includes/functions.php:744
+msgid "Suriname"
+msgstr ""
+
+#: lib/includes/functions.php:745
+msgid "Svalbard and Jan Mayen"
+msgstr ""
+
+#: lib/includes/functions.php:746
+msgid "Swaziland"
+msgstr ""
+
+#: lib/includes/functions.php:747
+msgid "Sweden"
+msgstr ""
+
+#: lib/includes/functions.php:748
+msgid "Switzerland"
+msgstr ""
+
+#: lib/includes/functions.php:749
+msgid "Syrian Arab Republic"
+msgstr ""
+
+#: lib/includes/functions.php:750
+msgid "Taiwan, Province of China"
+msgstr ""
+
+#: lib/includes/functions.php:751
+msgid "Tajikistan"
+msgstr ""
+
+#: lib/includes/functions.php:752
+msgid "Tanzania, United Republic of"
+msgstr ""
+
+#: lib/includes/functions.php:753
+msgid "Thailand"
+msgstr ""
+
+#: lib/includes/functions.php:754
+msgid "Timor-Leste"
+msgstr ""
+
+#: lib/includes/functions.php:755
+msgid "Togo"
+msgstr ""
+
+#: lib/includes/functions.php:756
+msgid "Tokelau"
+msgstr ""
+
+#: lib/includes/functions.php:757
+msgid "Tonga"
+msgstr ""
+
+#: lib/includes/functions.php:758
+msgid "Trinidad and Tobago"
+msgstr ""
+
+#: lib/includes/functions.php:759
+msgid "Tunisia"
+msgstr ""
+
+#: lib/includes/functions.php:760
+msgid "Turkey"
+msgstr ""
+
+#: lib/includes/functions.php:761
+msgid "Turkmenistan"
+msgstr ""
+
+#: lib/includes/functions.php:762
+msgid "Turks and Caicos Islands"
+msgstr ""
+
+#: lib/includes/functions.php:763
+msgid "Tuvalu"
+msgstr ""
+
+#: lib/includes/functions.php:764
+msgid "Uganda"
+msgstr ""
+
+#: lib/includes/functions.php:765
+msgid "Ukraine"
+msgstr ""
+
+#: lib/includes/functions.php:766
+msgid "United Arab Emirates"
+msgstr ""
+
+#: lib/includes/functions.php:767
+msgid "United Kingdom"
+msgstr ""
+
+#: lib/includes/functions.php:768
+msgid "United States"
+msgstr ""
+
+#: lib/includes/functions.php:769
+msgid "United States Minor Outlying Islands"
+msgstr ""
+
+#: lib/includes/functions.php:770
+msgid "Uruguay"
+msgstr ""
+
+#: lib/includes/functions.php:771
+msgid "Uzbekistan"
+msgstr ""
+
+#: lib/includes/functions.php:772
+msgid "Vanuatu"
+msgstr ""
+
+#: lib/includes/functions.php:773
+msgid "Venezuela"
+msgstr ""
+
+#: lib/includes/functions.php:774
+msgid "Viet Nam"
+msgstr ""
+
+#: lib/includes/functions.php:775
+msgid "Virgin Islands, British"
+msgstr ""
+
+#: lib/includes/functions.php:776
+msgid "Virgin Islands, U.s."
+msgstr ""
+
+#: lib/includes/functions.php:777
+msgid "Wallis and Futuna"
+msgstr ""
+
+#: lib/includes/functions.php:778
+msgid "Western Sahara"
+msgstr ""
+
+#: lib/includes/functions.php:779
+msgid "Yemen"
+msgstr ""
+
+#: lib/includes/functions.php:780
+msgid "Zambia"
+msgstr ""
+
+#: lib/includes/functions.php:781
+msgid "Zimbabwe"
+msgstr ""
+
+#: lib/includes/messageprocess.php:9 lib/includes/messageprocess.php:19
+#: lib/includes/messageprocess.php:29 lib/includes/messageprocess.php:39
+#: messages.php:14
+msgid "Message is empty!"
+msgstr ""
+
+#: lib/includes/sidepanel.php:12 lib/includes/sidepanel.php:55
+#: lib/includes/sidepanel.php:57
+msgid "Dashboard"
+msgstr ""
+
+#: lib/includes/sidepanel.php:15 users.php:15
+msgid "Manage Users"
+msgstr ""
+
+#: lib/includes/sidepanel.php:16 manage_users.php:326
+msgid "Add User"
+msgstr ""
+
+#: lib/includes/sidepanel.php:22 manage_user_level.php:27
+msgid "Add User Level"
+msgstr ""
+
+#: lib/includes/sidepanel.php:25 lib/includes/sidepanel.php:61
+#: lib/includes/sidepanel.php:63 lib/includes/top_nav.php:65
+#: lib/includes/top_nav.php:95
+msgid "Messages"
+msgstr ""
+
+#: lib/includes/sidepanel.php:26 lib/includes/sidepanel.php:67
+#: lib/includes/top_nav.php:100 notes.php:13
+msgid "My Notes"
+msgstr ""
+
+#: lib/includes/sidepanel.php:35 lib/includes/sidepanel.php:70
+msgid "Other Pages"
+msgstr ""
+
+#: lib/includes/sidepanel.php:37
+msgid "Update Language"
+msgstr ""
+
+#: lib/includes/sidepanel.php:38
+msgid "For All Logged In User"
+msgstr ""
+
+#: lib/includes/sidepanel.php:39 lib/includes/sidepanel.php:73
+msgid "For Subscriber User Level"
+msgstr ""
+
+#: lib/includes/sidepanel.php:40 lib/includes/sidepanel.php:74
+msgid "For Admin User Level"
+msgstr ""
+
+#: lib/includes/sidepanel.php:58
+msgid "Logout"
+msgstr ""
+
+#: lib/includes/sidepanel.php:64
+msgid "Sent Items"
+msgstr ""
+
+#: lib/includes/sidepanel.php:72
+msgid "For All Logged In Users"
+msgstr ""
+
+#: lib/includes/socialloginprocess.php:22 login.php:40
+msgid "Login disabled. Please contact site admin."
+msgstr ""
+
+#: lib/includes/top_nav.php:42
+msgid "Notes"
+msgstr ""
+
+#: lib/includes/top_nav.php:49
+msgid "View All Notes"
+msgstr ""
+
+#: lib/includes/top_nav.php:73
+msgid "View All Messages"
+msgstr ""
+
+#: lib/includes/top_nav.php:119
+msgid "Edit Profile"
+msgstr ""
+
+#: lib/system_load.php:45
+msgid "Login Script"
+msgstr ""
+
+#: login.php:30 register.php:56
+msgid "Email required"
+msgstr ""
+
+#: login.php:32 manage_users.php:59
+msgid "Password Required"
+msgstr ""
+
+#: login.php:67
+msgid "Login Success"
+msgstr ""
+
+#: login.php:75
+msgid "Password or Email doesn't Match"
+msgstr ""
+
+#: login.php:80
+msgid "Login to your account"
+msgstr ""
+
+#: login.php:142
+msgid "Remember me"
+msgstr ""
+
+#: login.php:146 register.php:177
+msgid "Forgot password?"
+msgstr ""
+
+#: login.php:146 register.php:177
+msgid "Recover Password"
+msgstr ""
+
+#: login.php:151
+msgid "Login"
+msgstr ""
+
+#: login.php:159
+msgid "Login with Facebook"
+msgstr ""
+
+#: manage_announcement.php:23
+msgid "Title Required"
+msgstr ""
+
+#: manage_announcement.php:25
+msgid "Detail Required"
+msgstr ""
+
+#: manage_announcement.php:32
+msgid "Edit Announcement"
+msgstr ""
+
+#: manage_announcement.php:34 manage_announcement.php:97
+msgid "Add Announcement"
+msgstr ""
+
+#: manage_announcement.php:47 manage_announcement.php:49
+msgid "Announcement Title"
+msgstr ""
+
+#: manage_announcement.php:54 manage_announcement.php:56
+msgid "Announcement Detail"
+msgstr ""
+
+#: manage_announcement.php:65
+msgid "All users"
+msgstr ""
+
+#: manage_announcement.php:76
+msgid "Announcement Status"
+msgstr ""
+
+#: manage_announcement.php:80
+msgid "Activate"
+msgstr ""
+
+#: manage_announcement.php:83
+msgid "Deactivate"
+msgstr ""
+
+#: manage_announcement.php:97
+msgid "Update Announcement"
+msgstr ""
+
+#: manage_user_level.php:27
+msgid "Edit User Level"
+msgstr ""
+
+#: manage_user_level.php:39 manage_user_level.php:41 user_levels.php:37
+msgid "Level Name"
+msgstr ""
+
+#: manage_user_level.php:46 manage_user_level.php:48 user_levels.php:38
+msgid "Level Description"
+msgstr ""
+
+#: manage_user_level.php:53
+msgid "Page Name"
+msgstr ""
+
+#: manage_user_level.php:53
+msgid ""
+"This would be default page where user of stated level redirected after login."
+msgstr ""
+
+#: manage_user_level.php:55
+msgid "User Level Page"
+msgstr ""
+
+#: manage_user_level.php:55
+msgid ""
+"e.g manager.php this would be default page for user types of entered name. "
+"You can use ../manager.php if your file is one directory back of this script."
+msgstr ""
+
+#: manage_user_level.php:60
+msgid "How to use user levels."
+msgstr ""
+
+#: manage_user_level.php:62
+msgid ""
+"To make a page password secure and accessable by entered level name users "
+"let's say you created user level manager and setup default page manager.php. "
+"Now you want to secure manager_2.php with password but manager user level "
+"users can access and admins we need to put."
+msgstr ""
+
+#: manage_user_level.php:65
+msgid "Please make sure this file loads properly."
+msgstr ""
+
+#: manage_user_level.php:67
+msgid "//This loads system."
+msgstr ""
+
+#: manage_user_level.php:72
+msgid ""
+"PHP code in start of manager.php and manager_2.php Both files will need "
+"login and user level manager."
+msgstr ""
+
+#: manage_user_level.php:83
+msgid "Update Level"
+msgstr ""
+
+#: manage_user_level.php:83
+msgid "Add Level"
+msgstr ""
+
+#: manage_users.php:53
+msgid "First Name Required"
+msgstr ""
+
+#: manage_users.php:55
+msgid "Username Required"
+msgstr ""
+
+#: manage_users.php:57
+msgid "Email Required"
+msgstr ""
+
+#: manage_users.php:63
+msgid "User Status Required"
+msgstr ""
+
+#: manage_users.php:65
+msgid "User Type Required"
+msgstr ""
+
+#: manage_users.php:71
+msgid "Edit User"
+msgstr ""
+
+#: manage_users.php:71
+msgid "Add New User"
+msgstr ""
+
+#: manage_users.php:294 users.php:92
+msgid "Status"
+msgstr ""
+
+#: manage_users.php:297
+msgid "Select User Status"
+msgstr ""
+
+#: manage_users.php:298
+msgid "Active"
+msgstr ""
+
+#: manage_users.php:299
+msgid "Deactive"
+msgstr ""
+
+#: manage_users.php:300
+msgid "Ban"
+msgstr ""
+
+#: manage_users.php:301
+msgid "Suspend"
+msgstr ""
+
+#: manage_users.php:310
+msgid "Select User Type"
+msgstr ""
+
+#: messages.php:18
+msgid "My Messages"
+msgstr ""
+
+#: messages.php:19
+msgid "Manage Your Messages"
+msgstr ""
+
+#: messages.php:29
+msgid "New Message"
+msgstr ""
+
+#: messages.php:63 user_levels.php:78 users.php:55
+msgid "Message To"
+msgstr ""
+
+#: messages.php:90
+msgid "Inbox"
+msgstr ""
+
+#: messages.php:94
+msgid "Sent"
+msgstr ""
+
+#: messages.php:115
+msgid "Pic"
+msgstr ""
+
+#: messages.php:116
+msgid "Message From"
+msgstr ""
+
+#: notes.php:25
+msgid "Go Back"
+msgstr ""
+
+#: register.php:50
+msgid "Captcha is not correct"
+msgstr ""
+
+#: register.php:52
+msgid "First name required"
+msgstr ""
+
+#: register.php:54
+msgid "Username required"
+msgstr ""
+
+#: register.php:58
+msgid "Incorrect email format"
+msgstr ""
+
+#: register.php:60
+msgid "Password required"
+msgstr ""
+
+#: register.php:62
+msgid "You didn't agree with our privacy policy."
+msgstr ""
+
+#: register.php:64
+msgid "User type is empty"
+msgstr ""
+
+#: register.php:67
+msgid "Registration is disabled please contact site admin."
+msgstr ""
+
+#: register.php:77
+msgid "Register Yourself!"
+msgstr ""
+
+#: register.php:100
+msgid ""
+"If you want to create your new account kindly fill the form in right. If you "
+"already have an account then please go to login page."
+msgstr ""
+
+#: register.php:119
+msgid "Create an account"
+msgstr ""
+
+#: register.php:173
+msgid "You agree with our privacy policy"
+msgstr ""
+
+#: register.php:185
+msgid "Register"
+msgstr ""
+
+#: register.php:191
+msgid "Register With Facebook"
+msgstr ""
+
+#: subscriber.php:8
+msgid "Subscriber Level Users And Admin users Can access this page only!"
+msgstr ""
+
+#: subscriber.php:16
+msgid "How user level pages works!"
+msgstr ""
+
+#: subscriber.php:19
+msgid ""
+"In sidebar menu Dashboard would be linked to level page automatically. This "
+"is subscriber page and dashboard link in sidebar is linked to subscriber.php "
+"from database. You can create more user levels as per your needs and create "
+"pages like this which are only accessible by admin users and their level "
+"access holders. Non loged in users would be redirected to login page."
+msgstr ""
+
+#: subscriber.php:20
+msgid ""
+"This is a default page for subscriber user level, Subscriber user level is "
+"deafault level on registration. This page is only accessable when user is "
+"signed in and his access level is subscriber. If you are loged in as admin "
+"you still can see this page."
+msgstr ""
+
+#: user_levels.php:15
+msgid "Manage User Levels"
+msgstr ""
+
+#: user_levels.php:36
+msgid "ID"
+msgstr ""
+
+#: user_levels.php:39
+msgid "Level Page Name"
+msgstr ""
+
+#: user_levels.php:41
+msgid "Actions"
+msgstr ""
+
+#: user_levels.php:48
+msgid "Default Admins Level"
+msgstr ""
+
+#: user_levels.php:79
+msgid "All Admin Users"
+msgstr ""
+
+#: users.php:25
+msgid "Message to All Users"
+msgstr ""
+
+#: users.php:56
+msgid "Message All Users"
+msgstr ""
+
+#: users.php:88
+msgid "Full Name"
+msgstr ""
+
+#: users.php:89
+msgid "Location"
+msgstr ""
+
+#: users.php:94
+msgid "Last Seen"
+msgstr ""
+
+#: users.php:95
+msgid "Last Login IP"
+msgstr ""
+
+#: users.php:96
+msgid "Action"
+msgstr ""
+
+#: website_labels.php:9
+msgid "Website Labels"
+msgstr ""
+
+#: website_labels.php:18
+msgid ""
+"Manage website labels or translation by translating login_script.pot into "
+"your own language going to root /locale directory. Then setup new language "
+"through General Settings"
+msgstr ""
