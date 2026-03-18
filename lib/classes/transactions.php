@@ -402,8 +402,13 @@ class Transactions {
     {
         global $db;
         $investment_sql = $db->query("SELECT amount FROM user_investments WHERE user_id = '$user_id'");
-        $invested_data  = $investment_sql->fetch_assoc();
-        $investement    = $invested_data['amount'];
+        $investement    = 0;
+        // $invested_data  = $investment_sql->fetch_assoc();
+        // $investement    = $invested_data['amount'];
+        if ($investment_sql && $investment_sql->num_rows > 0) {
+            $invested_data = $investment_sql->fetch_assoc();
+            $investement = (float)$invested_data['amount'];
+        }        
 
         $sql = "
             SELECT 
@@ -451,8 +456,13 @@ class Transactions {
         global $db;
 
         $investment_sql = $db->query("SELECT amount FROM user_investments WHERE user_id = '$user_id'");
-        $invested_data  = $investment_sql->fetch_assoc();
-        $investement    = $invested_data['amount'];
+        $investement = 0;
+        // $invested_data  = $investment_sql->fetch_assoc();
+        // $investement    = $invested_data['amount'];
+        if ($investment_sql && $investment_sql->num_rows > 0) {
+            $invested_data = $investment_sql->fetch_assoc();
+            $investement = (float)$invested_data['amount'];
+        }        
 
         $sql = "
             SELECT 

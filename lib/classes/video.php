@@ -61,41 +61,59 @@ function list_videos(){
 
                 $url = $row['video_url'];
 
-                // YOUTUBE SUPPORT
-                if(strpos($url, 'youtube.com') !== false || strpos($url, 'youtu.be') !== false){
+                // ================= YOUTUBE =================
+                if(strpos($url, 'youtube') !== false || strpos($url, 'youtu.be') !== false){
 
-                    // extract video ID
-                    preg_match("/(youtu.be\/|v=)([^&]+)/", $url, $matches);
-                    $video_id = $matches[2] ?? '';
+                    $video_id = '';
+
+                    if(preg_match('/youtu\.be\/([^\?&]+)/', $url, $m)){
+                        $video_id = $m[1];
+                    }
+                    elseif(preg_match('/v=([^\?&]+)/', $url, $m)){
+                        $video_id = $m[1];
+                    }
+                    elseif(preg_match('/shorts\/([^\?&]+)/', $url, $m)){
+                        $video_id = $m[1];
+                    }
 
                     if($video_id){
-                        echo "<iframe width='120' height='80'
+                        echo "<iframe width='280' height='180'
                                 src='https://www.youtube.com/embed/".$video_id."'
                                 frameborder='0'
                                 allowfullscreen>
                             </iframe>";
+                    } else {
+                        echo "<span class='text-danger'>Invalid YouTube URL</span>";
                     }
+                }
 
-                // VIMEO SUPPORT
-                } elseif(strpos($url, 'vimeo.com') !== false){
+                // ================= VIMEO =================
+                elseif(strpos($url, 'vimeo.com') !== false){
 
-                    $video_id = basename($url);
+                    preg_match('/vimeo\.com\/(\d+)/', $url, $m);
+                    $video_id = $m[1] ?? '';
 
-                    echo "<iframe width='120' height='80'
-                            src='https://player.vimeo.com/video/".$video_id."'
-                            frameborder='0'
-                            allowfullscreen>
-                        </iframe>";
+                    if($video_id){
+                        echo "<iframe width='120' height='80'
+                                src='https://player.vimeo.com/video/".$video_id."'
+                                frameborder='0'
+                                allowfullscreen>
+                            </iframe>";
+                    } else {
+                        echo "<span class='text-danger'>Invalid Vimeo URL</span>";
+                    }
+                }
 
-                } else {
+                // ================= DIRECT VIDEO =================
+                else {
 
-                    // DIRECT VIDEO LINK (mp4 etc)
                     echo "<video width='120' height='80' controls>
                             <source src='".$url."'>
                         </video>";
                 }
 
             } else {
+
                 echo "<span class='text-muted'>No Video</span>";
             }
 
@@ -170,7 +188,23 @@ function list_videos(){
     function update_video($id, $title, $description, $file, $url){
         global $db;
 
-        if(isset($file['name']) && $file['name'] != ''){
+        // CASE 1: URL MODE
+        if(!empty($url)){
+
+            $stmt = $db->prepare("
+                UPDATE videos 
+                SET title=?, 
+                    description=?, 
+                    video_url=?, 
+                    video_file=NULL 
+                WHERE id=?
+            ");
+            $stmt->bind_param("sssi", $title, $description, $url, $id);
+
+        }
+
+        // CASE 2: FILE UPLOAD MODE
+        elseif(isset($file['name']) && $file['name'] != ''){
 
             $target_dir = "uploads/videos/";
             $filename = time() . "_" . basename($file["name"]);
@@ -178,17 +212,54 @@ function list_videos(){
 
             move_uploaded_file($file["tmp_name"], $target_file);
 
-            $stmt = $db->prepare("UPDATE videos SET title=?, description=?, video_file=?, video_url=? WHERE id=?");
-            $stmt->bind_param("ssssi", $title, $description, $filename, $url, $id);
+            $stmt = $db->prepare("
+                UPDATE videos 
+                SET title=?, 
+                    description=?, 
+                    video_file=?, 
+                    video_url=NULL 
+                WHERE id=?
+            ");
+            $stmt->bind_param("sssi", $title, $description, $filename, $id);
 
-        } else {
+        }
 
-            $stmt = $db->prepare("UPDATE videos SET title=?, description=?, video_url=? WHERE id=?");
-            $stmt->bind_param("sssi", $title, $description, $url, $id);
+        // CASE 3: ONLY TEXT UPDATE
+        else {
+
+            $stmt = $db->prepare("
+                UPDATE videos 
+                SET title=?, 
+                    description=? 
+                WHERE id=?
+            ");
+            $stmt->bind_param("ssi", $title, $description, $id);
         }
 
         return $stmt->execute();
-    }
+    }    
+    // function update_video($id, $title, $description, $file, $url){
+    //     global $db;
+
+    //     if(isset($file['name']) && $file['name'] != ''){
+
+    //         $target_dir = "uploads/videos/";
+    //         $filename = time() . "_" . basename($file["name"]);
+    //         $target_file = $target_dir . $filename;
+
+    //         move_uploaded_file($file["tmp_name"], $target_file);
+
+    //         $stmt = $db->prepare("UPDATE videos SET title=?, description=?, video_file=?, video_url=? WHERE id=?");
+    //         $stmt->bind_param("ssssi", $title, $description, $filename, $url, $id);
+
+    //     } else {
+
+    //         $stmt = $db->prepare("UPDATE videos SET title=?, description=?, video_url=? WHERE id=?");
+    //         $stmt->bind_param("sssi", $title, $description, $url, $id);
+    //     }
+
+    //     return $stmt->execute();
+    // }
 
 
     /* =========================
@@ -234,4 +305,72 @@ function list_videos(){
 
         return $videos;
     }
+
+    function show_dashboard_videos($limit = 1){
+        global $db;
+
+        $stmt = $db->prepare("SELECT * FROM videos ORDER BY id DESC LIMIT ?");
+        $stmt->bind_param("i", $limit);
+        $stmt->execute();
+        $result = $stmt->get_result();
+
+        if($result->num_rows == 0){
+            echo "
+            <div class='video-box no-video mb-5'>
+                <div class='no-video-text'>
+                    No Video Available
+                </div>
+            </div>
+            ";
+            return;
+        }
+
+        $row = $result->fetch_assoc();
+
+        echo "<div class='video-box'>";
+
+        if($row['video_file']){
+
+            echo "<video class='dashboard-video video-hover'
+                    autoplay muted loop playsinline>
+                    <source src='uploads/videos/".$row['video_file']."'>
+                </video>";
+
+        } elseif($row['video_url']){
+
+            $url = $row['video_url'];
+
+            if(strpos($url, 'youtube') !== false || strpos($url, 'youtu.be') !== false){
+
+                $video_id = '';
+
+                // youtu.be/ID
+                if(preg_match('/youtu\.be\/([^\?&]+)/', $url, $m)){
+                    $video_id = $m[1];
+                }
+                // youtube.com/watch?v=ID
+                elseif(preg_match('/v=([^\?&]+)/', $url, $m)){
+                    $video_id = $m[1];
+                }
+                // youtube.com/shorts/ID ✅ FIXED
+                elseif(preg_match('/shorts\/([^\?&]+)/', $url, $m)){
+                    $video_id = $m[1];
+                }
+
+                if($video_id){
+                    echo "<iframe class='dashboard-video'
+                            src='https://www.youtube.com/embed/".$video_id."?autoplay=1&mute=1&loop=1&playlist=".$video_id."'
+                            frameborder='0'
+                            allow='autoplay; encrypted-media'
+                            allowfullscreen>
+                        </iframe>";
+                } else {
+                    echo "<div class='no-video-text'>Invalid YouTube URL</div>";
+                }
+            }
+        }
+
+        echo "<div class='video-overlay'></div>";
+        echo "</div>";
+    }   
 }

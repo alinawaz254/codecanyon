@@ -45,7 +45,8 @@ if(isset($_POST['add_video']) && $_POST['add_video'] == '1'){
             }
 
             // ignore file
-            $file = ['name' => ''];
+            // $file = ['name' => ''];
+             $file = null;
 
         } else {
             $message = "Please select video type";
@@ -132,14 +133,6 @@ require_once("lib/includes/header.php");
 
 <div class="row flex-row">
     <div class="col-12">
-
-        <!-- ERROR -->
-        <?php if(!empty($message)): ?>
-        <div class="alert alert-danger alert-dismissible fade show">
-            <?= $message ?>
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-        </div>
-        <?php endif; ?>
 
         <!-- FORM -->
         <div class="widget has-shadow">

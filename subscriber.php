@@ -48,116 +48,232 @@ $total_commission = $row['total_commission'] ?? 0;
 }
 ?>
 
-<div class="row flex-row">
+<style>
+.row.flex-row {
+    display: flex;
+    align-items: stretch;
+}
 
-<!-- My Investments -->
+/* left + right columns */
+.col-xl-4,
+.col-xl-8 {
+    display: flex;
+    flex-direction: column;
+}
 
-<div class="col-xl-4 col-md-6 col-sm-6">
-<a href="frontinvestments.php" class="f-links" style="text-decoration:none">
-<div class="widget widget-12 has-shadow">
-<div class="widget-body">
-<div class="media">
+/* right side grid */
+.col-xl-8 .row {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
 
-<div class="align-self-center ml-5 mr-5">
-<i class="la la-money"></i>
-</div>
+/* each card column */
+.col-md-6 {
+    display: flex;
+}
 
-<div class="media-body align-self-center">
-<div class="title">My Investments</div>
-<div class="number"><?php echo $investment_count; ?> Investments</div>
-</div>
+/* cards equal height */
+.widget.widget-12 {
+    flex: 1;
+}
 
-</div>
-</div>
-</div>
-</a>
-</div>
+/* VIDEO BOX (IMPORTANT) */
+.video-box {
+    flex: 1; /* 🔥 magic line */
+    height: 308px !important;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    position: relative;
+}
 
-<!-- My Referrals -->
+/* video full fit */
+.dashboard-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
 
-<div class="col-xl-4 col-md-6 col-sm-6">
-<a href="frontreferrals.php" class="f-links" style="text-decoration:none">
-<div class="widget widget-12 has-shadow">
-<div class="widget-body">
-<div class="media">
+/* overlay */
+.video-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.2);
+    opacity: 0;
+    transition: 0.3s;
+    pointer-events: none;
+}
 
-<div class="align-self-center ml-5 mr-5">
-<i class="la la-users"></i>
-</div>
+.video-box:hover .video-overlay {
+    opacity: 1;
+}
 
-<div class="media-body align-self-center">
-<div class="title">My Referrals</div>
-<div class="number"><?php echo $referral_count; ?> Referrals</div>
-</div>
+/* no video */
+.video-box.no-video {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+}
 
-</div>
-</div>
-</div>
-</a>
-</div>
+.no-video-text {
+    color: #999;
+}
 
-<!-- My Notes -->
+</style>
 
-<div class="col-xl-4 col-md-6 col-sm-6">
-<a href="notes.php" style="text-decoration:none" class="f-links">
-<div class="widget widget-12 has-shadow">
-<div class="widget-body">
-<div class="media">
+<div class="row flex-row h-100">
 
-<div class="align-self-center ml-5 mr-5">
-<i class="la la-sticky-note"></i>
-</div>
+    <div class="col-xl-4 col-md-4 d-flex">
+            <div class="widget-body p-0 w-100 d-flex">
 
-<div class="media-body align-self-center">
-<div class="title">My Notes</div>
-<div class="number"><?php echo $notes_count; ?> Notes</div>
-</div>
+                <?php
+                    $video = new Video();
+                    $video->show_dashboard_videos(1); // single video
+                ?>
 
-</div>
-</div>
-</div>
-</a>
-</div>
+            </div>
+    </div>
 
-<div class="col-xl-4 col-md-6 col-sm-6">
+    <div class="col-xl-8 col-md-8">
 
-<div class="widget widget-12 has-shadow">
-<div class="widget-body">
-<div class="media">
+        <div class="row flex-row h-100">
 
-<div class="align-self-center ml-5 mr-5">
-<i class="la la-dollar"></i>
-</div>
+            <!-- My Investments -->
+            <div class="col-md-6 mb-3">
+                <a href="frontinvestments.php" class="f-links">
+                    <div class="widget widget-12 has-shadow mb-3">
+                        <div class="widget-body">
+                            <div class="media">
+                                <div class="align-self-center mx-3">
+                                    <i class="la la-money"></i>
+                                </div>
+                                <div class="media-body align-self-center">
+                                    <div class="title">My Investments</div>
+                                    <div class="number"><?php echo $investment_count; ?> Investments</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
 
-<div class="media-body align-self-center">
-<div class="title">Total Commission</div>
-<div class="number">$<?php echo number_format($total_commission,2); ?></div>
-</div>
+            <!-- My Referrals -->
+            <div class="col-md-6">
+                <a href="frontreferrals.php" class="f-links">
+                    <div class="widget widget-12 has-shadow mb-3">
+                        <div class="widget-body">
+                            <div class="media">
+                                <div class="align-self-center mx-3">
+                                    <i class="la la-users"></i>
+                                </div>
+                                <div class="media-body align-self-center">
+                                    <div class="title">My Referrals</div>
+                                    <div class="number"><?php echo $referral_count; ?> Referrals</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
 
-</div>
-</div>
-</div>
+            <!-- My Notes -->
+            <div class="col-md-6">
+                <a href="notes.php" class="f-links">
+                    <div class="widget widget-12 has-shadow mb-3">
+                        <div class="widget-body">
+                            <div class="media">
+                                <div class="align-self-center mx-3">
+                                    <i class="la la-sticky-note"></i>
+                                </div>
+                                <div class="media-body align-self-center">
+                                    <div class="title">My Notes</div>
+                                    <div class="number"><?php echo $notes_count; ?> Notes</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
 
-</div>
+            <!-- Total Commission -->
+            <div class="col-md-6">
+                <div class="widget widget-12 has-shadow mb-3">
+                    <div class="widget-body">
+                        <div class="media">
+                            <div class="align-self-center mx-3">
+                                <i class="la la-dollar"></i>
+                            </div>
+                            <div class="media-body align-self-center">
+                                <div class="title">Total Commission</div>
+                                <div class="number">$<?php echo number_format($total_commission,2); ?></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
 </div>
 
 <div class="row flex-row mt-4">
 
-<div class="col-xl-12">
-<div class="widget has-shadow">
+    <div class="col-xl-12">
+        <div class="widget has-shadow">
 
-<div class="widget-header bordered d-flex align-items-center">
-<h4>Welcome</h4>
+            <div class="widget-header bordered d-flex align-items-center">
+                <h4>Welcome</h4>
+            </div>
+
+            <div class="widget-body">
+                <p>This is your subscriber dashboard.</p>
+                <p>From here you can manage your investments, referrals and notes.</p>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 
-<div class="widget-body">
-<p>This is your subscriber dashboard.</p>
-<p>From here you can manage your investments, referrals and notes.</p>
-</div>
+<script>
 
-</div>
-</div>
+window.addEventListener("load", function(){
 
-</div>
+    let noteCard = document.querySelector(".col-md-6 .widget");
+    let videoBox = document.querySelector(".video-box");
+
+    if(noteCard && videoBox){
+        videoBox.style.height = noteCard.offsetHeight + "px";
+    }
+
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    document.querySelectorAll(".video-box").forEach(box => {
+
+        let video = box.querySelector(".video-hover");
+
+        if (!video) return;
+
+        video.removeAttribute("controls");
+
+        box.addEventListener("mouseenter", () => {
+            video.setAttribute("controls", "controls");
+        });
+
+        box.addEventListener("mouseleave", () => {
+            video.removeAttribute("controls");
+        });
+
+    });
+
+});
+</script>
 
 <?php require_once("lib/includes/footer.php"); ?>
+
