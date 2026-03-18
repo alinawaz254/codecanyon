@@ -11,6 +11,28 @@ $page_title = _("My Investments");
 
 require_once("lib/includes/header.php");
 
+/* ================= ALERTS ================= */
+
+if(isset($_SESSION['success_message'])){
+
+    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+        '. $_SESSION['success_message'] . '
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>';
+
+    unset($_SESSION['success_message']);    
+}
+
+if(isset($_SESSION['error_message'])){
+
+    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+        ' . $_SESSION['error_message'] . '
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>';
+
+    unset($_SESSION['error_message']);
+}
+
 // First query to get all investments for the user
 $investment_query = "
 SELECT 
@@ -35,34 +57,89 @@ $investments = $db->query($investment_query);
 $today = date("Y-m-d");
 // $today = "2026-07-28"; // test date
 
-     if(isset($_GET['user_investment_detail_id'])){
-            $search_record = $db->query("SELECT * FROM user_investment_details WHERE id =" . $_GET['user_investment_detail_id']);
-            $db->query("UPDATE user_investment_details SET is_claimed = 1,claimed_date = NOW() WHERE id =".$_GET['user_investment_detail_id']);
+    //  if(isset($_GET['user_investment_detail_id'])){
+    //         $search_record = $db->query("SELECT * FROM user_investment_details WHERE id =" . $_GET['user_investment_detail_id']);
+    //         $db->query("UPDATE user_investment_details SET is_claimed = 1,claimed_date = NOW() WHERE id =".$_GET['user_investment_detail_id']);
             
+    //         $get_record  = $search_record->fetch_assoc();
+    //         $search_user = $db->query("SELECT * FROM users WHERE user_id = $user_id AND user_type LIKE '%subscriber%'");
+    //         $user        = $search_user->fetch_assoc();
+    //         $amount      = $get_record['comission'];
+    //         $username    = $user['username'];
+    //         $message     = $db->real_escape_string("$username has collected his commission on $today");
+
+    //         $db->query("INSERT INTO transactions (user_id,transaction_type,amount,description,is_approved) VALUES ('$user_id',3,'$amount','$message',1)");
+
+    //         $search_admin = $db->query("SELECT * FROM users WHERE user_type LIKE '%admin%'");
+
+    //         while($row = $search_admin->fetch_assoc()){
+
+    //             $admin_id = isset($row['user_id']) ?? 0;
+
+    //             $db->query("INSERT INTO notifications
+    //             (sender_id, sender_type, receiver_id, receiver_type, message)
+    //             VALUES ('$user_id','subscriber','$admin_id','admin','$message')")
+    //             or die($db->error);
+    //         }
+    //         header("Location: frontinvestments.php");
+    //         exit;     
+    // }
+
+    if(isset($_GET['user_investment_detail_id'])){
+
+        $search_record = $db->query("SELECT * FROM user_investment_details WHERE id =" . $_GET['user_investment_detail_id']);
+
+        if($search_record && $search_record->num_rows > 0){
+
             $get_record  = $search_record->fetch_assoc();
-            $search_user = $db->query("SELECT * FROM users WHERE user_id = $user_id AND user_type LIKE '%subscriber%'");
-            $user        = $search_user->fetch_assoc();
-            $amount      = $get_record['comission'];
-            $username    = $user['username'];
-            $message     = $db->real_escape_string("$username has collected his commission on $today");
 
-            $db->query("INSERT INTO transactions (user_id,transaction_type,amount,description,is_approved) VALUES ('$user_id',3,'$amount','$message',1)");
+            if($get_record['is_claimed'] == 0){
 
-            $search_admin = $db->query("SELECT * FROM users WHERE user_type LIKE '%admin%'");
+                $db->query("UPDATE user_investment_details SET is_claimed = 1,claimed_date = NOW() WHERE id =".$_GET['user_investment_detail_id']);
 
-            while($row = $search_admin->fetch_assoc()){
+                $search_user = $db->query("SELECT * FROM users WHERE user_id = $user_id AND user_type LIKE '%subscriber%'");
+                $user        = $search_user->fetch_assoc();
 
-                $admin_id = isset($row['user_id']) ?? 0;
+                $amount      = $get_record['comission'];
+                $username    = $user['username'];
+                $message     = $db->real_escape_string("$username has collected his commission on $today");
 
-                $db->query("INSERT INTO notifications
-                (sender_id, sender_type, receiver_id, receiver_type, message)
-                VALUES ('$user_id','subscriber','$admin_id','admin','$message')")
-                or die($db->error);
+                $db->query("INSERT INTO transactions (user_id,transaction_type,amount,description,is_approved) VALUES ('$user_id',3,'$amount','$message',1)");
+
+                $transaction_id = $db->insert_id;
+
+                send_notification(
+                    ADMIN_ID,
+                    $user_id,
+                    "$username claimed commission of PKR $amount",
+                    "roi_claim",
+                    $transaction_id
+                );                
+                // $search_admin = $db->query("SELECT * FROM users WHERE user_type LIKE '%admin%'");
+
+                // while($row = $search_admin->fetch_assoc()){
+
+                //     $admin_id = $row['user_id'] ?? 0;
+
+                //     $db->query("INSERT INTO notifications
+                //     (sender_id, sender_type, receiver_id, receiver_type, message)
+                //     VALUES ('$user_id','subscriber','$admin_id','admin','$message')")
+                //     or die($db->error);
+                // }
+
+                $_SESSION['success_message'] = "Commission claimed successfully!";
+
+            } else {
+                $_SESSION['error_message'] = "Commission already claimed!";
             }
 
-            header("Location: frontinvestments.php");
-            exit;     
-    }
+        } else {
+            $_SESSION['error_message'] = "Invalid commission request!";
+        }
+
+        header("Location: frontinvestments.php");
+        exit;     
+    }    
 
     if(isset($_GET['re_invest_amount'])){
         $plan_id    = (int) $_GET['plan_id'];
@@ -82,6 +159,17 @@ $today = date("Y-m-d");
         $db->query("INSERT INTO user_investments (user_id,plan_id,amount,issue_date) VALUES ('$user_id','$plan_id','$amount','$issue_date')");
 
         $investment_id = $db->insert_id;
+
+        $u = $db->query("SELECT username FROM users WHERE user_id = $user_id");
+        $username = $u->fetch_assoc()['username'] ?? 'User';
+
+        send_notification(
+            ADMIN_ID,
+            $user_id,
+            "$username re-invested PKR $amount",
+            "reinvest",
+            $investment_id
+        );        
 
         for ($i=1; $i <= $plan['total_cycles']; $i++) {     
 
@@ -105,7 +193,9 @@ $today = date("Y-m-d");
                 ");
             }
         }
-        
+
+        $_SESSION['success_message'] = "Re-investment completed successfully!";
+
         header("Location: frontinvestments.php");
         exit;     
 
@@ -142,7 +232,12 @@ $today = date("Y-m-d");
                 WHERE user_id = $user_id 
                 AND investment_id = $investment_id
             ");
-        }            
+            
+            $_SESSION['success_message'] = "All commissions released successfully!";
+
+        } else {
+            $_SESSION['error_message'] = "No commission available to release!";
+        }           
         $message = $db->real_escape_string("$user has collected his commission on $today");
 
         $check = $db->query("
@@ -158,6 +253,16 @@ $today = date("Y-m-d");
                 (user_id, transaction_type, amount, is_approved, description) 
                 VALUES ($user_id, 3, $commission_amount, 1, '$message')
             ");
+
+            $transaction_id = $db->insert_id;
+
+            send_notification(
+                ADMIN_ID,
+                $user_id,
+                "$user collected total commission of PKR $commission_amount",
+                "roi_release",
+                $transaction_id
+            );            
         }
 
         header("Location: frontinvestments.php");
@@ -165,27 +270,26 @@ $today = date("Y-m-d");
     }
 ?>
 <style>
-    /* Mobile Modal Fix */
-    @media (max-width:768px){
+/* Mobile Modal Fix */
+@media (max-width:768px) {
 
-        .modal-dialog{
-            margin:10px;
-            max-width:95%;
-        }
+    .modal-dialog {
+        margin: 10px;
+        max-width: 95%;
+    }
 
-        .modal-content{
-            max-height:90vh;
-            display:flex;
-            flex-direction:column;
-        }
+    .modal-content {
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
+    }
 
-        .modal-body{
-            overflow-y:auto;
-            overflow-x:auto;
-        }
+    .modal-body {
+        overflow-y: auto;
+        overflow-x: auto;
+    }
 
-    }    
-
+}
 </style>
 
 <div class="mywidget wc_data">
@@ -195,7 +299,7 @@ $today = date("Y-m-d");
         </div>
 
         <div class="widget-body table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table dataTable">
                 <thead>
                     <tr>
                         <th>Packages</th>
@@ -245,86 +349,84 @@ $today = date("Y-m-d");
                         $has_details = ($details_result && $details_result->num_rows > 0);
                     ?>
 
-                        <tr <?php if ($is_expired) echo 'style="opacity:0.6;background-color:#f5f5f5;"'; ?>>
-                            <td><?php echo $investment['plan_name']; ?></td>
-                            <td><?php echo number_format($amount, 2); ?></td>
-                            <td><?php echo $investment['issue_date']; ?></td>
+                    <tr <?php if ($is_expired) echo 'style="opacity:0.6;background-color:#f5f5f5;"'; ?>>
+                        <td><?php echo $investment['plan_name']; ?></td>
+                        <td><?php echo number_format($amount, 2); ?></td>
+                        <td><?php echo $investment['issue_date']; ?></td>
 
-                            <td>
-                                <?php if ($is_expired): ?>
-                                    <span class="badge text-bg-secondary ml-2">Inactive</span>
-                                    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET">
-                                        <input type="hidden" name="re_invest_amount" value="<?php echo $amount ?>">
-                                        <input type="hidden" name="plan_id" value="<?php echo $plan_id ?>">
-                                        <button type="submit" class="btn btn-sm btn-warning ml-2">Re-Invest</button>
-                                    </form>
-                                    <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET">
-                                        <input type="hidden" name="release_investment_id" value="<?php echo $investment['investment_id'] ?>">
-                                        <button type="submit" class="btn btn-sm btn-success ml-2">Release</button>
-                                    </form>
-                                <?php else : ?>
-                                <button class="btn btn-golden btn-sm"
-                                    data-toggle="modal"
-                                    data-target="#investmentModal_<?php echo $investment['investment_id']; ?>">
-                                    View
-                                </button>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
+                        <td>
+                            <?php if ($is_expired): ?>
+                            <span class="badge text-bg-secondary ml-2">Inactive</span>
+                            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET">
+                                <input type="hidden" name="re_invest_amount" value="<?php echo $amount ?>">
+                                <input type="hidden" name="plan_id" value="<?php echo $plan_id ?>">
+                                <button type="submit" class="btn btn-sm btn-warning ml-2">Re-Invest</button>
+                            </form>
+                            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET">
+                                <input type="hidden" name="release_investment_id"
+                                    value="<?php echo $investment['investment_id'] ?>">
+                                <button type="submit" class="btn btn-sm btn-success ml-2">Release</button>
+                            </form>
+                            <?php else : ?>
+                            <button class="btn btn-golden btn-sm" data-toggle="modal"
+                                data-target="#investmentModal_<?php echo $investment['investment_id']; ?>">
+                                View
+                            </button>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
 
-                        <?php
+                    <?php
                         ob_start();
                         ?>
 
-                        <div class="modal fade"
-                            id="investmentModal_<?php echo $investment['investment_id']; ?>"
-                            tabindex="-1">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                <div class="modal-content investment-modal">
-                                    <div class="modal-header investment-header">
-                                        <h5 class="modal-title">
-                                            <?php echo $investment['plan_name']; ?> Investment Details
-                                        </h5>
+                    <div class="modal fade" id="investmentModal_<?php echo $investment['investment_id']; ?>"
+                        tabindex="-1">
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content investment-modal">
+                                <div class="modal-header investment-header">
+                                    <h5 class="modal-title">
+                                        <?php echo $investment['plan_name']; ?> Investment Details
+                                    </h5>
 
-                                        <button type="button"
-                                            class="btn-close-investment"
-                                            data-dismiss="modal">
-                                            &times;
-                                        </button>
-                                    </div>
+                                    <button type="button" class="btn-close-investment" data-dismiss="modal">
+                                        &times;
+                                    </button>
+                                </div>
 
-                                    <div class="modal-body">
-                                        <div class="investment-info">
-                                            <div>
-                                                <span class="info-label">Package</span>
-                                                <span class="info-value"><?php echo $investment['plan_name']; ?></span>
-                                            </div>
-
-                                            <div>
-                                                <span class="info-label">Amount</span>
-                                                <span class="info-value"><?php echo number_format($amount, 2); ?></span>
-                                            </div>
-
-                                            <div>
-                                                <span class="info-label">Date Issued</span>
-                                                <span class="info-value"><?php echo $investment['issue_date']; ?></span>
-                                            </div>
+                                <div class="modal-body">
+                                    <div class="investment-info">
+                                        <div>
+                                            <span class="info-label">Package</span>
+                                            <span class="info-value"><?php echo $investment['plan_name']; ?></span>
                                         </div>
 
-                                        <hr>
+                                        <div>
+                                            <span class="info-label">Amount</span>
+                                            <span class="info-value"><?php echo number_format($amount, 2); ?></span>
+                                        </div>
 
-                                        <table class="table investment-table">
-                                            <thead>
-                                                <tr>
-                                                    <th class="info-value">Cycle</th>
-                                                    <th class="info-value">Commission Date</th>
-                                                    <th class="info-value">Commission (<?php echo $commission_percent; ?>%)</th>
-                                                    <th class="info-value">Status</th>
-                                                </tr>
-                                            </thead>
+                                        <div>
+                                            <span class="info-label">Date Issued</span>
+                                            <span class="info-value"><?php echo $investment['issue_date']; ?></span>
+                                        </div>
+                                    </div>
 
-                                            <tbody>
-                                                <?php
+                                    <hr>
+
+                                    <table class="table investment-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="info-value">Cycle</th>
+                                                <th class="info-value">Commission Date</th>
+                                                <th class="info-value">Commission (<?php echo $commission_percent; ?>%)
+                                                </th>
+                                                <th class="info-value">Status</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <?php
                                                 if ($has_details) {
                                                     // Loop through actual details from database
                                                     while ($detail = $details_result->fetch_assoc()) {
@@ -338,25 +440,33 @@ $today = date("Y-m-d");
                                                         $interval = $date1->diff($date2);
 
                                                         ?>
-                                                        <tr <?php if ($is_detail_expired) ?>>
-                                                            <td class="info-value"><?php echo $detail['cycle']; ?></td>
-                                                            <td class="info-value"><?php echo $detail['comission_expiry_date']; ?></td>
-                                                            <td class="info-value"><?php echo number_format($detail['comission'], 2); ?></td>
-                                                            <td class="info-value">
-                                                                <?php if ($is_detail_expired  && $detail['is_claimed'] == 0): ?>
-                                                                    <form action="<?php echo $_SERVER['PHP_SELF']?>" name="claim_investment_form">
-                                                                        <input type="hidden" name="user_investment_detail_id" value="<?php echo $detail['id']; ?>">
-                                                                        <input class="text-white" type="submit" name="claim_ivestment" value="Claim Now" style="background: green;border-radius: 5%;">
-                                                                    </form>
-                                                                <?php
+                                            <tr <?php if ($is_detail_expired) ?>>
+                                                <td class="info-value"><?php echo $detail['cycle']; ?></td>
+                                                <td class="info-value"><?php echo $detail['comission_expiry_date']; ?>
+                                                </td>
+                                                <td class="info-value">
+                                                    <?php echo number_format($detail['comission'], 2); ?></td>
+                                                <td class="info-value">
+                                                    <?php if ($is_detail_expired  && $detail['is_claimed'] == 0): ?>
+                                                    <form action="<?php echo $_SERVER['PHP_SELF']?>"
+                                                        name="claim_investment_form">
+                                                        <input type="hidden" name="user_investment_detail_id"
+                                                            value="<?php echo $detail['id']; ?>">
+                                                        <input class="text-white" type="submit" name="claim_ivestment"
+                                                            value="Claim Now"
+                                                            style="background: green;border-radius: 5%;">
+                                                    </form>
+                                                    <?php
                                                                  elseif(($is_detail_expired && isset($detail['is_claimed']) && $detail['is_claimed'] == 1)): ?>
-                                                                    <span class="badge text-bg-success">Paid on <?php echo $detail['claimed_date'];?></span>
-                                                                <?php else: ?>
-                                                                    <span class="badge text-bg-danger">Unpaid <?php echo '('.$interval->days .' days left to claim)'; ?></span>
-                                                                <?php endif; ?>
-                                                            </td>
-                                                        </tr>
-                                                        <?php
+                                                    <span class="badge text-bg-success">Paid on
+                                                        <?php echo $detail['claimed_date'];?></span>
+                                                    <?php else: ?>
+                                                    <span class="badge text-bg-danger">Unpaid
+                                                        <?php echo '('.$interval->days .' days left to claim)'; ?></span>
+                                                    <?php endif; ?>
+                                                </td>
+                                            </tr>
+                                            <?php
                                                     }
                                                 } else {
                                                     // If no details exist yet, show projected cycles
@@ -368,38 +478,37 @@ $today = date("Y-m-d");
                                                         $is_future_cycle = ($cycle_date > $today);
                                                         ?>
 
-                                                        <tr>
-                                                            <td class="info-value"><?php echo $i; ?></td>
-                                                            <td class="info-value"><?php echo $cycle_date; ?></td>
-                                                            <td class="info-value"><?php echo number_format($commission, 2); ?></td>
-                                                            <td class="info-value">
-                                                                <?php if (!$is_future_cycle && $today <= $cycle_date): ?>
-                                                                    <span class="badge text-bg-warning">Pending</span>
-                                                                <?php elseif ($today > $cycle_date): ?>
-                                                                    <span class="badge text-bg-secondary">Expired</span>
-                                                                <?php else: ?>
-                                                                    <span class="badge text-bg-info">Future</span>
-                                                                <?php endif; ?>
-                                                            </td>
-                                                        </tr>
+                                            <tr>
+                                                <td class="info-value"><?php echo $i; ?></td>
+                                                <td class="info-value"><?php echo $cycle_date; ?></td>
+                                                <td class="info-value"><?php echo number_format($commission, 2); ?></td>
+                                                <td class="info-value">
+                                                    <?php if (!$is_future_cycle && $today <= $cycle_date): ?>
+                                                    <span class="badge text-bg-warning">Pending</span>
+                                                    <?php elseif ($today > $cycle_date): ?>
+                                                    <span class="badge text-bg-secondary">Expired</span>
+                                                    <?php else: ?>
+                                                    <span class="badge text-bg-info">Future</span>
+                                                    <?php endif; ?>
+                                                </td>
+                                            </tr>
 
-                                                    <?php } ?>
-                                                <?php } ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            <?php } ?>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                                    <div class="modal-footer investment-footer">
-                                        <button class="btn btn-golden btn-md"
-                                            data-dismiss="modal">
-                                            Close
-                                        </button>
-                                    </div>
+                                <div class="modal-footer investment-footer">
+                                    <button class="btn btn-golden btn-md" data-dismiss="modal">
+                                        Close
+                                    </button>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <?php
+                    <?php
                         $modals .= ob_get_clean();
                     endwhile;
                     ?>
@@ -417,9 +526,9 @@ require_once("lib/includes/footer.php");
 ?>
 
 <script>
-    $(document).ready(function() {
-        $('.modal').on('show.bs.modal', function() {
-            console.log('Modal opened');
-        });
+$(document).ready(function() {
+    $('.modal').on('show.bs.modal', function() {
+        console.log('Modal opened');
     });
+});
 </script>

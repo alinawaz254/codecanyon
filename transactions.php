@@ -59,7 +59,7 @@ require_once("lib/includes/header.php");
                                 </div>
                                 <div>
                                     <h3 class="mb-0 text-success">
-                                        +PKR <?php echo number_format($stats['funded'] + $stats['roi_commission'] + $stats['referral_commission'] , 2); ?></h3>
+                                        +PKR <?php echo number_format($stats['funded'] + $stats['roi_commission'] + $stats['referral_commission'] + $stats['bonus'] , 2); ?></h3>
                                     <span class="text-muted"><?php _e("Total Credits"); ?></span>
                                 </div>
                             </div>

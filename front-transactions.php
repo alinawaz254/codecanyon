@@ -52,11 +52,7 @@ require_once("lib/includes/header.php");
         font-size: 14px;
         border-top: 1px solid #e9ecef;
     }
-    
-    .table-striped tbody tr:nth-of-type(odd) {
-        background-color: #fcfcfc;
-    }
-    
+        
     .amount-value {
         font-weight: 500;
         color: #28a745;
@@ -120,7 +116,7 @@ require_once("lib/includes/header.php");
         </div>
 
         <div class="widget-body table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table dataTable">
                 <thead>
                     <tr>
                         <th><?php _e("Amount"); ?></th>
@@ -170,6 +166,10 @@ require_once("lib/includes/header.php");
                                         $type = "Referral Commission";
                                         $class = 'badge text-light bg-info';
                                         break;
+                                    case 6:
+                                        $type = "Referral Commission";
+                                        $class = 'badge text-light bg-dark';
+                                        break;                                        
                                     default:
                                         $type = "Unknown";
                                         $class = 'badge text-bg-secondary';
@@ -219,7 +219,8 @@ require_once("lib/includes/header.php");
                             COALESCE(SUM(
                                 CASE 
                                     WHEN transaction_type = 3 THEN amount      
-                                    WHEN transaction_type = 5 THEN amount     
+                                    WHEN transaction_type = 5 THEN amount   
+                                    WHEN transaction_type = 6 THEN amount   
                                 END
                             ),0) AS total
                         FROM transactions

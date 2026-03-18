@@ -81,4 +81,16 @@
 		});
 	});
 
+	$(function () {
+		$('#plans-table').DataTable({
+			"lengthMenu": [
+				[10, 15, 20, -1],
+				[10, 15, 20, "All"]
+			],
+			"order": [
+				[0, "desc"] // first column sort
+			]
+		});
+	});	
+
 })(jQuery);

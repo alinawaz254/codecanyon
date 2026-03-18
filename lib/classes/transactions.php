@@ -23,11 +23,29 @@ class Transactions {
             }
             // Insert transaction into database
             $result = $db->query("INSERT INTO transactions 
-                                  (user_id, transaction_type, amount, description,is_approved, created_at, updated_at) 
-                                  VALUES ('$user_id', '$transaction_type', '$amount', '$description','$is_approved', NOW(), NOW())");
+                (user_id, transaction_type, amount, description,is_approved, created_at, updated_at) 
+                VALUES ('$user_id', '$transaction_type', '$amount', '$description','$is_approved', NOW(), NOW())");
         
             if($result) {
-                return "Transaction added successfully.";
+            $transaction_id = $db->insert_id;
+
+            $admin_query = $db->query("SELECT username FROM users WHERE user_id = " . ADMIN_ID);
+            $admin = $admin_query->fetch_assoc()['username'] ?? 'Admin';
+
+            $user_query = $db->query("SELECT username FROM users WHERE user_id = $user_id");
+            $user = $user_query->fetch_assoc()['username'] ?? 'User';
+
+            if($transaction_type == 2){
+                send_notification(
+                    ADMIN_ID,
+                    $user_id,
+                    "$admin funded $user with PKR $amount",
+                    "funded",
+                    $transaction_id
+                );
+            }
+
+            return "Transaction added successfully.";
             } else {
                 return _("Error adding transaction: ") . $db->error;
             }
@@ -109,6 +127,10 @@ class Transactions {
                         $type = "Referral Commission";
                         $class = 'badge text-light bg-info';
                         break;
+                    case 6:
+                        $type = "Bonus Commission";
+                        $class = 'badge text-light bg-dark';
+                        break;                        
                     default:
                         $type = "Unknown";
                         $class = 'badge text-bg-secondary';
@@ -199,6 +221,7 @@ class Transactions {
             case 3: $type_label = _("ROI Commission"); break;
             case 4: $type_label = _("Transfer"); break;
             case 5: $type_label = _("Referral Commission"); break;
+            case 6: $type_label = _("Bonus Commission"); break;
             default: $type_label = _("Unknown");
         }
         
@@ -270,6 +293,9 @@ class Transactions {
                                         case 5:
                                             $class = 'badge text-light bg-info';
                                             break;
+                                        case 6:
+                                            $class = 'badge text-light bg-dark';
+                                            break;                                            
                                         default:
                                             $class = 'badge text-bg-secondary';
                                     }
@@ -353,7 +379,8 @@ class Transactions {
             'referral_commission' => 0,
             'transfers' => 0,            
             'today_count' => 0,
-            'today_amount' => 0
+            'today_amount' => 0,
+            'bonus' => 0
         );
         
         // Total transactions count
@@ -370,7 +397,8 @@ class Transactions {
                     SUM(CASE WHEN transaction_type = 2 THEN amount ELSE 0 END) as total_funded,
                     SUM(CASE WHEN transaction_type = 3 THEN amount ELSE 0 END) as total_roi_commission,
                     SUM(CASE WHEN transaction_type = 4 THEN amount ELSE 0 END) as total_transfers,
-                    SUM(CASE WHEN transaction_type = 5 THEN amount ELSE 0 END) as total_referral_commission
+                    SUM(CASE WHEN transaction_type = 5 THEN amount ELSE 0 END) as total_referral_commission,
+                    SUM(CASE WHEN transaction_type = 6 THEN amount ELSE 0 END) as total_bonus
                 FROM transactions
             ");
             if($result) {
@@ -379,7 +407,8 @@ class Transactions {
                 $stats['funded'] = $amounts['total_funded'] ?? 0;
                 $stats['roi_commission'] = $amounts['total_roi_commission'] ?? 0;
                 $stats['transfers'] = $amounts['total_transfers'] ?? 0;                
-                $stats['referral_commission'] = $amounts['total_referral_commission'] ?? 0;                
+                $stats['referral_commission'] = $amounts['total_referral_commission'] ?? 0;
+                $stats['bonus'] = $amounts['total_bonus'] ?? 0;        
             }
             
             // Today's transactions
@@ -401,24 +430,26 @@ class Transactions {
     function display_balance($user_id)
     {
         global $db;
+
         $investment_sql = $db->query("SELECT amount FROM user_investments WHERE user_id = '$user_id'");
-        $investement    = 0;
-        // $invested_data  = $investment_sql->fetch_assoc();
-        // $investement    = $invested_data['amount'];
+        $investement = 0;
         if ($investment_sql && $investment_sql->num_rows > 0) {
-            $invested_data = $investment_sql->fetch_assoc();
-            $investement = (float)$invested_data['amount'];
-        }        
+
+            while($row = $investment_sql->fetch_assoc()){
+            $investement += (float)$row['amount'];
+            }
+        }       
 
         $sql = "
             SELECT 
                 COALESCE(SUM(
                     CASE 
+                        WHEN transaction_type = 1 THEN -amount     
                         WHEN transaction_type = 2 THEN amount     
                         WHEN transaction_type = 3 THEN amount    
-                        WHEN transaction_type = 1 THEN -amount     
                         WHEN transaction_type = 4 THEN -amount     
-                        WHEN transaction_type = 5 THEN amount     
+                        WHEN transaction_type = 5 THEN amount
+                        WHEN transaction_type = 6 THEN amount  
                     END
                 ),0) AS balance
             FROM transactions
@@ -457,22 +488,23 @@ class Transactions {
 
         $investment_sql = $db->query("SELECT amount FROM user_investments WHERE user_id = '$user_id'");
         $investement = 0;
-        // $invested_data  = $investment_sql->fetch_assoc();
-        // $investement    = $invested_data['amount'];
         if ($investment_sql && $investment_sql->num_rows > 0) {
-            $invested_data = $investment_sql->fetch_assoc();
-            $investement = (float)$invested_data['amount'];
+
+            while($row = $investment_sql->fetch_assoc()){
+            $investement += (float)$row['amount'];
+            }
         }        
 
         $sql = "
             SELECT 
                 COALESCE(SUM(
                     CASE 
+                        WHEN transaction_type = 1 THEN -amount
                         WHEN transaction_type = 2 THEN amount     
                         WHEN transaction_type = 3 THEN amount    
-                        WHEN transaction_type = 1 THEN -amount     
                         WHEN transaction_type = 4 THEN -amount     
-                        WHEN transaction_type = 5 THEN amount     
+                        WHEN transaction_type = 5 THEN amount
+                        WHEN transaction_type = 6 THEN amount
                     END
                 ),0) AS balance
             FROM transactions
@@ -487,6 +519,52 @@ class Transactions {
         $result  = $stmt->get_result();
         $row     = $result->fetch_assoc();
         $balance = $investement + (float)$row['balance'];
+        return $balance;
+    }    
+    function investement($user_id)
+    {
+        global $db;
+
+        $investment_sql = $db->query("SELECT amount FROM user_investments WHERE user_id = '$user_id'");
+        $investement = 0;
+        if ($investment_sql && $investment_sql->num_rows > 0) {
+
+            while($row = $investment_sql->fetch_assoc()){
+            $investement += (float)$row['amount'];
+            }
+        }       
+
+        return $investement;
+    }
+        
+    function profit($user_id)
+    {
+        global $db;
+        $sql = "
+            SELECT 
+                COALESCE(SUM(
+                    CASE 
+                        WHEN transaction_type = 1 THEN -amount
+                        WHEN transaction_type = 2 THEN amount     
+                        WHEN transaction_type = 3 THEN amount    
+                        WHEN transaction_type = 4 THEN -amount     
+                        WHEN transaction_type = 5 THEN amount
+                        WHEN transaction_type = 6 THEN amount
+                    END
+                ),0) AS balance
+            FROM transactions
+            WHERE user_id = ?
+            AND is_approved = 1
+        ";
+
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+
+        $result  = $stmt->get_result();
+        $row     = $result->fetch_assoc();
+        $balance = (float)$row['balance'];
+
         return $balance;
     }
     
@@ -532,7 +610,19 @@ class Transactions {
             $stmt2->bind_param("ids",$receiver_id,$amount,$desc2);
             $stmt2->execute();
 
+            $transaction_id = $db->insert_id;
+
             $db->commit();
+
+            $message = "$sender sent PKR $amount to $receiver";
+
+            send_notification(
+                ADMIN_ID,
+                $sender_id,
+                $message,
+                "transfer",
+                $transaction_id
+            );
 
             return true;
 
@@ -552,20 +642,39 @@ class Transactions {
             return false;
         }
 
+        $result = $db->query("SELECT username FROM users WHERE user_id = $user_id");
+
+        $username = 'User';
+        if($result && $result->num_rows > 0){
+            $row = $result->fetch_assoc();
+            $username = $row['username'];
+        }
+
         $db->begin_transaction();
 
         try {
 
-            // Sender debit
             $stmt1 = $db->prepare("
                 INSERT INTO transactions
-                (user_id,transaction_type,amount,is_approved,description,created_at,updated_at)
-                VALUES(?,1,?,0,'Withdrawl Request',NOW(),NOW())
+                (user_id, transaction_type, amount, is_approved, description, created_at, updated_at)
+                VALUES(?, 1, ?, 0, 'Withdrawl Request', NOW(), NOW())
             ");
-            $stmt1->bind_param("id",$user_id,$amount);
+            $stmt1->bind_param("id", $user_id, $amount);
             $stmt1->execute();
 
+            $transaction_id = $db->insert_id;
+
             $db->commit();
+
+            $message = "$username sent you a withdrawal request of PKR $amount";
+
+            send_notification(
+                ADMIN_ID,
+                $user_id,
+                $message,
+                "withdrawal",
+                $transaction_id
+            );
 
             return true;
 
@@ -574,6 +683,6 @@ class Transactions {
             $db->rollback();
             return false;
         }
-    }    
+    }  
 }
 ?>

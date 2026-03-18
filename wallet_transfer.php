@@ -159,7 +159,7 @@ if(isset($_GET['error']) && $_GET['error']=="self"){
                             Send OTP
 
                         </button>
-                        <a href="wallet.php" class="btn btn-md btn-secondary">
+                        <a href="wallet.php" class="btn btn-outline-dark">
                             Back
                         </a>
                     </div>

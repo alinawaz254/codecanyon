@@ -49,7 +49,7 @@
 
                 <!-- Begin Notes -->
                 <li class="nav-item dropdown">
-                    <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown"
+                    <a id="notifications" rel="nofollow" data-target="#" href="#" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false" class="nav-link">
                         <i class="la la-sticky-note"></i>
                         <span class="badge-pulse"></span>
@@ -73,7 +73,7 @@
 
                 <!-- Begin Messages -->
                 <li class="nav-item dropdown">
-                    <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true"
+                    <a id="messages" rel="nofollow" data-target="#" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false" class="nav-link">
                         <i class="la la-comments"></i>
                         <span class="badge-pulse"></span>
@@ -100,7 +100,7 @@
                 <!-- Begin Notification -->
                 <li class="nav-item dropdown">
 
-                    <a href="#" data-toggle="dropdown" class="nav-link">
+                    <a href="#" data-bs-toggle="dropdown" class="nav-link">
 
                         <i class="la la-bell"></i>
 
@@ -146,7 +146,7 @@
 
                 <!-- User -->
                 <li class="nav-item dropdown">
-                    <a id="user" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true"
+                    <a id="user" rel="nofollow" data-target="#" href="#" data-bs-toggle="dropdown" aria-haspopup="true"
                         aria-expanded="false" class="nav-link">
                         <img src="<?=$profile_img;?>" alt="..." class="avatar rounded-circle"></a>
                     <ul aria-labelledby="user" class="user-size dropdown-menu">

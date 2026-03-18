@@ -6,7 +6,9 @@
 
 	/*This file loads system to do basic functions on the site, Please do not change anything here if you dont know what you are doing.*/
 	require_once 'includes/db_connect.php';
-
+	require_once "notifications_helper.php";
+	
+	define('ADMIN_ID', 1);
 	//Redirecting to installation wizard
 	//If not installed already.
 	global $db;

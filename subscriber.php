@@ -203,11 +203,11 @@ $total_commission = $row['total_commission'] ?? 0;
                     <div class="widget-body">
                         <div class="media">
                             <div class="align-self-center mx-3">
-                                <i class="la la-dollar"></i>
+                                <i class="las la-money-bill"></i>
                             </div>
                             <div class="media-body align-self-center">
-                                <div class="title">Total Commission</div>
-                                <div class="number">$<?php echo number_format($total_commission,2); ?></div>
+                                <div class="title">Total Investments</div>
+                                <div class="number">PKR <?php echo number_format($transaction_obj->investement($user_id),2); ?></div>
                             </div>
                         </div>
                     </div>

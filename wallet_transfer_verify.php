@@ -170,7 +170,7 @@ if(isset($_GET['error']) && $_GET['error']=="failed"){
 
                     <div class="text-center mt-3">
 
-                        <button name="verify" class="btn btn-success mr-2">
+                        <button name="verify" class="btn btn-primary btn-md btn-golden mr-2">
                             <i class="la la-check"></i>
                             Verify Transfer
                         </button>
@@ -180,7 +180,7 @@ if(isset($_GET['error']) && $_GET['error']=="failed"){
                             Resend OTP
                         </button>
 
-                        <a href="wallet_transfer.php" class="btn btn-secondary">
+                        <a href="wallet_transfer.php" class="btn btn-outline-dark">
                             <i class="la la-arrow-left"></i>
                             Back
                         </a>

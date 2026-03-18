@@ -48,13 +48,43 @@ $transactions = $db->query("
             <!-- WALLET BALANCE -->
             <div class="wallet-balance-card">
 
-                <h2 class="page-header-title">Biz Wallet</h2>
+                <h2 class="page-header-title mb-5">Biz Wallet</h2>
+                <div class="row text-center">
 
-                <div class="wallet-page-balance">
-                    <?php echo $transaction_obj->display_balance($_SESSION["user_id"]); ?>
+                    <!-- TOTAL WALLET -->
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm p-4">
+                            <h6>Total Wallet Amount</h6>
+                            <strong class="text-success">
+                                <?php echo $transaction_obj->display_balance($user_id); ?>
+                            </strong>
+                        </div>
+                    </div>
+
+                    <!-- TOTAL INVESTMENT -->
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm p-4">
+                            <h6>Total Investment Amount</h6>
+                            <strong class="text-info">
+                                PKR <?php echo number_format($transaction_obj->investement($user_id),2); ?>
+                            </strong>
+                        </div>
+                    </div>
+
+                    <!-- TOTAL PROFIT -->
+                    <div class="col-md-4 mb-3">
+                        <div class="card shadow-sm p-4">
+                            <h6>Total Profit Amount</h6>
+                            <strong class="text-warning">
+                                PKR <?php echo number_format($transaction_obj->profit($user_id),2); ?>
+                            </strong>
+                        </div>
+                    </div>
+
                 </div>
 
-                <div class="wallet-actions mt-3">
+
+                <div class="wallet-actions mt-5">
 
                     <a href="wallet_transfer.php" class="btn btn-golden btn-lg">
                         <i class="la la-exchange"></i> Transfer

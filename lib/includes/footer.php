@@ -185,7 +185,8 @@
 			width:'100%',
 			placeholder:"Search & Select Referral User",
 			allowClear:true
-		});		
+		});
+	
 
 		// $('#congratsModal').modal('show');
 	});

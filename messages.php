@@ -26,7 +26,7 @@
         <div class="widget has-shadow">
             <div class="widget-body">
                 <div class="">
-					<button class="btn btn-success" data-toggle="modal" data-target="#new_message" style="width:100%"><?php _e("New Message"); ?></button>
+					<button class="btn btn-primary btn-md btn-golden" data-toggle="modal" data-target="#new_message" style="width:100%"><?php _e("New Message"); ?></button>
 					<!-- Modal -->
 					<script type="text/javascript">
 						jQuery(function($) {
@@ -86,7 +86,9 @@
 					</div><!-- /.modal-dialog -->
 					</div><!-- /.modal -->
 					<hr />
-					<a href="messages.php" class="btn btn-<?php if(isset($_GET['type'])){echo'default';}else{echo'primary';}?>" style="width:100%">
+					<a href="messages.php" 
+					class="btn btn-md btn-golden <?php echo isset($_GET['type']) ? 'btn-default' : 'btn-primary'; ?>" 
+					style="width:100%">
 						<?php _e("Inbox"); ?>
 					</a>
 					<div style="height:7px;"></div>

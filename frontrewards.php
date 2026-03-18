@@ -86,7 +86,7 @@ $levels = [
                 <b>Units Achieved:</b> <?php echo $units_achieved; ?>
             </div>
 
-            <table class="table table-bordered table-striped">
+            <table class="table dataTable">
                 <thead>
                     <tr>
                         <th>Level</th>

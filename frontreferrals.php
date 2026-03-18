@@ -9,22 +9,23 @@ $page_title = _("My Referrals");
 
 require_once "lib/includes/header.php";
 
-// Display session messages
-if(isset($_SESSION['success_message'])) {
-    echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
-            ' . $_SESSION['success_message'] . '
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-          </div>';
-    unset($_SESSION['success_message']);
+/* ================= ALERTS ================= */
+
+if(isset($_SESSION['success_message'])){
+
+    echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
+        '. $_SESSION['success_message'] . '
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        </button>
+    </div>';
+    unset($_SESSION['success_message']);    
 }
 
-if(isset($_SESSION['error_message'])) {
-    echo '<div class="alert alert-danger alert-dismissible fade show" role="alert">
+if(isset($_SESSION['error_message'])){
+
+    echo '<div class="alert alert-warning alert-dismissible fade show" role="alert">
             ' . $_SESSION['error_message'] . '
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
             </button>
           </div>';
     unset($_SESSION['error_message']);
@@ -78,17 +79,26 @@ if(isset($_GET['referral_detail_id'])){
         ");
 
         // Notify admins
-        $search_admin = $db->query("SELECT * FROM users WHERE user_type LIKE '%admin%'");
+        $transaction_id = $db->insert_id;
 
-        while($row = $search_admin->fetch_assoc()){
-            $admin_id = $row['user_id'] ?? 0;
+        send_notification(
+            ADMIN_ID,
+            $user_id,
+            "$username claimed referral commission of PKR $amount from $referred_username",
+            "referral_claim",
+            $transaction_id
+        );        
+        // $search_admin = $db->query("SELECT * FROM users WHERE user_type LIKE '%admin%'");
 
-            $db->query("
-                INSERT INTO notifications
-                (sender_id, sender_type, receiver_id, receiver_type, message, created_at)
-                VALUES ($user_id, 'subscriber', $admin_id, 'admin', '$message', NOW())
-            ");
-        }
+        // while($row = $search_admin->fetch_assoc()){
+        //     $admin_id = $row['user_id'] ?? 0;
+
+        //     $db->query("
+        //         INSERT INTO notifications
+        //         (sender_id, sender_type, receiver_id, receiver_type, message, created_at)
+        //         VALUES ($user_id, 'subscriber', $admin_id, 'admin', '$message', NOW())
+        //     ");
+        // }
 
         $_SESSION['success_message'] = "Referral commission claimed successfully!";
     } else {
@@ -123,109 +133,109 @@ $result = $db->query($query);
 ?>
 
 <style>
-    .investment-modal {
-        border-radius: 10px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-        margin-bottom: 25px;
-    }
+.investment-modal {
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    margin-bottom: 25px;
+}
 
-    .investment-header {
-        background: #2c304d;
-        color: #fff;
-        padding: 15px 20px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+.investment-header {
+    background: #2c304d;
+    color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.investment-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.info-label {
+    display: block;
+    font-size: 12px;
+    color: #777;
+}
+
+.info-value {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.cycles-title {
+    margin: 10px 0 15px 0;
+    font-weight: 600;
+}
+
+.investment-table thead {
+    background: #f5f5f5;
+}
+
+.investment-table th {
+    font-weight: 600;
+}
+
+.referral-footer {
+    justify-content: flex-end;
+    border-top: 0px;
+    padding: 7px 9px 8px 8px !important;
+}
+
+.modal-title {
+    color: white;
+}
+
+.investment-table {
+    width: 100%;
+}
+
+.btn-claim {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-claim:hover {
+    background: #218838;
+}
+
+/* Mobile Modal Fix */
+@media (max-width: 768px) {
+    .investment-table {
+        min-width: 600px;
     }
 
     .investment-info {
         display: flex;
-        justify-content: space-between;
-        margin-bottom: 15px;
-        flex-wrap: wrap;
+        flex-direction: column;
         gap: 10px;
     }
 
-    .info-label {
-        display: block;
-        font-size: 12px;
-        color: #777;
+    .modal-dialog {
+        margin: 10px;
+        max-width: 95%;
     }
 
-    .info-value {
-        font-size: 13px;
-        font-weight: 600;
+    .modal-content {
+        max-height: 90vh;
+        display: flex;
+        flex-direction: column;
     }
 
-    .cycles-title {
-        margin: 10px 0 15px 0;
-        font-weight: 600;
+    .modal-body {
+        overflow-y: auto;
+        overflow-x: auto;
     }
-
-    .investment-table thead {
-        background: #f5f5f5;
-    }
-
-    .investment-table th {
-        font-weight: 600;
-    }
-
-    .referral-footer {
-        justify-content: flex-end;
-        border-top: 0px;
-        padding: 7px 9px 8px 8px !important;
-    }
-    
-    .modal-title {
-        color: white;
-    }
-    
-    .investment-table {
-        width: 100%;
-    }
-
-    .btn-claim {
-        background: #28a745;
-        color: white;
-        border: none;
-        padding: 5px 15px;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 13px;
-    }
-    
-    .btn-claim:hover {
-        background: #218838;
-    }
-
-    /* Mobile Modal Fix */
-    @media (max-width: 768px) {
-        .investment-table {
-            min-width: 600px;
-        }
-        
-        .investment-info {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        
-        .modal-dialog {
-            margin: 10px;
-            max-width: 95%;
-        }
-
-        .modal-content {
-            max-height: 90vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .modal-body {
-            overflow-y: auto;
-            overflow-x: auto;
-        }
-    }    
+}
 </style>
 
 <div class="mywidget wc_data">
@@ -235,7 +245,7 @@ $result = $db->query($query);
         </div>
 
         <div class="widget-body table-responsive">
-            <table class="table table-bordered table-striped">
+            <table class="table dataTable">
                 <thead>
                     <tr>
                         <th>Referred User</th>
@@ -279,84 +289,81 @@ $result = $db->query($query);
                         $is_expired = ($today > $expiry_row['last_date']);
                         ?>
 
-                        <tr <?php if ($is_expired) echo 'style="opacity:0.6;background:#f5f5f5;"'; ?>>
-                            <td><?php echo $row['username']; ?></td>
-                            <td><?php echo $row['plan_name']; ?></td>
-                            <td><?php echo number_format($amount, 2); ?></td>
-                            <td><?php echo $row['issue_date']; ?></td>
-                            <td>
-                                <?php if ($is_expired): ?>
-                                    <button class="btn btn-sm btn-success ml-2">In-Active</button>
-                                <?php else : ?>
-                                <button class="btn btn-primary btn-sm btn-golden"
-                                    data-toggle="modal"
-                                    data-target="#referralModal_<?php echo $row['investment_id']; ?>_<?php echo $row['referred_user_id']; ?>">
-                                    View Commission
-                                </button>
-                                <?php endif; ?>
+                    <tr <?php if ($is_expired) echo 'style="opacity:0.6;background:#f5f5f5;"'; ?>>
+                        <td><?php echo $row['username']; ?></td>
+                        <td><?php echo $row['plan_name']; ?></td>
+                        <td><?php echo number_format($amount, 2); ?></td>
+                        <td><?php echo $row['issue_date']; ?></td>
+                        <td>
+                            <?php if ($is_expired): ?>
+                            <button class="btn btn-sm btn-success ml-2">In-Active</button>
+                            <?php else : ?>
+                            <button class="btn btn-primary btn-sm btn-golden" data-toggle="modal"
+                                data-target="#referralModal_<?php echo $row['investment_id']; ?>_<?php echo $row['referred_user_id']; ?>">
+                                View Commission
+                            </button>
+                            <?php endif; ?>
 
-                            </td>
-                        </tr>
+                        </td>
+                    </tr>
 
-                        <?php
+                    <?php
                         ob_start();
                         ?>
 
-                        <div class="modal fade"
-                            id="referralModal_<?php echo $row['investment_id']; ?>_<?php echo $row['referred_user_id']; ?>"
-                            tabindex="-1">
-                            <div class="modal-dialog modal-lg modal-dialog-centered">
-                                <div class="modal-content investment-modal">
-                                    <div class="modal-header investment-header">
-                                        <h5 class="modal-title">
-                                            <?php echo $row['username']; ?> - Investment Details
-                                        </h5>
-                                        <button type="button"
-                                            class="btn-close-investment"
-                                            data-dismiss="modal">
-                                            ×
-                                        </button>
-                                    </div>
+                    <div class="modal fade"
+                        id="referralModal_<?php echo $row['investment_id']; ?>_<?php echo $row['referred_user_id']; ?>"
+                        tabindex="-1">
+                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                            <div class="modal-content investment-modal">
+                                <div class="modal-header investment-header">
+                                    <h5 class="modal-title">
+                                        <?php echo $row['username']; ?> - Investment Details
+                                    </h5>
+                                    <button type="button" class="btn-close-investment" data-dismiss="modal">
+                                        ×
+                                    </button>
+                                </div>
 
-                                    <div class="modal-body">
-                                        <div class="investment-info">
-                                            <div>
-                                                <span class="info-label">Referred User</span>
-                                                <span class="info-value"><?php echo $row['username']; ?></span>
-                                            </div>
-
-                                            <div>
-                                                <span class="info-label">Package</span>
-                                                <span class="info-value"><?php echo $row['plan_name']; ?></span>
-                                            </div>
-
-                                            <div>
-                                                <span class="info-label">Amount</span>
-                                                <span class="info-value"><?php echo number_format($amount, 2); ?></span>
-                                            </div>
-
-                                            <div>
-                                                <span class="info-label">Date Issued</span>
-                                                <span class="info-value"><?php echo $row['issue_date']; ?></span>
-                                            </div>
+                                <div class="modal-body">
+                                    <div class="investment-info">
+                                        <div>
+                                            <span class="info-label">Referred User</span>
+                                            <span class="info-value"><?php echo $row['username']; ?></span>
                                         </div>
 
-                                        <hr>
+                                        <div>
+                                            <span class="info-label">Package</span>
+                                            <span class="info-value"><?php echo $row['plan_name']; ?></span>
+                                        </div>
 
-                                        <h6>Your Referral Commission: <span class="text-success">1% (Fixed)</span></h6>
+                                        <div>
+                                            <span class="info-label">Amount</span>
+                                            <span class="info-value"><?php echo number_format($amount, 2); ?></span>
+                                        </div>
 
-                                        <table class="table investment-table">
-                                            <thead>
-                                                <tr>
-                                                    <th class="info-value">Cycle</th>
-                                                    <th class="info-value">Commission Date</th>
-                                                    <th class="info-value">Commission (1%)</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
+                                        <div>
+                                            <span class="info-label">Date Issued</span>
+                                            <span class="info-value"><?php echo $row['issue_date']; ?></span>
+                                        </div>
+                                    </div>
 
-                                            <tbody>
-                                                <?php
+                                    <hr>
+
+                                    <h6>Your Referral Commission: <span class="text-success">1% (Fixed)</span></h6>
+
+                                    <table class="table investment-table">
+                                        <thead>
+                                            <tr>
+                                                <th class="info-value">Cycle</th>
+                                                <th class="info-value">Commission Date</th>
+                                                <th class="info-value">Commission (1%)</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <?php
                                                 $details_query = "
                                                     SELECT cycle, comission_expiry_date,
                                                     id,
@@ -387,41 +394,48 @@ $result = $db->query($query);
                                                     $can_claim = ($is_detail_expired && $detail['is_claimed'] == 0);
                                                     ?>
 
-                                                    <tr <?php if ($is_detail_expired && $detail['is_claimed'] == 1) echo 'style="opacity:0.7"'; ?>>
-                                                        <td class="info-value"><?php echo $cycle; ?></td>
-                                                        <td class="info-value"><?php echo $cycle_date; ?></td>
-                                                        <td class="info-value">Rs <?php echo number_format($commission, 2); ?></td>
-                                                        <td class="info-value">
-                                                            <?php if ($can_claim): ?>
-                                                                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET" style="display: inline;" onsubmit="return confirm('Are you sure you want to claim this referral commission of <?php echo number_format($commission, 2); ?>?');">
-                                                                    <input type="hidden" name="referral_detail_id" value="<?php echo $detail['id']; ?>">
-                                                                    <button type="submit" class="btn-claim">
-                                                                        Claim Now
-                                                                    </button>
-                                                                </form>
-                                                            <?php elseif($detail['is_claimed'] == 1): ?>
-                                                                <span class="badge bg-success">Paid on <?php echo date('Y-m-d', strtotime($detail['claimed_date'])); ?></span>
-                                                            <?php else: ?>
-                                                                <span class="badge bg-danger">Pending (<?php echo $interval->days; ?> days left)</span>
-                                                            <?php endif; ?>
-                                                        </td>
-                                                    </tr>
+                                            <tr
+                                                <?php if ($is_detail_expired && $detail['is_claimed'] == 1) echo 'style="opacity:0.7"'; ?>>
+                                                <td class="info-value"><?php echo $cycle; ?></td>
+                                                <td class="info-value"><?php echo $cycle_date; ?></td>
+                                                <td class="info-value">Rs <?php echo number_format($commission, 2); ?>
+                                                </td>
+                                                <td class="info-value">
+                                                    <?php if ($can_claim): ?>
+                                                    <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="GET"
+                                                        style="display: inline;"
+                                                        onsubmit="return confirm('Are you sure you want to claim this referral commission of <?php echo number_format($commission, 2); ?>?');">
+                                                        <input type="hidden" name="referral_detail_id"
+                                                            value="<?php echo $detail['id']; ?>">
+                                                        <button type="submit" class="btn-claim">
+                                                            Claim Now
+                                                        </button>
+                                                    </form>
+                                                    <?php elseif($detail['is_claimed'] == 1): ?>
+                                                    <span class="badge bg-success">Paid on
+                                                        <?php echo date('Y-m-d', strtotime($detail['claimed_date'])); ?></span>
+                                                    <?php else: ?>
+                                                    <span class="badge bg-danger">Pending
+                                                        (<?php echo $interval->days; ?> days left)</span>
+                                                    <?php endif; ?>
+                                                </td>
+                                            </tr>
 
-                                                <?php } ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                            <?php } ?>
+                                        </tbody>
+                                    </table>
+                                </div>
 
-                                    <div class="modal-footer referral-footer">
-                                        <button class="btn btn-golden btn-md" data-dismiss="modal">
-                                            Close
-                                        </button>
-                                    </div>
+                                <div class="modal-footer referral-footer">
+                                    <button class="btn btn-golden btn-md" data-dismiss="modal">
+                                        Close
+                                    </button>
                                 </div>
                             </div>
                         </div>
+                    </div>
 
-                        <?php
+                    <?php
                         $modals .= ob_get_clean();
                     endwhile;
                     ?>
@@ -438,11 +452,11 @@ require_once "lib/includes/footer.php";
 ?>
 
 <script>
-$(document).ready(function(){
-    $('.modal').on('show.bs.modal', function(){
+$(document).ready(function() {
+    $('.modal').on('show.bs.modal', function() {
         console.log('Modal opened: ' + $(this).attr('id'));
     });
-    
+
     // Auto-hide alerts after 5 seconds
     setTimeout(function() {
         $('.alert').fadeOut('slow');

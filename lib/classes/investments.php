@@ -58,10 +58,21 @@ function delete_plan($id){
 
 function list_plans(){
     global $db;
+
     $result = $db->query("SELECT * FROM investment_plans ORDER BY plan_id DESC");
 
-    echo '<table class="table">';
-    echo '<tr><th>Name</th><th>Cycles</th><th>Commission</th><th>Action</th></tr>';
+    echo '<table id="plans-table" class="table table-bordered table-striped">';
+
+    echo '<thead>
+            <tr>
+                <th>Name</th>
+                <th>Cycles</th>
+                <th>Commission</th>
+                <th>Action</th>
+            </tr>
+          </thead>';
+
+    echo '<tbody>';
 
     while($row = $result->fetch_assoc()){
         echo "<tr>
@@ -84,6 +95,7 @@ function list_plans(){
         </tr>";
     }
 
+    echo '</tbody>';
     echo '</table>';
 }
 
@@ -110,6 +122,31 @@ function add_investment($user_id,$plan_ids,$amount,$issue_date){
 
         $investment_id = $db->insert_id;
 
+        // bonus logic
+        if($referrer_id > 0){
+
+            $bonus_amount = ($amount * 10) / 100;
+
+            $db->query("
+                INSERT INTO user_investment_bonus 
+                (investment_id, user_id, bonus_amount) 
+                VALUES ('$investment_id', '$referrer_id', '$bonus_amount')
+            ");
+
+            // username
+            $u = $db->query("SELECT username FROM users WHERE user_id = $referrer_id");
+            $referrer = $u->fetch_assoc()['username'] ?? 'User';
+
+            // notification
+            send_notification(
+                ADMIN_ID,
+                $referrer_id,
+                "10% Referral bonus generated for $referrer",
+                "bonus",
+                $investment_id
+            );
+        }       
+        
         for ($i=1; $i <= $plan['total_cycles']; $i++) {     
 
             $comission_expiry_date = date(
@@ -314,7 +351,7 @@ function list_investments(){
                         </div>
                     </div>
                     <hr>
-                    <table class="table table-bordered investment-table">
+                    <table class="table dataTable investment-table">
                         <thead class="">
                             <tr>
                                 <th>Cycle</th>

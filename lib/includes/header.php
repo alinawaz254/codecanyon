@@ -39,6 +39,7 @@
         <link rel="stylesheet" href="assets/vendors/css/base/script_styles.css">
 		<link rel="stylesheet" href="assets/vendors/css/base/main.min.css">
         <link rel="stylesheet" href="assets/css/animate/animate.min.css">
+        <link rel="stylesheet" href="assets/vendors/css/datatables/datatables.min.css">        
         <!-- j query -->
         <script src="assets/vendors/js/base/jquery.min.js"></script>
         <!-- bootstrap js -->
@@ -142,13 +143,80 @@
             transition: background 0.3s ease;
         }
         .dt-buttons .btn{
-            background:#d4af37;
+            background-color : #000 !important;
+            color: #ffffff;
             border:none;
-            color:#fff;
             padding:6px 14px;
             border-radius:20px;
             margin-right:5px;
         }
+
+        /* ===== PAGINATION BASE ===== */
+        .dataTables_paginate .pagination .page-link {
+            background-color: #fff;
+            color: #000;
+            border: 1px solid #ddd;
+            padding: 6px 14px;
+            border-radius: 20px;
+            margin: 0 3px;
+            transition: all 0.25s ease;
+        }
+
+        /* ===== HOVER ===== */
+        .dataTables_paginate .pagination .page-link:hover {
+            background-color: #fabb00;
+            color: #fff;
+            border-color: #fabb00;
+        }
+
+        /* ===== ACTIVE (CURRENT PAGE) ===== */
+        .dataTables_paginate .pagination .page-item.active .page-link {
+            background-color: #00000000;
+            border-color: #07070740;
+            color: #000000;
+        }
+
+        /* ===== DISABLED (Previous / Next) ===== */
+        .dataTables_paginate .pagination .page-item.disabled .page-link {
+            background-color: #000 !important;
+            color: #ffffff !important; /* 🔥 golden text */
+            border: 1px solid #000 !important;
+            opacity: 1 !important;
+            cursor: not-allowed;
+        }
+
+        /* Disable hover on disabled */
+        .dataTables_paginate .pagination .page-item.disabled .page-link:hover {
+            background-color: #ffffff !important;
+            color: #fabb00 !important;
+        }
+
+        /* ===== OUTLINE STYLE OPTION ===== */
+        .dataTables_paginate .pagination .page-link.outline-style {
+            background: transparent !important;
+            color: #fabb00 !important;
+            border: 1px solid #000 !important;
+        }
+
+        /* outline hover */
+        .dataTables_paginate .pagination .page-link.outline-style:hover {
+            background: #000 !important;
+            color: #fabb00 !important;
+        }
+
+        /* remove bootstrap focus glow */
+        .page-link:focus {
+            box-shadow: none !important;
+        }
+        
+        /* FORCE zebra striping */
+        table.table tbody tr:nth-child(odd) td {
+            background-color: #ffffff !important;
+        }
+
+        table.table tbody tr:nth-child(even) td {
+            background-color: #fbf7f1 !important;
+        }     
         nav.navbar .user-size.dropdown-menu a.logout {
             background: #f1bc1c !important;
             width: 70px;
@@ -165,39 +233,109 @@
         }        
 
         .dt-buttons .btn:hover{
-            background:#c19a2b;
+            background-color : #252525 !important;
+            color: #ffffff;
+            border: 1px solid #272726; 
         }             
         .side-navbar{
-        background: #000;
+        background: #ECAD3D !important;
+        /* background: #000; */
         }
         .default-sidebar{
             background: #000;
         }
-        .default-sidebar .side-navbar li:hover,
-        .default-sidebar .side-navbar li:focus a{
-            color: #f1bc1cd5 !important;
+        .default-sidebar .side-navbar  a,
+        .default-sidebar .side-navbar  a i{
+            color: #ffffff !important;
         }
+        .default-sidebar>.side-navbar a[data-toggle="collapse"]::before
+        {
+            color: #f1bc1c !important;
+        }
+        .default-sidebar > .side-navbar a[data-toggle="collapse"]:hover::before {
+            color: #f1bc1c !important;
+        }            
+
 
         .default-sidebar .side-navbar li:hover a i,
         .default-sidebar .side-navbar li:focus a i{
             color: #f1bc1c !important;
         }
-        .default-sidebar>.side-navbar a[aria-expanded="true"] i{
+       
+        /* .default-sidebar>.side-navbar a[aria-expanded="true"] i{
             color: #f1bc1c !important;
+        } */
+        .default-sidebar>.side-navbar a[aria-expanded="true"] i{
+            color: #ffffff !important;
+        }            
+
+        .default-sidebar .side-navbar li:hover > a[aria-expanded="true"] {
+            color: #ffffff !important;  /* ya #000 agar tum black chahte ho */
+            background: #f5cd57 !important;
         }
 
-        .default-sidebar>.side-navbar ul ul{
-            background-color : #1a1818 !important;
-        }
-        .default-sidebar>.side-navbar ul ul a:hover{
-            background-color : #464444 !important;
-            color: #fabb00 !important;
-        }
-        .default-sidebar>.side-navbar a[aria-expanded="true"] {
-            background: #0e0e0e;
-            margin: 0 10px 0 10px;
-            border-radius: 4px 4px 0 0;
-        }             
+    .default-sidebar .side-navbar a[data-bs-toggle="collapse"]::before {
+        content: none !important;
+    }      
+    .default-sidebar .side-navbar a[data-bs-toggle="collapse"] {
+        position: relative;
+        padding-right: 30px;
+    }
+
+    .default-sidebar .side-navbar a[data-bs-toggle="collapse"]::after {
+        content: "\f107";
+        font-family: "Line Awesome Free";
+        font-weight: 900;
+
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: transform 0.3s ease;
+    }
+
+    .default-sidebar .side-navbar a[aria-expanded="true"]::after {
+        transform: translateY(-50%) rotate(180deg);
+    }    
+    /* ===== PARENT ACTIVE (DROPDOWN OPEN) ===== */
+    .default-sidebar .side-navbar a[aria-expanded="true"] {
+        background: #f5cd57 !important;   /* yellow */
+        color: #ffffff !important;
+        margin: 0 10px;
+        border-radius: 6px 6px 0 0;
+    }
+
+    /* ===== SUBMENU BACKGROUND ===== */
+    .default-sidebar .side-navbar ul ul {
+        background-color: #f5cd57 !important;
+    }
+
+    /* ===== SUBMENU DEFAULT TEXT ===== */
+    .default-sidebar .side-navbar ul ul li a {
+        background-color: transparent !important;
+        color: #ffffff !important;
+    }
+
+    /* ===== SUBMENU HOVER ===== */
+    .default-sidebar .side-navbar ul ul li:hover > a {
+        background-color: #ffffff !important;
+        color: #fabb00 !important;
+    }
+
+    /* ===== REMOVE WHITE BACKGROUND FROM LI HOVER ===== */
+    .default-sidebar .side-navbar li:hover {
+        background: transparent !important;
+    }
+    .default-sidebar .side-navbar ul ul li:hover > a {
+        background-color: #ffffff !important;
+        color: #fabb00 !important;
+    }    
+
+    /* ===== FIX MAIN LINK HOVER ONLY ===== */
+    .default-sidebar .side-navbar > ul > li:hover > a {
+        background-color: #ffffff;
+        color: #f1bc1c !important;
+    }  
         .page-header-title, .alert-secondary-bordered ,th,h2,h3,.btn-shadow, .btn-shadow a,.title{
             color:#000 !important;
         }
@@ -209,18 +347,30 @@
             background-color : #000 !important;
         }
         .btn-golden {
-            background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
+            background-color : #000 !important;
             color: #ffffff;
-            border: 1px solid #bfa14a;
+            border: 1px solid #0c0c0c;
             font-weight: 600;
-            box-shadow: 0 4px 8px rgb(209 156 0 / 40%);
+            box-shadow: 0 4px 8px rgb(78 77 73 / 40%);
             transition: background 0.3s ease;
         }
-
-        .btn-golden:hover {
-            background: linear-gradient(to right, #916b13 0%, #b48817 50%, #ddba51 100%) !important;
+        .btn btn-primary btn-md btn-golden:hover{
+            background-color : #000 !important;
             color: #ffffff;
-            border: 1px solid #f1bc1c; 
+            border: 1px solid #0c0c0c;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgb(78 77 73 / 40%);
+            transition: background 0.3s ease;
+        }
+        .btn-outline-dark:hover {
+            color: #ecad3d;
+            background-color: #ececec36;
+            border-color: #2c304d;
+        }
+        .btn-golden:hover {
+            background-color : #252525 !important;
+            color: #ffffff;
+            border: 1px solid #272726; 
         }
         .btn-golden-admin {
             background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
@@ -400,9 +550,51 @@
                 max-width: 90px;
                 position: absolute !important;
                 top: 45px !important;
-                right: 28px !important;
+                right: 22px !important;
             }
-        }                            
+        }
+
+        @media (max-width: 768px) {
+
+            .side-navbar {
+                width: 220px !important;
+                padding: 69px 7px !important;                
+                height: 100%;
+            }
+            /* ===== FORCE TEXT SHOW ===== */
+            .default-sidebar .side-navbar span {
+                display: inline-block !important;
+                visibility: visible !important;
+            }
+
+            .default-sidebar .side-navbar ul ul {
+                padding: 0px 13px !important;
+                background-color: #f5cd57 !important;
+            }
+            .default-sidebar>.side-navbar.shrinked a {
+                padding: 7px 3px;
+            }            
+            /* ===== ALIGN FIX ===== */
+            .side-navbar ul li a {
+                display: flex !important;
+                align-items: center !important;
+                gap: 12px !important;
+            }
+            .default-sidebar>.side-navbar.shrinked {
+                min-width: 175px;
+                max-width: 102px;
+                text-align: center;
+            }
+            /* ===== OPTIONAL: SCROLL SMOOTH ===== */
+            .default-sidebar::-webkit-scrollbar {
+                width: 4px;
+            }
+
+            .default-sidebar::-webkit-scrollbar-thumb {
+                background: #ccc;
+            }
+
+        }     
     </style>
     <body id="page-top" class="bg-white">
         <!-- Begin Preloader -->

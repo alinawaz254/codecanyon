@@ -35,7 +35,7 @@ function list_videos(){
         echo '<tr>';
         echo '<td colspan="5" class="text-center p-5">';
         echo '<h5 class="text-muted">No Videos Found</h5>';
-        echo '<a href="manage_video.php" class="btn btn-primary mt-2">Add First Video</a>';
+        echo '<a href="manage_video.php" class="btn btn-primary btn-md btn-golden mt-2">Add First Video</a>';
         echo '</td>';
         echo '</tr>';
 

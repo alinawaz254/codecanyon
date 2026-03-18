@@ -210,7 +210,7 @@ require_once("lib/includes/header.php");
                             <button type="submit" class="btn btn-golden">
                                 Update Video
                             </button>
-                            <a href="videos.php" class="btn btn-secondary">
+                            <a href="videos.php" class="btn btn-outline-dark">
                                 View All
                             </a>
                             <?php else: ?>
@@ -220,7 +220,7 @@ require_once("lib/includes/header.php");
                             <button type="submit" class="btn btn-golden">
                                 Add Video
                             </button>
-                            <a href="videos.php" class="btn btn-secondary">
+                            <a href="videos.php" class="btn btn-outline-dark">
                                 View All
                             </a>
                             <?php endif; ?>

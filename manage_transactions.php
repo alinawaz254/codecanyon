@@ -127,7 +127,7 @@
 				Create Transaction
 				</button>
 
-				<a href="transactions.php" class="btn btn-secondary">
+				<a href="transactions.php" class="btn btn-outline-dark">
 				View All
 				</a>
 
