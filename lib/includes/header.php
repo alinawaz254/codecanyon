@@ -38,8 +38,7 @@
         <!-- <link rel="stylesheet" href="assets/vendors/css/base/bootstrap.min.css"> -->
         <link rel="stylesheet" href="assets/vendors/css/base/script_styles.css">
 		<link rel="stylesheet" href="assets/vendors/css/base/main.min.css">
-        <link rel="stylesheet" href="assets/css/animate/animate.min.css">
-        <link rel="stylesheet" href="assets/vendors/css/datatables/datatables.min.css">        
+        <link rel="stylesheet" href="assets/css/animate/animate.min.css">    
         <!-- j query -->
         <script src="assets/vendors/js/base/jquery.min.js"></script>
         <!-- bootstrap js -->
