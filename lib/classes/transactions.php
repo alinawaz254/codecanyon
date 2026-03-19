@@ -380,16 +380,16 @@ class Transactions {
         global $db;
         
         $stats = array(
-            'total' => 0,
-            'withdrawals' => 0,
-            'funded' => 0,
-            'roi_commission' => 0,
+            'total'               => 0,
+            'withdrawals'         => 0,
+            'funded'              => 0,
+            'roi_commission'      => 0,
             'referral_commission' => 0,
-            'transfers' => 0,            
-            'today_count' => 0,
-            'today_amount' => 0,
-            'bonus' => 0,
-            'released' => 0
+            'transfers'           => 0,            
+            'today_count'         => 0,
+            'today_amount'        => 0,
+            'bonus'               => 0,
+            'released'            => 0
         );
         
         // Total transactions count
@@ -407,19 +407,19 @@ class Transactions {
                     SUM(CASE WHEN transaction_type = 3 THEN amount ELSE 0 END) as total_roi_commission,
                     SUM(CASE WHEN transaction_type = 4 THEN amount ELSE 0 END) as total_transfers,
                     SUM(CASE WHEN transaction_type = 5 THEN amount ELSE 0 END) as total_referral_commission,
-                    SUM(CASE WHEN transaction_type = 6 THEN amount ELSE 0 END) as total_bonus
+                    SUM(CASE WHEN transaction_type = 6 THEN amount ELSE 0 END) as total_bonus,
                     SUM(CASE WHEN transaction_type = 7 THEN amount ELSE 0 END) as total_released
                 FROM transactions
             ");
             if($result) {
-                $amounts = $result->fetch_assoc();
-                $stats['withdrawals'] = $amounts['total_withdrawals'] ?? 0;
-                $stats['funded'] = $amounts['total_funded'] ?? 0;
-                $stats['roi_commission'] = $amounts['total_roi_commission'] ?? 0;
-                $stats['transfers'] = $amounts['total_transfers'] ?? 0;                
+                $amounts                      = $result->fetch_assoc();
+                $stats['withdrawals']         = $amounts['total_withdrawals'] ?? 0;
+                $stats['funded']              = $amounts['total_funded'] ?? 0;
+                $stats['roi_commission']      = $amounts['total_roi_commission'] ?? 0;
+                $stats['transfers']           = $amounts['total_transfers'] ?? 0;                
                 $stats['referral_commission'] = $amounts['total_referral_commission'] ?? 0;
-                $stats['bonus'] = $amounts['total_bonus'] ?? 0;        
-                $stats['released'] = $amounts['total_released'] ?? 0;        
+                $stats['bonus']               = $amounts['total_bonus'] ?? 0;        
+                $stats['released']            = $amounts['total_released'] ?? 0;        
             }
             
             // Today's transactions
@@ -545,6 +545,7 @@ class Transactions {
                     CASE    
                         WHEN transaction_type = 3 THEN amount      
                         WHEN transaction_type = 5 THEN amount
+                        WHEN transaction_type = 6 THEN amount
                     END
                 ),0) AS balance
             FROM transactions

@@ -211,7 +211,7 @@ $today = date("Y-m-d");
                         $db->query("
                             INSERT INTO transactions 
                             (user_id, transaction_type, amount, is_approved, description) 
-                            VALUES ($user_id, 7, $amount, 1, '$message')
+                            VALUES ($user_id, 3, $amount, 1, '$message')
                         ");
 
                         $transaction_id = $db->insert_id;
