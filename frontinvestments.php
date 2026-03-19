@@ -40,6 +40,7 @@ SELECT
     ui.user_id,
     ui.plan_id,
     ui.amount,
+    ui.is_released,
     ui.issue_date,
     ui.created_at AS investment_created_at,
     ip.plan_name,
@@ -335,6 +336,7 @@ $today = date("Y-m-d");
                                 View
                             </button>
                             <span class="badge text-bg-secondary ml-2 mx-5">Inactive</span>
+                            <?php if($investment['is_released'] != 1) : ?>
                             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET">
                                 <input type="hidden" name="re_invest_amount" value="<?php echo $amount ?>">
                                 <input type="hidden" name="plan_id" value="<?php echo $plan_id ?>">
@@ -345,6 +347,8 @@ $today = date("Y-m-d");
                                     value="<?php echo $investment['investment_id'] ?>">
                                 <button type="submit" class="btn btn-sm btn-success ml-2">Release</button>
                             </form>
+                            <?php endif; ?>
+
                             <?php else : ?>
                             <button class="btn btn-golden btn-sm" data-toggle="modal"
                                 data-target="#investmentModal_<?php echo $investment['investment_id']; ?>">
