@@ -137,14 +137,18 @@ function add_investment($user_id,$plan_ids,$amount,$issue_date){
             $u = $db->query("SELECT username FROM users WHERE user_id = $referrer_id");
             $referrer = $u->fetch_assoc()['username'] ?? 'User';
 
-            // notification
-            send_notification(
-                ADMIN_ID,
-                $referrer_id,
-                "10% Referral bonus generated for $referrer",
-                "bonus",
-                $investment_id
-            );
+            if($key == 0){
+               // notification
+                send_notification(
+                    ADMIN_ID,
+                    $referrer_id,
+                    "10% Referral bonus generated for $referrer",
+                    "bonus",
+                    $investment_id
+                );
+            }else{
+                continue;
+            }
         }       
         
         for ($i=1; $i <= $plan['total_cycles']; $i++) {     
