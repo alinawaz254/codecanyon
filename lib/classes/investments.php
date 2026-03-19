@@ -61,7 +61,7 @@ function list_plans(){
 
     $result = $db->query("SELECT * FROM investment_plans ORDER BY plan_id DESC");
 
-    echo '<table id="plans-table" class="table table-bordered table-striped">';
+    echo '<table id="plans-table" class="table table-bordered">';
 
     echo '<thead>
             <tr>
@@ -282,8 +282,18 @@ function list_investments(){
         ORDER BY ui.investment_id DESC
     ");    
 
-    echo '<table class="table">';
-    echo '<tr><th>User</th><th>Plan</th><th>Amount</th><th>Issue Date</th><th>Action</th></tr>';
+    echo '<table class="table table-bordered">';
+    echo '<thead>
+            <tr>
+                <th>User</th>
+                <th>Plan</th>
+                <th>Amount</th>
+                <th>Issue Date</th>
+                <th>Action</th>
+            </tr>
+          </thead>';
+
+    echo '<tbody>';
 
     while($row = $result->fetch_assoc()){
         echo "<tr>

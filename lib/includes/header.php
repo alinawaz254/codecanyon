@@ -372,18 +372,18 @@
             border: 1px solid #272726; 
         }
         .btn-golden-admin {
-            background: linear-gradient(to right, #a07411 0%, #ce9f2b 50%, #f7d56c 100%) !important;
+            background-color : #000 !important;
             color: #ffffff;
-            border: 1px solid #bfa14a;
+            border: 1px solid #0c0c0c;
             font-weight: 600;
-            box-shadow: 0 4px 8px rgb(209 156 0 / 40%);
+            box-shadow: 0 4px 8px rgb(78 77 73 / 40%);
             transition: background 0.3s ease;
         }
 
         .btn-golden-admin:hover {
-            background: linear-gradient(to right, #916b13 0%, #b48817 50%, #ddba51 100%) !important;
+            background-color : #252525 !important;
             color: #ffffff;
-            border: 1px solid #f1bc1c; 
+            border: 1px solid #272726; 
         }
 
         .btn-close-investment {
@@ -404,7 +404,8 @@
             padding-bottom:120px;
         }
         .auth-left-panel{
-            background:#000;
+            background-color: #ECAD3D !important;
+            color: #ffffff !important;
             height:100vh;
             display:flex;
             align-items:center;
@@ -593,7 +594,12 @@
                 background: #ccc;
             }
 
-        } 
+        }
+
+        .table thead th {
+            background-color: #ECAD3D !important;
+            color: #ffffff !important;
+        }
             /* ===== end css ===== */           
     </style>
     <body id="page-top" class="bg-white">
