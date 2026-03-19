@@ -813,26 +813,26 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 		$result = $db->query($query) or die($db->error);
 		$row = $result->fetch_array();
 		//results ends here.
-		$this->user_id       = $row['user_id'];
-		$this->first_name    = $row['first_name'];
-		$this->last_name     = $row['last_name'];
-		$this->gender        = $row['gender'];
-		$this->date_of_birth = $row['date_of_birth'];
-		$this->address1      = $row['address1'];
-		$this->address2      = $row['address2'];
-		$this->city          = $row['city'];
-		$this->state         = $row['state'];
-		$this->country       = $row['country'];
-		$this->zip_code      = $row['zip_code'];
-		$this->mobile        = $row['mobile'];
-		$this->phone         = $row['phone'];
-		$this->username      = $row['username'];
-		$this->email         = $row['email'];
-		$this->profile_image = $row['profile_image'];
-		$this->description   = $row['description'];
-		$this->status        = $row['status'];
-		$this->user_type     = $row['user_type'];
-		$this->referral_id   = $row['referral_id'];
+		$this->user_id       = $row['user_id'] ?? 'N\A';
+		$this->first_name    = $row['first_name'] ?? 'N\A';
+		$this->last_name     = $row['last_name'] ?? 'N\A';
+		$this->gender        = $row['gender'] ?? 'N\A';
+		$this->date_of_birth = $row['date_of_birth'] ?? 'N\A';
+		$this->address1      = $row['address1'] ?? 'N\A';
+		$this->address2      = $row['address2'] ?? 'N\A';
+		$this->city          = $row['city'] ?? 'N\A';
+		$this->state         = $row['state'] ?? 'N\A';
+		$this->country       = $row['country'] ?? 'N\A';
+		$this->zip_code      = $row['zip_code'] ?? 'N\A';
+		$this->mobile        = $row['mobile'] ?? 'N\A';
+		$this->phone         = $row['phone'] ?? 'N\A';
+		$this->username      = $row['username'] ?? 'N\A';
+		$this->email         = $row['email'] ?? 'N\A';
+		$this->profile_image = $row['profile_image'] ?? 'N\A';
+		$this->description   = $row['description'] ?? 'N\A';
+		$this->status        = $row['status'] ?? 'N\A';
+		$this->user_type     = $row['user_type'] ?? 'N\A';
+		$this->referral_id   = $row['referral_id'] ?? 'N\A';
 	}//level set ends here.
 
 	function update_user($user_id, $user_type_ses, $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type,$referral_id) {
