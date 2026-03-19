@@ -77,7 +77,7 @@ $today = date("Y-m-d");
                 $username    = $user['username'];
                 $message     = $db->real_escape_string("$username has collected his commission on $today");
 
-                $db->query("INSERT INTO transactions (user_id,transaction_type,amount,description,is_approved) VALUES ('$user_id',7,'$amount','$message',1)");
+                $db->query("INSERT INTO transactions (user_id,transaction_type,amount,description,is_approved) VALUES ('$user_id',3,'$amount','$message',1)");
 
                 $transaction_id = $db->insert_id;
 
