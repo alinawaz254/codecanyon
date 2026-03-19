@@ -120,7 +120,7 @@ class Users {
 				$result = $search ? $search->fetch_assoc() : null;
 
 				if($result == null){
-					$db->query("INSERT INTO `users`( `first_name`, `last_name`, `gender`, `date_of_birth`, `address1`, `address2`, `city`, `state`, `country`, `zip_code`, `mobile`, `phone`, `username`, `email`, `password`, `profile_image`, `description`, `status`, `activation_key`, `date_register`, `user_type`, `referral_id`) VALUES (null,null,null,null,null,null,null,null,null,null,null,null,'BIZ0000',null,null,null,null,null,null,null,'subscriber',null)");
+					$db->query("INSERT INTO `users`( `first_name`, `last_name`, `gender`, `date_of_birth`, `address1`, `address2`, `city`, `state`, `country`, `zip_code`, `mobile`, `phone`, `username`, `email`, `password`, `profile_image`, `description`, `status`, `activation_key`, `date_register`, `user_type`, `referral_id`) VALUES (null,null,null,null,null,null,null,null,null,null,null,null,'BIZ0000',null,null,null,null,null,null,null,'admin',null)");
 					$referral_id = $db->insert_id;
 				}else{
 						$referral_id = $result['user_id'];

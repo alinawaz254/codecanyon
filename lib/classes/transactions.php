@@ -432,13 +432,6 @@ class Transactions {
         global $db;
 
         $investment_sql = $db->query("SELECT amount FROM user_investments WHERE user_id = '$user_id'");
-        $investement = 0;
-        if ($investment_sql && $investment_sql->num_rows > 0) {
-
-            while($row = $investment_sql->fetch_assoc()){
-            $investement += (float)$row['amount'];
-            }
-        }       
 
         $sql = "
             SELECT 
@@ -463,7 +456,7 @@ class Transactions {
 
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
-        $balance = $investement + (float)$row['balance'];
+        $balance = (float)$row['balance'];
         // Prevent negative balance display
         if ($balance < 0) {
             $balance = 0;
@@ -487,13 +480,6 @@ class Transactions {
         global $db;
 
         $investment_sql = $db->query("SELECT amount FROM user_investments WHERE user_id = '$user_id'");
-        $investement = 0;
-        if ($investment_sql && $investment_sql->num_rows > 0) {
-
-            while($row = $investment_sql->fetch_assoc()){
-            $investement += (float)$row['amount'];
-            }
-        }        
 
         $sql = "
             SELECT 
@@ -518,7 +504,7 @@ class Transactions {
 
         $result  = $stmt->get_result();
         $row     = $result->fetch_assoc();
-        $balance = $investement + (float)$row['balance'];
+        $balance = (float)$row['balance'];
         return $balance;
     }    
     function investement($user_id)
