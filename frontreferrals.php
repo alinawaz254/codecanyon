@@ -88,17 +88,6 @@ if(isset($_GET['referral_detail_id'])){
             "referral_claim",
             $transaction_id
         );        
-        // $search_admin = $db->query("SELECT * FROM users WHERE user_type LIKE '%admin%'");
-
-        // while($row = $search_admin->fetch_assoc()){
-        //     $admin_id = $row['user_id'] ?? 0;
-
-        //     $db->query("
-        //         INSERT INTO notifications
-        //         (sender_id, sender_type, receiver_id, receiver_type, message, created_at)
-        //         VALUES ($user_id, 'subscriber', $admin_id, 'admin', '$message', NOW())
-        //     ");
-        // }
 
         $_SESSION['success_message'] = "Referral commission claimed successfully!";
     } else {
