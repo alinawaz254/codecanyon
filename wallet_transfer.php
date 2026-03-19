@@ -30,11 +30,6 @@ if(isset($_POST['send'])){
         exit;
     }
 
-    // find receiver
-    // $q = $db->prepare("SELECT user_id FROM users WHERE email=? LIMIT 1");
-    // $q->bind_param("s",$email);
-    // $q->execute();
-    // $result = $q->get_result();
     $q = $db->prepare("SELECT user_id FROM users WHERE email=? OR username=? LIMIT 1");
     $q->bind_param("ss",$identity,$identity);
     $q->execute();

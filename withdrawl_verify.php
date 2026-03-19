@@ -64,42 +64,15 @@ if(isset($_POST['verify'])){
         header("Location: wallet_transfer_verify.php?error=invalid");
         exit;
     }
-    // $stmt = $db->prepare("
-    //     SELECT id, expires_at 
-    //     FROM wallet_otps
-    //     WHERE user_id=? AND otp=?
-    //     LIMIT 1
-    // ");
 
-    // $stmt->bind_param("ii",$user_id,$otp);
-    // $stmt->execute();
-
-    // $result = $stmt->get_result();
-
-    // if($result->num_rows == 0){
-    //     header("Location: withdrawl_verify.php?error=invalid");
-    //     exit;
-    // }
-
-    // $row = $result->fetch_assoc();
-
-    // /* check expiry manually */
-
-    // if(strtotime($row['expires_at']) < time()){
-    //     header("Location: withdrawl_verify.php?error=invalid");
-    //     exit;
-    // }
-
-    $transactions_obj = new Transactions();
-
-    $balance = $transactions_obj->get_balance($user_id);
+    $balance = $transaction_obj->get_balance($user_id);
 
     if($_SESSION['withdrawl_amount'] > $balance){
         header("Location: withdrawl_verify.php?error=balance");
         exit;
     }
 
-    $success = $transactions_obj->withdrawl(
+    $success = $transaction_obj->withdrawl(
         $user_id,
         $_SESSION['withdrawl_amount']
     );
