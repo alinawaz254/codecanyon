@@ -105,7 +105,7 @@ function list_plans(){
 function add_investment($user_id,$plan_ids,$amount,$issue_date){
     global $db;
 
-
+    $count = 1;
     foreach ($plan_ids as $key => $plan_id) {    
 
         $search      = $db->query("SELECT * FROM investment_plans WHERE plan_id = $plan_id");
@@ -137,7 +137,7 @@ function add_investment($user_id,$plan_ids,$amount,$issue_date){
             $u = $db->query("SELECT username FROM users WHERE user_id = $referrer_id");
             $referrer = $u->fetch_assoc()['username'] ?? 'User';
 
-            if($key == 0){
+            if($count == 1){
                // notification
                 send_notification(
                     ADMIN_ID,
@@ -175,7 +175,7 @@ function add_investment($user_id,$plan_ids,$amount,$issue_date){
         }
             
     }
-
+    $count++;
     
     return "Investment Added Successfully";
 }
