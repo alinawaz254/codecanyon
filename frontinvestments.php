@@ -337,11 +337,11 @@ $today = date("Y-m-d");
                             </button>
                             <span class="badge text-bg-secondary ml-2 mx-5">Inactive</span>
                             <?php if($investment['is_released'] != 1) : ?>
-                            <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET">
+                                <!--                             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET">
                                 <input type="hidden" name="re_invest_amount" value="<?php echo $amount ?>">
                                 <input type="hidden" name="plan_id" value="<?php echo $plan_id ?>">
                                 <button type="submit" class="btn btn-sm btn-warning ml-2">Re-Invest</button>
-                            </form>
+                            </form> -->
                             <form action="<?php echo $_SERVER['PHP_SELF'] ?>" method="GET">
                                 <input type="hidden" name="release_investment_id"
                                     value="<?php echo $investment['investment_id'] ?>">
