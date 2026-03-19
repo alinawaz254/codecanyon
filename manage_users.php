@@ -468,7 +468,7 @@
 							    <?php
 							    $current_referral_id = isset($new_user->referral_id) ? $new_user->referral_id : '';
 							    
-							    $result = $db->query("SELECT user_id, username FROM users ORDER BY username ASC");
+							    $result = $db->query("SELECT user_id, username FROM users WHERE user_type LIKE '%subscriber%' ORDER BY username ASC");
 							    
 							    if ($result && $result->num_rows > 0) {
 							        while($u = $result->fetch_assoc()){

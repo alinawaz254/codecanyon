@@ -169,6 +169,10 @@ require_once("lib/includes/header.php");
                                     case 6:
                                         $type = "Referral Commission";
                                         $class = 'badge text-light bg-dark';
+                                        break;                                      
+                                    case 7:
+                                        $type = "Investment Released";
+                                        $class = 'badge text-light bg-info';
                                         break;                                        
                                     default:
                                         $type = "Unknown";

@@ -76,7 +76,7 @@ $today = date("Y-m-d");
                 $username    = $user['username'];
                 $message     = $db->real_escape_string("$username has collected his commission on $today");
 
-                $db->query("INSERT INTO transactions (user_id,transaction_type,amount,description,is_approved) VALUES ('$user_id',3,'$amount','$message',1)");
+                $db->query("INSERT INTO transactions (user_id,transaction_type,amount,description,is_approved) VALUES ('$user_id',7,'$amount','$message',1)");
 
                 $transaction_id = $db->insert_id;
 
@@ -111,58 +111,53 @@ $today = date("Y-m-d");
         if(!$plan){
             echo "Invalid plan";
         }
-        
-        $current_balance = $transaction_obj->balance;
 
-        if($current_balance > $amount){
-            $issue_date  = date('Y-m-d');
-            $comission   = ($amount * $plan['commission']) / 100;
-            $ref_query   = $db->query("SELECT referral_id FROM users WHERE user_id = '$user_id'");
-            $ref_data    = $ref_query->fetch_assoc();
-            $referrer_id = $ref_data['referral_id'] ?? 0;
+        $issue_date  = date('Y-m-d');
+        $comission   = ($amount * $plan['commission']) / 100;
+        $ref_query   = $db->query("SELECT referral_id FROM users WHERE user_id = '$user_id'");
+        $ref_data    = $ref_query->fetch_assoc();
+        $referrer_id = $ref_data['referral_id'] ?? 0;
 
-            $db->query("INSERT INTO user_investments (user_id,plan_id,amount,issue_date) VALUES ('$user_id','$plan_id','$amount','$issue_date')");
+        $db->query("INSERT INTO user_investments (user_id,plan_id,amount,issue_date) VALUES ('$user_id','$plan_id','$amount','$issue_date')");
 
-            $investment_id = $db->insert_id;
+        $investment_id = $db->insert_id;
 
-            $u = $db->query("SELECT username FROM users WHERE user_id = $user_id");
-            $username = $u->fetch_assoc()['username'] ?? 'User';
+        $u = $db->query("SELECT username FROM users WHERE user_id = $user_id");
+        $username = $u->fetch_assoc()['username'] ?? 'User';
 
-            send_notification(
-                ADMIN_ID,
-                $user_id,
-                "$username re-invested PKR $amount",
-                "reinvest",
-                $investment_id
-            );        
+        send_notification(
+            ADMIN_ID,
+            $user_id,
+            "$username re-invested PKR $amount",
+            "reinvest",
+            $investment_id
+        );        
 
-            for ($i=1; $i <= $plan['total_cycles']; $i++) {     
+        for ($i=1; $i <= $plan['total_cycles']; $i++) {     
 
-                $comission_expiry_date = date(
-                "Y-m-d",
-                strtotime($issue_date . " +" . ($i * intval($plan['cycle_days'])) . " days")
-                );            
+            $comission_expiry_date = date(
+            "Y-m-d",
+            strtotime($issue_date . " +" . ($i * intval($plan['cycle_days'])) . " days")
+            );            
 
-                $db->query("INSERT INTO user_investment_details 
-                (investment_id,user_id,cycle,comission,comission_expiry_date) 
-                VALUES ('$investment_id','$user_id','$i','$comission','$comission_expiry_date')");
+            $db->query("INSERT INTO user_investment_details 
+            (investment_id,user_id,cycle,comission,comission_expiry_date) 
+            VALUES ('$investment_id','$user_id','$i','$comission','$comission_expiry_date')");
 
-                if($referrer_id > 0){
+            if($referrer_id > 0){
 
-                    $referral_commission = ($amount * 1) / 100;
+                $referral_commission = ($amount * 1) / 100;
 
-                    $db->query("
-                        INSERT INTO user_investment_details 
-                        (investment_id,user_id,cycle,comission,comission_expiry_date) 
-                        VALUES ('$investment_id','$referrer_id','$i','$referral_commission','$comission_expiry_date')
-                    ");
-                }
+                $db->query("
+                    INSERT INTO user_investment_details 
+                    (investment_id,user_id,cycle,comission,comission_expiry_date) 
+                    VALUES ('$investment_id','$referrer_id','$i','$referral_commission','$comission_expiry_date')
+                ");
             }
-
-            $_SESSION['success_message'] = "Re-investment completed successfully!";  
-        }else{
-            $_SESSION['error_message'] = "In Sufficient balance!";  
         }
+
+        $_SESSION['success_message'] = "Re-investment completed successfully!";  
+            // $_SESSION['error_message'] = "In Sufficient balance!";  
 
         header("Location: frontinvestments.php");
         exit;     
@@ -175,64 +170,75 @@ $today = date("Y-m-d");
 
         $details_query = $db->query("
             SELECT * 
-            FROM user_investment_details 
-            WHERE is_claimed = 0 
+            FROM user_investments 
+            WHERE investment_id = $investment_id AND is_released = 0 
             AND user_id = $user_id 
-            AND investment_id = $investment_id
         ");
+
+        if (!$details_query) {
+            die($db->error);
+        }
+        
+        $user_investment =   $details_query->fetch_assoc() ?? [];
 
         $get_user  = $db->query("SELECT username FROM users WHERE user_id = $user_id");
         $user_data = $get_user->fetch_assoc();
         $user      = $user_data['username'];
+        
+        if(!empty($user_investment)){
+            if(isset($user_investment)){
+                $amount = $user_investment['amount'];   
 
-        $commission_amount = 0;
+                if ($amount > 0) {
+                    $search_investment_details = $db->query("SELECT * FROM user_investment_details WHERE investment_id = $investment_id AND user_id = $user_id");
 
-        while ($row = $details_query->fetch_assoc()) {
-            $commission_amount += $row['comission'];
+                    $verify = true;
+                    
+                    while($row = $search_investment_details->fetch_assoc()){
+                        if($row['is_claimed'] == 0){
+                            $verify = false;
+                            break;
+                        }else{
+                            continue;
+                        }
+                    }
+
+                    if($verify){
+                        $db->query("UPDATE user_investments SET is_released = 1 WHERE investment_id = $investment_id AND user_id = $user_id");
+                        $message = $db->real_escape_string("$user has released his investment on $today");
+
+                        $db->query("
+                            INSERT INTO transactions 
+                            (user_id, transaction_type, amount, is_approved, description) 
+                            VALUES ($user_id, 7, $amount, 1, '$message')
+                        ");
+
+                        $transaction_id = $db->insert_id;
+
+                        send_notification(
+                            ADMIN_ID,
+                            $user_id,
+                            "$user collected his total investment of PKR $amount",
+                            "roi_release",
+                            $transaction_id
+                        );            
+                        $_SESSION['success_message'] = "Investment released successfully!";
+                    }else{
+                        $_SESSION['error_message'] = "Please claim all comissions first!";
+                    }
+
+                } else {
+                    $_SESSION['error_message'] = "An error occured while releasing the investment!";
+                }           
+
+            }else{
+                $_SESSION['error_message'] = "Cannot release this investment agian!";
+            }
+
+        }else{
+            $_SESSION['error_message'] = "No investment available to release!";
         }
-        print_r($commission_amount);
-        if ($commission_amount > 0) {
-
-            // Update once
-            $db->query("
-                UPDATE user_investment_details 
-                SET is_claimed = 1, claimed_date = '$today' 
-                WHERE user_id = $user_id 
-                AND investment_id = $investment_id
-            ");
-            
-            $_SESSION['success_message'] = "All commissions released successfully!";
-
-        } else {
-            $_SESSION['error_message'] = "No commission available to release!";
-        }           
-        $message = $db->real_escape_string("$user has collected his commission on $today");
-
-        $check = $db->query("
-            SELECT id 
-            FROM transactions 
-            WHERE user_id = $user_id 
-            AND created_at LIKE '%$today%'
-        ");
-
-        if ($check->num_rows == 0 && $commission_amount > 0) {
-            $db->query("
-                INSERT INTO transactions 
-                (user_id, transaction_type, amount, is_approved, description) 
-                VALUES ($user_id, 3, $commission_amount, 1, '$message')
-            ");
-
-            $transaction_id = $db->insert_id;
-
-            send_notification(
-                ADMIN_ID,
-                $user_id,
-                "$user collected total commission of PKR $commission_amount",
-                "roi_release",
-                $transaction_id
-            );            
-        }
-
+        
         header("Location: frontinvestments.php");
         exit;
     }

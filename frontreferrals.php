@@ -285,13 +285,13 @@ $result = $db->query($query);
                         <td><?php echo $row['issue_date']; ?></td>
                         <td>
                             <?php if ($is_expired): ?>
-                            <button class="btn btn-sm btn-success ml-2">In-Active</button>
+                            <button class="btn btn-sm btn-secondary ml-2">In-Active</button>
                             <?php else : ?>
+                            <?php endif; ?>                            
                             <button class="btn btn-primary btn-sm btn-golden" data-toggle="modal"
                                 data-target="#referralModal_<?php echo $row['investment_id']; ?>_<?php echo $row['referred_user_id']; ?>">
                                 View Commission
                             </button>
-                            <?php endif; ?>
 
                         </td>
                     </tr>

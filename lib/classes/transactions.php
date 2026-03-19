@@ -130,7 +130,11 @@ class Transactions {
                     case 6:
                         $type = "Bonus Commission";
                         $class = 'badge text-light bg-dark';
-                        break;                        
+                        break;                                          
+                    case 7:
+                        $type = "Investment Released";
+                        $class = 'badge text-light bg-info';
+                        break;                       
                     default:
                         $type = "Unknown";
                         $class = 'badge text-bg-secondary';
@@ -222,6 +226,7 @@ class Transactions {
             case 4: $type_label = _("Transfer"); break;
             case 5: $type_label = _("Referral Commission"); break;
             case 6: $type_label = _("Bonus Commission"); break;
+            case 7: $type_label = _("Investment Released"); break;
             default: $type_label = _("Unknown");
         }
         
@@ -295,7 +300,10 @@ class Transactions {
                                             break;
                                         case 6:
                                             $class = 'badge text-light bg-dark';
-                                            break;                                            
+                                            break;                                        
+                                        case 7:
+                                            $class = 'badge text-light bg-info';
+                                            break;                                          
                                         default:
                                             $class = 'badge text-bg-secondary';
                                     }
@@ -380,7 +388,8 @@ class Transactions {
             'transfers' => 0,            
             'today_count' => 0,
             'today_amount' => 0,
-            'bonus' => 0
+            'bonus' => 0,
+            'released' => 0
         );
         
         // Total transactions count
@@ -399,6 +408,7 @@ class Transactions {
                     SUM(CASE WHEN transaction_type = 4 THEN amount ELSE 0 END) as total_transfers,
                     SUM(CASE WHEN transaction_type = 5 THEN amount ELSE 0 END) as total_referral_commission,
                     SUM(CASE WHEN transaction_type = 6 THEN amount ELSE 0 END) as total_bonus
+                    SUM(CASE WHEN transaction_type = 7 THEN amount ELSE 0 END) as total_released
                 FROM transactions
             ");
             if($result) {
@@ -409,6 +419,7 @@ class Transactions {
                 $stats['transfers'] = $amounts['total_transfers'] ?? 0;                
                 $stats['referral_commission'] = $amounts['total_referral_commission'] ?? 0;
                 $stats['bonus'] = $amounts['total_bonus'] ?? 0;        
+                $stats['released'] = $amounts['total_released'] ?? 0;        
             }
             
             // Today's transactions
@@ -443,6 +454,7 @@ class Transactions {
                         WHEN transaction_type = 4 THEN -amount     
                         WHEN transaction_type = 5 THEN amount
                         WHEN transaction_type = 6 THEN amount  
+                        WHEN transaction_type = 7 THEN amount  
                     END
                 ),0) AS balance
             FROM transactions
@@ -491,6 +503,7 @@ class Transactions {
                         WHEN transaction_type = 4 THEN -amount     
                         WHEN transaction_type = 5 THEN amount
                         WHEN transaction_type = 6 THEN amount
+                        WHEN transaction_type = 7 THEN amount
                     END
                 ),0) AS balance
             FROM transactions
@@ -511,7 +524,7 @@ class Transactions {
     {
         global $db;
 
-        $investment_sql = $db->query("SELECT amount FROM user_investments WHERE user_id = '$user_id'");
+        $investment_sql = $db->query("SELECT amount FROM user_investments WHERE user_id = '$user_id' AND is_released = 0");
         $investement = 0;
         if ($investment_sql && $investment_sql->num_rows > 0) {
 
@@ -529,13 +542,9 @@ class Transactions {
         $sql = "
             SELECT 
                 COALESCE(SUM(
-                    CASE 
-                        WHEN transaction_type = 1 THEN -amount
-                        WHEN transaction_type = 2 THEN amount     
-                        WHEN transaction_type = 3 THEN amount    
-                        WHEN transaction_type = 4 THEN -amount     
+                    CASE    
+                        WHEN transaction_type = 3 THEN amount      
                         WHEN transaction_type = 5 THEN amount
-                        WHEN transaction_type = 6 THEN amount
                     END
                 ),0) AS balance
             FROM transactions

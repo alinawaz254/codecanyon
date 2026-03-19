@@ -243,7 +243,7 @@ function update_investment($investment_id,$user_id,$plan_id,$amount,$issue_date)
             $db->query("
                 INSERT INTO user_investment_details 
                 (investment_id,user_id,cycle,comission,comission_expiry_date) 
-                VALUES ('$investment_id','$referrer_id','$i','$referral_commission','$comission_expiry_date')
+                VALUES ('$investment_id','$referrer_id','$i','$referral_commission','$expiry_date')
             ");
         }
     }
