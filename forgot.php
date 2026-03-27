@@ -35,29 +35,25 @@
             <div class="row flex-row h-100 bg-white">
                 <!-- Begin Left Content -->
                 <div class="col-xl-3 col-lg-5 col-md-5 col-sm-12 col-12 no-padding">
-                    <div class="webfulho-bg background-03">
-                        <div class="webfulho-overlay overlay-08"></div>
-                        <div class="authentication-col-content-2 mx-auto text-center">
-                            <div class="logo-centered">
-                                <a href="<?=SITEURL;?>">
-                                    <img src="<?=SITELOGO;?>" alt="logo">
-                                </a>
-                            </div>
-                            <h1><?php _e("PHP login script"); ?></h1>
-                            <span class="description">
-                                <?php _e("If you are already a member please fill the login form and if you don't have an account yet click signup below."); ?> 
-                            </span>
-                            <ul class="mt-5 justify-content-center">
-                                <li><a href="<?=SITEURL;?>register.php" class="btn btn-lg btn-gradient-01" data-easein="zoomInRight">
-                                        <?php _e("Sign Up"); ?>
-                                    </a>
-                                	<a href="<?=SITEURL;?>login.php" class="btn btn-lg btn-gradient-01" data-easein="zoomInRight">
-                                        <?php _e("Sign In"); ?>
-                                    </a>
-                                </li>
-                            </ul>
+
+                    <div class="auth-left-panel">
+                        <div class="auth-left-inner text-center">
+                            <img src="<?=SITELOGO;?>" class="auth-logo">
+
+                            <h1 class="auth-title"><?=SITE_NAME;?></h1>
+
+                            <p class="auth-desc">
+                                If you are already a member please fill the login form.
+                            </p>
+
+                             <a href="<?=SITEURL;?>register.php" class="btn btn-primary btn-lg btn-golden-admin">
+                                Sign Up
+                            </a> 
+                            <a href="<?=SITEURL;?>login.php" class="btn btn-primary btn-lg btn-golden-admin">
+                                Sign In
+                            </a> 
                         </div>
-                    </div>
+                    </div>                    
                 </div>
                 <!-- End Left Content -->
                 <!-- Begin Right Content -->
@@ -76,12 +72,12 @@
 									<p><?php _e("Please enter your email address or username to recover your password."); ?></p>
 									<form action="<?php $_SERVER['PHP_SELF']?>" class="form-signin" id="forgot_form" name="forgot" method="post">
 										<div class="group material-input">
-											<input type="text" class="form-control" id="eMail" name="email" required="required" />
+											<input type="text" class="form-control mt-5" id="eMail" name="email" required="required" />
 											<label for="eMail"><?php _e("Email or Username"); ?></label>
 										</div>
 										
 										<div class="sign-btn text-center">
-											<input type="submit" class="btn btn-lg btn-gradient-01" value="<?php _e("Reset Password"); ?>" />
+											<input type="submit" class="btn btn-primary btn-lg btn-golden-admin" value="<?php _e("Reset Password"); ?>" />
 										</div>
 										<input type="hidden" name="forgot_pass" value="1" />
 									</form>
@@ -97,7 +93,7 @@
 										
 										<div class="sign-btn text-center">
 											<input type="hidden" value="1" name="reset_form" />
-											<input type="submit" class="btn btn-lg btn-gradient-01" value="<?php _e("Reset Password"); ?>" />
+											<input type="submit" class="btn btn-primary btn-lg btn-golden-admin" value="<?php _e("Reset Password"); ?>" />
 										</div>	
 									</form>
 								<?php endif; ?>
