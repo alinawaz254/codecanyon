@@ -347,7 +347,7 @@
 								<?php _e("Password"); ?>
 							</label>
 							<div class="col-lg-5">
-								<input type="password" id="password" class="form-control" name="password" placeholder="<?php _e("Password"); ?>" value="" /><small><?php _e("Leave blank if you don't want to change password"); ?></small>
+								<input type="password" id="password" class="form-control" name="password" placeholder="<?php _e("Password"); ?>" value="" /><i class="toggle-password fa fa-fw fa-eye-slash"></i><small><?php _e("Leave blank if you don't want to change password"); ?></small>
 							</div>
 						</div>
 					</div>
@@ -358,7 +358,7 @@
 								<?php _e("Confirm Password"); ?>
 							</label>
 							<div class="col-lg-5">
-								<input class="form-control" id="confirmpassword" type="password" name="confirm_password" placeholder="<?php _e("Confirm Password"); ?>" value="" />
+								<input class="form-control" id="confirmpassword" type="password" name="confirm_password" placeholder="<?php _e("Confirm Password"); ?>" value="" /><i class="toggle-password fa fa-fw fa-eye-slash"></i>
 							</div>
 						</div>
 					</div>
@@ -369,7 +369,7 @@
 								<?php _e("Password"); ?>*
 							</label>
 							<div class="col-lg-5">
-								<input type="password" id="password" class="form-control" name="password" placeholder="<?php _e("Password"); ?>" value="" />
+								<input type="password" id="password" class="form-control" name="password" placeholder="<?php _e("Password"); ?>" value="" /><i class="toggle-password fa fa-fw fa-eye-slash"></i>
 							</div>
 						</div>
 					</div>
@@ -380,7 +380,7 @@
 								<?php _e("Confirm Password"); ?>*
 							</label>
 							<div class="col-lg-5">
-								<input class="form-control" id="confirmpassword" type="password" name="confirm_password" placeholder="<?php _e("Confirm Password"); ?>" value="" />
+								<input class="form-control" id="confirmpassword" type="password" name="confirm_password" placeholder="<?php _e("Confirm Password"); ?>" value="" /><i class="toggle-password fa fa-fw fa-eye-slash"></i>
 							</div>
 						</div>	
 					</div>	

@@ -203,7 +203,7 @@
 									</div>
 									
 									<div class="group material-input">	
-										<input type="password" id="passWord" name="password" class="form-control" required="required"/>
+										<input type="password" id="passWord" name="password" class="form-control" required="required"/><i class="toggle-password fa fa-fw fa-eye-slash"></i>
 										<label for="passWord"><?php _e("Password"); ?>*</label>
 									</div>
 									<?php 
