@@ -18,7 +18,7 @@ require_once("lib/includes/header.php");
     </p>
 </div>
 
-<div class="row">
+<div class="row table-responsive">
     <?php $investment_obj->list_plans(); ?>
 </div>
 
