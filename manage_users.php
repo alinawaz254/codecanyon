@@ -480,8 +480,7 @@
 							                continue; 
 							            }
 							            
-							            echo "<option data-user-name ='".htmlspecialchars($u['username']). "' data-user-full-name='".$user_full_name."' value='" . htmlspecialchars($u['user_id']) . "' $selected>" . 
-							                 (isset($selected) && !empty($selected) ? $user_full_name : htmlspecialchars($u['username'])) . "</option>";
+							            echo "<option data-user-name ='".htmlspecialchars($u['username']). "' data-user-full-name='".$user_full_name."' value='" . htmlspecialchars($u['user_id']) . "' $selected>" . htmlspecialchars($u['username']).' - '.$user_full_name . . "</option>";
 							        }
 							    } else {
 							        echo "<option value=''>No subscribers found</option>";

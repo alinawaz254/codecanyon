@@ -185,20 +185,20 @@
 			width:'100%',
 			placeholder:"Search & Select Referral User",
 			allowClear:true,
-		    templateResult: function (data) {
-		        if (!data.id) return data.text;
+		    // templateResult: function (data) {
+		    //     if (!data.id) return data.text;
 
-		        let option = $(data.element);
+		    //     let option = $(data.element);
 
-		        return option.data('user-name') || data.text;
-		    },
-		    templateSelection: function (data) {
-		        if (!data.id) return data.text;
+		    //     return option.data('user-name') || data.text;
+		    // },
+		    // templateSelection: function (data) {
+		    //     if (!data.id) return data.text;
 
-		        let option = $(data.element);
+		    //     let option = $(data.element);
 
-		        return option.data('user-full-name') || data.text;
-		    }
+		    //     return option.data('user-full-name') || data.text;
+		    // }
 		});
 
 		$(".toggle-password").click(function() {

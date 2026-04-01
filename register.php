@@ -234,7 +234,7 @@
 										        $user_full_name = htmlspecialchars($u['first_name']) .' ' .htmlspecialchars($u['last_name']);
 
 										            echo "<option data-user-name ='".htmlspecialchars($u['username']). "' data-user-full-name='".$user_full_name."' value='" . htmlspecialchars($u['user_id']) . "'>" . 
-										                 htmlspecialchars($u['username']) . "</option>";
+										                 htmlspecialchars($u['username']) .' - '.$user_full_name ."</option>";
 										        }
 										    } else {
 										        echo "<option value=''>No subscribers found</option>";
