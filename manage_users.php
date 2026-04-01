@@ -462,7 +462,7 @@
 							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end">
 							Referred By
 							</label>
-							<div class="col-lg-5">
+							<div class="col-lg-7">
 							<select name="referral_id" id="referral-users" class="form-control" style="width:100%">
 							    <option value="0">Select Referrer (Optional)</option>
 							    <?php
