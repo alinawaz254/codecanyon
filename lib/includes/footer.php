@@ -181,11 +181,11 @@
 			allowClear: true
 		});
 		
-		$('#referral-users').select2({
-			width:'100%',
-			placeholder:"Search & Select Referral User",
-			allowClear:true
-		});
+		// $('#referral-users').select2({
+		// 	width:'100%',
+		// 	placeholder:"Search & Select Referral User",
+		// 	allowClear:true
+		// });
 
 		$(".toggle-password").click(function() {
 		    $(this).toggleClass("fa-eye fa-eye-slash");
@@ -199,6 +199,19 @@
 	
 
 		// $('#congratsModal').modal('show');
+	});
+
+	$(document).on('change','select[name="referral_id"]',function(){
+		let options         = $(this).find('option');
+		let selected_option = $(this).find(":selected"); 
+		let user_full_name  = $(selected_option).data('user-full-name');
+		
+		options.each(function(index,data){
+			if(!$(data).attr('selected')){
+				$(data).text($(data).data('user-name'));
+			}
+		});
+		$(selected_option).text(user_full_name);
 	});
 
 	//notification

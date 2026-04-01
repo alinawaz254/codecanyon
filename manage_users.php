@@ -468,19 +468,20 @@
 							    <?php
 							    $current_referral_id = isset($new_user->referral_id) ? $new_user->referral_id : '';
 							    
-							    $result = $db->query("SELECT user_id, username FROM users WHERE user_type LIKE '%subscriber%' ORDER BY username ASC");
+							    $result = $db->query("SELECT user_id,first_name,last_name,username FROM users WHERE user_type LIKE '%subscriber%' ORDER BY username ASC");
 							    
 							    if ($result && $result->num_rows > 0) {
 							        while($u = $result->fetch_assoc()){
 							            // Check if this option should be selected
 							            $selected = ($current_referral_id == $u['user_id']) ? 'selected="selected"' : '';
-							            
+								        $user_full_name = htmlspecialchars($u['first_name']) .' ' .htmlspecialchars($u['last_name']);
+
 							            if (isset($_POST['edit_user']) && $_POST['edit_user'] == $u['user_id']) {
 							                continue; 
 							            }
 							            
-							            echo "<option value='" . htmlspecialchars($u['user_id']) . "' $selected>" . 
-							                 htmlspecialchars($u['username']) . "</option>";
+							            echo "<option data-user-name ='".htmlspecialchars($u['username']). "' data-user-full-name='".$user_full_name."' value='" . htmlspecialchars($u['user_id']) . "' $selected>" . 
+							                 (isset($selected) && !empty($selected) ? $user_full_name : htmlspecialchars($u['username'])) . "</option>";
 							        }
 							    } else {
 							        echo "<option value=''>No subscribers found</option>";

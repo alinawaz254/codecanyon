@@ -81,6 +81,13 @@
 		?>
     </head>
     <style>
+        @media screen and (min-width: 0px) and (max-width: 490px){
+            .dataTables_info{
+                display: block !important;
+                margin-top: 20px !important;
+                justify-content: center !important;
+            }
+        }
         .toggle-password {
             float: right;
             cursor: pointer;
