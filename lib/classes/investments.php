@@ -349,7 +349,7 @@ function list_investments(){
                         &times;
                     </button>    
                 </div>
-                <div class="modal-body">
+                <div class="modal-body table-responsive">
                     <div class="investment-info">
                         <div>
                             <label class="info-label">User</label><br>

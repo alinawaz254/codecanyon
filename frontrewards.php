@@ -78,7 +78,7 @@ $levels = [
 </style>
 
 <div class="mywidget wc_data">
-    <div class="widget has-shadow">
+    <div class="widget has-shadow table-responsive">
         <div class="widget-body">
             <div class="reward-stats">
                 <b>Total Investment:</b> <?php echo number_format($total_investment, 2); ?> PKR<br>

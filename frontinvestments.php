@@ -364,7 +364,7 @@ $today = date("Y-m-d");
 
                     <div class="modal fade" id="investmentModal_<?php echo $investment['investment_id']; ?>"
                         tabindex="-1">
-                        <div class="modal-dialog modal-lg modal-dialog-centered">
+                        <div class="modal-dialog modal-lg modal-dialog-centered table-responsive">
                             <div class="modal-content investment-modal">
                                 <div class="modal-header investment-header">
                                     <h5 class="modal-title">

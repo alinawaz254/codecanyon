@@ -314,7 +314,7 @@ $result = $db->query($query);
                                     </button>
                                 </div>
 
-                                <div class="modal-body">
+                                <div class="modal-body table-responsive">
                                     <div class="investment-info">
                                         <div>
                                             <span class="info-label">Referred User</span>

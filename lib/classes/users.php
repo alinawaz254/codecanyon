@@ -300,18 +300,12 @@ class Users {
 
 		$password_submission = $password;
 		
-		$query 	= "SELECT * FROM `users` WHERE `email`='{$email}' OR `username`='{$email}'";
+		// $query 	= "SELECT * FROM `users` WHERE `email`='{$email}' OR `username`='{$email}'";
 
-	 	$select_query   = "SELECT * FROM `users` WHERE `email`=? OR `username`=?";
-        $stmt           = $db->prepare($select_query);
-
-        $stmt->bind_param('ss', $email, $email);
-        $stmt->execute();
-
-        $result = $stmt->get_result();
+	 	$select_query   = $db->query("SELECT * FROM users WHERE email LIKE '%{$email}%' OR username LIKE '%{$email}%' LIMIT 1");
 		 
-		 if($result->num_rows > 0) { 
-			$row = $result->fetch_assoc();
+		 if($select_query->num_rows > 0) { 
+			$row = $select_query->fetch_assoc();
 
 			$lock_account = $this->get_user_meta($row['user_id'], 'login_lock');
 			 

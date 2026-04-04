@@ -359,7 +359,7 @@
 								<?php _e("Password"); ?>
 							</label>
 							<div class="col-lg-5">
-								<input type="password" id="password" class="form-control" name="password" placeholder="<?php _e("Password"); ?>" value="" /><small><?php _e("Leave blank if you don't want to change password"); ?></small>
+								<input type="password" id="password" class="form-control" name="password" placeholder="<?php _e("Password"); ?>" value="" /><i class="toggle-password fa fa-fw fa-eye-slash"></i><small><?php _e("Leave blank if you don't want to change password"); ?></small>
 							</div>
 						</div>
 					</div>
@@ -370,7 +370,7 @@
 								<?php _e("Confirm Password"); ?>
 							</label>
 							<div class="col-lg-5">
-								<input class="form-control" id="confirmpassword" type="password" name="confirm_password" placeholder="<?php _e("Confirm Password"); ?>" value="" />
+								<input class="form-control" id="confirmpassword" type="password" name="confirm_password" placeholder="<?php _e("Confirm Password"); ?>" value="" /><i class="toggle-password fa fa-fw fa-eye-slash"></i>
 							</div>
 						</div>
 					</div>
@@ -381,7 +381,7 @@
 								<?php _e("Password"); ?>*
 							</label>
 							<div class="col-lg-5">
-								<input type="password" id="password" class="form-control" name="password" placeholder="<?php _e("Password"); ?>" value="" />
+								<input type="password" id="password" class="form-control" name="password" placeholder="<?php _e("Password"); ?>" value="" /><i class="toggle-password fa fa-fw fa-eye-slash"></i>
 							</div>
 						</div>
 					</div>
@@ -392,7 +392,7 @@
 								<?php _e("Confirm Password"); ?>*
 							</label>
 							<div class="col-lg-5">
-								<input class="form-control" id="confirmpassword" type="password" name="confirm_password" placeholder="<?php _e("Confirm Password"); ?>" value="" />
+								<input class="form-control" id="confirmpassword" type="password" name="confirm_password" placeholder="<?php _e("Confirm Password"); ?>" value="" /><i class="toggle-password fa fa-fw fa-eye-slash"></i>
 							</div>
 						</div>	
 					</div>	
@@ -474,25 +474,25 @@
 							<label class="col-lg-4 form-control-label d-flex justify-content-lg-end">
 							Referred By
 							</label>
-							<div class="col-lg-5">
+							<div class="col-lg-7">
 							<select name="referral_id" id="referral-users" class="form-control" style="width:100%">
 							    <option value="0">Select Referrer (Optional)</option>
 							    <?php
 							    $current_referral_id = isset($new_user->referral_id) ? $new_user->referral_id : '';
 							    
-							    $result = $db->query("SELECT user_id, username FROM users WHERE user_type LIKE '%subscriber%' ORDER BY username ASC");
+							    $result = $db->query("SELECT user_id,first_name,last_name,username FROM users WHERE user_type LIKE '%subscriber%' ORDER BY username ASC");
 							    
 							    if ($result && $result->num_rows > 0) {
 							        while($u = $result->fetch_assoc()){
 							            // Check if this option should be selected
 							            $selected = ($current_referral_id == $u['user_id']) ? 'selected="selected"' : '';
-							            
+								        $user_full_name = htmlspecialchars($u['first_name']) .' ' .htmlspecialchars($u['last_name']);
+
 							            if (isset($_POST['edit_user']) && $_POST['edit_user'] == $u['user_id']) {
 							                continue; 
 							            }
 							            
-							            echo "<option value='" . htmlspecialchars($u['user_id']) . "' $selected>" . 
-							                 htmlspecialchars($u['username']) . "</option>";
+							            echo "<option data-user-name ='".htmlspecialchars($u['username']). "' data-user-full-name='".$user_full_name."' value='" . htmlspecialchars($u['user_id']) . "' $selected>" . htmlspecialchars($u['username']).' - '.$user_full_name . "</option>";
 							        }
 							    } else {
 							        echo "<option value=''>No subscribers found</option>";

@@ -1,7 +1,8 @@
-<?php 
-if(!defined('ROOT_DIR')) {
+<?php
+
+if (!defined('ROOT_DIR')) {
 	exit();
-} ?>
+}?>
 
 <style>
 	@media (max-width: 768px) {
@@ -17,7 +18,7 @@ if(!defined('ROOT_DIR')) {
 		</div>
 		<div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 d-flex align-items-center justify-content-xl-end justify-content-lg-end justify-content-md-end justify-content-center">
 			<p>&copy; <?php _e("Copyright"); ?> <?php echo date('Y'); ?> 
-				<strong><?php echo get_option('site_name'); ?></strong> <?php _e("All Rights Reserved"); ?> <?php _e("Powered By"); ?>: <a href="https://www.webfulcreations.com/">Webful Creations</a></p>
+				<strong><?php echo get_option('site_name'); ?></strong> <?php _e("All Rights Reserved"); ?> <?php _e("Powered By"); ?>: <a href="https://marvelstack.co/">Marvel Stack</a></p>
 		</div>
 	</div>
 </footer>
