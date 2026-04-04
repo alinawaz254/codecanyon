@@ -102,15 +102,27 @@
 
 		$auto_generated_user_name = 'BIZ';
 
-		if(strlen($count) == 1){
-			$auto_generated_user_name .= '000' . ($count + 1);
-		}elseif(strlen($count) == 2){
-			$auto_generated_user_name .= '00' . ($count + 1);
-		}elseif(strlen($count) == 3){
-			$auto_generated_user_name .= '0' . ($count + 1);
-		}else{
-			$auto_generated_user_name .= ($count + 1);
-		}
+			if(strlen($count) == 1) {
+				if(($count + 1) == 10){
+					$auto_generated_user_name .= '00' . ($count + 1);
+				}else{
+					$auto_generated_user_name .= '000' . ($count + 1);
+				}
+			}elseif (strlen($count) == 2 ) {
+				if(($count + 1) == 100){
+					$auto_generated_user_name .= '0' . ($count + 1);
+				}else{
+					$auto_generated_user_name .= '00' . ($count + 1);
+				}
+			}elseif (strlen($count) == 3 ) {
+				if(($count + 1) == 1000){
+					$auto_generated_user_name .=  ($count + 1);
+				}else{
+					$auto_generated_user_name .= '0' . ($count + 1);
+				}
+			}elseif (strlen($count) == 4 ) {
+				$auto_generated_user_name .= ($count + 1);
+			}
 
 	}	
 ?>

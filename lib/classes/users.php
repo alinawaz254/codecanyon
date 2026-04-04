@@ -1084,17 +1084,31 @@ function match_confirm_code($confirmation_code,$user_id){
 			$result                   = $db->query($all_users);
 			$count                    = $result->num_rows;
 			$auto_generated_user_name = 'BIZ';
+			
 
-			if(strlen($count) == 1){
-				$auto_generated_user_name .= '000' . ($count + 1);
-			}elseif (strlen($count) == 2) {
-				$auto_generated_user_name .= '00' . ($count + 1);
-			}elseif (strlen($count) == 3) {
-				$auto_generated_user_name .= '0' . ($count + 1);
-			}elseif (strlen($count) == 4) {
+			if(strlen($count) == 1) {
+				if(($count + 1) == 10){
+					$auto_generated_user_name .= '00' . ($count + 1);
+				}else{
+					$auto_generated_user_name .= '000' . ($count + 1);
+				}
+			}elseif (strlen($count) == 2 ) {
+				if(($count + 1) == 100){
+					$auto_generated_user_name .= '0' . ($count + 1);
+				}else{
+					$auto_generated_user_name .= '00' . ($count + 1);
+				}
+			}elseif (strlen($count) == 3 ) {
+				if(($count + 1) == 1000){
+					$auto_generated_user_name .=  ($count + 1);
+				}else{
+					$auto_generated_user_name .= '0' . ($count + 1);
+				}
+			}elseif (strlen($count) == 4 ) {
 				$auto_generated_user_name .= ($count + 1);
 			}
 			
+			// die(strlen($count) . " $auto_generated_user_name");
 			// $auto_generated_username = 'BIZ' . count();
 			//Running Query to add user.
 			$query = "INSERT into users VALUES(NULL, '".$first_name."', '".$last_name."', '".$gender."', '".$date_of_birth."', '".$address1."', '".$address2."', '".$city."', '".$state."', '".$country."', '".$zip_code."', '".$mobile."', '".$phone."', '".$auto_generated_user_name."', '".$email."', '".$password_con."', '".$profile_image."', '".$description."', '".$status."', '', '".date('Y-m-d')."', '".$user_type."','".$referral_id."')";
