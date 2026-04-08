@@ -220,24 +220,6 @@
 										<input type="password" id="passWord" name="password" class="form-control" required="required"/><i class="toggle-password fa fa-fw fa-eye-slash"></i>
 										<label for="passWord"><?php _e("Password"); ?>*</label>
 									</div>
-									<?php 
-										//This is captcha code please do not remove it you can deactivate captcha by going admin section general settings. Else form will not work . on other page.
-										if(get_option('activate_captcha') == '1') { 
-												$sitekey = get_option('site_key'); // you got this from the signup page
-									?>
-										<script type="text/javascript">
-											var onloadCallback = function() {
-											grecaptcha.render('html_element', {
-												'sitekey' : '<?php echo $sitekey; ?>'
-											});
-											};
-										</script>
-										<div id="html_element" class="mb-3"></div>
-										<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-											async defer>
-										</script>
-									<?php } ?>
-
 									<div style="margin-bottom: 20px;">
 										<input type="text" id="referrer_username" class="form-control" autocomplete="off" placeholder="<?php _e("Enter Referral Username (Optional)"); ?>" />
 										<span id="referrer_name_display" style="display:block;margin-top:5px;font-weight:bold;font-size:14px;"></span>
@@ -279,6 +261,25 @@
 											}
 										});
 									</script>
+
+									<?php 
+										//This is captcha code please do not remove it you can deactivate captcha by going admin section general settings. Else form will not work . on other page.
+										if(get_option('activate_captcha') == '1') { 
+												$sitekey = get_option('site_key'); // you got this from the signup page
+									?>
+										<script type="text/javascript">
+											var onloadCallback = function() {
+											grecaptcha.render('html_element', {
+												'sitekey' : '<?php echo $sitekey; ?>'
+											});
+											};
+										</script>
+										<div id="html_element" class="mb-3"></div>
+										<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
+											async defer>
+										</script>
+									<?php } ?>
+
 
 									<div class="row mt-2">
 										<div class="col text-left">
