@@ -475,30 +475,65 @@
 							Referred By
 							</label>
 							<div class="col-lg-7">
-							<select name="referral_id" id="referral-users" class="form-control" style="width:100%">
-							    <option value="0">Select Referrer (Optional)</option>
-							    <?php
-							    $current_referral_id = isset($new_user->referral_id) ? $new_user->referral_id : '';
-							    
-							    $result = $db->query("SELECT user_id,first_name,last_name,username FROM users WHERE user_type LIKE '%subscriber%' ORDER BY username ASC");
-							    
-							    if ($result && $result->num_rows > 0) {
-							        while($u = $result->fetch_assoc()){
-							            // Check if this option should be selected
-							            $selected = ($current_referral_id == $u['user_id']) ? 'selected="selected"' : '';
-								        $user_full_name = htmlspecialchars($u['first_name']) .' ' .htmlspecialchars($u['last_name']);
+							<input type="text" id="referrer_username" class="form-control" autocomplete="off" placeholder="<?php _e("Enter Referral Username (Optional)"); ?>" />
+							<span id="referrer_name_display" style="display:block;margin-top:5px;font-weight:bold;font-size:14px;"></span>
+							<input type="hidden" name="referral_id" id="referral_id" value="<?php echo isset($new_user->referral_id) ? $new_user->referral_id : '0'; ?>">
 
-							            if (isset($_POST['edit_user']) && $_POST['edit_user'] == $u['user_id']) {
-							                continue; 
-							            }
-							            
-							            echo "<option data-user-name ='".htmlspecialchars($u['username']). "' data-user-full-name='".$user_full_name."' value='" . htmlspecialchars($u['user_id']) . "' $selected>" . htmlspecialchars($u['username']).' - '.$user_full_name . "</option>";
-							        }
-							    } else {
-							        echo "<option value=''>No subscribers found</option>";
-							    }
-							    ?>
-							</select>
+							<script>
+								var subscribersData = {
+								<?php
+								$current_referral_id = isset($new_user->referral_id) ? $new_user->referral_id : '0';
+								$current_username = '';
+								$current_fullname = '';
+
+								$result = $db->query("SELECT user_id,first_name,last_name,username FROM users WHERE user_type LIKE '%subscriber%' ORDER BY username ASC");
+
+								if ($result && $result->num_rows > 0) {
+									$sub_arr = [];
+									while($u = $result->fetch_assoc()){
+										if (isset($_POST['edit_user']) && $_POST['edit_user'] == $u['user_id']) {
+											continue; 
+										}
+										$user_full_name = htmlspecialchars($u['first_name']) .' ' .htmlspecialchars($u['last_name']);
+										if ($current_referral_id == $u['user_id']) {
+											$current_username = htmlspecialchars($u['username']);
+											$current_fullname = $user_full_name;
+										}
+										$sub_arr[] = '"' . htmlspecialchars(strtolower($u['username'])) . '": {"id": "' . htmlspecialchars($u['user_id']) . '", "name": "' . addslashes($user_full_name) . '"}';
+									}
+									echo implode(",\n\t\t\t\t\t\t\t\t\t\t\t\t\t", $sub_arr);
+								}
+								?>
+								};
+
+								document.getElementById('referrer_username').value = "<?php echo $current_username; ?>";
+								var initialDisplay = "<?php echo $current_username ? strtoupper($current_username) . ' - ' . addslashes($current_fullname) : ''; ?>";
+								if (initialDisplay) {
+									document.getElementById('referrer_name_display').textContent = initialDisplay;
+									document.getElementById('referrer_name_display').style.color = '#4CAF50';
+								}
+
+								document.getElementById('referrer_username').addEventListener('input', function() {
+									var username = this.value.trim().toLowerCase();
+									var displaySpan = document.getElementById('referrer_name_display');
+									var hiddenId = document.getElementById('referral_id');
+
+									if(username && subscribersData[username]) {
+										var data = subscribersData[username];
+										displaySpan.textContent = username.toUpperCase() + ' - ' + data.name;
+										displaySpan.style.color = '#4CAF50';
+										hiddenId.value = data.id;
+									} else {
+										if(username.length > 0) {
+											displaySpan.textContent = '<?php _e("User not found"); ?>';
+											displaySpan.style.color = '#dc3545';
+										} else {
+											displaySpan.textContent = '';
+										}
+										hiddenId.value = 0;
+									}
+								});
+							</script>
 							</div>
 						</div>					
 					</div>					

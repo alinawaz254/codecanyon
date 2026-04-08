@@ -238,21 +238,47 @@
 										</script>
 									<?php } ?>
 
-									<select name="referral_id" id="referral-users" class="form-control mb-5" style="width:100%;margin-bottom: 20px;">
-									    <option value="0">Select Referrer (Optional)</option>
-									    <?php
-										    if ($subscribers && $subscribers->num_rows > 0) {
-										        while($u = $subscribers->fetch_assoc()){	
-										        $user_full_name = htmlspecialchars($u['first_name']) .' ' .htmlspecialchars($u['last_name']);
+									<div style="margin-bottom: 20px;">
+										<input type="text" id="referrer_username" class="form-control" autocomplete="off" placeholder="<?php _e("Enter Referral Username (Optional)"); ?>" />
+										<span id="referrer_name_display" style="display:block;margin-top:5px;font-weight:bold;font-size:14px;"></span>
+									</div>
+									<input type="hidden" name="referral_id" id="referral_id" value="0">
 
-										            echo "<option data-user-name ='".htmlspecialchars($u['username']). "' data-user-full-name='".$user_full_name."' value='" . htmlspecialchars($u['user_id']) . "'>" . 
-										                 htmlspecialchars($u['username']) .' - '.$user_full_name ."</option>";
-										        }
-										    } else {
-										        echo "<option value=''>No subscribers found</option>";
-										    }
-									    ?>
-									</select>
+									<script>
+										var subscribersData = {
+										<?php
+											if ($subscribers && $subscribers->num_rows > 0) {
+												$sub_arr = [];
+												while($u = $subscribers->fetch_assoc()){
+													$user_full_name = htmlspecialchars($u['first_name']) .' ' .htmlspecialchars($u['last_name']);
+													$sub_arr[] = '"' . htmlspecialchars(strtolower($u['username'])) . '": {"id": "' . htmlspecialchars($u['user_id']) . '", "name": "' . addslashes($user_full_name) . '"}';
+												}
+												echo implode(",\n\t\t\t\t\t\t\t\t\t\t\t", $sub_arr);
+											}
+										?>
+										};
+
+										document.getElementById('referrer_username').addEventListener('input', function() {
+											var username = this.value.trim().toLowerCase();
+											var displaySpan = document.getElementById('referrer_name_display');
+											var hiddenId = document.getElementById('referral_id');
+
+											if(username && subscribersData[username]) {
+												var data = subscribersData[username];
+												displaySpan.textContent = username.toUpperCase() + ' - ' + data.name;
+												displaySpan.style.color = '#4CAF50';
+												hiddenId.value = data.id;
+											} else {
+												if(username.length > 0) {
+												    displaySpan.textContent = '<?php _e("User not found"); ?>';
+												    displaySpan.style.color = '#dc3545';
+												} else {
+												    displaySpan.textContent = '';
+												}
+												hiddenId.value = 0;
+											}
+										});
+									</script>
 
 									<div class="row mt-2">
 										<div class="col text-left">
