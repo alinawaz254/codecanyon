@@ -396,10 +396,15 @@ function list_investments(){
                             </span>
 
                             <?php } else { ?>
-
-                            <span class="badge text-bg-danger">
-                            Unpaid (<?php echo $interval->days ?> days left)
-                            </span>
+                                <?php if($interval->days < $today && $d['is_claimed'] != 1){ ?>
+                                    <span class="badge text-bg-success">
+                                    Ready to collect
+                                    </span>
+                                <?php } else{?>
+                                <span class="badge text-bg-danger">
+                                    Unpaid (<?php echo $interval->days ?> days left)
+                                </span>
+                                <?php } ?>
 
                             <?php } ?>
 

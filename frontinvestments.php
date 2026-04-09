@@ -443,6 +443,14 @@ $today = date("Y-m-d");
                                                     <span class="badge text-bg-success">Paid on
                                                         <?php echo $detail['claimed_date'];?></span>
                                                     <?php else: ?>
+                                                        <?php if($interval->days < $today && $d['is_claimed'] != 1): ?>
+                                                        <span class="badge text-bg-success">
+                                                            Ready to collect
+                                                        </span>
+                                                        <?php else :?>
+                                                        <span class="badge text-bg-danger">Unpaid
+                                                            <?php echo '('.$interval->days .' days left to claim)'; ?></span>
+                                                        <?php endif; ?>
                                                     <span class="badge text-bg-danger">Unpaid
                                                         <?php echo '('.$interval->days .' days left to claim)'; ?></span>
                                                     <?php endif; ?>
