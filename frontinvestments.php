@@ -443,7 +443,7 @@ $today = date("Y-m-d");
                                                     <span class="badge text-bg-success">Paid on
                                                         <?php echo $detail['claimed_date'];?></span>
                                                     <?php else: ?>
-                                                        <?php if($interval->days < $today && $d['is_claimed'] != 1): ?>
+                                                        <?php if($is_detail_expired): ?>
                                                         <span class="badge text-bg-success">
                                                             Ready to collect
                                                         </span>

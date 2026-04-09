@@ -396,7 +396,7 @@ function list_investments(){
                             </span>
 
                             <?php } else { ?>
-                                <?php if($interval->days < $today && $d['is_claimed'] != 1){ ?>
+                                <?php if($expired){ ?>
                                     <span class="badge text-bg-success">
                                     Ready to collect
                                     </span>
