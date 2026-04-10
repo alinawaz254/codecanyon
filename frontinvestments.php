@@ -430,28 +430,27 @@ $today = date("Y-m-d");
                                                     <?php echo number_format($detail['comission'], 2); ?></td>
                                                 <td class="info-value">
                                                     <?php if ($is_detail_expired  && $detail['is_claimed'] == 0): ?>
-                                                    <form action="<?php echo $_SERVER['PHP_SELF']?>"
-                                                        name="claim_investment_form">
-                                                        <input type="hidden" name="user_investment_detail_id"
-                                                            value="<?php echo $detail['id']; ?>">
-                                                        <input class="text-white" type="submit" name="claim_ivestment"
-                                                            value="Claim Now"
-                                                            style="background: green;border-radius: 5%;">
-                                                    </form>
-                                                    <?php
-                                                                 elseif(($is_detail_expired && isset($detail['is_claimed']) && $detail['is_claimed'] == 1)): ?>
-                                                    <span class="badge text-bg-success">Paid on
-                                                        <?php echo $detail['claimed_date'];?></span>
-                                                    <?php else: ?>
-                                                        <?php if($is_detail_expired): ?>
-                                                        <span class="badge text-bg-success">
-                                                            Ready to collect
-                                                        </span>
-                                                        <?php else :?>
+                                                        <form action="<?php echo $_SERVER['PHP_SELF']?>"
+                                                            name="claim_investment_form">
+                                                            <input type="hidden" name="user_investment_detail_id"
+                                                                value="<?php echo $detail['id']; ?>">
+                                                            <input class="text-white" type="submit" name="claim_ivestment"
+                                                                value="Claim Now"
+                                                                style="background: green;border-radius: 5%;">
+                                                        </form>
+                                                    <?php elseif(($is_detail_expired && isset($detail['is_claimed']) && $detail['is_claimed'] == 1)): ?>
+                                                        <span class="badge text-bg-success">Paid on
+                                                            <?php echo $detail['claimed_date'];?></span>
+                                                        <?php else: ?>
+                                                            <?php if($is_detail_expired): ?>
+                                                            <span class="badge text-bg-success">
+                                                                Ready to collect
+                                                            </span>
+                                                            <?php else :?>
+                                                            <span class="badge text-bg-danger">Unpaid
+                                                                <?php echo '('.$interval->days .' days left to claim)'; ?></span>
+                                                            <?php endif; ?>
                                                         <span class="badge text-bg-danger">Unpaid
-                                                            <?php echo '('.$interval->days .' days left to claim)'; ?></span>
-                                                        <?php endif; ?>
-                                                    <span class="badge text-bg-danger">Unpaid
                                                         <?php echo '('.$interval->days .' days left to claim)'; ?></span>
                                                     <?php endif; ?>
                                                 </td>
