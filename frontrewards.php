@@ -4,7 +4,7 @@ require_once("lib/system_load.php");
 
 authenticate_user('all');
 
-$user_id = (int)$_SESSION['user_id'];
+$user_id = (int) $_SESSION['user_id'];
 
 $page_title = _("My Rewards");
 
@@ -69,7 +69,7 @@ $levels = [
         color: #e67e22;
         font-weight: 600;
     }
-    
+
     .units-achieved-info {
         font-size: 12px;
         color: #666;
@@ -98,11 +98,11 @@ $levels = [
                 <tbody>
                     <?php
                     $remaining_units = $units_achieved;
-                    
+
                     foreach ($levels as $level => $required) {
                         // Calculate units used for this level
                         $units_used = 0;
-                        
+
                         if ($remaining_units >= $required) {
                             // Level is fully completed
                             $units_used = $required;
@@ -113,7 +113,7 @@ $levels = [
                             $remaining_units = 0;
                         }
                         // If remaining_units is 0, units_used remains 0
-                        
+                    
                         ?>
                         <tr>
                             <td>0<?php echo $level; ?></td>
@@ -121,9 +121,15 @@ $levels = [
                             <td><?php echo $units_used; ?></td>
                             <td>
                                 <?php if ($units_used >= $required): ?>
-                                    <span class='badge-complete'>Completed</span>
+                                    <?php
+                                    $gift_check = $db->query("SELECT id FROM user_reward_releases WHERE user_id = $user_id AND level = $level");
+                                    $gift_received = ($gift_check->num_rows > 0);
+                                    ?>
+                                    <span class='badge-complete'>Completed
+                                        <?php echo $gift_received ? "(Received Gift)" : ""; ?></span>
                                 <?php elseif ($units_used > 0): ?>
-                                    <span class='badge-ongoing'>In Progress (<?php echo $units_used; ?>/<?php echo $required; ?>)</span>
+                                    <span class='badge-ongoing'>In Progress
+                                        (<?php echo $units_used; ?>/<?php echo $required; ?>)</span>
                                 <?php else: ?>
                                     <span class='badge-ongoing'>Ongoing</span>
                                 <?php endif; ?>
@@ -134,11 +140,11 @@ $levels = [
                     ?>
                 </tbody>
             </table>
-            
+
             <?php if ($remaining_units > 0): ?>
-            <div class="units-achieved-info">
-                <strong>Extra Units:</strong> <?php echo $remaining_units; ?> unit(s) available for next levels
-            </div>
+                <div class="units-achieved-info">
+                    <strong>Extra Units:</strong> <?php echo $remaining_units; ?> unit(s) available for next levels
+                </div>
             <?php endif; ?>
 
             <!-- REWARD IMAGE -->

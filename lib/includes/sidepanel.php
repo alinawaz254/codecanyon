@@ -66,6 +66,9 @@
                 <a href="withdrawl.php"><i class="la la-user"></i><span><?php _e("Withdrawl Requests"); ?></span></a>
             </li>
             <li>
+                <a href="power_generation.php"><i class="la la-bolt"></i><span><?php _e("Power Generation"); ?></span></a>
+            </li>
+            <li>
                 <a href="#dropdown-videos" aria-expanded="false" data-bs-toggle="collapse">
                 <i class="la la-video"></i>
                 <span><?php _e("Videos"); ?></span>

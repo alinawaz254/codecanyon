@@ -964,7 +964,7 @@ endif;
 
 	function wc_get_user_display_name($username, $first_name, $last_name) {
 		if (!empty($first_name) || !empty($last_name)) {
-			return $username . ' (' . trim($first_name . ' ' . $last_name) . ')';
+			return $username . ' -' . trim($first_name . ' ' . $last_name) . '';
 		}
 		return $username;
 	}

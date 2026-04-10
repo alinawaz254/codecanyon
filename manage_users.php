@@ -486,6 +486,14 @@
 								$current_username = '';
 								$current_fullname = '';
 
+								if ($current_referral_id > 0) {
+									$ref_res = $db->query("SELECT username, first_name, last_name FROM users WHERE user_id = '$current_referral_id'");
+									if ($ref_res && $ref_row = $ref_res->fetch_assoc()) {
+										$current_username = $ref_row['username'];
+										$current_fullname = $ref_row['first_name'] . ' ' . $ref_row['last_name'];
+									}
+								}
+
 								$result = $db->query("SELECT user_id,first_name,last_name,username FROM users WHERE user_type LIKE '%subscriber%' ORDER BY username ASC");
 
 								if ($result && $result->num_rows > 0) {
