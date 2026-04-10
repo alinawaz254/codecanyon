@@ -77,6 +77,52 @@
 		<!-- Form -->
 		<div class="widget has-shadow">
 			<div class="widget-body">
+				<!-- Referral Link Section -->
+				<div class="form-group row d-flex align-items-center mb-5" style="background: #f8f9fa; padding: 20px 0; border-radius: 8px; border: 1px dashed #ECAD3D; margin: 0 15px 30px 15px;">
+					<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" style="font-weight: 700; color: #333;">
+						<i class="la la-share-alt-square mr-2" style="font-size: 20px; color: #ECAD3D;"></i> <?php _e("Your Referral Link"); ?>
+					</label>
+					<div class="col-lg-6">
+						<div class="input-group">
+							<input type="text" class="form-control" id="referral_link" value="<?php echo rtrim(SITEURL, '/') . '/register.php?ref=' . $new_user->username; ?>" readonly style="background: #fff; border-color: #ECAD3D; font-weight: 500;" />
+							<button class="btn btn-primary btn-golden-admin" type="button" onclick="copyReferralLink()">
+								<i class="la la-copy"></i> <?php _e("Copy Link"); ?>
+							</button>
+						</div>
+						<small id="copy_msg" class="text-success" style="display:none; margin-top: 5px; font-weight: 600;"><i class="la la-check-circle"></i> <?php _e("Link copied to clipboard!"); ?></small>
+					</div>
+				</div>
+
+				<script>
+				function copyReferralLink() {
+					var copyText = document.getElementById("referral_link");
+					copyText.select();
+					copyText.setSelectionRange(0, 99999); // For mobile devices
+
+					try {
+						// Use modern clipboard API if available and in secure context
+						if (navigator.clipboard && window.isSecureContext) {
+							navigator.clipboard.writeText(copyText.value).then(showSuccess);
+						} else {
+							// Fallback for HTTP/local development
+							document.execCommand("copy");
+							showSuccess();
+						}
+					} catch (err) {
+						// Final fallback if everything else fails
+						document.execCommand("copy");
+						showSuccess();
+					}
+
+					function showSuccess() {
+						var msg = document.getElementById("copy_msg");
+						msg.style.display = "block";
+						setTimeout(function() {
+							msg.style.display = "none";
+						}, 3000);
+					}
+				}
+				</script>
 				<form action="<?php $_SERVER['PHP_SELF']?>" id="add_user" name="user" method="post" enctype="multipart/form-data">
 
 					<?php if ( ! isset( $_fieldarr['first_name']['status'] ) || $_fieldarr['first_name']['status'] != 'hide' ) : ?>
@@ -248,6 +294,7 @@
 							<input type="text" class="form-control" id="username" name="username" placeholder="<?php _e("Username"); ?>" value="<?php echo $new_user->username; ?>" required="required" />
 						</div>
 					</div>
+
 
 					<div class="form-group row d-flex align-items-center mb-5">
 						<label class="col-lg-4 form-control-label d-flex justify-content-lg-end" for="email">

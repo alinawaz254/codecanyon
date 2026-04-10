@@ -260,6 +260,42 @@
 												hiddenId.value = 0;
 											}
 										});
+
+										// Referral Link & LocalStorage Logic (Improved)
+										window.addEventListener('DOMContentLoaded', (event) => {
+											const urlParams = new URLSearchParams(window.location.search);
+											const urlRef = urlParams.get('ref');
+											const successMsg = urlParams.get('message');
+											const referralInput = document.getElementById('referrer_username');
+
+											// Clear localStorage only on successful registration
+											if (successMsg && successMsg.toLowerCase().includes('successful')) {
+												localStorage.removeItem('referral_code');
+											}
+
+											// 1. Capture ref from URL and save to localStorage
+											if (urlRef) {
+												localStorage.setItem('referral_code', urlRef);
+												// Clean URL by removing ?ref to keep it professional (optional)
+												// window.history.replaceState({}, document.title, window.location.pathname);
+											}
+
+											// 2. Load from localStorage if exists
+											const storedRef = localStorage.getItem('referral_code');
+											if (storedRef && referralInput) {
+												referralInput.value = storedRef;
+												// Trigger input event to run existing lookup logic
+												referralInput.dispatchEvent(new Event('input'));
+												
+												// Make it readonly so it stays "selected" as requested
+												referralInput.readOnly = true;
+												referralInput.style.backgroundColor = '#e9ecef'; // Light grey look
+												referralInput.style.cursor = 'not-allowed';
+												
+												// Add a "Clear" option if they really want to change it? 
+												// For now keeping it locked for "Professional" feel.
+											}
+										});
 									</script>
 
 									<?php 
