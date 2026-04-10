@@ -12,7 +12,9 @@ $user_id = $_SESSION['user_id'];
 $query = "
 SELECT 
 n.*,
-u.username
+u.username,
+u.first_name,
+u.last_name
 FROM notifications n
 LEFT JOIN users u 
 ON n.sender_id = u.user_id
@@ -96,7 +98,7 @@ $unread = $unread_result->fetch_assoc()['total'];
 
                                 <i class="la la-user text-primary"></i>
 
-                                <?= $row['username'] ?? 'System' ?>
+                                <?= isset($row['username']) ? wc_get_user_display_name($row['username'], $row['first_name'], $row['last_name']) : 'System' ?>
 
                             </td>
 

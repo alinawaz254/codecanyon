@@ -275,6 +275,8 @@ function list_investments(){
         ui.issue_date,
         ui.created_at,
         u.username,
+        u.first_name,
+        u.last_name,
         u.user_id,
         p.plan_name,
         p.total_cycles,
@@ -301,7 +303,7 @@ function list_investments(){
 
     while($row = $result->fetch_assoc()){
         echo "<tr>
-        <td>{$row['username']}</td>
+        <td><?php echo wc_get_user_display_name($row['username'], $row['first_name'], $row['last_name']); ?></td>
         <td>{$row['plan_name']}</td>
         <td>{$row['amount']}</td>
         <td>{$row['issue_date']}</td>
@@ -353,7 +355,7 @@ function list_investments(){
                     <div class="investment-info">
                         <div>
                             <label class="info-label">User</label><br>
-                            <b class="info-value"><?php echo $row['username']; ?></b>
+                            <b class="info-value"><?php echo wc_get_user_display_name($row['username'], $row['first_name'], $row['last_name']); ?></b>
                         </div>
                         <div>
                             <label class="info-label">Amount</label><br>

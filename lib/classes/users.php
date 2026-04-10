@@ -410,7 +410,7 @@ function list_users($user_type) {
 				extract($row);
 				$user_id = intval($user_id);
 				$referral_id = intval($row['referral_id']);
- 				$referal = $db->query("SELECT username FROM users WHERE user_id = " . $referral_id . " LIMIT 1");				
+ 				$referal = $db->query("SELECT username, first_name, last_name FROM users WHERE user_id = " . $referral_id . " LIMIT 1");				
  				$ref_row = $referal ? $referal->fetch_assoc() : null;
 				/* Total Investment */
 				$investment = $db->query("
@@ -533,11 +533,11 @@ function list_users($user_type) {
 				}
 				$content .= $country;
 				$content .= '</td><td>';
-				$content .= $username;
-				$content .= '</td><td>';
-				$content .= $email;
-				$content .= '</td><td>';				
-				$content .= isset($ref_row) && !empty($ref_row) ? $ref_row['username'] : 'N\A';
+ 				$content .= wc_get_user_display_name($username, $first_name, $last_name);
+ 				$content .= '</td><td>';
+ 				$content .= $email;
+ 				$content .= '</td><td>';				
+ 				$content .= isset($ref_row) && !empty($ref_row) ? wc_get_user_display_name($ref_row['username'], $ref_row['first_name'], $ref_row['last_name']) : 'N\A';
 				$content .= '</td><td>';
 				$content .= $status ? ucfirst($status) : null;
 				$content .= '</td><td>';
@@ -575,9 +575,9 @@ $("#message_form_'.$user_id.'").on("submit", function(e){
       <div class="modal-body">
       		<div id="success_message_'.$user_id.'"></div>
 	   		<div class="form-group">
-				<label class="control-label">'._("To").'</label>
-				<input type="text" class="form-control" name="message_to" value="'._("Email").':('.$email.') '._("Username").': ('.$username.')" readonly="readonly" />
-			</div>
+ 				<label class="control-label">'._("To").'</label>
+ 				<input type="text" class="form-control" name="message_to" value="'._("Email").':('.$email.') '._("User").': ('.wc_get_user_display_name($username, $first_name, $last_name).')" readonly="readonly" />
+ 			</div>
 			
 			<div class="form-group">
 				<label class="control-label">'._("Subject").'</label>
@@ -608,18 +608,18 @@ $("#message_form_'.$user_id.'").on("submit", function(e){
 				<div class="modal-content investment-modal">
 
 				<div class="modal-header investment-header">
-				<h5 class="modal-title">
-					User '.$username.' Details
-				</h5>				
+ 				<h5 class="modal-title">
+ 					User '.wc_get_user_display_name($username, $first_name, $last_name).' Details
+ 				</h5>				
 				<button type="button" class="btn-close-investment" data-dismiss="modal">&times;</button>
 				</div>
 
 				<div class="modal-body">
 
-				<b>Username:</b> '.$username.'<br>
-				<b>Email:</b> '.$email.'<br>
-				<b>Joined:</b> '.(!empty($date_register) ? date("d M Y",strtotime($date_register)) : "N/A").'<br>
-				<b>Referred By:</b> '.($ref_row['username'] ?? 'N/A').'
+ 				<b>User:</b> '.wc_get_user_display_name($username, $first_name, $last_name).'<br>
+ 				<b>Email:</b> '.$email.'<br>
+ 				<b>Joined:</b> '.(!empty($date_register) ? date("d M Y",strtotime($date_register)) : "N/A").'<br>
+ 				<b>Referred By:</b> '.(isset($ref_row) ? wc_get_user_display_name($ref_row['username'], $ref_row['first_name'], $ref_row['last_name']) : 'N/A').'
 
 				<hr>
 
@@ -1170,7 +1170,7 @@ function match_confirm_code($confirmation_code,$user_id){
 			$output .= '<tr><td>'.time_elapsed_string($login_time).'</td>';
 			$output .= '<td>'.$login_ip.'</td>';
 			$output .= '<td>'.$first_name.' '.$last_name.'</td>';
-			$output .= '<td>'.$username.'</td>';
+			$output .= '<td>'.wc_get_user_display_name($username, $first_name, $last_name).'</td>';
 			$output .= '<td>'.$user_type.'</td></tr>';
 		}
 		

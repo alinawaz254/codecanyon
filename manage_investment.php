@@ -67,10 +67,10 @@ require_once("lib/includes/header.php");
                 <select name="user_id" id="investment-users"  class="form-control "style="width:100%" required>
                 <option></option>
                 <?php
-                $result = $db->query("SELECT user_id,username FROM users WHERE user_type LIKE '%subscriber%'");
+                $result = $db->query("SELECT user_id,username,first_name,last_name FROM users WHERE user_type LIKE '%subscriber%'");
                 while($u = $result->fetch_assoc()){
                 $selected = ($investment_obj->user_id == $u['user_id']) ? "selected" : "";
-                echo "<option value='{$u['user_id']}' $selected>{$u['username']}</option>";
+                echo "<option value='{$u['user_id']}' $selected>".wc_get_user_display_name($u['username'], $u['first_name'], $u['last_name'])."</option>";
                 }
                 ?>
                 </select>

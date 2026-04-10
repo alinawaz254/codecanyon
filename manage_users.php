@@ -495,11 +495,8 @@
 											continue; 
 										}
 										$user_full_name = htmlspecialchars($u['first_name']) .' ' .htmlspecialchars($u['last_name']);
-										if ($current_referral_id == $u['user_id']) {
-											$current_username = htmlspecialchars($u['username']);
-											$current_fullname = $user_full_name;
-										}
-										$sub_arr[] = '"' . htmlspecialchars(strtolower($u['username'])) . '": {"id": "' . htmlspecialchars($u['user_id']) . '", "name": "' . addslashes($user_full_name) . '"}';
+										$display_name = htmlspecialchars($u['username']) . ( !empty($u['first_name']) || !empty($u['last_name']) ? ' (' . trim($user_full_name) . ')' : '');
+										$sub_arr[] = '"' . htmlspecialchars(strtolower($u['username'])) . '": {"id": "' . htmlspecialchars($u['user_id']) . '", "name": "' . addslashes($display_name) . '"}';
 									}
 									echo implode(",\n\t\t\t\t\t\t\t\t\t\t\t\t\t", $sub_arr);
 								}
@@ -507,7 +504,7 @@
 								};
 
 								document.getElementById('referrer_username').value = "<?php echo $current_username; ?>";
-								var initialDisplay = "<?php echo $current_username ? strtoupper($current_username) . ' - ' . addslashes($current_fullname) : ''; ?>";
+								var initialDisplay = "<?php echo $current_username && ($current_fullname != ' ') ? htmlspecialchars($current_username) . ' (' . addslashes(trim($current_fullname)) . ')' : htmlspecialchars($current_username); ?>";
 								if (initialDisplay) {
 									document.getElementById('referrer_name_display').textContent = initialDisplay;
 									document.getElementById('referrer_name_display').style.color = '#4CAF50';
@@ -520,7 +517,7 @@
 
 									if(username && subscribersData[username]) {
 										var data = subscribersData[username];
-										displaySpan.textContent = username.toUpperCase() + ' - ' + data.name;
+										displaySpan.textContent = data.name;
 										displaySpan.style.color = '#4CAF50';
 										hiddenId.value = data.id;
 									} else {

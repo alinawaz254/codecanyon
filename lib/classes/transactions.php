@@ -153,10 +153,7 @@ class Transactions {
                     $amount_class = 'text-success';
                 }
                 
-                $user_display = $row['username'];
-                if(!empty($row['first_name']) || !empty($row['last_name'])) {
-                    $user_display .= ' (' . trim($row['first_name'] . ' ' . $row['last_name']) . ')';
-                }
+                $user_display = wc_get_user_display_name($row['username'], $row['first_name'], $row['last_name']);
                 
                 echo "<tr>";
                 echo "<td><strong>" . htmlspecialchars($user_display) . "</strong><br><small>" . htmlspecialchars($row['email']) . "</small></td>";
@@ -257,12 +254,9 @@ class Transactions {
                                 <h6 class="mb-0 text-white"><?php echo _("User Information"); ?></h6>
                             </div>
                             <div class="card-body">
-                                <p><strong><?php echo _("Username:"); ?></strong>
-                                    <?php echo $transaction['username'] ? htmlspecialchars($transaction['username']) : 'N\A'; ?>
-                                </p>
-                                <p><strong><?php echo _("Name:"); ?></strong>
-                                    <?php echo $transaction['first_name'] ? htmlspecialchars($transaction['first_name'] . ' ' . $transaction['last_name']) : 'N\A'; ?>
-                                </p>
+                                 <p><strong><?php echo _("User:"); ?></strong>
+                                     <?php echo wc_get_user_display_name($transaction['username'], $transaction['first_name'], $transaction['last_name']); ?>
+                                 </p>
                                 <p><strong><?php echo _("Email:"); ?></strong>
                                     <?php echo $transaction['email'] ? htmlspecialchars($transaction['email']) : 'N\A'; ?>
                                 </p>

@@ -60,15 +60,15 @@ if(isset($_GET['referral_detail_id'])){
         
         // Get investment details to find which referred user generated this commission
         $investment_details = $db->query("
-            SELECT ui.user_id as referred_user_id, u.username as referred_username
-            FROM user_investment_details uid
-            JOIN user_investments ui ON uid.investment_id = ui.investment_id
-            JOIN users u ON ui.user_id = u.user_id
+             SELECT ui.user_id as referred_user_id, u.username as referred_username, u.first_name, u.last_name
+             FROM user_investment_details uid
+             JOIN user_investments ui ON uid.investment_id = ui.investment_id
+             JOIN users u ON ui.user_id = u.user_id
             WHERE uid.id = $detail_id
         ");
         $investment_info = $investment_details->fetch_assoc();
         
-        $referred_username = $investment_info['referred_username'] ?? 'Unknown User';
+         $referred_username = wc_get_user_display_name($investment_info['referred_username'] ?? 'Unknown User', $investment_info['first_name'] ?? '', $investment_info['last_name'] ?? '');
         $message = $db->real_escape_string("$username has collected referral commission of $amount from $referred_username on $today");
 
         // Insert into transactions (using type 3 for commission as per your schema)
@@ -101,8 +101,10 @@ if(isset($_GET['referral_detail_id'])){
 // Query to get referrals
 $query = "
     SELECT 
-        u.username,
-        u.user_id AS referred_user_id,
+         u.username,
+         u.first_name,
+         u.last_name,
+         u.user_id AS referred_user_id,
         ui.investment_id,
         ui.amount,
         ui.issue_date,
@@ -256,7 +258,7 @@ $result = $db->query($query);
                     while ($row = $result->fetch_assoc()):
                         if (!$row['investment_id']) {
                             echo "<tr>
-                                <td>{$row['username']}</td>
+                                 <td>" . wc_get_user_display_name($row['username'], $row['first_name'], $row['last_name']) . "</td>
                                 <td>-</td>
                                 <td>0.00</td>
                                 <td>-</td>
@@ -279,7 +281,7 @@ $result = $db->query($query);
                         ?>
 
                     <tr <?php if ($is_expired) echo 'style="opacity:0.6;background:#f5f5f5;"'; ?>>
-                        <td><?php echo $row['username']; ?></td>
+                         <td><?php echo wc_get_user_display_name($row['username'], $row['first_name'], $row['last_name']); ?></td>
                         <td><?php echo $row['plan_name']; ?></td>
                         <td><?php echo number_format($amount, 2); ?></td>
                         <td><?php echo $row['issue_date']; ?></td>
@@ -306,9 +308,9 @@ $result = $db->query($query);
                         <div class="modal-dialog modal-lg modal-dialog-centered">
                             <div class="modal-content investment-modal">
                                 <div class="modal-header investment-header">
-                                    <h5 class="modal-title">
-                                        <?php echo $row['username']; ?> - Investment Details
-                                    </h5>
+                                     <h5 class="modal-title">
+                                         <?php echo wc_get_user_display_name($row['username'], $row['first_name'], $row['last_name']); ?> - Investment Details
+                                     </h5>
                                     <button type="button" class="btn-close-investment" data-dismiss="modal">
                                         ×
                                     </button>
@@ -317,8 +319,8 @@ $result = $db->query($query);
                                 <div class="modal-body table-responsive">
                                     <div class="investment-info">
                                         <div>
-                                            <span class="info-label">Referred User</span>
-                                            <span class="info-value"><?php echo $row['username']; ?></span>
+                                             <span class="info-label">Referred User</span>
+                                             <span class="info-value"><?php echo wc_get_user_display_name($row['username'], $row['first_name'], $row['last_name']); ?></span>
                                         </div>
 
                                         <div>

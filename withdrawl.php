@@ -51,7 +51,7 @@
                         // Get withdrawal requests from transactions table
                         // transaction_type = 1 for withdrawals, 4 for transfers (both need approval)
                         
-                        $sql = "SELECT t.*, u.username 
+                        $sql = "SELECT t.*, u.username, u.first_name, u.last_name 
                                 FROM transactions t
                                 LEFT JOIN users u ON t.user_id = u.user_id
                                 WHERE t.transaction_type = 1
@@ -69,7 +69,7 @@
                                 $status_class = ($withdrawal['is_approved'] == 1) ? 'badge text-success' : 'badge text-warning';
                                 ?>
                                 <tr>
-                                    <td><?php echo htmlspecialchars($withdrawal['username'] ?? 'N/A'); ?></td>
+                                    <td><?php echo htmlspecialchars(wc_get_user_display_name($withdrawal['username'] ?? 'N/A', $withdrawal['first_name'] ?? '', $withdrawal['last_name'] ?? '')); ?></td>
                                     <td><?php echo number_format($withdrawal['amount'], 2); ?></td>
                                     <td><?php echo date('Y-m-d', strtotime($withdrawal['created_at'])); ?></td>
                                     <td>

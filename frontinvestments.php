@@ -68,14 +68,15 @@ $today = date("Y-m-d");
 
             if($get_record['is_claimed'] == 0){
 
-                $db->query("UPDATE user_investment_details SET is_claimed = 1,claimed_date = NOW() WHERE id =".$_GET['user_investment_detail_id']);
+                $db->query("UPDATE user_investment_details SET is_claimed = 1, claimed_date = NOW() WHERE id =".$_GET['user_investment_detail_id']);
 
-                $search_user = $db->query("SELECT * FROM users WHERE user_id = $user_id AND user_type LIKE '%subscriber%'");
-                $user        = $search_user->fetch_assoc();
+                $search_user = $db->query("SELECT * FROM users WHERE user_id = $user_id");
+                $user_row    = $search_user->fetch_assoc();
 
-                $amount      = $get_record['comission'];
-                $username    = $user['username'];
-                $message     = $db->real_escape_string("$username has collected his commission on $today");
+                $amount           = $get_record['comission'];
+                $username         = $user_row['username'];
+                $full_display_name = wc_get_user_display_name($username, $user_row['first_name'], $user_row['last_name']);
+                $message          = $db->real_escape_string("$full_display_name has collected his commission on $today");
 
                 $db->query("INSERT INTO transactions (user_id,transaction_type,amount,description,is_approved) VALUES ('$user_id',3,'$amount','$message',1)");
 
@@ -84,7 +85,7 @@ $today = date("Y-m-d");
                 send_notification(
                     ADMIN_ID,
                     $user_id,
-                    "$username claimed commission of PKR $amount",
+                    "$full_display_name claimed commission of PKR $amount",
                     "roi_claim",
                     $transaction_id
                 );                
@@ -123,13 +124,14 @@ $today = date("Y-m-d");
 
         $investment_id = $db->insert_id;
 
-        $u = $db->query("SELECT username FROM users WHERE user_id = $user_id");
-        $username = $u->fetch_assoc()['username'] ?? 'User';
+        $u = $db->query("SELECT * FROM users WHERE user_id = $user_id");
+        $user_row = $u->fetch_assoc();
+        $full_display_name = wc_get_user_display_name($user_row['username'] ?? 'User', $user_row['first_name'] ?? '', $user_row['last_name'] ?? '');
 
         send_notification(
             ADMIN_ID,
             $user_id,
-            "$username re-invested PKR $amount",
+            "$full_display_name re-invested PKR $amount",
             "reinvest",
             $investment_id
         );        

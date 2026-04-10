@@ -55,12 +55,12 @@
 				<option value="">-- Select User --</option>
 
 				<?php
-				$result = $db->query("SELECT user_id,username FROM users WHERE user_type LIKE'%subscriber' ORDER BY username ASC");
+				$result = $db->query("SELECT user_id,username,first_name,last_name FROM users WHERE user_type LIKE'%subscriber%' ORDER BY username ASC");
 
 				while($user = $result->fetch_assoc()){
 				?>
 				<option value="<?php echo $user['user_id']; ?>">
-				<?php echo $user['username']; ?>
+				<?php echo wc_get_user_display_name($user['username'], $user['first_name'], $user['last_name']); ?>
 				</option>
 				<?php } ?>
 
