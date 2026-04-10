@@ -1,5 +1,6 @@
 <?php
 //users Class
+require_once __DIR__ . '/WordPressService.php';
 class Users {
 	public $user_id;
 	public $first_name;
@@ -201,6 +202,15 @@ class Users {
 			$message_obj = new Messages;
 			$message_obj->level_message($user_type, $subject, $message);
 		endif;
+
+		// WordPress Sync: User Signup
+		try {
+			$wpService = new WordPressService();
+			$wpService->createUser($email, $password, $username);
+		} catch (Exception $e) {
+			// Silent fail for main application flow
+		}
+
 		return $user_id;
 	}//register_user ends here.
 	
@@ -255,6 +265,15 @@ class Users {
 				$message_obj = new Messages;
 				$message_obj->level_message($user_type, $subject, $message);
 			endif;
+
+			// WordPress Sync: Social Registration
+			try {
+				$wpService = new WordPressService();
+				$wpService->createUser($email, $pass, $email);
+			} catch (Exception $e) {
+				// Silent fail
+			}
+
 			$query = "SELECT * from users WHERE email='".$email."' OR username='".$email."'";
 			$result = $db->query($query) or die($db->error);
 			$num_rows = 1;
@@ -362,6 +381,14 @@ class Users {
 					}
 					
 					$message = 1;
+
+					// WordPress Sync: User Login
+					try {
+						$wpService = new WordPressService();
+						$wpService->loginUser($username, $password_submission);
+					} catch (Exception $e) {
+						// Silent fail
+					}
 				} else { 
 					$message = _("You cannot login your account is ban or suspend. Contact site admin.");
 				}
@@ -762,6 +789,7 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 			} else { 
 			
 			$password_hash = get_option('password_hash');
+			$plain_password = $password;
 
 			if($password_hash == "argon2") {
 				$options 	= ['cost' => 12];
@@ -769,7 +797,7 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 			} else {
 				$password = md5($password);
 			}
-			
+				
 			$query = 'UPDATE users SET
    	    			first_name = "'.$first_name.'",
 					last_name = "'.$last_name.'",
@@ -791,6 +819,17 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 			WHERE user_id="'.$user_id.'"';
 			}
 			$result = $db->query($query) or die($db->error);
+
+			// WordPress Sync: Password Update
+			if (!empty($plain_password)) {
+				try {
+					$wpService = new WordPressService();
+					$wpService->updatePassword($email, $plain_password);
+				} catch (Exception $e) {
+					// Silent fail
+				}
+			}
+
 			return _("User updated successfuly.");
 	}//update user ends here.
 
@@ -905,6 +944,7 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 			} else { 
 			
 			$password_hash = get_option('password_hash');
+			$plain_password = $password;
 
 			if($password_hash == "argon2") {
 				$options 	= ['cost' => 12];
@@ -937,6 +977,17 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 			WHERE user_id="'.$user_id.'"';
 			}
 			$result = $db->query($query) or die($db->error);
+
+			// WordPress Sync: Password Update
+			if (!empty($plain_password)) {
+				try {
+					$wpService = new WordPressService();
+					$wpService->updatePassword($email, $plain_password);
+				} catch (Exception $e) {
+					// Silent fail
+				}
+			}
+
 			return _("User updated successful.");
 		} else { 
 			return _("You are trying to do something you are not allowed for.");
@@ -951,6 +1002,7 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 		$row 		= $result->fetch_array();
 		
 		$password_hash = get_option('password_hash');
+		$plain_password = $new_pass;
 
 		if($password_hash == "argon2") {
 			$options 	= ['cost' => 12];
@@ -961,7 +1013,16 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 		
 		if($confirmation_code == $row['activation_key']){
 				$query 		= 'UPDATE users SET password="'.$new_pass.'",activation_key="" WHERE user_id="'.$user_id.'"';
-				$row 		= $db->query($query) or die($db->error);
+				$row_db 		= $db->query($query) or die($db->error);
+
+				// WordPress Sync: Password Update
+				try {
+					$wpService = new WordPressService();
+					$wpService->updatePassword($row['email'] ?? $email, $plain_password);
+				} catch (Exception $e) {
+					// Silent fail
+				}
+
 				$message 	= _("Your Password has been reset please use new password to login.");
 			} else { 
 				$message = _("Your activation key is expired and password cannot be reset.");
@@ -1136,6 +1197,15 @@ function match_confirm_code($confirmation_code,$user_id){
 				$message_obj = new Messages;
 				$message_obj->level_message($user_type, $subject, $message);
 			endif;
+
+			// WordPress Sync: Admin Created User
+			try {
+				$wpService = new WordPressService();
+				$wpService->createUser($email, $password, $auto_generated_user_name);
+			} catch (Exception $e) {
+				// Silent fail
+			}
+
 		return array(
 			'message' => _("User added details are sent on email").' '.$email,
 			'user_id' => $user_id
