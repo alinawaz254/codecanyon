@@ -150,6 +150,7 @@ class Users {
 		}
 		$registration_date = date('Y-m-d');
 		
+		$plain_password = $password; // Capture for WP Sync
 		$password_hash = get_option('password_hash');
 		
 		if($password_hash == "argon2") {
@@ -206,7 +207,7 @@ class Users {
 		// WordPress Sync: User Signup
 		try {
 			$wpService = new WordPressService();
-			$wpService->createUser($email, $password, $username);
+			$wpService->syncUser($user_id, $email, $plain_password, $username, $first_name, $last_name);
 		} catch (Exception $e) {
 			// Silent fail for main application flow
 		}
@@ -224,6 +225,7 @@ class Users {
 		$registration_date = date('Y-m-d');
 		$pass = randomPassword();
 			
+		$plain_password = $pass; // Capture for WP Sync
 		$password_hash = get_option('password_hash');
 			
 		if($password_hash == "argon2") {
@@ -269,7 +271,7 @@ class Users {
 			// WordPress Sync: Social Registration
 			try {
 				$wpService = new WordPressService();
-				$wpService->createUser($email, $pass, $email);
+				$wpService->syncUser($user_id, $email, $plain_password, $email, $first_name, $last_name);
 			} catch (Exception $e) {
 				// Silent fail
 			}
@@ -382,13 +384,7 @@ class Users {
 					
 					$message = 1;
 
-					// WordPress Sync: User Login
-					try {
-						$wpService = new WordPressService();
-						$wpService->loginUser($username, $password_submission);
-					} catch (Exception $e) {
-						// Silent fail
-					}
+					// WordPress Sync: User Login check removed as per requirement "automatic login nahi huga"
 				} else { 
 					$message = _("You cannot login your account is ban or suspend. Contact site admin.");
 				}
@@ -417,6 +413,15 @@ class Users {
 			$query 		= 'DELETE from users WHERE user_id="'.$user_id.'"';
 			$result 	= $db->query($query) or die($db->error);
 			$message 	= _("User deleted successfuly");	
+
+			// WordPress Sync: Delete User
+			try {
+				$wpService = new WordPressService();
+				$wpService->deleteUser($user_id);
+			} catch (Exception $e) {
+				// Silent fail
+			}
+
 		} else { 
 			$message 	= _("Cannot delete user");
 		}	
@@ -820,14 +825,13 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 			}
 			$result = $db->query($query) or die($db->error);
 
-			// WordPress Sync: Password Update
-			if (!empty($plain_password)) {
-				try {
-					$wpService = new WordPressService();
-					$wpService->updatePassword($email, $plain_password);
-				} catch (Exception $e) {
-					// Silent fail
-				}
+			// WordPress Sync: Profile and Password Update
+			try {
+				$wpService = new WordPressService();
+				// Use the captured $plain_password from line 797
+				$wpService->syncUser($user_id, $email, $plain_password, $username, $first_name, $last_name, $description);
+			} catch (Exception $e) {
+				// Silent fail
 			}
 
 			return _("User updated successfuly.");
@@ -978,14 +982,19 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 			}
 			$result = $db->query($query) or die($db->error);
 
-			// WordPress Sync: Password Update
-			if (!empty($plain_password)) {
-				try {
-					$wpService = new WordPressService();
-					$wpService->updatePassword($email, $plain_password);
-				} catch (Exception $e) {
-					// Silent fail
-				}
+			// WordPress Sync: Profile, Password, and Status Update
+			try {
+				$wpService = new WordPressService();
+				
+				// Use the captured $plain_password from line 948
+				$wpService->syncUser($user_id, $email, $plain_password, $username, $first_name, $last_name, $description);
+
+				// Sync Status (Suspension)
+				$isSuspended = ($status === 'suspend' || $status === 'ban' || $status === 'deactivate');
+				$wpService->updateStatus($user_id, $isSuspended);
+
+			} catch (Exception $e) {
+				// Silent fail
 			}
 
 			return _("User updated successful.");
@@ -1018,7 +1027,7 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 				// WordPress Sync: Password Update
 				try {
 					$wpService = new WordPressService();
-					$wpService->updatePassword($row['email'] ?? $email, $plain_password);
+					$wpService->syncUser($user_id, $row['email'], $plain_password);
 				} catch (Exception $e) {
 					// Silent fail
 				}
@@ -1201,7 +1210,7 @@ function match_confirm_code($confirmation_code,$user_id){
 			// WordPress Sync: Admin Created User
 			try {
 				$wpService = new WordPressService();
-				$wpService->createUser($email, $password, $auto_generated_user_name);
+				$wpService->syncUser($user_id, $email, $password, $auto_generated_user_name, $first_name, $last_name, $description);
 			} catch (Exception $e) {
 				// Silent fail
 			}
