@@ -3,3 +3,4 @@ lib/includes/db_connect.php
 uploads/videos/
 assets/upload/
 .env
+logs/
