@@ -135,6 +135,7 @@ require_once("lib/includes/header.php");
                         t.amount,
                         t.is_approved,
                         t.description,
+                        t.proof_image,
                         t.created_at
                         FROM transactions t WHERE t.user_id = '$user_id' ORDER BY t.created_at DESC
                     ";
@@ -188,6 +189,9 @@ require_once("lib/includes/header.php");
                                 </td>                                
                                 <td class="desc-value">
                                      <?php echo $row['description'] ; ?>
+                                     <?php if($row['transaction_type'] == 1 && !empty($row['proof_image'])): ?>
+                                         <br><a href="<?php echo htmlspecialchars($row['proof_image']); ?>" target="_blank" class="badge text-bg-info text-white mt-1" style="text-decoration:none; padding: 5px 10px; font-weight: normal;"><i class="la la-image"></i> View Proof</a>
+                                     <?php endif; ?>
                                 </td>
                              
                                 <td><?php echo date('d M Y', strtotime($row['created_at'])); ?></td>

@@ -4,6 +4,10 @@
 */
     $imagePath = "../../assets/upload/";
 
+	if(!is_dir($imagePath)) {
+	    mkdir($imagePath, 0777, true);
+	}
+
 	$allowedExts = array("gif", "jpeg", "jpg", "png", "GIF", "JPEG", "JPG", "PNG");
 	$temp = explode(".", $_FILES["img"]["name"]);
 	$extension = end($temp);

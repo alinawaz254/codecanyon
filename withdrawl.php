@@ -2,16 +2,41 @@
   require_once("lib/system_load.php");
   //This loads system.
 
+  $datatables = 1;
+
   //user Authentication.
   authenticate_user('admin');
   
+  // Ensure the column exists
+  $res = $db->query("SHOW COLUMNS FROM transactions LIKE 'proof_image'");
+  if($res && $res->num_rows == 0){
+      $db->query("ALTER TABLE transactions ADD proof_image VARCHAR(500) NULL AFTER amount");
+  }
+
   // Handle approval action
   if(isset($_POST['approve_withdrawal']) && isset($_POST['transaction_id'])) {
       $transaction_id = (int)$_POST['transaction_id'];
       
-      // Update the is_approved column to true (1)
-      $update_sql = "UPDATE transactions SET is_approved = 1, updated_at = NOW() 
+      $proof_url = '';
+      if(isset($_FILES['payment_proof']) && $_FILES['payment_proof']['error'] == 0){
+          $temp = $_FILES['payment_proof']['tmp_name'];
+          $name = $_FILES['payment_proof']['name'];
+          $ext = pathinfo($name, PATHINFO_EXTENSION);
+          $new_name = time() . '_' . rand(1000, 9999) . '.' . $ext;
+          $upload_dir = 'assets/upload/proofs/';
+          if(!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
+          if(move_uploaded_file($temp, $upload_dir . $new_name)){
+              $proof_url = $upload_dir . $new_name;
+          }
+      }
+
+      if($proof_url != '') {
+          $update_sql = "UPDATE transactions SET is_approved = 1, proof_image = '$proof_url', updated_at = NOW() 
                      WHERE id = $transaction_id AND transaction_type IN (1, 4)";
+      } else {
+          $update_sql = "UPDATE transactions SET is_approved = 1, updated_at = NOW() 
+                     WHERE id = $transaction_id AND transaction_type IN (1, 4)";
+      }
       
       if(mysqli_query($db, $update_sql)) {
           $success_message = _("Withdrawal request approved successfully.");
@@ -35,7 +60,7 @@
             
               
               <div class="table-responsive">
-                  <table class="table mb-0">
+                  <table id="export-table" class="table mb-0">
                     <thead>
                       <tr>
                           <th><?php _e("Username"); ?></th>
@@ -43,6 +68,7 @@
                           <th><?php _e("Withdrawn On"); ?></th>
                           <th><?php _e("Status"); ?></th>
                           <th><?php _e("Action"); ?></th>
+                          <th><?php _e("Payment Proof"); ?></th>
                       </tr>
                     </thead>
 
@@ -80,7 +106,7 @@
                                     </td>
                                     <td>
                                         <?php if($withdrawal['is_approved'] == 0): ?>
-                                            <form method="post" style="display: inline;" onsubmit="return confirm('<?php _e("Are you sure you want to approve this withdrawal request?"); ?>');">
+                                            <form id="approve_form_<?php echo $withdrawal['id']; ?>" method="post" enctype="multipart/form-data" style="display: inline;" onsubmit="return confirm('<?php _e("Are you sure you want to approve this withdrawal request?"); ?>');">
                                                 <input type="hidden" name="transaction_id" value="<?php echo $withdrawal['id']; ?>">
                                                 <button type="submit" name="approve_withdrawal" class="btn btn-success btn-sm">
                                                     <i class="la la-check"></i> <?php _e("Approve"); ?>
@@ -90,13 +116,24 @@
                                             <span class="text-success"><i class="la la-check-circle"></i> <?php _e("Approved"); ?></span>
                                         <?php endif; ?>
                                     </td>
+                                    <td>
+                                        <?php if($withdrawal['is_approved'] == 0): ?>
+                                            <input type="file" form="approve_form_<?php echo $withdrawal['id']; ?>" name="payment_proof" class="form-control form-control-sm" accept="image/*" style="width: 220px;">
+                                        <?php else: ?>
+                                            <?php if(!empty($withdrawal['proof_image'])): ?>
+                                                <a href="<?php echo htmlspecialchars($withdrawal['proof_image']); ?>" target="_blank" class="btn btn-sm btn-info">View Proof</a>
+                                            <?php else: ?>
+                                                <span class="text-muted">N/A</span>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                    </td>
                                 </tr>
                                 <?php
                             }
                         } else {
                             ?>
                             <tr>
-                                <td colspan="5" class="text-center"><?php _e("No withdrawal or transfer requests found."); ?></td>
+                                <td colspan="6" class="text-center"><?php _e("No withdrawal or transfer requests found."); ?></td>
                             </tr>
                             <?php
                         }

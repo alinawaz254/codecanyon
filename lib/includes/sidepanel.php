@@ -14,6 +14,7 @@
                 <ul id="dropdown-users" class="collapse list-unstyled pt-0">
                     <li><a href="users.php"><?php _e("Manage Users"); ?></a></li>
                     <li><a href="manage_users.php"><?php _e("Add User"); ?></a></li>
+                    <li><a href="search_user.php"><?php _e("Search User"); ?></a></li>
                 </ul>
             </li>
             <li><a href="#dropdown-userlevel" aria-expanded="false" data-bs-toggle="collapse"><i class="la la-file-text"></i><span><?php _e("User Levels"); ?></span></a>

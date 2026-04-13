@@ -10,6 +10,8 @@ if(isset($_POST['delete_transaction'])){
     $message = $transactions_obj->delete_transaction($_POST['delete_transaction']);
 }
 
+$datatables = 1;
+
 $page_title = _("User Transactions");
 require_once("lib/includes/header.php");
 ?>
@@ -105,11 +107,24 @@ require_once("lib/includes/header.php");
         </div>
         <?php endif; ?>
 
-        <!-- Add Transaction Button -->
-        <div class="text-right mb-4">
-            <a href="manage_transactions.php" class="btn btn-primary btn-md btn-golden">
-                <i class="la la-plus-circle"></i> <?php _e("Add New Transaction"); ?>
-            </a>
+        <!-- Add Transaction Button and Filters -->
+        <div class="mb-4 d-flex justify-content-between align-items-center flex-wrap">
+            <div class="filter-buttons mb-2">
+                <button class="btn btn-primary btn-sm filter-btn mb-1 active" data-type="">All</button>
+                <button class="btn btn-outline-success btn-sm filter-btn mb-1" data-type="Funded">Funded</button>
+                <button class="btn btn-outline-danger btn-sm filter-btn mb-1" data-type="Withdrawal">Withdrawal</button>
+                <button class="btn btn-outline-success btn-sm filter-btn mb-1" data-type="ROI Commission">ROI</button>
+                <button class="btn btn-outline-warning btn-sm filter-btn mb-1" data-type="Transfer">Transfer</button>
+                <button class="btn btn-outline-info btn-sm filter-btn mb-1" data-type="Referral Commission">Referral</button>
+                <button class="btn btn-outline-dark btn-sm filter-btn mb-1" data-type="Bonus Commission">Bonus</button>
+                <button class="btn btn-outline-info btn-sm filter-btn mb-1" data-type="Investment Released">Released</button>
+            </div>
+            
+            <div class="mb-2">
+                <a href="manage_transactions.php" class="btn btn-primary btn-md btn-golden">
+                    <i class="la la-plus-circle"></i> <?php _e("Add New Transaction"); ?>
+                </a>
+            </div>
         </div>
 
         <div class="row">
@@ -127,6 +142,23 @@ $(document).ready(function() {
             allowClear: true
         });
     }
+
+    // DataTable filtering by Type
+    $('.filter-btn').on('click', function(e) {
+        e.preventDefault();
+        
+        // Remove primary from all, make them outline (except 'All' which we can just toggle active state)
+        $('.filter-btn').removeClass('active');
+        $(this).addClass('active');
+
+        var type = $(this).data('type');
+        var api = $('#export-table').DataTable();
+        if(type) {
+            api.column(1).search(type).draw();
+        } else {
+            api.column(1).search('').draw();
+        }
+    });
 });
 </script>
 

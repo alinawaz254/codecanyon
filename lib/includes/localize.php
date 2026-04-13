@@ -3,6 +3,23 @@
 		exit();
 	}
 
+	// Fallback for gettext functions to avoid undefined function errors if extension is not installed
+	if (!function_exists('bind_textdomain_codeset')) {
+		function bind_textdomain_codeset($domain, $codeset) { return $domain; }
+	}
+	if (!function_exists('bindtextdomain')) {
+		function bindtextdomain($domain, $directory) { return $directory; }
+	}
+	if (!function_exists('textdomain')) {
+		function textdomain($domain) { return $domain; }
+	}
+	if (!function_exists('_')) {
+		function _($message) { return $message; }
+	}
+	if (!function_exists('gettext')) {
+		function gettext($message) { return $message; }
+	}
+
 	if(!function_exists("get_language")):
 		function get_language() { 
 			global $db;

@@ -32,7 +32,10 @@
 					text: 'Copy',
 					title: $('h1').text(),
 					exportOptions: {
-						columns: ':not(.no-print)'
+						columns: function (idx, data, node) {
+							var text = $(node).text().trim().toLowerCase();
+							return !$(node).hasClass('no-print') && text !== 'action' && text !== 'actions';
+						}
 					},
 					footer: true
 				},{
@@ -40,7 +43,10 @@
 					text: 'Excel',
 					title: $('h1').text(),
 					exportOptions: {
-						columns: ':not(.no-print)'
+						columns: function (idx, data, node) {
+							var text = $(node).text().trim().toLowerCase();
+							return !$(node).hasClass('no-print') && text !== 'action' && text !== 'actions';
+						}
 					},
 					footer: true
 				},{
@@ -48,7 +54,10 @@
 					text: 'Csv',
 					title: $('h1').text(),
 					exportOptions: {
-						columns: ':not(.no-print)'
+						columns: function (idx, data, node) {
+							var text = $(node).text().trim().toLowerCase();
+							return !$(node).hasClass('no-print') && text !== 'action' && text !== 'actions';
+						}
 					},
 					footer: true
 				},{
@@ -56,7 +65,10 @@
 					text: 'Pdf',
 					title: $('h1').text(),
 					exportOptions: {
-						columns: ':not(.no-print)'
+						columns: function (idx, data, node) {
+							var text = $(node).text().trim().toLowerCase();
+							return !$(node).hasClass('no-print') && text !== 'action' && text !== 'actions';
+						}
 					},
 					footer: true
 				},{
@@ -64,7 +76,10 @@
 					text: 'Print',
 					title: $('h1').text(),
 					exportOptions: {
-						columns: ':not(.no-print)'
+						columns: function (idx, data, node) {
+							var text = $(node).text().trim().toLowerCase();
+							return !$(node).hasClass('no-print') && text !== 'action' && text !== 'actions';
+						}
 					},
 					footer: true,
 					autoPrint: true

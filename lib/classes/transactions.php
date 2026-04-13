@@ -74,7 +74,7 @@ class Transactions {
         echo '<div class="widget has-shadow">';
         echo '<div class="widget-body">';
         echo '<div class="table-responsive">';
-        echo '<table class="table table-hover mb-0">';
+        echo '<table id="export-table" class="table table-hover mb-0">';
         echo '<thead>';
         echo '<tr>';
         echo '<th>' . _("User") . '</th>';
@@ -315,6 +315,11 @@ class Transactions {
                                     <?php echo date("F j, Y, g:i a", strtotime($transaction['created_at'])); ?></p>
                                 <p><strong><?php echo _("Last Updated:"); ?></strong>
                                     <?php echo date("F j, Y, g:i a", strtotime($transaction['updated_at'])); ?></p>
+                                <?php if(!empty($transaction['proof_image'])): ?>
+                                <p><strong><?php echo _("Payment Proof:"); ?></strong>
+                                    <br><a href="<?php echo htmlspecialchars($transaction['proof_image']); ?>" target="_blank" class="btn btn-sm btn-info text-white mt-1"><i class="la la-image"></i> <?php echo _("View Screenshot"); ?></a>
+                                </p>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
