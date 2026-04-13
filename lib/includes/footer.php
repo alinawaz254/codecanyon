@@ -48,6 +48,38 @@
 	<?php endif; ?>
 	<?php if(isset($croppic) && $croppic == 1) : ?>
 	<script src="assets/js/croppic.min.js"></script>
+    <style>
+        /* Modern styling for Croppic controls to make them look like buttons */
+        .cropControls {
+            background-color: rgba(0,0,0,0.85) !important;
+            padding: 10px !important;
+            border-radius: 5px !important;
+            display: flex !important;
+            gap: 10px !important;
+            align-items: center !important;
+        }
+        .cropControls i {
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            font-style: normal !important;
+            font-size: 14px !important;
+            color: #fff !important;
+            cursor: pointer !important;
+            padding: 5px 12px !important;
+            border-radius: 4px !important;
+            background: #444 !important;
+            min-width: 60px !important;
+            transition: all 0.2s !important;
+        }
+        .cropControls i:hover { background: #666 !important; }
+        .cropControls i.cropControlZoomIn::after { content: " + Zoom"; margin-left: 5px; }
+        .cropControls i.cropControlZoomOut::after { content: " - Zoom"; margin-left: 5px; }
+        .cropControls i.cropControlCrop { background: #28a745 !important; }
+        .cropControls i.cropControlCrop::after { content: " SET & CROP"; margin-left: 5px; font-weight: bold; }
+        .cropControls i.cropControlReset { background: #dc3545 !important; }
+        .cropControls i.cropControlReset::after { content: " CANCEL"; margin-left: 5px; }
+    </style>
 	<script type="text/javascript">
 		var croppicContaineroutputOptions = {
 				uploadUrl:'lib/includes/img_save_to_file.php',
@@ -57,6 +89,12 @@
 				doubleZoomControls:false,
 				rotateControls:false,
 				loaderHtml:'<div class="loader bubblingG"><span id="bubblingG_1"></span><span id="bubblingG_2"></span><span id="bubblingG_3"></span></div>',
+                onAfterImgCrop: function() {
+                    alert("Profile image cropped successfully! Now click 'Update User' to save changes.");
+                },
+                onError: function(errormsg) {
+                    alert("Error: " + errormsg);
+                }
 		}
 		var cropContaineroutput = new Croppic('cropContaineroutput', croppicContaineroutputOptions);
 	</script>

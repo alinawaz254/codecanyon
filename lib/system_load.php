@@ -9,6 +9,17 @@
 	require_once "notifications_helper.php";
 	
 	define('ADMIN_ID', 1);
+
+	// Ensure upload directories exist (especially since they are gitignored)
+	$dirs_to_check = [
+		ROOT_DIR . '/assets/upload',
+		ROOT_DIR . '/assets/upload/proofs'
+	];
+	foreach($dirs_to_check as $dir) {
+		if(!is_dir($dir)) {
+			@mkdir($dir, 0777, true);
+		}
+	}
 	//Redirecting to installation wizard
 	//If not installed already.
 	global $db;

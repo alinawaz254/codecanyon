@@ -26,7 +26,7 @@ if(!empty($search_query)) {
         $user_data['total_investment'] = $inv_row['total_inv'];
         
         $ref_query = "
-            SELECT u.user_id, u.first_name, u.last_name, u.phone, u.email, u.address1, u.address2,
+            SELECT u.user_id, u.username, u.first_name, u.last_name, u.phone, u.email, u.address1, u.address2,
             (SELECT COALESCE(SUM(amount),0) FROM user_investments WHERE user_id = u.user_id) as total_investment,
             (SELECT COALESCE(SUM(ui.amount),0) FROM user_investments ui JOIN users sub_u ON ui.user_id = sub_u.user_id WHERE sub_u.referral_id = u.user_id) as team_investment,
             (SELECT COUNT(*) FROM users sub_u WHERE sub_u.referral_id = u.user_id) as ref_count
@@ -111,7 +111,7 @@ if(!empty($search_query)) {
                                 <th>Phone</th>
                                 <th>Email</th>
                                 <th>Address</th>
-                                <th>T. Investment</th>
+                                <th>Total Investment</th>
                                 <th>Team Investment</th>
                                 <th>Ref Count</th>
                             </tr>
@@ -120,7 +120,7 @@ if(!empty($search_query)) {
                             <?php if($referrals && $referrals->num_rows > 0): ?>
                                 <?php while($ref = $referrals->fetch_assoc()): ?>
                                     <tr>
-                                        <td><?php echo $ref['user_id']; ?> - <?php echo htmlspecialchars($ref['first_name'].' '.$ref['last_name']); ?></td>
+                                        <td><?php echo htmlspecialchars($ref['username']); ?> - <?php echo htmlspecialchars($ref['first_name'].' '.$ref['last_name']); ?></td>
                                         <td><?php echo htmlspecialchars($ref['phone']); ?></td>
                                         <td><?php echo htmlspecialchars($ref['email']); ?></td>
                                         <td><?php echo htmlspecialchars(trim($ref['address1'] . ' ' . $ref['address2'])); ?></td>

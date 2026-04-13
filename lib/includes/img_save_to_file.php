@@ -1,16 +1,29 @@
 <?php
+ini_set('memory_limit', '256M');
+error_reporting(0);
+ob_start();
 /*
 *	!!! THIS IS JUST AN EXAMPLE !!!, PLEASE USE ImageMagick or some other quality image processing libraries
 */
     $imagePath = "../../assets/upload/";
 
 	if(!is_dir($imagePath)) {
-	    mkdir($imagePath, 0777, true);
+	    @mkdir($imagePath, 0777, true);
 	}
 
-	$allowedExts = array("gif", "jpeg", "jpg", "png", "GIF", "JPEG", "JPG", "PNG");
+    if (!isset($_FILES["img"]) || empty($_FILES["img"]["name"])) {
+        $response = array(
+            "status" => 'error',
+            "message" => 'No file uploaded or file too large.',
+        );
+        header('Content-Type: application/json');
+        echo json_encode($response);
+        exit;
+    }
+
+	$allowedExts = array("gif", "jpeg", "jpg", "png", "GIF", "JPEG", "JPG", "PNG", "webp", "WEBP");
 	$temp = explode(".", $_FILES["img"]["name"]);
-	$extension = end($temp);
+	$extension = strtolower(end($temp));
 
 	if ( in_array($extension, $allowedExts))
 	  {
@@ -18,28 +31,37 @@
 		{
 			 $response = array(
 				"status" => 'error',
-				"message" => 'ERROR Return Code: '. $_FILES["img"]["error"],
+				"message" => 'Upload Error: '. $_FILES["img"]["error"],
 			);
-			echo "Return Code: " . $_FILES["img"]["error"] . "<br>";
 		}
 	  else {
 		  $filename = $_FILES["img"]["tmp_name"];
 		  list($width, $height) = getimagesize( $filename );
 
-		  move_uploaded_file($filename,  $imagePath . $_FILES["img"]["name"]);
+          // Use a unique name to avoid conflicts
+          $new_filename = 'temp_'.time().'_'.rand(100,999).'.'.$extension;
 
-		  $response = array(
-			"status" => 'success',
-			"url" => 'assets/upload/'.$_FILES["img"]["name"],
-			"width" => $width,
-			"height" => $height
-		  );
+		  if(move_uploaded_file($filename,  $imagePath . $new_filename)) {
+              $response = array(
+                "status" => 'success',
+                "url" => 'assets/upload/'.$new_filename,
+                "width" => $width,
+                "height" => $height
+              );
+          } else {
+              $response = array(
+                "status" => 'error',
+                "message" => 'Could not save file to assets/upload/. Please check folder permissions (777).',
+              );
+          }
 		}
 	  } else {
 			$response = array(
 				"status" => 'error',
-				"message" => 'something went wrong',
+				"message" => 'Invalid file format. Use JPG, PNG, GIF or WEBP.',
 			);
 	  }
-	  
-	  print json_encode($response);
+    ob_clean();
+    header('Content-Type: application/json');
+	echo json_encode($response);
+    exit;
