@@ -21,30 +21,35 @@ add_action('rest_api_init', function () {
 });
 
 /**
+ * 🔥 FORCE ROLE ON USER CREATE (GLOBAL FIX)
+ * This ensures EVERY new user becomes "customer"
+ */
+add_action('user_register', function ($user_id) {
+    $user = new \WP_User($user_id);
+    $user->set_role('customer');
+}, 100);
+
+/**
  * FORCE CUSTOMER ROLE FOR REST API SYNC
  * This hook runs after a user is created or updated via the REST API.
  */
 add_action('rest_insert_user', function ($user, $request, $creating) {
-    // Check if the request is coming from our PHP sync
-    if ($request->get_param('sync_source') === 'php') {
-        // Force role to customer
-        $user->set_role('customer');
 
-        // Double check WooCommerce role specifically if needed
-        if (class_exists('WooCommerce')) {
-            $user->set_role('customer');
-        }
-    }
-}, 10, 3);
+    // Debug (optional - remove in production)
+    error_log('User created via REST. Forcing role to customer');
+
+    $user->set_role('customer');
+
+}, 100, 3);
 
 /**
  * Block suspended users from logging into WordPress
  */
 add_filter('authenticate', function ($user, $username, $password) {
-    if ($user instanceof WP_User) {
+    if ($user instanceof \WP_User) {
         $is_suspended = get_user_meta($user->ID, 'is_suspended', true);
         if ($is_suspended) {
-            return new WP_Error('user_suspended', __('This account has been suspended by the administrator.'));
+            return new \WP_Error('user_suspended', __('This account has been suspended by the administrator.'));
         }
     }
     return $user;
@@ -55,11 +60,9 @@ add_filter('authenticate', function ($user, $username, $password) {
  */
 function sync_to_php_project($data)
 {
-    // Prevent infinite loops if the request originated from PHP
     if (defined('SYNCING_FROM_PHP') && SYNCING_FROM_PHP === true)
         return;
 
-    // Also check for the query parameter in the current request
     if (isset($_GET['sync_source']) && $_GET['sync_source'] === 'php')
         return;
 
@@ -68,23 +71,21 @@ function sync_to_php_project($data)
     wp_remote_post(PHP_PROJECT_WEBHOOK_URL, [
         'method' => 'POST',
         'timeout' => 15,
-        'redirection' => 5,
-        'httpversion' => '1.0',
-        'blocking' => true,
         'headers' => [
             'Content-Type' => 'application/json',
             'X-WP-SYNC-SECRET' => PHP_PROJECT_SYNC_SECRET
         ],
         'body' => json_encode($data),
-        'cookies' => []
     ]);
 }
+
 
 /**
  * Hook into User Profile Updates
  */
 add_action('profile_update', function ($user_id, $old_user_data) {
     $user = get_userdata($user_id);
+
     $data = [
         'action' => 'user_updated',
         'email' => $user->user_email,
@@ -93,6 +94,7 @@ add_action('profile_update', function ($user_id, $old_user_data) {
         'wp_user_id' => $user_id,
         'is_suspended' => get_user_meta($user_id, 'is_suspended', true)
     ];
+
     sync_to_php_project($data);
 }, 20, 2);
 
@@ -119,6 +121,7 @@ add_action('delete_user', function ($user_id) {
         'email' => $user->user_email,
         'wp_user_id' => $user_id
     ];
+
     sync_to_php_project($data);
 });
 

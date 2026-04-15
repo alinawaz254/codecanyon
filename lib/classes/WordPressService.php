@@ -30,7 +30,8 @@ class WordPressService
     /**
      * Get WordPress User ID from Local Mapping
      */
-    public function getMappedWpId($phpUserId) {
+    public function getMappedWpId($phpUserId)
+    {
         global $db;
         $id = intval($phpUserId);
         $query = "SELECT wp_user_id FROM php_users_wp_map WHERE php_user_id = $id LIMIT 1";
@@ -44,7 +45,8 @@ class WordPressService
     /**
      * Save Mapping to Local DB
      */
-    public function saveMapping($phpUserId, $wpUserId) {
+    public function saveMapping($phpUserId, $wpUserId)
+    {
         global $db;
         $php = intval($phpUserId);
         $wp = intval($wpUserId);
@@ -57,7 +59,8 @@ class WordPressService
     /**
      * Remove Mapping from Local DB
      */
-    public function removeMappingByPhpId($phpUserId) {
+    public function removeMappingByPhpId($phpUserId)
+    {
         global $db;
         $id = intval($phpUserId);
         $query = "DELETE FROM php_users_wp_map WHERE php_user_id = $id";
@@ -67,18 +70,20 @@ class WordPressService
     /**
      * Sync User to WordPress (Create or Update)
      */
-    public function syncUser($phpUserId, $email, $password = null, $username = null, $firstName = '', $lastName = '', $description = '') {
+    public function syncUser($phpUserId, $email, $password = null, $username = null, $firstName = '', $lastName = '', $description = '')
+    {
         $wpUserId = $this->getMappedWpId($phpUserId);
-        
+
         $data = [
-            'email'      => $email,
+            'email' => $email,
             'first_name' => $firstName,
-            'last_name'  => $lastName,
+            'last_name' => $lastName,
             'description' => $description,
-            'role'       => $this->defaultRole
+            'roles' => [$this->defaultRole]
         ];
 
-        if ($password) $data['password'] = $password;
+        if ($password)
+            $data['password'] = $password;
 
         if ($wpUserId) {
             // Update Existing User
@@ -96,9 +101,10 @@ class WordPressService
             }
 
             // Create New User
-            if (!$username) $username = $email; // Fallback
+            if (!$username)
+                $username = $email; // Fallback
             $data['username'] = $username;
-            
+
             $response = $this->request('POST', "/users", $data);
             if ($response && isset($response['id'])) {
                 $this->saveMapping($phpUserId, $response['id']);
@@ -112,7 +118,8 @@ class WordPressService
     /**
      * Delete a user in WordPress
      */
-    public function deleteUser($phpUserId) {
+    public function deleteUser($phpUserId)
+    {
         $wpUserId = $this->getMappedWpId($phpUserId);
         if ($wpUserId) {
             $this->removeMappingByPhpId($phpUserId);
@@ -124,7 +131,8 @@ class WordPressService
     /**
      * Update user status (suspension) in WordPress via Meta
      */
-    public function updateStatus($phpUserId, $isSuspended) {
+    public function updateStatus($phpUserId, $isSuspended)
+    {
         $wpUserId = $this->getMappedWpId($phpUserId);
         if ($wpUserId) {
             $data = [
@@ -194,18 +202,21 @@ class WordPressService
 
         $this->logSyncAttempt($method, $url, $data, $httpCode, $response, $error);
 
-        if ($error) return false;
-        
+        if ($error)
+            return false;
+
         return json_decode($response, true);
     }
 
     private function logSyncAttempt($method, $url, $data, $code, $response, $error)
     {
         $timestamp = date('Y-m-d H:i:s');
-        if (isset($data['password'])) $data['password'] = '********';
+        if (isset($data['password']))
+            $data['password'] = '********';
         $logEntry = "[$timestamp] $method $url | Status: $code\n";
         $logEntry .= "Request Data: " . json_encode($data) . "\n";
-        if ($error) $logEntry .= "cURL Error: $error\n";
+        if ($error)
+            $logEntry .= "cURL Error: $error\n";
         $logEntry .= "Response: $response\n";
         $logEntry .= str_repeat('-', 50) . "\n";
         file_put_contents($this->logFile, $logEntry, FILE_APPEND);
