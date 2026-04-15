@@ -482,7 +482,7 @@ function list_users($user_type) {
 				FROM user_investment_details uid
 				JOIN user_investments ui
 				ON uid.investment_id = ui.investment_id
-				WHERE ui.user_id = $user_id
+				WHERE uid.user_id = $user_id
 				");
 
 				$commission = $commission->fetch_assoc();
@@ -503,7 +503,7 @@ function list_users($user_type) {
 				ON uid.investment_id = ui.investment_id
 				JOIN investment_plans p
 				ON ui.plan_id = p.plan_id
-				WHERE ui.user_id = $user_id
+				WHERE uid.user_id = $user_id
 				ORDER BY uid.comission_expiry_date ASC
 				");
 
