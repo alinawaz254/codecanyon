@@ -16,7 +16,7 @@ $referrals = null;
 
 if(!empty($search_query)) {
     $q = $db->real_escape_string($search_query);
-    $query = "SELECT * FROM users WHERE user_id='$q' OR username='$q' OR email='$q' OR phone='$q' LIMIT 1";
+    $query = "SELECT * FROM users WHERE user_id='$q' OR username='$q' OR email='$q' OR phone='$q' OR mobile='$q' LIMIT 1";
     $res = $db->query($query);
     if($res && $res->num_rows > 0) {
         $user_data = $res->fetch_assoc();
@@ -26,7 +26,7 @@ if(!empty($search_query)) {
         $user_data['total_investment'] = $inv_row['total_inv'];
         
         $ref_query = "
-            SELECT u.user_id, u.username, u.first_name, u.last_name, u.phone, u.email, u.address1, u.address2,
+            SELECT u.user_id, u.username, u.first_name, u.last_name, u.phone, u.mobile, u.email, u.address1, u.address2,
             (SELECT COALESCE(SUM(amount),0) FROM user_investments WHERE user_id = u.user_id) as total_investment,
             (SELECT COALESCE(SUM(ui.amount),0) FROM user_investments ui JOIN users sub_u ON ui.user_id = sub_u.user_id WHERE sub_u.referral_id = u.user_id) as team_investment,
             (SELECT COUNT(*) FROM users sub_u WHERE sub_u.referral_id = u.user_id) as ref_count
@@ -76,7 +76,7 @@ if(!empty($search_query)) {
                                 <td><strong>EMAIL:</strong> <?php echo htmlspecialchars($user_data['email']); ?></td>
                             </tr>
                             <tr>
-                                <td><strong>PHONE:</strong> <?php echo htmlspecialchars($user_data['phone']); ?></td>
+                                <td><strong>PHONE:</strong> <?php echo htmlspecialchars(!empty($user_data['phone']) ? $user_data['phone'] : $user_data['mobile']); ?></td>
                                 <td><strong>ADDRESS:</strong> <?php echo htmlspecialchars(trim($user_data['address1'].' '.$user_data['address2'])); ?></td>
                             </tr>
                             <tr>
@@ -121,7 +121,7 @@ if(!empty($search_query)) {
                                 <?php while($ref = $referrals->fetch_assoc()): ?>
                                     <tr>
                                         <td><?php echo htmlspecialchars($ref['username']); ?> - <?php echo htmlspecialchars($ref['first_name'].' '.$ref['last_name']); ?></td>
-                                        <td><?php echo htmlspecialchars($ref['phone']); ?></td>
+                                        <td><?php echo htmlspecialchars(!empty($ref['phone']) ? $ref['phone'] : $ref['mobile']); ?></td>
                                         <td><?php echo htmlspecialchars($ref['email']); ?></td>
                                         <td><?php echo htmlspecialchars(trim($ref['address1'] . ' ' . $ref['address2'])); ?></td>
                                         <td>PKR <?php echo number_format($ref['total_investment'], 2); ?></td>

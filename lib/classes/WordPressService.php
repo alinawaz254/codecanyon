@@ -70,7 +70,7 @@ class WordPressService
     /**
      * Sync User to WordPress (Create or Update)
      */
-    public function syncUser($phpUserId, $email, $password = null, $username = null, $firstName = '', $lastName = '', $description = '')
+    public function syncUser($phpUserId, $email, $password = null, $username = null, $firstName = '', $lastName = '', $description = '', $status = 'activate')
     {
         $wpUserId = $this->getMappedWpId($phpUserId);
 
@@ -79,7 +79,10 @@ class WordPressService
             'first_name' => $firstName,
             'last_name' => $lastName,
             'description' => $description,
-            'roles' => [$this->defaultRole]
+            'roles' => [$this->defaultRole],
+            'meta' => [
+                'user_status' => $status
+            ]
         ];
 
         if ($password)
@@ -97,7 +100,7 @@ class WordPressService
             if ($existingId) {
                 $this->saveMapping($phpUserId, $existingId);
                 // Now update them with fresh data
-                return $this->syncUser($phpUserId, $email, $password, $username, $firstName, $lastName, $description);
+                return $this->syncUser($phpUserId, $email, $password, $username, $firstName, $lastName, $description, $status);
             }
 
             // Create New User
@@ -129,15 +132,15 @@ class WordPressService
     }
 
     /**
-     * Update user status (suspension) in WordPress via Meta
+     * Update user status in WordPress via Meta
      */
-    public function updateStatus($phpUserId, $isSuspended)
+    public function updateStatus($phpUserId, $status)
     {
         $wpUserId = $this->getMappedWpId($phpUserId);
         if ($wpUserId) {
             $data = [
                 'meta' => [
-                    'is_suspended' => (bool) $isSuspended
+                    'user_status' => $status
                 ]
             ];
             return $this->request('POST', "/users/{$wpUserId}", $data);

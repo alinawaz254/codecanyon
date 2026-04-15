@@ -53,7 +53,7 @@ if (!$localUser) {
     $query = "SELECT * FROM users WHERE email='" . $db->real_escape_string($email) . "' LIMIT 1";
     $res = $db->query($query);
     $localUser = $res->fetch_assoc();
-    
+
     // If found by email but not mapped, create the mapping now
     if ($localUser && $wpUserId > 0) {
         $phpId = $localUser['user_id'];
@@ -65,18 +65,20 @@ switch ($action) {
     case 'user_updated':
         if ($localUser) {
             $userId = $localUser['user_id'];
-            
+
             // Update profile data in local DB
-            if (isset($data['first_name'])) $usersModel->update_user_row($userId, 'first_name', $db->real_escape_string($data['first_name']));
-            if (isset($data['last_name'])) $usersModel->update_user_row($userId, 'last_name', $db->real_escape_string($data['last_name']));
-            if (isset($data['email'])) $usersModel->update_user_row($userId, 'email', $db->real_escape_string($data['email']));
-            
-            // Handle suspension sync
-            if (isset($data['is_suspended'])) {
-                $status = ($data['is_suspended']) ? 'suspend' : 'activate';
-                $usersModel->update_user_row($userId, 'status', $status);
+            if (isset($data['first_name']))
+                $usersModel->update_user_row($userId, 'first_name', $db->real_escape_string($data['first_name']));
+            if (isset($data['last_name']))
+                $usersModel->update_user_row($userId, 'last_name', $db->real_escape_string($data['last_name']));
+            if (isset($data['email']))
+                $usersModel->update_user_row($userId, 'email', $db->real_escape_string($data['email']));
+
+            // Handle status sync
+            if (isset($data['user_status'])) {
+                $usersModel->update_user_row($userId, 'status', $db->real_escape_string($data['user_status']));
             }
-            
+
             echo "User updated: $email";
         }
         break;
@@ -84,8 +86,8 @@ switch ($action) {
     case 'password_updated':
         if ($localUser && isset($data['new_password'])) {
             $userId = $localUser['user_id'];
-            $newPass = $data['new_password']; 
-            
+            $newPass = $data['new_password'];
+
             $password_hash = get_option('password_hash');
             if ($password_hash == "argon2") {
                 $options = ['cost' => 12];
@@ -93,7 +95,7 @@ switch ($action) {
             } else {
                 $hashedPass = md5($newPass);
             }
-            
+
             $usersModel->update_user_row($userId, 'password', $hashedPass);
             echo "Password updated: $email";
         }

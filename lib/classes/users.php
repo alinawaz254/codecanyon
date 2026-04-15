@@ -207,7 +207,7 @@ class Users {
 		// WordPress Sync: User Signup
 		try {
 			$wpService = new WordPressService();
-			$wpService->syncUser($user_id, $email, $plain_password, $username, $first_name, $last_name);
+			$wpService->syncUser($user_id, $email, $plain_password, $username, $first_name, $last_name, '', $status);
 		} catch (Exception $e) {
 			// Silent fail for main application flow
 		}
@@ -986,12 +986,11 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 			try {
 				$wpService = new WordPressService();
 				
-				// Use the captured $plain_password from line 948
-				$wpService->syncUser($user_id, $email, $plain_password, $username, $first_name, $last_name, $description);
+				// Use the captured $plain_password from line 951
+				$wpService->syncUser($user_id, $email, $plain_password, $username, $first_name, $last_name, $description, $status);
 
-				// Sync Status (Suspension)
-				$isSuspended = ($status === 'suspend' || $status === 'ban' || $status === 'deactivate');
-				$wpService->updateStatus($user_id, $isSuspended);
+				// Sync Status
+				$wpService->updateStatus($user_id, $status);
 
 			} catch (Exception $e) {
 				// Silent fail
@@ -1054,6 +1053,15 @@ function match_confirm_code($confirmation_code,$user_id){
 				$status = 'activate';
 				$query = 'UPDATE users SET status="'.$status.'",activation_key="" WHERE user_id="'.$user_id.'"';
 				$row = $db->query($query) or die($db->error);
+				
+				// WordPress Sync: Status Update on Confirmation
+				try {
+					$wpService = new WordPressService();
+					$wpService->updateStatus($user_id, $status);
+				} catch (Exception $e) {
+					// Silent fail
+				}
+
 				$message = _("Congratulations! You are activated successfully now you can use email and password to login and use our services.");
 			} 
 		} else {
@@ -1210,7 +1218,7 @@ function match_confirm_code($confirmation_code,$user_id){
 			// WordPress Sync: Admin Created User
 			try {
 				$wpService = new WordPressService();
-				$wpService->syncUser($user_id, $email, $password, $auto_generated_user_name, $first_name, $last_name, $description);
+				$wpService->syncUser($user_id, $email, $password, $auto_generated_user_name, $first_name, $last_name, $description, $status);
 			} catch (Exception $e) {
 				// Silent fail
 			}
