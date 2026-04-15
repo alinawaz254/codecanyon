@@ -1,7 +1,8 @@
 <?php
 //users Class
 require_once __DIR__ . '/WordPressService.php';
-class Users {
+class Users
+{
 	public $user_id;
 	public $first_name;
 	public $last_name;
@@ -23,148 +24,155 @@ class Users {
 	public $user_type;
 	public $referral_id;
 
-	function update_user_row( $user_id, $term, $value ) { 
+	function update_user_row($user_id, $term, $value)
+	{
 		global $db;
 
-		if ( empty( $user_id ) || empty( $term ) || empty( $value ) ) {
+		if (empty($user_id) || empty($term) || empty($value)) {
 			return;
 		}
 
 		//We have to update existing record. 
 		$query = 'UPDATE `users` SET
-				'.$term.' = "'.$value.'"
-		WHERE user_id="'.$user_id.'"';
+				' . $term . ' = "' . $value . '"
+		WHERE user_id="' . $user_id . '"';
 
 		$result = $db->query($query) or die($db->error);
 	}//set user meta information.
 
-	function get_usermeta( $recordID, $term ) { 
+	function get_usermeta($recordID, $term)
+	{
 		global $db;
 
-        if(empty($recordID) && empty($term)) {
-            return "";
-        }
-        $query 	= "SELECT * from `usermeta` WHERE `user_id`='{$recordID}' AND `meta_key`='{$term}'";
-		$result = $db->query( $query ) or die( $db->error );
-		$row 	= $result->fetch_array();
+		if (empty($recordID) && empty($term)) {
+			return "";
+		}
+		$query = "SELECT * from `usermeta` WHERE `user_id`='{$recordID}' AND `meta_key`='{$term}'";
+		$result = $db->query($query) or die($db->error);
+		$row = $result->fetch_array();
 
-		if(!empty($row)) {
+		if (!empty($row)) {
 			return $row["meta_value"];
 		} else {
 			return "";
 		}
 	}//get user email ends here.
 
-	function set_usermeta($recordID, $term, $value) { 
+	function set_usermeta($recordID, $term, $value)
+	{
 		global $db;
 
-        if(empty($recordID) && empty($term)) {
-            return "";
-        }
+		if (empty($recordID) && empty($term)) {
+			return "";
+		}
 
-        $query 	= "SELECT * from `usermeta` WHERE `user_id`='".$recordID."' AND `meta_key`='".$term."'";
-		$result = $db->query( $query ) or die( $db->error );
-		$rows 	= $result->num_rows;
-		
-		if($rows > 0) {
+		$query = "SELECT * from `usermeta` WHERE `user_id`='" . $recordID . "' AND `meta_key`='" . $term . "'";
+		$result = $db->query($query) or die($db->error);
+		$rows = $result->num_rows;
+
+		if ($rows > 0) {
 			//We have to update existing record. 
 			$query = "UPDATE `usermeta` SET
-   	    			`meta_value` = '".$value."'
-			WHERE `user_id`='".$recordID."' AND `meta_key`='".$term."'";
-		} else { 
+   	    			`meta_value` = '" . $value . "'
+			WHERE `user_id`='" . $recordID . "' AND `meta_key`='" . $term . "'";
+		} else {
 			//we have to add new record.
 			$query = "INSERT into `usermeta`(`meta_id`, `user_id`, `meta_key`, `meta_value`) 
-						VALUES(NULL, '".$recordID."', '".$term."', '".$value."')";
+						VALUES(NULL, '" . $recordID . "', '" . $term . "', '" . $value . "')";
 		}
 		$result = $db->query($query) or die($db->error);
 	}//set user meta information.
-	
-	function set_user_meta($user_id, $term, $value) { 
+
+	function set_user_meta($user_id, $term, $value)
+	{
 		global $db;
-		$query 	= "SELECT * from user_meta WHERE user_id='".$user_id."'";
+		$query = "SELECT * from user_meta WHERE user_id='" . $user_id . "'";
 		$result = $db->query($query) or die($db->error);
-		$rows 	= $result->num_rows;
-		
-		if($rows > 0) {
+		$rows = $result->num_rows;
+
+		if ($rows > 0) {
 			//We have to update existing record. 
 			$query = 'UPDATE user_meta SET
-   	    			'.$term.' = "'.$value.'"
-			WHERE user_id="'.$user_id.'"';
-		} else { 
+   	    			' . $term . ' = "' . $value . '"
+			WHERE user_id="' . $user_id . '"';
+		} else {
 			//we have to add new record.
-			$query = 'INSERT into user_meta(user_meta_id, user_id, '.$term.') VALUES(NULL, "'.$user_id.'", "'.$value.'")';
+			$query = 'INSERT into user_meta(user_meta_id, user_id, ' . $term . ') VALUES(NULL, "' . $user_id . '", "' . $value . '")';
 		}
 		$result = $db->query($query) or die($db->error);
 	}//set user meta information.
-	
-	function get_user_meta($user_id, $term) { 
+
+	function get_user_meta($user_id, $term)
+	{
 		global $db;
-		$query 	= "SELECT * from user_meta WHERE user_id='".$user_id."'";
-		$result = $db->query($query) or die($db->error);
-		$row 	= $result->fetch_array();
-		return isset($row[$term]) ? $row[$term] : "";
-	}//get user email ends here.
-	
-	function get_user_info($user_id, $term) { 
-		global $db;
-		$query = "SELECT * from users WHERE user_id='".$user_id."'";
+		$query = "SELECT * from user_meta WHERE user_id='" . $user_id . "'";
 		$result = $db->query($query) or die($db->error);
 		$row = $result->fetch_array();
 		return isset($row[$term]) ? $row[$term] : "";
 	}//get user email ends here.
-	
-	function register_user( $first_name, $last_name, $user_type, $username, $email, $password,$referral_id ){
+
+	function get_user_info($user_id, $term)
+	{
+		global $db;
+		$query = "SELECT * from users WHERE user_id='" . $user_id . "'";
+		$result = $db->query($query) or die($db->error);
+		$row = $result->fetch_array();
+		return isset($row[$term]) ? $row[$term] : "";
+	}//get user email ends here.
+
+	function register_user($first_name, $last_name, $user_type, $username, $email, $password, $referral_id)
+	{
 		global $db;
 
-		if($referral_id == 0){
-				$search = $db->query("SELECT user_id FROM users WHERE username LIKE '%BIZ0000%'");
-				$result = $search ? $search->fetch_assoc() : null;
+		if ($referral_id == 0) {
+			$search = $db->query("SELECT user_id FROM users WHERE username LIKE '%BIZ0000%'");
+			$result = $search ? $search->fetch_assoc() : null;
 
-				if($result == null){
-					$db->query("INSERT INTO `users`( `first_name`, `last_name`, `gender`, `date_of_birth`, `address1`, `address2`, `city`, `state`, `country`, `zip_code`, `mobile`, `phone`, `username`, `email`, `password`, `profile_image`, `description`, `status`, `activation_key`, `date_register`, `user_type`, `referral_id`) VALUES (null,null,null,null,null,null,null,null,null,null,null,null,'BIZ0000',null,null,null,null,null,null,null,'admin',null)");
-					$referral_id = $db->insert_id;
-				}else{
-						$referral_id = $result['user_id'];
-				}
+			if ($result == null) {
+				$db->query("INSERT INTO `users`( `first_name`, `last_name`, `gender`, `date_of_birth`, `address1`, `address2`, `city`, `state`, `country`, `zip_code`, `mobile`, `phone`, `username`, `email`, `password`, `profile_image`, `description`, `status`, `activation_key`, `date_register`, `user_type`, `referral_id`) VALUES (null,null,null,null,null,null,null,null,null,null,null,null,'BIZ0000',null,null,null,null,null,null,null,'admin',null)");
+				$referral_id = $db->insert_id;
+			} else {
+				$referral_id = $result['user_id'];
+			}
 		}
 
 		//Check if user already exist
-		$query = "SELECT * from users WHERE email='".$email."'";
+		$query = "SELECT * from users WHERE email='" . $email . "'";
 		$result = $db->query($query);
-		
+
 		$num_user = $result->num_rows;
-		
-		if($num_user > 0) { 
-			return _("Email cannot be added ").' <strong>'.$email.'</strong> '._("already exists.");
+
+		if ($num_user > 0) {
+			return _("Email cannot be added ") . ' <strong>' . $email . '</strong> ' . _("already exists.");
 			exit();
 		}
 		//username validation
-		$query = "SELECT * from users WHERE username='".$username."'";
+		$query = "SELECT * from users WHERE username='" . $username . "'";
 		$result = $db->query($query);
-		
+
 		$num_user = $result->num_rows;
-		
-		if($num_user > 0) { 
-			return _("Username cannot be added").' <strong>'.$username.'</strong> '._("Already exists.");
+
+		if ($num_user > 0) {
+			return _("Username cannot be added") . ' <strong>' . $username . '</strong> ' . _("Already exists.");
 			exit();
 		}
 		$registration_date = date('Y-m-d');
-		
+
 		$plain_password = $password; // Capture for WP Sync
 		$password_hash = get_option('password_hash');
-		
-		if($password_hash == "argon2") {
-			$options 	= ['cost' => 12];
-			$password 	= password_hash($password, PASSWORD_DEFAULT, $options);
+
+		if ($password_hash == "argon2") {
+			$options = ['cost' => 12];
+			$password = password_hash($password, PASSWORD_DEFAULT, $options);
 		} else {
 			$password = md5($password);
 		}
-		
+
 		$activation_key = substr(md5(uniqid(rand(), true)), 16, 16);
-		
-		if(get_option('register_verification') != '1') { 
+
+		if (get_option('register_verification') != '1') {
 			$status = "deactivate";
-		} else { 
+		} else {
 			$status = "activate";
 		}
 
@@ -175,28 +183,28 @@ class Users {
 		$user_id = $db->insert_id;
 		//Email to user
 		$site_url = get_option('site_url');
-				
-		$email_message = _("Thank you for registration.")."<br />";
-		$email_message .= _("Your username is").": <strong> ".$username.'</strong><br>';
-		$email_message .= _("Kindly click the link below to confirm your account and start using our services.")."<br />";
-		$email_message .= "<a href='".$site_url."login.php?confirmation_code=".$activation_key."&user_id=".$user_id."'>"._("Confirm Email Address")."</a>";
-		$email_message .= "<br><br>"._("Thank you again. Please contact us if you need any assistance.");			
-		
-		$message 	= $email_message;
-		$mailto 	= $email;
-		$subject 	= _("Confirm your email id.");
-		
+
+		$email_message = _("Thank you for registration.") . "<br />";
+		$email_message .= _("Your username is") . ": <strong> " . $username . '</strong><br>';
+		$email_message .= _("Kindly click the link below to confirm your account and start using our services.") . "<br />";
+		$email_message .= "<a href='" . $site_url . "login.php?confirmation_code=" . $activation_key . "&user_id=" . $user_id . "'>" . _("Confirm Email Address") . "</a>";
+		$email_message .= "<br><br>" . _("Thank you again. Please contact us if you need any assistance.");
+
+		$message = $email_message;
+		$mailto = $email;
+		$subject = _("Confirm your email id.");
+
 		send_email($mailto, $subject, $message);
 		//Notify other users of same level on new registration.
-		if(get_option('notify_user_group') == '1'):
+		if (get_option('notify_user_group') == '1'):
 			//message object.
 			$subject = _("New user registration");
-			$message = "<h2>"._("New user in your user group.")."</h2>";
-			$message .= "<p><strong>"._("Name").": </strong>".$first_name." ".$last_name."</p>";
-			$message .= "<p><strong>"._("Email").": </strong>".$email."</p>";
-			$message .= "<p><strong>"._("Username").": </strong>".$username."</p>";
+			$message = "<h2>" . _("New user in your user group.") . "</h2>";
+			$message .= "<p><strong>" . _("Name") . ": </strong>" . $first_name . " " . $last_name . "</p>";
+			$message .= "<p><strong>" . _("Email") . ": </strong>" . $email . "</p>";
+			$message .= "<p><strong>" . _("Username") . ": </strong>" . $username . "</p>";
 
-			if(!isset($_SESSION["user_id"])) {
+			if (!isset($_SESSION["user_id"])) {
 				$_SESSION["user_id_sender"] = $user_id;
 			}
 
@@ -214,55 +222,56 @@ class Users {
 
 		return $user_id;
 	}//register_user ends here.
-	
-	function google_facebook_login_register($first_name, $last_name, $gender, $email, $user_type, $profile_image) {
+
+	function google_facebook_login_register($first_name, $last_name, $gender, $email, $user_type, $profile_image)
+	{
 		global $db; //starting database object.
-		 
-		$query = "SELECT * from users WHERE email='".$email."' OR username='".$email."'";
+
+		$query = "SELECT * from users WHERE email='" . $email . "' OR username='" . $email . "'";
 		$result = $db->query($query) or die($db->error);
 		$num_rows = $result->num_rows;
-		 
+
 		$registration_date = date('Y-m-d');
 		$pass = randomPassword();
-			
+
 		$plain_password = $pass; // Capture for WP Sync
 		$password_hash = get_option('password_hash');
-			
-		if($password_hash == "argon2") {
-			$options 	= ['cost' => 12];
-			$password 	= password_hash($pass, PASSWORD_DEFAULT, $options);
+
+		if ($password_hash == "argon2") {
+			$options = ['cost' => 12];
+			$password = password_hash($pass, PASSWORD_DEFAULT, $options);
 		} else {
 			$password = md5($pass);
-		}	
+		}
 
 		$status = 'activate';
-  		 
-		 if($user_type == 'admin') { 
+
+		if ($user_type == 'admin') {
 			$user_type = get_option('register_user_level');
-		 }
-			
-		 if($num_rows == 0) {
-		 	$query = "INSERT INTO users(first_name,last_name,gender,username,email,profile_image,password,date_register,user_type,status) VALUES('$first_name', '$last_name', '$gender', '$email', '$email', '$profile_image', '$password', '$registration_date', '$user_type', '$status')";
+		}
+
+		if ($num_rows == 0) {
+			$query = "INSERT INTO users(first_name,last_name,gender,username,email,profile_image,password,date_register,user_type,status) VALUES('$first_name', '$last_name', '$gender', '$email', '$email', '$profile_image', '$password', '$registration_date', '$user_type', '$status')";
 			$result = $db->query($query) or die($mysqli->error);
 			$user_id = $db->insert_id;
-			
-			$email_msg = '<h1>'._("Thank you for registration").'.</h1>';
-			$email_msg .= '<p>'._("You can use facebook login or following login information to access our system.").'</p>';			
-			$email_msg .= '<p>'._("Email").':'.$email.'<br>';
-			$email_msg .= _("Password").':'.$pass.'</p>';
+
+			$email_msg = '<h1>' . _("Thank you for registration") . '.</h1>';
+			$email_msg .= '<p>' . _("You can use facebook login or following login information to access our system.") . '</p>';
+			$email_msg .= '<p>' . _("Email") . ':' . $email . '<br>';
+			$email_msg .= _("Password") . ':' . $pass . '</p>';
 			$email_msg .= get_option('site_url');
-			
-			$subject = _("Thank you for registration").' | '.get_option('site_name');
-			
+
+			$subject = _("Thank you for registration") . ' | ' . get_option('site_name');
+
 			send_email($email, $subject, $email_msg);
 			//Notification to user group on new registration.
-			if(get_option('notify_user_group') == '1'):
+			if (get_option('notify_user_group') == '1'):
 				//message object.
 				$subject = _("New user registration.");
-				$message = "<h2>"._("New user in your user group.")."</h2>";
-				$message .= "<p><strong>"._("Name").": </strong>".$first_name." ".$last_name."</p>";
-				$message .= "<p><strong>"._("Email").": </strong>".$email."</p>";
-				$message .= "<p><strong>"._("Username").": </strong>".$username."</p>";
+				$message = "<h2>" . _("New user in your user group.") . "</h2>";
+				$message .= "<p><strong>" . _("Name") . ": </strong>" . $first_name . " " . $last_name . "</p>";
+				$message .= "<p><strong>" . _("Email") . ": </strong>" . $email . "</p>";
+				$message .= "<p><strong>" . _("Username") . ": </strong>" . $username . "</p>";
 
 				$message_obj = new Messages;
 				$message_obj->level_message($user_type, $subject, $message);
@@ -276,143 +285,145 @@ class Users {
 				// Silent fail
 			}
 
-			$query = "SELECT * from users WHERE email='".$email."' OR username='".$email."'";
+			$query = "SELECT * from users WHERE email='" . $email . "' OR username='" . $email . "'";
 			$result = $db->query($query) or die($db->error);
 			$num_rows = 1;
-		 }//if user do not exist register user.
-		 
-		 if($num_rows > 0) { 
-		 	$row = $result->fetch_array();
-			
-				if($row['status'] == 'deactivate') { 
-					$message = _("Your account is not activated yet please confirm your Email address to activate your account!");
-				} else if($row['status'] == 'activate'){
-					extract($row);
-					$this->user_id 		= $user_id; 
-					$this->first_name 	= $first_name;
-					$this->last_name 	= $last_name;
-					$this->username 	= $username;
-					$this->email 		= $email;
-					$this->status 		= $status;
-					$this->user_type 	= $user_type;
-					if($profile_image != '') { 
+		}//if user do not exist register user.
+
+		if ($num_rows > 0) {
+			$row = $result->fetch_array();
+
+			if ($row['status'] == 'deactivate') {
+				$message = _("Your account is not activated yet please confirm your Email address to activate your account!");
+			} else if ($row['status'] == 'activate') {
+				extract($row);
+				$this->user_id = $user_id;
+				$this->first_name = $first_name;
+				$this->last_name = $last_name;
+				$this->username = $username;
+				$this->email = $email;
+				$this->status = $status;
+				$this->user_type = $user_type;
+				if ($profile_image != '') {
 					$this->profile_image = $profile_image;
-					} else { 
+				} else {
 					$this->profile_image = 'assets/images/thumb.png';
-					}
-					
-					$message = 1;
-				} else { 
-					$message = _("Your account is ban or suspend. Please contact site admin.");
 				}
-			
-		 } else { 
-		 	$message = _("Couldn't find email.");
-		 }
-		 return $message;
+
+				$message = 1;
+			} else {
+				$message = _("Your account is ban or suspend. Please contact site admin.");
+			}
+
+		} else {
+			$message = _("Couldn't find email.");
+		}
+		return $message;
 	}//login func ends here.
-		
-	function login_user($email, $password) {
+
+	function login_user($email, $password)
+	{
 		global $db;
-		
-		if(empty($email) || empty($password)) {
+
+		if (empty($email) || empty($password)) {
 			return _("Email and password both are required fields.");
 		}
 
 		$password_submission = $password;
-		
+
 		// $query 	= "SELECT * FROM `users` WHERE `email`='{$email}' OR `username`='{$email}'";
 
-	 	$select_query   = $db->query("SELECT * FROM users WHERE email LIKE '%{$email}%' OR username LIKE '%{$email}%' LIMIT 1");
-		 
-		 if($select_query->num_rows > 0) { 
+		$select_query = $db->query("SELECT * FROM users WHERE email LIKE '%{$email}%' OR username LIKE '%{$email}%' LIMIT 1");
+
+		if ($select_query->num_rows > 0) {
 			$row = $select_query->fetch_assoc();
 
 			$lock_account = $this->get_user_meta($row['user_id'], 'login_lock');
-			 
+
 			$lock_account = (empty($lock_account)) ? 0 : $lock_account;
 
-			if($lock_account != 'No') { 
-				if($lock_account + get_option('wrong_attempts_time') * 60 > time()) { 
+			if ($lock_account != 'No') {
+				if ($lock_account + get_option('wrong_attempts_time') * 60 > time()) {
 					return _("You are locked cause of maximum login attempts.");
 					exit();
-				} else { 
+				} else {
 					$this->set_user_meta($row['user_id'], 'login_attempt', '0');
 					$this->set_user_meta($row['user_id'], 'login_lock', 'No'); //setting last login time.
 				}
 			}
-			 
+
 			$password_hash = get_option('password_hash');
 
-			if($password_hash == "argon2") {
+			if ($password_hash == "argon2") {
 				// This is the hash of the password in example above.
 				$hash = $row['password'];
-				
-				if(password_verify($password_submission, $hash)) {
-					$status = "valid";
-				} else {
-					$status = "invalid";
-				}	
-			} else {
-				$password_submission = md5($password_submission);
-				
-				if($row['password'] == $password_submission) {
+
+				if (password_verify($password_submission, $hash)) {
 					$status = "valid";
 				} else {
 					$status = "invalid";
 				}
-			} 
-			 
-			if($status == "valid") {
-				if($row['status'] == 'deactivate') { 
+			} else {
+				$password_submission = md5($password_submission);
+
+				if ($row['password'] == $password_submission) {
+					$status = "valid";
+				} else {
+					$status = "invalid";
+				}
+			}
+
+			if ($status == "valid") {
+				if ($row['status'] == 'deactivate') {
 					$message = _("Your account is not activated yet please confirm your Email address to activate your account!");
-				} else if($row['status'] == 'activate'){
+				} else if ($row['status'] == 'activate') {
 					extract($row);
-					$this->user_id 		= $user_id; 
-					$this->first_name 	= $first_name;
-					$this->last_name	= $last_name;
-					$this->username 	= $username;
-					$this->email 		= $email;
-					$this->status 		= $status;
-					$this->user_type 	= $user_type;
-					
-					if($profile_image != '') { 
+					$this->user_id = $user_id;
+					$this->first_name = $first_name;
+					$this->last_name = $last_name;
+					$this->username = $username;
+					$this->email = $email;
+					$this->status = $status;
+					$this->user_type = $user_type;
+
+					if ($profile_image != '') {
 						$this->profile_image = $profile_image;
-					} else { 
+					} else {
 						$this->profile_image = 'assets/images/thumb.png';
 					}
-					
+
 					$message = 1;
 
 					// WordPress Sync: User Login check removed as per requirement "automatic login nahi huga"
-				} else { 
+				} else {
 					$message = _("You cannot login your account is ban or suspend. Contact site admin.");
 				}
-			} else { 
-				$message 		= _("Password does not match.");
-				$login_attempt 	= $this->get_user_meta($row['user_id'], 'login_attempt');
-				$login_attempt = ( empty( $login_attempt ) ) ? 1 : $login_attempt+1;
-				
+			} else {
+				$message = _("Password does not match.");
+				$login_attempt = $this->get_user_meta($row['user_id'], 'login_attempt');
+				$login_attempt = (empty($login_attempt)) ? 1 : $login_attempt + 1;
+
 				$this->set_user_meta($row['user_id'], 'login_attempt', $login_attempt);
-				
-				if($login_attempt >= get_option('maximum_login_attempts')) { 
-					$this->set_user_meta($row['user_id'], 'login_lock', time());	
+
+				if ($login_attempt >= get_option('maximum_login_attempts')) {
+					$this->set_user_meta($row['user_id'], 'login_lock', time());
 				}
 			}
-			
-		 } else { 
-		 	$message = _("Couldn't find email.");
-		 }
-		 return $message;
+
+		} else {
+			$message = _("Couldn't find email.");
+		}
+		return $message;
 	}//login func ends here.
-	
-	function delete_user($user_type, $user_id) {
+
+	function delete_user($user_type, $user_id)
+	{
 		global $db;
 
-		if($user_type == 'admin') {
-			$query 		= 'DELETE from users WHERE user_id="'.$user_id.'"';
-			$result 	= $db->query($query) or die($db->error);
-			$message 	= _("User deleted successfuly");	
+		if ($user_type == 'admin') {
+			$query = 'DELETE from users WHERE user_id="' . $user_id . '"';
+			$result = $db->query($query) or die($db->error);
+			$message = _("User deleted successfuly");
 
 			// WordPress Sync: Delete User
 			try {
@@ -422,28 +433,29 @@ class Users {
 				// Silent fail
 			}
 
-		} else { 
-			$message 	= _("Cannot delete user");
-		}	
+		} else {
+			$message = _("Cannot delete user");
+		}
 		return $message;
 	}//delete level ends here.
 
-function list_users($user_type) {
+	function list_users($user_type)
+	{
 		global $db;
 		$content = '';
-		$modals  = '';
-		if($user_type == 'admin') { 
-			$query 		= 'SELECT * from users ORDER by first_name ASC';
-			$result 	= $db->query($query) or die($db->error);
-			$content 	= '';
-			$count 		= 0;
-			
-			while($row = $result->fetch_array()) { 
+		$modals = '';
+		if ($user_type == 'admin') {
+			$query = 'SELECT * from users ORDER by first_name ASC';
+			$result = $db->query($query) or die($db->error);
+			$content = '';
+			$count = 0;
+
+			while ($row = $result->fetch_array()) {
 				extract($row);
 				$user_id = intval($user_id);
 				$referral_id = intval($row['referral_id']);
- 				$referal = $db->query("SELECT username, first_name, last_name FROM users WHERE user_id = " . $referral_id . " LIMIT 1");				
- 				$ref_row = $referal ? $referal->fetch_assoc() : null;
+				$referal = $db->query("SELECT username, first_name, last_name FROM users WHERE user_id = " . $referral_id . " LIMIT 1");
+				$ref_row = $referal ? $referal->fetch_assoc() : null;
 				/* Total Investment */
 				$investment = $db->query("
 				SELECT 
@@ -497,7 +509,8 @@ function list_users($user_type) {
 				SELECT 
 				p.plan_name,
 				uid.comission,
-				uid.comission_expiry_date
+				uid.comission_expiry_date,
+				CASE WHEN uid.user_id = ui.user_id THEN 'ROI' ELSE 'Referral' END AS comission_type
 				FROM user_investment_details uid
 				JOIN user_investments ui 
 				ON uid.investment_id = ui.investment_id
@@ -521,7 +534,7 @@ function list_users($user_type) {
 					FROM user_investments ui
 					JOIN users u ON u.user_id = ui.user_id
 					WHERE u.referral_id = '$user_id'
-				");				
+				");
 
 				$reward_row = $total_query->fetch_assoc();
 				$total_investment_reward = $reward_row['total_investment'] ? $reward_row['total_investment'] : 0;
@@ -529,13 +542,13 @@ function list_users($user_type) {
 				$units_achieved = floor($total_investment_reward / $unit_value);
 
 				$levels = [
-				1 => 3,
-				2 => 9,
-				3 => 27,
-				4 => 81,
-				5 => 243,
-				6 => 729
-				];				
+					1 => 3,
+					2 => 9,
+					3 => 27,
+					4 => 81,
+					5 => 243,
+					6 => 729
+				];
 				/* Packages */
 				$packages = $db->query("
 				SELECT 
@@ -548,144 +561,148 @@ function list_users($user_type) {
 				GROUP BY p.plan_id
 				");
 				$count++;
-				if($count%2 == 0) { 
+				if ($count % 2 == 0) {
 					$class = 'even';
-				} else { 
+				} else {
 					$class = 'odd';
 				}
-				$content .= '<tr class="'.$class.'">';
+				$content .= '<tr class="' . $class . '">';
 				$content .= '<td>';
-				$content .= $first_name.' '.$last_name;
+				$content .= $first_name . ' ' . $last_name;
 				$content .= '</td><td>';
-				if($city != '') { 
-				$content .= $city.', ';
+				if ($city != '') {
+					$content .= $city . ', ';
 				}
-				if($state != '') { 
-				$content .= $state.', ';
+				if ($state != '') {
+					$content .= $state . ', ';
 				}
 				$content .= $country;
 				$content .= '</td><td>';
- 				$content .= wc_get_user_display_name($username, $first_name, $last_name);
- 				$content .= '</td><td>';
- 				$content .= $email;
- 				$content .= '</td><td>';				
- 				$content .= isset($ref_row) && !empty($ref_row) ? wc_get_user_display_name($ref_row['username'], $ref_row['first_name'], $ref_row['last_name']) : 'N\A';
+				$content .= wc_get_user_display_name($username, $first_name, $last_name);
+				$content .= '</td><td>';
+				$content .= $email;
+				$content .= '</td><td>';
+				$content .= isset($ref_row) && !empty($ref_row) ? wc_get_user_display_name($ref_row['username'], $ref_row['first_name'], $ref_row['last_name']) : 'N\A';
 				$content .= '</td><td>';
 				$content .= $status ? ucfirst($status) : null;
 				$content .= '</td><td>';
 				$content .= ucfirst($user_type);
 				$content .= '</td><td>';
-				if($user_type == 'subscriber'){
-					$content .= '<button class="btn btn-default btn-sm pull-left" data-toggle="modal" data-target="#details_'.$user_id.'">Details</button>';
-				}else{
+				if ($user_type == 'subscriber') {
+					$content .= '<button class="btn btn-default btn-sm pull-left" data-toggle="modal" data-target="#details_' . $user_id . '">Details</button>';
+				} else {
 					$content .= '<button class="btn btn-default btn-sm pull-left" disabled>No Details</button>';
 				}
-				$content .= '<button class="btn btn-default btn-sm pull-left" style="margin-right:5px;" data-toggle="modal" data-target="#modal_'.$user_id.'">'._("Message").'</button>';			
+				$content .= '<button class="btn btn-default btn-sm pull-left" style="margin-right:5px;" data-toggle="modal" data-target="#modal_' . $user_id . '">' . _("Message") . '</button>';
 				$content .= '<!-- Modal -->
 <script type="text/javascript">
 $(function(){
-$("#message_form_'.$user_id.'").on("submit", function(e){
+$("#message_form_' . $user_id . '").on("submit", function(e){
   e.preventDefault();
   tinyMCE.triggerSave();
   $.post("lib/includes/messageprocess.php", 
-	 $("#message_form_'.$user_id.'").serialize(), 
+	 $("#message_form_' . $user_id . '").serialize(), 
 	 function(data, status, xhr){
-	   $("#success_message_'.$user_id.'").html("<div class=\'alert alert-success\'>"+data+"</div>");
+	   $("#success_message_' . $user_id . '").html("<div class=\'alert alert-success\'>"+data+"</div>");
 	 });
 });
 });
 </script>				
-<div class="modal fade" id="modal_'.$user_id.'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="modal_' . $user_id . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
-    <form id="message_form_'.$user_id.'" method="post" name="send_message">
+    <form id="message_form_' . $user_id . '" method="post" name="send_message">
 	<div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="myModalLabel">'._("Send Message").'</h4>
+        <h4 class="modal-title" id="myModalLabel">' . _("Send Message") . '</h4>
 		<button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
       </div>
 	  
       <div class="modal-body">
-      		<div id="success_message_'.$user_id.'"></div>
+      		<div id="success_message_' . $user_id . '"></div>
 	   		<div class="form-group">
- 				<label class="control-label">'._("To").'</label>
- 				<input type="text" class="form-control" name="message_to" value="'._("Email").':('.$email.') '._("User").': ('.wc_get_user_display_name($username, $first_name, $last_name).')" readonly="readonly" />
+ 				<label class="control-label">' . _("To") . '</label>
+ 				<input type="text" class="form-control" name="message_to" value="' . _("Email") . ':(' . $email . ') ' . _("User") . ': (' . wc_get_user_display_name($username, $first_name, $last_name) . ')" readonly="readonly" />
  			</div>
 			
 			<div class="form-group">
-				<label class="control-label">'._("Subject").'</label>
+				<label class="control-label">' . _("Subject") . '</label>
 				<input type="text" class="form-control" name="subject" value="" />
 			</div>
 			
 			<div class="form-group">
-				<label class="control-label">'._("Message").'</label>
+				<label class="control-label">' . _("Message") . '</label>
 				<textarea class="tinyst form-control" name="message"></textarea>
 			</div>
       </div>
-	  <input type="hidden" name="from" value="'.$_SESSION['user_id'].'" />
-	  <input type="hidden" name="user_id" value="'.$user_id.'" />
+	  <input type="hidden" name="from" value="' . $_SESSION['user_id'] . '" />
+	  <input type="hidden" name="user_id" value="' . $user_id . '" />
 	  <input type="hidden" name="single_form" value="1" />
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">'._("Close").'</button>
-		<input type="submit" value="'._("Send Message").'" class="btn btn-primary" />
+        <button type="button" class="btn btn-default" data-dismiss="modal">' . _("Close") . '</button>
+		<input type="submit" value="' . _("Send Message") . '" class="btn btn-primary" />
       </div>
     </div><!-- /.modal-content -->
    </form>
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->';
-			if($user_type == 'subscriber'){
-				$modals .= '
+				if ($user_type == 'subscriber') {
+					$modals .= '
 
-				<div class="modal fade" id="details_'.$user_id.'" tabindex="-1">
+				<div class="modal fade" id="details_' . $user_id . '" tabindex="-1">
 				<div class="modal-dialog modal-lg">
 				<div class="modal-content investment-modal">
 
 				<div class="modal-header investment-header">
  				<h5 class="modal-title">
- 					User '.wc_get_user_display_name($username, $first_name, $last_name).' Details
+ 					User ' . wc_get_user_display_name($username, $first_name, $last_name) . ' Details
  				</h5>				
 				<button type="button" class="btn-close-investment" data-dismiss="modal">&times;</button>
 				</div>
 
 				<div class="modal-body">
 
- 				<b>User:</b> '.wc_get_user_display_name($username, $first_name, $last_name).'<br>
- 				<b>Email:</b> '.$email.'<br>
- 				<b>Joined:</b> '.(!empty($date_register) ? date("d M Y",strtotime($date_register)) : "N/A").'<br>
- 				<b>Referred By:</b> '.(isset($ref_row) ? wc_get_user_display_name($ref_row['username'], $ref_row['first_name'], $ref_row['last_name']) : 'N/A').'
+ 				<b>User:</b> ' . wc_get_user_display_name($username, $first_name, $last_name) . '<br>
+ 				<b>Email:</b> ' . $email . '<br>
+ 				<b>Joined:</b> ' . (!empty($date_register) ? date("d M Y", strtotime($date_register)) : "N/A") . '<br>
+ 				<b>Referred By:</b> ' . (isset($ref_row) ? wc_get_user_display_name($ref_row['username'], $ref_row['first_name'], $ref_row['last_name']) : 'N/A') . '
 
 				<hr>
 
-				<b>Total Investment:</b> PKR '.number_format($total_investment,2).'<br>
-				<b>Total Claimed Commission:</b> PKR '.number_format($claimed_commission,2).'<br><br>
+				<b>Total Investment:</b> PKR ' . number_format($total_investment, 2) . '<br>
+				<b>Total Claimed Commission:</b> PKR ' . number_format($claimed_commission, 2) . '<br><br>
 							
 				<b>Investment Packages</b>
 				<ul>
 				';
 
-				if($packages && $packages->num_rows > 0){
-					while($pkg = $packages->fetch_assoc()){
-						$modals .= '<li>'.$pkg['plan_name'].' - PKR '.number_format($pkg['total_investment'],2).'</li>';
+					if ($packages && $packages->num_rows > 0) {
+						while ($pkg = $packages->fetch_assoc()) {
+							$modals .= '<li>' . $pkg['plan_name'] . ' - PKR ' . number_format($pkg['total_investment'], 2) . '</li>';
+						}
+					} else {
+						$modals .= '<li>No Packages</li>';
 					}
-				}else{
-					$modals .= '<li>No Packages</li>';
-				}
 
-				$modals .= '
+					$modals .= '
 
 				</ul>
 
 				<hr>
-				<b>Recent Commissions</b>
+				<b>Commission Summary</b>
 				<ul>
 				';
-				if($commission_dates && $commission_dates->num_rows > 0){
-					while($c = $commission_dates->fetch_assoc()){
-						$modals .= "<li>".$c['plan_name']." — PKR ".number_format($c['comission'],2)." - ".date("d M Y",strtotime($c['comission_expiry_date']))."</li>";
+					if ($commission_dates && $commission_dates->num_rows > 0) {
+						while ($c = $commission_dates->fetch_assoc()) {
+							$type = $c['comission_type'];
+							$badge_class = ($type == 'ROI') ? 'badge text-bg-success' : 'badge text-light bg-info';
+							$badge_label = ($type == 'ROI') ? 'ROI' : 'Referral';
+							
+							$modals .= "<li>" . $c['plan_name'] . " — PKR " . number_format($c['comission'], 2) . " - " . date("d M Y", strtotime($c['comission_expiry_date'])) . " <span class='" . $badge_class . "'>" . $badge_label . "</span></li>";
+						}
+					} else {
+						$modals .= "<li>No Commissions</li>";
 					}
-				}else{
-					$modals .= "<li>No Commissions</li>";
-				}
-				$modals .= '
+					$modals .= '
 
 				</ul>
 
@@ -700,292 +717,296 @@ $("#message_form_'.$user_id.'").on("submit", function(e){
 				</div>
 
 			';
-			}
+				}
 				$content .= '<form method="post" name="edit" action="manage_users.php">';
-				$content .= '<input type="hidden" name="edit_user" value="'.$user_id.'">';
-				$content .= '<input type="submit" style="margin-right:5px;" class="btn btn-default btn-sm pull-left" value="'._("Edit").'">';
+				$content .= '<input type="hidden" name="edit_user" value="' . $user_id . '">';
+				$content .= '<input type="submit" style="margin-right:5px;" class="btn btn-default btn-sm pull-left" value="' . _("Edit") . '">';
 				$content .= '</form>';
 				$content .= '<form method="post" name="delete" onsubmit="return confirm_delete();" action="">';
-				$content .= '<input type="hidden" name="delete_user" value="'.$user_id.'">';
-				$content .= '<input type="submit" class="btn btn-default btn-sm pull-left" value="'._("Delete").'">';
+				$content .= '<input type="hidden" name="delete_user" value="' . $user_id . '">';
+				$content .= '<input type="submit" class="btn btn-default btn-sm pull-left" value="' . _("Delete") . '">';
 				$content .= '</form>';
 				$content .= '</td>';
 				$content .= '</tr>';
 				unset($class);
 			}//loop ends here.
-		} else { 
+		} else {
 			$content = _("You cannot view list of users.");
-		}	
+		}
 		echo $content;
 		echo $modals;
 	}//list_levels ends here.
 
-	function get_total_users($condition) { 
+	function get_total_users($condition)
+	{
 		global $db;
 
-		if($_SESSION['user_type'] == 'admin') {
-			if($condition == 'all') { 
+		if ($_SESSION['user_type'] == 'admin') {
+			if ($condition == 'all') {
 				$query = "SELECT * from users";
-			} else { 
-				$query = "SELECT * from users WHERE status='".$condition."'";
+			} else {
+				$query = "SELECT * from users WHERE status='" . $condition . "'";
 			}
-			$result 	= $db->query($query) or die($db->error);
-			$num_rows 	= $result->num_rows;
+			$result = $db->query($query) or die($db->error);
+			$num_rows = $result->num_rows;
 			echo $num_rows;
-		} else { 
+		} else {
 			echo _("You are not allowed to view this list.");
 		}
 	}//prints total registered users.
 
-function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description) {
+	function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description)
+	{
 		global $db;
-		
-		$current_email		= $this->get_user_info($_SESSION['user_id'], 'email');
-		$current_username 	= $this->get_user_info($_SESSION['user_id'], 'username');
-		
-		$address1 			= $db->real_escape_string($address1);
-		$address2 			= $db->real_escape_string($address2);
-		$description 		= $db->real_escape_string($description);
-	
-		if($email != $current_email) {
-		$query = "SELECT * from users WHERE email='".$email."'";
+
+		$current_email = $this->get_user_info($_SESSION['user_id'], 'email');
+		$current_username = $this->get_user_info($_SESSION['user_id'], 'username');
+
+		$address1 = $db->real_escape_string($address1);
+		$address2 = $db->real_escape_string($address2);
+		$description = $db->real_escape_string($description);
+
+		if ($email != $current_email) {
+			$query = "SELECT * from users WHERE email='" . $email . "'";
 			$result = $db->query($query);
-			
+
 			$num_user = $result->num_rows;
-			
-			if($num_user > 0) { 
-				return _("Email cannot be added").' <strong>'.$email.'</strong> '._("Already exists.");
+
+			if ($num_user > 0) {
+				return _("Email cannot be added") . ' <strong>' . $email . '</strong> ' . _("Already exists.");
 				exit();
 			}
 		}
-		
-		if($current_username != $username) {
+
+		if ($current_username != $username) {
 			//username validation
-			$query = "SELECT * from users WHERE username='".$username."'";
+			$query = "SELECT * from users WHERE username='" . $username . "'";
 			$result = $db->query($query);
-			
+
 			$num_user = $result->num_rows;
-			
-			if($num_user > 0) { 
-				return _("Username couldn't be added").' <strong>'.$username.'</strong> '._("Already exists");
+
+			if ($num_user > 0) {
+				return _("Username couldn't be added") . ' <strong>' . $username . '</strong> ' . _("Already exists");
 				exit();
 			}
 		}
 		$date_of_birth = (!empty($date_of_birth)) ? date('Y-m-d', strtotime(str_replace('-', '/', $date_of_birth))) : "000-00-00";
-		if($password == '') {
+		if ($password == '') {
 			$query = 'UPDATE users SET
-   	    			first_name = "'.$first_name.'",
-					last_name = "'.$last_name.'",
-					gender = "'.$gender.'",
-					date_of_birth = "'.$date_of_birth.'",
-					address1 = "'.$address1.'",
-					address2 = "'.$address2.'",
-					city = "'.$city.'",
-					state = "'.$state.'",
-					country = "'.$country.'",
-					zip_code = "'.$zip_code.'",
-					mobile = "'.$mobile.'",
-					phone = "'.$phone.'",
-					username = "'.$username.'",
-					email = "'.$email.'",
-					profile_image = "'.$profile_image.'",
-					description = "'.$description.'"
-			WHERE user_id="'.$user_id.'"';
-			} else { 
-			
+   	    			first_name = "' . $first_name . '",
+					last_name = "' . $last_name . '",
+					gender = "' . $gender . '",
+					date_of_birth = "' . $date_of_birth . '",
+					address1 = "' . $address1 . '",
+					address2 = "' . $address2 . '",
+					city = "' . $city . '",
+					state = "' . $state . '",
+					country = "' . $country . '",
+					zip_code = "' . $zip_code . '",
+					mobile = "' . $mobile . '",
+					phone = "' . $phone . '",
+					username = "' . $username . '",
+					email = "' . $email . '",
+					profile_image = "' . $profile_image . '",
+					description = "' . $description . '"
+			WHERE user_id="' . $user_id . '"';
+		} else {
+
 			$password_hash = get_option('password_hash');
 			$plain_password = $password;
 
-			if($password_hash == "argon2") {
-				$options 	= ['cost' => 12];
-				$password 	= password_hash($password, PASSWORD_DEFAULT, $options);
+			if ($password_hash == "argon2") {
+				$options = ['cost' => 12];
+				$password = password_hash($password, PASSWORD_DEFAULT, $options);
 			} else {
 				$password = md5($password);
 			}
-				
+
 			$query = 'UPDATE users SET
-   	    			first_name = "'.$first_name.'",
-					last_name = "'.$last_name.'",
-					gender = "'.$gender.'",
-					date_of_birth = "'.$date_of_birth.'",
-					address1 = "'.$address1.'",
-					address2 = "'.$address2.'",
-					city = "'.$city.'",
-					state = "'.$state.'",
-					country = "'.$country.'",
-					zip_code = "'.$zip_code.'",
-					mobile = "'.$mobile.'",
-					phone = "'.$phone.'",
-					username = "'.$username.'",
-					email = "'.$email.'",
-					password = "'.$password.'",
-					profile_image = "'.$profile_image.'",
-					description = "'.$description.'"
-			WHERE user_id="'.$user_id.'"';
-			}
-			$result = $db->query($query) or die($db->error);
+   	    			first_name = "' . $first_name . '",
+					last_name = "' . $last_name . '",
+					gender = "' . $gender . '",
+					date_of_birth = "' . $date_of_birth . '",
+					address1 = "' . $address1 . '",
+					address2 = "' . $address2 . '",
+					city = "' . $city . '",
+					state = "' . $state . '",
+					country = "' . $country . '",
+					zip_code = "' . $zip_code . '",
+					mobile = "' . $mobile . '",
+					phone = "' . $phone . '",
+					username = "' . $username . '",
+					email = "' . $email . '",
+					password = "' . $password . '",
+					profile_image = "' . $profile_image . '",
+					description = "' . $description . '"
+			WHERE user_id="' . $user_id . '"';
+		}
+		$result = $db->query($query) or die($db->error);
 
-			// WordPress Sync: Profile and Password Update
-			try {
-				$wpService = new WordPressService();
-				// Use the captured $plain_password from line 797
-				$wpService->syncUser($user_id, $email, $plain_password, $username, $first_name, $last_name, $description);
-			} catch (Exception $e) {
-				// Silent fail
-			}
+		// WordPress Sync: Profile and Password Update
+		try {
+			$wpService = new WordPressService();
+			// Use the captured $plain_password from line 797
+			$wpService->syncUser($user_id, $email, $plain_password, $username, $first_name, $last_name, $description);
+		} catch (Exception $e) {
+			// Silent fail
+		}
 
-			return _("User updated successfuly.");
+		return _("User updated successfuly.");
 	}//update user ends here.
 
-	function set_user($user_id, $user_type, $login_user) {
-		 global $db;
-		
-		 if($user_type == 'admin') { 
-			$query = 'SELECT * from users WHERE user_id="'.$user_id.'"'; 
-		 } else if($user_id == $login_user) { 
-		 	$query = 'SELECT * from users WHERE user_id="'.$user_id.'"';
-		 } else { 
-		 	echo _("You are trying to do something which you are not allowed to do.");
-		 }
+	function set_user($user_id, $user_type, $login_user)
+	{
+		global $db;
+
+		if ($user_type == 'admin') {
+			$query = 'SELECT * from users WHERE user_id="' . $user_id . '"';
+		} else if ($user_id == $login_user) {
+			$query = 'SELECT * from users WHERE user_id="' . $user_id . '"';
+		} else {
+			echo _("You are trying to do something which you are not allowed to do.");
+		}
 		$result = $db->query($query) or die($db->error);
 		$row = $result->fetch_array();
 		//results ends here.
-		$this->user_id       = $row['user_id'] ?? 'N\A';
-		$this->first_name    = $row['first_name'] ?? 'N\A';
-		$this->last_name     = $row['last_name'] ?? 'N\A';
-		$this->gender        = $row['gender'] ?? 'N\A';
+		$this->user_id = $row['user_id'] ?? 'N\A';
+		$this->first_name = $row['first_name'] ?? 'N\A';
+		$this->last_name = $row['last_name'] ?? 'N\A';
+		$this->gender = $row['gender'] ?? 'N\A';
 		$this->date_of_birth = $row['date_of_birth'] ?? 'N\A';
-		$this->address1      = $row['address1'] ?? 'N\A';
-		$this->address2      = $row['address2'] ?? 'N\A';
-		$this->city          = $row['city'] ?? 'N\A';
-		$this->state         = $row['state'] ?? 'N\A';
-		$this->country       = $row['country'] ?? 'N\A';
-		$this->zip_code      = $row['zip_code'] ?? 'N\A';
-		$this->mobile        = $row['mobile'] ?? 'N\A';
-		$this->phone         = $row['phone'] ?? 'N\A';
-		$this->username      = $row['username'] ?? 'N\A';
-		$this->email         = $row['email'] ?? 'N\A';
+		$this->address1 = $row['address1'] ?? 'N\A';
+		$this->address2 = $row['address2'] ?? 'N\A';
+		$this->city = $row['city'] ?? 'N\A';
+		$this->state = $row['state'] ?? 'N\A';
+		$this->country = $row['country'] ?? 'N\A';
+		$this->zip_code = $row['zip_code'] ?? 'N\A';
+		$this->mobile = $row['mobile'] ?? 'N\A';
+		$this->phone = $row['phone'] ?? 'N\A';
+		$this->username = $row['username'] ?? 'N\A';
+		$this->email = $row['email'] ?? 'N\A';
 		$this->profile_image = $row['profile_image'] ?? 'N\A';
-		$this->description   = $row['description'] ?? 'N\A';
-		$this->status        = $row['status'] ?? 'N\A';
-		$this->user_type     = $row['user_type'] ?? 'N\A';
-		$this->referral_id   = $row['referral_id'] ?? 'N\A';
+		$this->description = $row['description'] ?? 'N\A';
+		$this->status = $row['status'] ?? 'N\A';
+		$this->user_type = $row['user_type'] ?? 'N\A';
+		$this->referral_id = $row['referral_id'] ?? 'N\A';
 	}//level set ends here.
 
-	function update_user($user_id, $user_type_ses, $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type,$referral_id) {
+	function update_user($user_id, $user_type_ses, $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type, $referral_id)
+	{
 		global $db;
 
-		if($referral_id == 0){
-				$search = $db->query("SELECT user_id FROM users WHERE username LIKE '%BIZ0000%'");
-				$result = $search ? $search->fetch_assoc() : null;
+		if ($referral_id == 0) {
+			$search = $db->query("SELECT user_id FROM users WHERE username LIKE '%BIZ0000%'");
+			$result = $search ? $search->fetch_assoc() : null;
 
-				if($result == null){
-					$db->query("INSERT INTO `users`( `first_name`, `last_name`, `gender`, `date_of_birth`, `address1`, `address2`, `city`, `state`, `country`, `zip_code`, `mobile`, `phone`, `username`, `email`, `password`, `profile_image`, `description`, `status`, `activation_key`, `date_register`, `user_type`, `referral_id`) VALUES (null,null,null,null,null,null,null,null,null,null,null,null,'BIZ0000',null,null,null,null,null,null,null,'subscriber',null)");
-					$referral_id = $db->insert_id;
-				}else{
-						$referral_id = $result['user_id'];
-				}
+			if ($result == null) {
+				$db->query("INSERT INTO `users`( `first_name`, `last_name`, `gender`, `date_of_birth`, `address1`, `address2`, `city`, `state`, `country`, `zip_code`, `mobile`, `phone`, `username`, `email`, `password`, `profile_image`, `description`, `status`, `activation_key`, `date_register`, `user_type`, `referral_id`) VALUES (null,null,null,null,null,null,null,null,null,null,null,null,'BIZ0000',null,null,null,null,null,null,null,'subscriber',null)");
+				$referral_id = $db->insert_id;
+			} else {
+				$referral_id = $result['user_id'];
+			}
 		}
-		
-		$current_email 		= $this->get_user_info($user_id, 'email');
-		$current_username 	= $this->get_user_info($user_id, 'username');
-		
-		$address1 			= $db->real_escape_string($address1);
-		$address2 			= $db->real_escape_string($address2);
-		$description 		= $db->real_escape_string($description);
-		
-		if($email != $current_email) {
-		$query = "SELECT * from users WHERE email='".$email."'";
+
+		$current_email = $this->get_user_info($user_id, 'email');
+		$current_username = $this->get_user_info($user_id, 'username');
+
+		$address1 = $db->real_escape_string($address1);
+		$address2 = $db->real_escape_string($address2);
+		$description = $db->real_escape_string($description);
+
+		if ($email != $current_email) {
+			$query = "SELECT * from users WHERE email='" . $email . "'";
 			$result = $db->query($query);
-			
+
 			$num_user = $result->num_rows;
-			
-			if($num_user > 0) { 
-				return _("This email cannot be used").' <strong>'.$email.'</strong> '._("already exists in our system.");
+
+			if ($num_user > 0) {
+				return _("This email cannot be used") . ' <strong>' . $email . '</strong> ' . _("already exists in our system.");
 				exit();
 			}
 		}
-			
-		if($current_username != $username) {
+
+		if ($current_username != $username) {
 			//username validation
-			$query = "SELECT * from users WHERE username='".$username."'";
+			$query = "SELECT * from users WHERE username='" . $username . "'";
 			$result = $db->query($query);
 
 			$num_user = $result->num_rows;
 
-			if($num_user > 0) { 
-				return _("Username couldn't be added").' <strong>'.$username.'</strong> '._("username already exists.");
+			if ($num_user > 0) {
+				return _("Username couldn't be added") . ' <strong>' . $username . '</strong> ' . _("username already exists.");
 				exit();
 			}
 		}
 
 		$date_of_birth = (!empty($date_of_birth)) ? date('Y-m-d', strtotime(str_replace('-', '/', $date_of_birth))) : "000-00-00";
 		//updating user info.
-		if($user_type_ses == 'admin') { 
-			if($password == '') {
+		if ($user_type_ses == 'admin') {
+			if ($password == '') {
 
-			$query = 'UPDATE users SET
-   	    			first_name = "'.$first_name.'",
-					last_name = "'.$last_name.'",
-					gender = "'.$gender.'",
-					date_of_birth = "'.$date_of_birth.'",
-					address1 = "'.$address1.'",
-					address2 = "'.$address2.'",
-					city = "'.$city.'",
-					state = "'.$state.'",
-					country = "'.$country.'",
-					zip_code = "'.$zip_code.'",
-					mobile = "'.$mobile.'",
-					phone = "'.$phone.'",
-					username = "'.$username.'",
-					email = "'.$email.'",
-					profile_image = "'.$profile_image.'",
-					description = "'.$description.'",
-					status = "'.$status.'",
-					user_type = "'.$user_type.'",
-					referral_id = "'.$referral_id.'"
-			WHERE user_id="'.$user_id.'"';
-			} else { 
-			
-			$password_hash = get_option('password_hash');
-			$plain_password = $password;
-
-			if($password_hash == "argon2") {
-				$options 	= ['cost' => 12];
-				$password 	= password_hash($password, PASSWORD_DEFAULT, $options);
+				$query = 'UPDATE users SET
+   	    			first_name = "' . $first_name . '",
+					last_name = "' . $last_name . '",
+					gender = "' . $gender . '",
+					date_of_birth = "' . $date_of_birth . '",
+					address1 = "' . $address1 . '",
+					address2 = "' . $address2 . '",
+					city = "' . $city . '",
+					state = "' . $state . '",
+					country = "' . $country . '",
+					zip_code = "' . $zip_code . '",
+					mobile = "' . $mobile . '",
+					phone = "' . $phone . '",
+					username = "' . $username . '",
+					email = "' . $email . '",
+					profile_image = "' . $profile_image . '",
+					description = "' . $description . '",
+					status = "' . $status . '",
+					user_type = "' . $user_type . '",
+					referral_id = "' . $referral_id . '"
+			WHERE user_id="' . $user_id . '"';
 			} else {
-				$password = md5($password);
-			}
-				
-			$query = 'UPDATE users SET
-   	    			first_name = "'.$first_name.'",
-					last_name = "'.$last_name.'",
-					gender = "'.$gender.'",
-					date_of_birth = "'.$date_of_birth.'",
-					address1 = "'.$address1.'",
-					address2 = "'.$address2.'",
-					city = "'.$city.'",
-					state = "'.$state.'",
-					country = "'.$country.'",
-					zip_code = "'.$zip_code.'",
-					mobile = "'.$mobile.'",
-					phone = "'.$phone.'",
-					username = "'.$username.'",
-					email = "'.$email.'",
-					password = "'.$password.'",
-					profile_image = "'.$profile_image.'",
-					description = "'.$description.'",
-					status = "'.$status.'",
-					user_type = "'.$user_type.'",
-					referral_id = "'.$referral_id.'"
-			WHERE user_id="'.$user_id.'"';
+
+				$password_hash = get_option('password_hash');
+				$plain_password = $password;
+
+				if ($password_hash == "argon2") {
+					$options = ['cost' => 12];
+					$password = password_hash($password, PASSWORD_DEFAULT, $options);
+				} else {
+					$password = md5($password);
+				}
+
+				$query = 'UPDATE users SET
+   	    			first_name = "' . $first_name . '",
+					last_name = "' . $last_name . '",
+					gender = "' . $gender . '",
+					date_of_birth = "' . $date_of_birth . '",
+					address1 = "' . $address1 . '",
+					address2 = "' . $address2 . '",
+					city = "' . $city . '",
+					state = "' . $state . '",
+					country = "' . $country . '",
+					zip_code = "' . $zip_code . '",
+					mobile = "' . $mobile . '",
+					phone = "' . $phone . '",
+					username = "' . $username . '",
+					email = "' . $email . '",
+					password = "' . $password . '",
+					profile_image = "' . $profile_image . '",
+					description = "' . $description . '",
+					status = "' . $status . '",
+					user_type = "' . $user_type . '",
+					referral_id = "' . $referral_id . '"
+			WHERE user_id="' . $user_id . '"';
 			}
 			$result = $db->query($query) or die($db->error);
 
 			// WordPress Sync: Profile, Password, and Status Update
 			try {
 				$wpService = new WordPressService();
-				
+
 				// Use the captured $plain_password from line 951
 				$wpService->syncUser($user_id, $email, $plain_password, $username, $first_name, $last_name, $description, $status);
 
@@ -997,63 +1018,65 @@ function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth
 			}
 
 			return _("User updated successful.");
-		} else { 
+		} else {
 			return _("You are trying to do something you are not allowed for.");
 		}
 	}//update user ends here.
-	
-	function reset_pass_user($user_id,$confirmation_code,$new_pass){
+
+	function reset_pass_user($user_id, $confirmation_code, $new_pass)
+	{
 		global $db;
-		
-		$query 		= "SELECT * from users WHERE user_id='".$user_id."'";
-		$result 	= $db->query($query) or die($db->error);
-		$row 		= $result->fetch_array();
-		
+
+		$query = "SELECT * from users WHERE user_id='" . $user_id . "'";
+		$result = $db->query($query) or die($db->error);
+		$row = $result->fetch_array();
+
 		$password_hash = get_option('password_hash');
 		$plain_password = $new_pass;
 
-		if($password_hash == "argon2") {
-			$options 	= ['cost' => 12];
-			$new_pass 	= password_hash($new_pass, PASSWORD_DEFAULT, $options);
+		if ($password_hash == "argon2") {
+			$options = ['cost' => 12];
+			$new_pass = password_hash($new_pass, PASSWORD_DEFAULT, $options);
 		} else {
 			$new_pass = md5($new_pass);
 		}
-		
-		if($confirmation_code == $row['activation_key']){
-				$query 		= 'UPDATE users SET password="'.$new_pass.'",activation_key="" WHERE user_id="'.$user_id.'"';
-				$row_db 		= $db->query($query) or die($db->error);
 
-				// WordPress Sync: Password Update
-				try {
-					$wpService = new WordPressService();
-					$wpService->syncUser($user_id, $row['email'], $plain_password);
-				} catch (Exception $e) {
-					// Silent fail
-				}
+		if ($confirmation_code == $row['activation_key']) {
+			$query = 'UPDATE users SET password="' . $new_pass . '",activation_key="" WHERE user_id="' . $user_id . '"';
+			$row_db = $db->query($query) or die($db->error);
 
-				$message 	= _("Your Password has been reset please use new password to login.");
-			} else { 
-				$message = _("Your activation key is expired and password cannot be reset.");
+			// WordPress Sync: Password Update
+			try {
+				$wpService = new WordPressService();
+				$wpService->syncUser($user_id, $row['email'], $plain_password);
+			} catch (Exception $e) {
+				// Silent fail
 			}
-			return $message;
-		}//reset password function ends here.	
 
-function match_confirm_code($confirmation_code,$user_id){
+			$message = _("Your Password has been reset please use new password to login.");
+		} else {
+			$message = _("Your activation key is expired and password cannot be reset.");
+		}
+		return $message;
+	}//reset password function ends here.	
+
+	function match_confirm_code($confirmation_code, $user_id)
+	{
 		global $db;
-	
+
 		//Getting Confirmation Code from database.
-		$query 		= "SELECT * from users WHERE user_id='".$user_id."'";
-		$result 	= $db->query($query) or die($db->error);
-		$row 		= $result->fetch_array();
-		
-		if($row['activation_key'] == $confirmation_code){
-			if($row['status'] == 'suspend'||$row['status'] == 'ban'){
-				$message= _("Your account has been suspended. Please contact the administrator for help.");
+		$query = "SELECT * from users WHERE user_id='" . $user_id . "'";
+		$result = $db->query($query) or die($db->error);
+		$row = $result->fetch_array();
+
+		if ($row['activation_key'] == $confirmation_code) {
+			if ($row['status'] == 'suspend' || $row['status'] == 'ban') {
+				$message = _("Your account has been suspended. Please contact the administrator for help.");
 			} else {
 				$status = 'activate';
-				$query = 'UPDATE users SET status="'.$status.'",activation_key="" WHERE user_id="'.$user_id.'"';
+				$query = 'UPDATE users SET status="' . $status . '",activation_key="" WHERE user_id="' . $user_id . '"';
 				$row = $db->query($query) or die($db->error);
-				
+
 				// WordPress Sync: Status Update on Confirmation
 				try {
 					$wpService = new WordPressService();
@@ -1063,36 +1086,37 @@ function match_confirm_code($confirmation_code,$user_id){
 				}
 
 				$message = _("Congratulations! You are activated successfully now you can use email and password to login and use our services.");
-			} 
+			}
 		} else {
-			  $message = _("Your account cannot be activated.");
+			$message = _("Your account cannot be activated.");
 		}
 		return $message;
-}//function  close
+	}//function  close
 
-	function forgot_user($email){
+	function forgot_user($email)
+	{
 		global $db;
-		 $query = "SELECT * from users WHERE email='".$email."' OR username='".$email."'";
-		 $result = $db->query($query) or die($db->error);
-		 $num_rows = $result->num_rows;
+		$query = "SELECT * from users WHERE email='" . $email . "' OR username='" . $email . "'";
+		$result = $db->query($query) or die($db->error);
+		$num_rows = $result->num_rows;
 
-			 if($num_rows > 0) { 
-				$row = $result->fetch_array();
-				$user_id =$row['user_id'];
-				$email = $row['email'];
-			 } else {
-				return _("Email is not in our system.");
-				exit();
-			}
+		if ($num_rows > 0) {
+			$row = $result->fetch_array();
+			$user_id = $row['user_id'];
+			$email = $row['email'];
+		} else {
+			return _("Email is not in our system.");
+			exit();
+		}
 		$activation_key = substr(md5(uniqid(rand(), true)), 16, 16);
-		$query = 'UPDATE users SET activation_key="'.$activation_key.'" WHERE user_id="'.$user_id.'"';
+		$query = 'UPDATE users SET activation_key="' . $activation_key . '" WHERE user_id="' . $user_id . '"';
 		$result = $db->query($query) or die($db->error);
 
 		$site_url = get_option('site_url');
-		$email_message = _("Reset your password.")."<br />";
-		$email_message .= _("Kindly click the link below to reset your password.")."<br />";
-		$email_message .= "<a href='".$site_url."forgot.php?confirmation_code=".$activation_key."&user_id=".$user_id."'>"._("Confirm Email Address")."</a>";
-		$email_message .= "<br><br>"._("Thank you again. Please contact us if you need any assistance.");			
+		$email_message = _("Reset your password.") . "<br />";
+		$email_message .= _("Kindly click the link below to reset your password.") . "<br />";
+		$email_message .= "<a href='" . $site_url . "forgot.php?confirmation_code=" . $activation_key . "&user_id=" . $user_id . "'>" . _("Confirm Email Address") . "</a>";
+		$email_message .= "<br><br>" . _("Thank you again. Please contact us if you need any assistance.");
 		$message = $email_message;
 		$mailto = $email;
 		$subject = _("Password reset instructions");
@@ -1102,167 +1126,169 @@ function match_confirm_code($confirmation_code,$user_id){
 		return _("Password recovery email sent please check mail for details.");
 	}//forgot password function endsh ere.
 
-	function add_user($first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type,$referral_id) { 
-			global $db;
+	function add_user($first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type, $referral_id)
+	{
+		global $db;
 
-			if($referral_id == 0){
-				$search = $db->query("SELECT user_id FROM users WHERE username LIKE '%BIZ0000%'");
-				$result = $search ? $search->fetch_assoc() : null;
+		if ($referral_id == 0) {
+			$search = $db->query("SELECT user_id FROM users WHERE username LIKE '%BIZ0000%'");
+			$result = $search ? $search->fetch_assoc() : null;
 
-				if($result == null){
-					$db->query("INSERT INTO `users`( `first_name`, `last_name`, `gender`, `date_of_birth`, `address1`, `address2`, `city`, `state`, `country`, `zip_code`, `mobile`, `phone`, `username`, `email`, `password`, `profile_image`, `description`, `status`, `activation_key`, `date_register`, `user_type`, `referral_id`) VALUES (null,null,null,null,null,null,null,null,null,null,null,null,'BIZ0000',null,null,null,null,null,null,null,'admin',null)");
-					$referral_id = $db->insert_id;
-				}else{
-						$referral_id = $result['user_id'];
-				}
-			}
-		
-			$address1 		= $db->real_escape_string($address1);
-			$address2 		= $db->real_escape_string($address2);
-			$description 	= $db->real_escape_string($description);
-		
-			//Check if user already exist
-			$query = "SELECT * from users WHERE email='".$email."'";
-			$result = $db->query($query) or die($db->error);
-			
-			$num_user = $result->num_rows;
-			if($num_user > 0) { 
-				return _("Email cannot be added").' <strong>'.$email.'</strong> '._("Already exists.");
-				exit();
-			}
-			//username validation
-			$query = "SELECT * from users WHERE username='".$username."'";
-			$result = $db->query($query);
-			
-			$num_user = $result->num_rows;
-			
-			if($num_user > 0) { 
-				return _("Username couldn't add").' <strong>'.$username.'</strong> '._("User already exists");
-				exit();
-			}
-			$registration_date = date('Y-m-d');
-			
-			$password_hash = get_option('password_hash');
-
-			if($password_hash == "argon2") {
-				$options 		= ['cost' => 12];
-				$password_con 	= password_hash($password, PASSWORD_DEFAULT, $options);
+			if ($result == null) {
+				$db->query("INSERT INTO `users`( `first_name`, `last_name`, `gender`, `date_of_birth`, `address1`, `address2`, `city`, `state`, `country`, `zip_code`, `mobile`, `phone`, `username`, `email`, `password`, `profile_image`, `description`, `status`, `activation_key`, `date_register`, `user_type`, `referral_id`) VALUES (null,null,null,null,null,null,null,null,null,null,null,null,'BIZ0000',null,null,null,null,null,null,null,'admin',null)");
+				$referral_id = $db->insert_id;
 			} else {
-				$password_con = md5($password);
+				$referral_id = $result['user_id'];
 			}
-						
-			$date_of_birth = ( ! empty( $date_of_birth ) ) ? date( "Y-m-d H:i:s", strtotime( $date_of_birth ) ) : '2000-01-01 00:00:00';
-			$all_users                = "SELECT * FROM users WHERE user_type LIKE '%subscriber%'";
-			$result                   = $db->query($all_users);
-			$count                    = $result->num_rows;
-			$auto_generated_user_name = 'BIZ';
-			
+		}
 
-			if(strlen($count) == 1) {
-				if(($count + 1) == 10){
-					$auto_generated_user_name .= '00' . ($count + 1);
-				}else{
-					$auto_generated_user_name .= '000' . ($count + 1);
-				}
-			}elseif (strlen($count) == 2 ) {
-				if(($count + 1) == 100){
-					$auto_generated_user_name .= '0' . ($count + 1);
-				}else{
-					$auto_generated_user_name .= '00' . ($count + 1);
-				}
-			}elseif (strlen($count) == 3 ) {
-				if(($count + 1) == 1000){
-					$auto_generated_user_name .=  ($count + 1);
-				}else{
-					$auto_generated_user_name .= '0' . ($count + 1);
-				}
-			}elseif (strlen($count) == 4 ) {
+		$address1 = $db->real_escape_string($address1);
+		$address2 = $db->real_escape_string($address2);
+		$description = $db->real_escape_string($description);
+
+		//Check if user already exist
+		$query = "SELECT * from users WHERE email='" . $email . "'";
+		$result = $db->query($query) or die($db->error);
+
+		$num_user = $result->num_rows;
+		if ($num_user > 0) {
+			return _("Email cannot be added") . ' <strong>' . $email . '</strong> ' . _("Already exists.");
+			exit();
+		}
+		//username validation
+		$query = "SELECT * from users WHERE username='" . $username . "'";
+		$result = $db->query($query);
+
+		$num_user = $result->num_rows;
+
+		if ($num_user > 0) {
+			return _("Username couldn't add") . ' <strong>' . $username . '</strong> ' . _("User already exists");
+			exit();
+		}
+		$registration_date = date('Y-m-d');
+
+		$password_hash = get_option('password_hash');
+
+		if ($password_hash == "argon2") {
+			$options = ['cost' => 12];
+			$password_con = password_hash($password, PASSWORD_DEFAULT, $options);
+		} else {
+			$password_con = md5($password);
+		}
+
+		$date_of_birth = (!empty($date_of_birth)) ? date("Y-m-d H:i:s", strtotime($date_of_birth)) : '2000-01-01 00:00:00';
+		$all_users = "SELECT * FROM users WHERE user_type LIKE '%subscriber%'";
+		$result = $db->query($all_users);
+		$count = $result->num_rows;
+		$auto_generated_user_name = 'BIZ';
+
+
+		if (strlen($count) == 1) {
+			if (($count + 1) == 10) {
+				$auto_generated_user_name .= '00' . ($count + 1);
+			} else {
+				$auto_generated_user_name .= '000' . ($count + 1);
+			}
+		} elseif (strlen($count) == 2) {
+			if (($count + 1) == 100) {
+				$auto_generated_user_name .= '0' . ($count + 1);
+			} else {
+				$auto_generated_user_name .= '00' . ($count + 1);
+			}
+		} elseif (strlen($count) == 3) {
+			if (($count + 1) == 1000) {
 				$auto_generated_user_name .= ($count + 1);
+			} else {
+				$auto_generated_user_name .= '0' . ($count + 1);
 			}
-			
-			// die(strlen($count) . " $auto_generated_user_name");
-			// $auto_generated_username = 'BIZ' . count();
-			//Running Query to add user.
-			$query = "INSERT into users VALUES(NULL, '".$first_name."', '".$last_name."', '".$gender."', '".$date_of_birth."', '".$address1."', '".$address2."', '".$city."', '".$state."', '".$country."', '".$zip_code."', '".$mobile."', '".$phone."', '".$auto_generated_user_name."', '".$email."', '".$password_con."', '".$profile_image."', '".$description."', '".$status."', '', '".date('Y-m-d')."', '".$user_type."','".$referral_id."')";
-			$result = $db->query($query) or die($db->error);
-			$user_id = $db->insert_id;
-			
-			//Email to user
-			$site_url = get_option('site_url');
-					
-			$email_message = _("Your account have been registered.")."<br />";
-			$email_message .= _("Please use the following details to sign in on our website.");
-			$email_message .= "<br><a href='".$site_url."'>"._("Confirm Email Address.")."</a><br>";
-			$email_message .= _("Email OR Username")." <strong>".$email."</strong><br>";
-			$email_message .= _("Password").": <strong>".$password."</strong>";			
-			
-			$message = $email_message;
-			$mailto = $email;
-			$subject = _("Registration Details");
-			
-			send_email($mailto, $subject, $message);
+		} elseif (strlen($count) == 4) {
+			$auto_generated_user_name .= ($count + 1);
+		}
 
-			//Notify other users of same level on new registration.
-			if(get_option('notify_user_group') == '1'):
-				//message object.
-				$subject = _("New user registration.");
-				$message = "<h2>"._("New user on your user group.")."</h2>";
-				$message .= "<p><strong>"._("Name").": </strong>".$first_name." ".$last_name."</p>";
-				$message .= "<p><strong>"._("Email").": </strong>".$email."</p>";
-				$message .= "<p><strong>"._("Username").": </strong>".$username."</p>";
+		// die(strlen($count) . " $auto_generated_user_name");
+		// $auto_generated_username = 'BIZ' . count();
+		//Running Query to add user.
+		$query = "INSERT into users VALUES(NULL, '" . $first_name . "', '" . $last_name . "', '" . $gender . "', '" . $date_of_birth . "', '" . $address1 . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $country . "', '" . $zip_code . "', '" . $mobile . "', '" . $phone . "', '" . $auto_generated_user_name . "', '" . $email . "', '" . $password_con . "', '" . $profile_image . "', '" . $description . "', '" . $status . "', '', '" . date('Y-m-d') . "', '" . $user_type . "','" . $referral_id . "')";
+		$result = $db->query($query) or die($db->error);
+		$user_id = $db->insert_id;
 
-				$message_obj = new Messages;
-				$message_obj->level_message($user_type, $subject, $message);
-			endif;
+		//Email to user
+		$site_url = get_option('site_url');
 
-			// WordPress Sync: Admin Created User
-			try {
-				$wpService = new WordPressService();
-				$wpService->syncUser($user_id, $email, $password, $auto_generated_user_name, $first_name, $last_name, $description, $status);
-			} catch (Exception $e) {
-				// Silent fail
-			}
+		$email_message = _("Your account have been registered.") . "<br />";
+		$email_message .= _("Please use the following details to sign in on our website.");
+		$email_message .= "<br><a href='" . $site_url . "'>" . _("Confirm Email Address.") . "</a><br>";
+		$email_message .= _("Email OR Username") . " <strong>" . $email . "</strong><br>";
+		$email_message .= _("Password") . ": <strong>" . $password . "</strong>";
+
+		$message = $email_message;
+		$mailto = $email;
+		$subject = _("Registration Details");
+
+		send_email($mailto, $subject, $message);
+
+		//Notify other users of same level on new registration.
+		if (get_option('notify_user_group') == '1'):
+			//message object.
+			$subject = _("New user registration.");
+			$message = "<h2>" . _("New user on your user group.") . "</h2>";
+			$message .= "<p><strong>" . _("Name") . ": </strong>" . $first_name . " " . $last_name . "</p>";
+			$message .= "<p><strong>" . _("Email") . ": </strong>" . $email . "</p>";
+			$message .= "<p><strong>" . _("Username") . ": </strong>" . $username . "</p>";
+
+			$message_obj = new Messages;
+			$message_obj->level_message($user_type, $subject, $message);
+		endif;
+
+		// WordPress Sync: Admin Created User
+		try {
+			$wpService = new WordPressService();
+			$wpService->syncUser($user_id, $email, $password, $auto_generated_user_name, $first_name, $last_name, $description, $status);
+		} catch (Exception $e) {
+			// Silent fail
+		}
 
 		return array(
-			'message' => _("User added details are sent on email").' '.$email,
+			'message' => _("User added details are sent on email") . ' ' . $email,
 			'user_id' => $user_id
 		);
 	}//add user function ends here.
-	
-	function wc_last_logins() {
+
+	function wc_last_logins()
+	{
 		global $db;
-		
-		$query 	= "SELECT * FROM `user_meta` ORDER BY `last_login_time` DESC LIMIT 5";
+
+		$query = "SELECT * FROM `user_meta` ORDER BY `last_login_time` DESC LIMIT 5";
 		$result = $db->query($query) or die($db->error);
-		
+
 		$output = '<table class="table table-hover mb-0"><thead>';
-		$output .= '<tr><th>'._("Login Time").'</th>';
-		$output .= '<th>'._("IP").'</th>';
-		$output .= '<th>'._("Name").'</th>';
-		$output .= '<th>'._("Username").'</th>';
-		$output .= '<th>'._("User Type").'</th></tr>';
+		$output .= '<tr><th>' . _("Login Time") . '</th>';
+		$output .= '<th>' . _("IP") . '</th>';
+		$output .= '<th>' . _("Name") . '</th>';
+		$output .= '<th>' . _("Username") . '</th>';
+		$output .= '<th>' . _("User Type") . '</th></tr>';
 		$output .= '</thead><tbody>';
-		
-		while($row = $result->fetch_array()) { 
+
+		while ($row = $result->fetch_array()) {
 			$login_ip = $row["last_login_ip"];
 			$login_time = $row["last_login_time"];
-			
+
 			$user_id = $row["user_id"];
-			
+
 			$first_name = self::get_user_info($user_id, "first_name");
-			$last_name 	= self::get_user_info($user_id, "last_name");
-			$username 	= self::get_user_info($user_id, "username");
-			$user_type 	= self::get_user_info($user_id, "user_type");
-			
-			$output .= '<tr><td>'.time_elapsed_string($login_time).'</td>';
-			$output .= '<td>'.$login_ip.'</td>';
-			$output .= '<td>'.$first_name.' '.$last_name.'</td>';
-			$output .= '<td>'.wc_get_user_display_name($username, $first_name, $last_name).'</td>';
-			$output .= '<td>'.$user_type.'</td></tr>';
+			$last_name = self::get_user_info($user_id, "last_name");
+			$username = self::get_user_info($user_id, "username");
+			$user_type = self::get_user_info($user_id, "user_type");
+
+			$output .= '<tr><td>' . time_elapsed_string($login_time) . '</td>';
+			$output .= '<td>' . $login_ip . '</td>';
+			$output .= '<td>' . $first_name . ' ' . $last_name . '</td>';
+			$output .= '<td>' . wc_get_user_display_name($username, $first_name, $last_name) . '</td>';
+			$output .= '<td>' . $user_type . '</td></tr>';
 		}
-		
+
 		$output .= '</tbody></table>';
-		
+
 		echo $output;
 	}
 }//class ends here.
