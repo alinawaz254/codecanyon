@@ -18,13 +18,27 @@ class Transactions {
             $amount = floatval($amount);
             $description = $db->real_escape_string($description);
             $is_approved = 0;
-            if($transaction_type == 2){
+            if($transaction_type == 2 || $transaction_type == 1){
                 $is_approved = 1;
             }
+
+            $proof_image = '';
+            if(isset($_FILES['payment_proof']) && $_FILES['payment_proof']['error'] == 0){
+                $temp = $_FILES['payment_proof']['tmp_name'];
+                $name = $_FILES['payment_proof']['name'];
+                $ext = pathinfo($name, PATHINFO_EXTENSION);
+                $new_name = time() . '_' . rand(1000, 9999) . '.' . $ext;
+                $upload_dir = 'assets/upload/proofs/';
+                if(!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
+                if(move_uploaded_file($temp, $upload_dir . $new_name)){
+                    $proof_image = $upload_dir . $new_name;
+                }
+            }
+
             // Insert transaction into database
             $result = $db->query("INSERT INTO transactions 
-                (user_id, transaction_type, amount, description,is_approved, created_at, updated_at) 
-                VALUES ('$user_id', '$transaction_type', '$amount', '$description','$is_approved', NOW(), NOW())");
+                (user_id, transaction_type, amount, description, is_approved, proof_image, created_at, updated_at) 
+                VALUES ('$user_id', '$transaction_type', '$amount', '$description', '$is_approved', '$proof_image', NOW(), NOW())");
         
             if($result) {
             $transaction_id = $db->insert_id;

@@ -45,7 +45,7 @@
 			</div>
 			<div class="widget-body">
 				<div class="container">
-				<form action="<?php $_SERVER['PHP_SELF']?>" id="add_transaction" method="post">
+				<form action="<?php $_SERVER['PHP_SELF']?>" id="add_transaction" method="post" enctype="multipart/form-data">
 
 				<div class="row">
 
@@ -71,12 +71,11 @@
 				<div class="col-md-6 mb-4">
 				<label>Transaction Type *</label>
 
-				<select name="transaction_type" class="form-control" required>
+				<select name="transaction_type" id="transaction_type" class="form-control" required>
 
 				<option value="">-- Select Type --</option>
-				<!-- <option value="1">Withdrawal</option> -->
+				<option value="1">Withdrawal</option>
 				<option value="2">Funded</option>
-				<!-- <option value="3">Commission</option> -->
 
 				</select>
 
@@ -116,6 +115,13 @@
 
 				</div>
 
+				<div class="row" id="proof_image_row" style="display:none;">
+				<div class="col-md-6 mb-4">
+				<label>Payment Proof (Image)</label>
+				<input type="file" name="payment_proof" class="form-control" accept="image/*">
+				</div>
+				</div>
+
 
 				<div class="row">
 
@@ -153,12 +159,19 @@ $(document).ready(function() {
         });
     }
     
-    // Format amount based on transaction type
+    // Handle transaction type changes
     $('#transaction_type').change(function() {
         var type = $(this).val();
         var amountField = $('#amount');
         var typeLabel = '';
         
+        // Toggle proof image field visibility for Withdrawal (type 1)
+        if(type == '1') {
+            $('#proof_image_row').show();
+        } else {
+            $('#proof_image_row').hide();
+        }
+
         switch(type) {
             case '1':
                 typeLabel = '<?php _e("Withdrawal"); ?>';
@@ -173,7 +186,7 @@ $(document).ready(function() {
         
         if(typeLabel) {
             $('.transaction-type-badge').remove();
-            amountField.before('<span class="transaction-type-badge badge badge-info mr-2">' + typeLabel + '</span>');
+            // Removed badge insertion that was breaking the input-group layout
         }
     });
     
