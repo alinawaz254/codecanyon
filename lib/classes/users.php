@@ -1208,7 +1208,7 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		// die(strlen($count) . " $auto_generated_user_name");
 		// $auto_generated_username = 'BIZ' . count();
 		//Running Query to add user.
-		$query = "INSERT into users VALUES(NULL, '" . $first_name . "', '" . $last_name . "', '" . $gender . "', '" . $date_of_birth . "', '" . $address1 . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $country . "', '" . $zip_code . "', '" . $mobile . "', '" . $phone . "', '" . $auto_generated_user_name . "', '" . $email . "', '" . $password_con . "', '" . $profile_image . "', '" . $description . "', '" . $status . "', '', '" . date('Y-m-d') . "', '" . $user_type . "','" . $referral_id . "')";
+		$query = "INSERT into users(first_name, last_name, gender, date_of_birth, address1, address2, city, state, country, zip_code, mobile, phone, username, email, password, profile_image, description, status, activation_key, date_register, user_type, referral_id) VALUES('" . $first_name . "', '" . $last_name . "', '" . $gender . "', '" . $date_of_birth . "', '" . $address1 . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $country . "', '" . $zip_code . "', '" . $mobile . "', '" . $phone . "', '" . $auto_generated_user_name . "', '" . $email . "', '" . $password_con . "', '" . $profile_image . "', '" . $description . "', '" . $status . "', '', '" . date('Y-m-d') . "', '" . $user_type . "','" . $referral_id . "')";
 		$result = $db->query($query) or die($db->error);
 		$user_id = $db->insert_id;
 
