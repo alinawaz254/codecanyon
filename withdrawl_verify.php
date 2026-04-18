@@ -29,8 +29,8 @@ if(isset($_POST['resend'])){
     $stmt->execute();
 
     // send email
-    $subject = "Withdrawl OTP";
-    $message = "Your Withdrawl OTP is: <b>".$otp."</b><br>This OTP will expire in 10 minutes.";
+    $subject = "Security Notification: Your Verification Code";
+    $message = "To verify your identity and complete your withdrawal request, please use the following verification code:<br><br><b>".$otp."</b><br><br>This code is valid for 10 minutes. If you did not initiate this request, please contact support immediately.";
 
     send_email($_SESSION['email'], $subject, $message);  
 

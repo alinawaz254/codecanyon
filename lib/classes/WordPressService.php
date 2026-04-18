@@ -192,7 +192,7 @@ class WordPressService
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 2);
 
         if ($data && ($method === 'POST' || $method === 'PUT' || $method === 'PATCH')) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));

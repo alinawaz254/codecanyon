@@ -48,8 +48,8 @@ if(isset($_POST['send'])){
 
     // send email
     // send_email($_SESSION['email'],"Withdrawl OTP","Your OTP is: ".$otp);
-    $subject = "Widrawl OTP";
-    $message = "Your Wallet Widrawl OTP is: <b>".$otp."</b><br>This OTP will expire in 10 minutes."; 
+    $subject = "Security Notification: Your Verification Code";
+    $message = "To verify your identity and complete your withdrawal request, please use the following verification code:<br><br><b>".$otp."</b><br><br>This code is valid for 10 minutes. If you did not initiate this request, please contact support immediately.";
 
     send_email($_SESSION['email'], $subject, $message);      
 

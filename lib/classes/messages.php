@@ -255,17 +255,11 @@ class Messages {
 		
 			if($new_user->get_user_meta($reply_to, 'message_email') == '1') { 
 				$mailto 	= $new_user->get_user_info($reply_to, 'email');
-				$subject 	= 'Re:'.$this->get_subject_by_id($subject_id);
-				$message 	= $reply_detail;
-
-				$from_user 	= $_SESSION['user_id'];
-				$to_user 	= $reply_to;
-
-				$from_full_name = $new_user->get_user_info( $from_user, 'first_name' ) . ' ' . $new_user->get_user_info( $from_user, 'last_name' );
-				$to_full_name 	= $new_user->get_user_info( $to_user, 'first_name' ) . ' ' . $new_user->get_user_info( $to_user, 'last_name' );
-
-				$message .= _( 'Hi' ) . ' ' . $to_full_name . '<br><br>'; 
-				$message .= _( 'You have received a message reply from' ) . ' ' . $from_full_name . '<br><br>';
+				$subject = _("Notification: New message received on our platform");
+				$message_body = _("Hello") . " " . $to_full_name . ",<br /><br />"; 
+				$message_body .= _("You have received a new message reply from") . " " . $from_full_name . ".<br /><br />";
+				$message_body .= "<strong>" . _("Message Content") . ":</strong><br />" . $reply_detail;
+				$message = $message_body;
 
 				send_email($mailto, $subject, $message);
 			}
@@ -303,16 +297,11 @@ class Messages {
 			
 			$new_user = new Users;
 			if($new_user->get_user_meta($to_id, 'message_email') == '1') { 
-				$mailto = $new_user->get_user_info($to_id, 'email');
-
-				$from_user 	= $_SESSION['user_id'];
-				$to_user 	= $to_id;
-
-				$from_full_name = $new_user->get_user_info( $from_user, 'first_name' ) . ' ' . $new_user->get_user_info( $from_user, 'last_name' );
-				$to_full_name 	= $new_user->get_user_info( $to_user, 'first_name' ) . ' ' . $new_user->get_user_info( $to_user, 'last_name' );
-
-				$message .= _( 'Hi' ) . ' ' . $to_full_name . '<br><br>'; 
-				$message .= _( 'You have received a message from' ) . ' ' . $from_full_name . '<br><br>';
+				$subject = _("Notification: New message received on our platform");
+				$message_body = _("Hello") . " " . $to_full_name . ",<br /><br />"; 
+				$message_body .= _("You have received a new message from") . " " . $from_full_name . ".<br /><br />";
+				$message_body .= "<strong>" . _("Message Content") . ":</strong><br />" . $message;
+				$message = $message_body;
 
 				send_email($mailto, $subject, $message);
 			}

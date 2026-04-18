@@ -69,8 +69,8 @@ if(isset($_POST['send'])){
     // send email
     // send_email($_SESSION['email'],"Wallet OTP","Your OTP is: ".$otp);
 
-    $subject = "Wallet OTP";
-    $message = "Your Wallet Transfer OTP is: <b>".$otp."</b><br>This OTP will expire in 10 minutes.";
+    $subject = "Security Notification: Your Verification Code";
+    $message = "To verify your identity and complete your transfer request, please use the following verification code:<br><br><b>".$otp."</b><br><br>This code is valid for 10 minutes. If you did not initiate this request, please contact support immediately.";
 
     send_email($_SESSION['email'], $subject, $message);     
 

@@ -69,10 +69,11 @@
 					$message = _("Registration is disabled please contact site admin.");
 				} else {
 					$user_id = $new_user->register_user( $first_name, $last_name, $user_type, $username, $email, $password,$referral_id );
-					$message = _("Registration successful please check your mailbox for email activation.");
-
-					//Update fields. 
+					
 					if ( is_integer( $user_id ) ) {
+						$message = _("Registration successful please check your mailbox for email activation.");
+						
+						//Update fields. 
 						$_reg_array = array( 'gender', 'date_of_birth', 'address1', 'address2', 'city', 'state', 'zip_code', 'country', 'mobile', 'phone', 'profile_image', 'description' );
 
 						foreach( $_reg_array as $reg_field ) {
@@ -87,9 +88,12 @@
 								( isset( $_POST[$theadditional] ) && ! empty( $_POST[$theadditional] ) ) ? $new_user->set_usermeta( $user_id, $theadditional, $_POST[$theadditional] ) : '';
 							}
 						}
+						
+						HEADER('LOCATION: register.php?message='.$message);
+						exit();
+					} else {
+						$message = $user_id; // This is the error message string
 					}
-					HEADER('LOCATION: register.php?message='.$message);
-					exit();
 				}
 			}//validation ends here.
 		}//form processing ends here.

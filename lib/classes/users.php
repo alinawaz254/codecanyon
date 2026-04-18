@@ -184,15 +184,15 @@ class Users
 		//Email to user
 		$site_url = get_option('site_url');
 
-		$email_message = _("Thank you for registration.") . "<br />";
+		$email_message = _("Thank you for joining us.") . "<br />";
 		$email_message .= _("Your username is") . ": <strong> " . $username . '</strong><br>';
-		$email_message .= _("Kindly click the link below to confirm your account and start using our services.") . "<br />";
+		$email_message .= _("Please click the link below to verify your email address and activate your account.") . "<br />";
 		$email_message .= "<a href='" . $site_url . "login.php?confirmation_code=" . $activation_key . "&user_id=" . $user_id . "'>" . _("Confirm Email Address") . "</a>";
 		$email_message .= "<br><br>" . _("Thank you again. Please contact us if you need any assistance.");
 
 		$message = $email_message;
 		$mailto = $email;
-		$subject = _("Confirm your email id.");
+		$subject = _("Please verify your email address");
 
 		send_email($mailto, $subject, $message);
 		//Notify other users of same level on new registration.
@@ -759,12 +759,19 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 	{
 		global $db;
 
-		$current_email = $this->get_user_info($_SESSION['user_id'], 'email');
-		$current_username = $this->get_user_info($_SESSION['user_id'], 'username');
+		$current_email = $this->get_user_info($user_id, 'email');
+		$current_username = $this->get_user_info($user_id, 'username');
 
-		$address1 = $db->real_escape_string($address1);
-		$address2 = $db->real_escape_string($address2);
-		$description = $db->real_escape_string($description);
+		$first_name = trim($first_name);
+		$last_name = trim($last_name);
+		$email = trim($email);
+		$username = trim($username);
+		$mobile = trim($mobile);
+		$phone = trim($phone);
+		
+		$address1 = $db->real_escape_string(trim($address1));
+		$address2 = $db->real_escape_string(trim($address2));
+		$description = $db->real_escape_string(trim($description));
 
 		if ($email != $current_email) {
 			$query = "SELECT * from users WHERE email='" . $email . "'";
@@ -791,6 +798,10 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 			}
 		}
 		$date_of_birth = (!empty($date_of_birth)) ? date('Y-m-d', strtotime(str_replace('-', '/', $date_of_birth))) : "000-00-00";
+		// Before update, get current data to see what changes
+		$old_data_query = $db->query("SELECT * FROM users WHERE user_id='$user_id'");
+		$old_data = $old_data_query->fetch_assoc();
+
 		if ($password == '') {
 			$query = 'UPDATE users SET
    	    			first_name = "' . $first_name . '",
@@ -844,11 +855,34 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		}
 		$result = $db->query($query) or die($db->error);
 
+		// Email Notification Logic
+		$changes = array();
+		if (trim($old_data['first_name']) != $first_name) $changes[] = _("First Name");
+		if (trim($old_data['last_name']) != $last_name) $changes[] = _("Last Name");
+		if (trim($old_data['email']) != $email) $changes[] = _("Email Address");
+		if (trim($old_data['username']) != $username) $changes[] = _("Username");
+		if (trim($old_data['mobile']) != $mobile) $changes[] = _("Mobile");
+		if (trim($old_data['phone']) != $phone) $changes[] = _("Phone");
+		if (trim($old_data['gender']) != $gender) $changes[] = _("Gender");
+		if (isset($plain_password) && $plain_password != '') $changes[] = _("Password");
+		if (trim($old_data['address1']) != $address1 || trim($old_data['city']) != $city || trim($old_data['country']) != $country) $changes[] = _("Address Details");
+
+		if (!empty($changes)) {
+			$subject = _("Notification: Your account profile has been updated");
+			$message = _("Hello") . " " . $first_name . ",<br /><br />";
+			$message .= _("We are writing to inform you that your profile has been successfully updated.") . "<br />";
+			$message .= _("The following fields were updated") . ": <strong>" . implode(", ", $changes) . "</strong><br />";
+			$message .= "<br />" . _("If you did not make these changes, please contact our support team immediately.");
+			$message .= "<br /><br />" . _("Thank you.");
+			
+			send_email($email, $subject, $message);
+		}
+
 		// WordPress Sync: Profile and Password Update
 		try {
 			$wpService = new WordPressService();
 			// Use the captured $plain_password from line 797
-			$wpService->syncUser($user_id, $email, $plain_password, $username, $first_name, $last_name, $description);
+			$wpService->syncUser($user_id, $email, (isset($plain_password) ? $plain_password : ''), $username, $first_name, $last_name, $description);
 		} catch (Exception $e) {
 			// Silent fail
 		}
@@ -941,6 +975,10 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		}
 
 		$date_of_birth = (!empty($date_of_birth)) ? date('Y-m-d', strtotime(str_replace('-', '/', $date_of_birth))) : "000-00-00";
+		// Before update, get current data
+		$old_data_query = $db->query("SELECT * FROM users WHERE user_id='$user_id'");
+		$old_data = $old_data_query->fetch_assoc();
+
 		//updating user info.
 		if ($user_type_ses == 'admin') {
 			if ($password == '') {
@@ -1003,12 +1041,33 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 			}
 			$result = $db->query($query) or die($db->error);
 
+			// Email Notification Logic for Admin Update
+			$changes = array();
+			if (trim($old_data['first_name']) != trim($first_name)) $changes[] = _("First Name");
+			if (trim($old_data['last_name']) != trim($last_name)) $changes[] = _("Last Name");
+			if (trim($old_data['email']) != trim($email)) $changes[] = _("Email Address");
+			if (isset($plain_password) && $plain_password != '') $changes[] = _("Password");
+			if (trim($old_data['status']) != trim($status)) $changes[] = _("Account Status");
+
+			if (!empty($changes)) {
+				$subject = _("Notification: Your account details have been modified");
+				$message = "Hello " . $old_data['first_name'] . ",<br /><br />";
+				$message .= _("This is an automated notification to inform you that your account details have been updated by the system administrator.") . "<br />";
+				$message .= _("Changes") . ": <strong>" . implode(", ", $changes) . "</strong><br />";
+				if (isset($plain_password) && $plain_password != '') {
+					$message .= _("New Password") . ": <strong>" . $plain_password . "</strong><br />";
+				}
+				$message .= "<br />" . _("Please keep this information secure.");
+				$message .= "<br /><br />" . _("Thank you.");
+				send_email($email, $subject, $message);
+			}
+
 			// WordPress Sync: Profile, Password, and Status Update
 			try {
 				$wpService = new WordPressService();
 
 				// Use the captured $plain_password from line 951
-				$wpService->syncUser($user_id, $email, $plain_password, $username, $first_name, $last_name, $description, $status);
+				$wpService->syncUser($user_id, $email, (isset($plain_password) ? $plain_password : ''), $username, $first_name, $last_name, $description, $status);
 
 				// Sync Status
 				$wpService->updateStatus($user_id, $status);
@@ -1113,13 +1172,13 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		$result = $db->query($query) or die($db->error);
 
 		$site_url = get_option('site_url');
-		$email_message = _("Reset your password.") . "<br />";
-		$email_message .= _("Kindly click the link below to reset your password.") . "<br />";
-		$email_message .= "<a href='" . $site_url . "forgot.php?confirmation_code=" . $activation_key . "&user_id=" . $user_id . "'>" . _("Confirm Email Address") . "</a>";
-		$email_message .= "<br><br>" . _("Thank you again. Please contact us if you need any assistance.");
+		$email_message = _("We received a request to reset the password associated with your account.") . "<br />";
+		$email_message .= _("To proceed with the reset, please click the secure link below:") . "<br />";
+		$email_message .= "<a href='" . $site_url . "forgot.php?confirmation_code=" . $activation_key . "&user_id=" . $user_id . "'>" . _("Reset My Password") . "</a>";
+		$email_message .= "<br><br>" . _("If you did not request this, you can safely ignore this email. Your password will not change until you access the link above.");
 		$message = $email_message;
 		$mailto = $email;
-		$subject = _("Password reset instructions");
+		$subject = _("Information regarding your password reset request");
 
 		send_email($mailto, $subject, $message);
 
@@ -1215,15 +1274,15 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		//Email to user
 		$site_url = get_option('site_url');
 
-		$email_message = _("Your account have been registered.") . "<br />";
-		$email_message .= _("Please use the following details to sign in on our website.");
-		$email_message .= "<br><a href='" . $site_url . "'>" . _("Confirm Email Address.") . "</a><br>";
-		$email_message .= _("Email OR Username") . " <strong>" . $email . "</strong><br>";
-		$email_message .= _("Password") . ": <strong>" . $password . "</strong>";
+		$email_message = _("Your account has been successfully created by the administrator.") . "<br />";
+		$email_message .= _("Please use the following credentials to access your account:");
+		$email_message .= "<br><br><strong>" . _("Email address") . ":</strong> " . $email;
+		$email_message .= "<br><strong>" . _("Temporary Password") . ":</strong> " . $password;
+		$email_message .= "<br><br><a href='" . $site_url . "'>" . _("Log in to your account") . "</a><br>";
 
 		$message = $email_message;
 		$mailto = $email;
-		$subject = _("Registration Details");
+		$subject = _("Account Notification: Your new login credentials");
 
 		send_email($mailto, $subject, $message);
 

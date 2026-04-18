@@ -67,8 +67,14 @@
 		}  else {
 			$received = $new_user->add_user( $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type,$referral_id);
 
-			$user_id = ( isset( $received['user_id'] ) && ! empty( $received['user_id'] ) ) ? $received['user_id'] : '';
-			$message = ( isset( $received['message'] ) && ! empty( $received['message'] ) ) ? $received['message'] : 'An error occured while processing the request';
+			$user_id = ( is_array($received) && isset( $received['user_id'] ) && ! empty( $received['user_id'] ) ) ? $received['user_id'] : '';
+			if(is_array($received) && isset($received['message'])) {
+				$message = $received['message'];
+			} else if(is_string($received)) {
+				$message = $received;
+			} else {
+				$message = 'An error occured while processing the request';
+			}
 		}
 	}//add user processing ends here.
 	
