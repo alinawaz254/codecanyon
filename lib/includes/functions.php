@@ -524,24 +524,21 @@ endif;
 	}
 
 	function return_info_messages($message) {
-		//display message if exist.
-		if(isset($_GET['message']) && $_GET['message'] != '') { 
-			echo '<div class="mywidget">
-					<div class="row">
-						<div class="col-sm-12">
-							<div class="alert alert-warning alert-dismissible fade show" role="alert">';
-			echo $_GET['message'];
-			echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-				</button>';
-			echo '</div></div></div></div>';
+		$output_message = '';
+		if(!empty($message)) { 
+			$output_message = $message;
+		} else if(isset($_GET['message']) && $_GET['message'] != '') { 
+			$output_message = $_GET['message'];
 		}
-		if(isset($message) && $message != '') { 
+
+		if(!empty($output_message)) {
 			echo '<div class="mywidget">
 					<div class="row">
 						<div class="col-sm-12">
 							<div class="alert alert-warning alert-dismissible fade show" role="alert">';
-			echo $message;
+			echo $output_message;
 			echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
 				</button>';
 			echo '</div></div></div></div>';
 		}
@@ -967,4 +964,8 @@ endif;
 			return $username . ' -' . trim($first_name . ' ' . $last_name) . '';
 		}
 		return $username;
+	}
+
+	function is_logged_in() {
+		return (isset($_SESSION['user_id']) && !empty($_SESSION['user_id']));
 	}

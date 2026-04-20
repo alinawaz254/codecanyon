@@ -1,5 +1,6 @@
 <?php
 	require_once("lib/system_load.php");
+	$datepicker = 1;
 	//This loads system.
 	
 	if(isset($_SESSION['user_id']) && $_SESSION['user_id'] != '') { 
@@ -74,12 +75,31 @@
 						$message = _("Registration successful please check your mailbox for email activation.");
 						
 						//Update fields. 
-						$_reg_array = array( 'gender', 'date_of_birth', 'address1', 'address2', 'city', 'state', 'zip_code', 'country', 'mobile', 'phone', 'profile_image', 'description' );
+						$_reg_array = array( 'gender', 'date_of_birth', 'address1', 'address2', 'city', 'state', 'zip_code', 'country', 'mobile', 'phone', 'description' );
 
 						foreach( $_reg_array as $reg_field ) {
 							if ( isset( $_POST[$reg_field] ) ) {
-								$new_user->update_user_row( $user_id, $reg_field, $_POST[$reg_field] );
+								$val = $_POST[$reg_field];
+								// Convert Date for DB
+								if($reg_field == 'date_of_birth' && !empty($val)) {
+									$val = date("Y-m-d", strtotime($val));
+								}
+								$new_user->update_user_row( $user_id, $reg_field, $val );
 							}
+						}
+
+						// Handle file uploads
+						if(isset($_FILES['profile_image']) && $_FILES['profile_image']['size'] > 0) {
+							$url = wc_upload_image_return_url($_FILES['profile_image'], 'users');
+							if(is_string($url)) $new_user->update_user_row($user_id, 'profile_image', $url);
+						}
+						if(isset($_FILES['nic_front']) && $_FILES['nic_front']['size'] > 0) {
+							$url = wc_upload_image_return_url($_FILES['nic_front'], 'users');
+							if(is_string($url)) $new_user->update_user_row($user_id, 'nic_front', $url);
+						}
+						if(isset($_FILES['nic_back']) && $_FILES['nic_back']['size'] > 0) {
+							$url = wc_upload_image_return_url($_FILES['nic_back'], 'users');
+							if(is_string($url)) $new_user->update_user_row($user_id, 'nic_back', $url);
 						}
 
 						$_additionalarr = return_additionalfields_array( 'registration' );
@@ -148,199 +168,382 @@
 			}
 	}	
 ?>
-      <!-- Begin Container -->
-        <div class="container-fluid no-padding h-100">
-            <div class="row flex-row h-100 bg-white">
-                <!-- Begin Left Content -->
-                <div class="col-xl-3 col-lg-5 col-md-5 col-sm-12 col-12 no-padding">
+<style>
+	.authentication-form-2 { max-width: 95% !important; width: 100%; padding: 40px; background: #fff; border-radius: 12px; }
+	
+	.auth-left-panel { background-color: #ECAD3D; min-height: 100vh; height: 100% !important; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 316px; color: #fff; width: 100%; }
+	.auth-left-inner { width: 100%; padding: 0 30px; text-align: center; }
+	.auth-logo { margin-bottom: 20px; max-width: 130px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+	.auth-title { font-weight: 800 !important; color: #fff !important; font-size: 26px; margin-bottom: 5px; }
+	.auth-desc { color: rgba(255,255,255,0.95) !important; margin-bottom: 25px; font-size: 14px; line-height: 1.4; }
 
-                    <div class="auth-left-panel">
-                        <div class="auth-left-inner text-center">
-                            <img src="<?=SITELOGO;?>" class="auth-logo">
+	@media (max-width: 767px) {
+		.auth-left-panel { min-height: auto; padding: 30px 20px; }
+		.auth-logo { max-width: 100px; margin-bottom: 15px; }
+		.authentication-form-2 { padding: 25px 15px; margin-top: 0; border-radius: 0; }
+	}
 
-                            <h1 class="auth-title"><?=SITE_NAME;?></h1>
+	.admin-form-group { margin-bottom: 22px; }
+	.admin-form-group label { font-weight: 700; color: #333; margin-bottom: 8px; display: block; font-size: 13px; text-transform: uppercase; letter-spacing: 0.5px; }
+	.admin-form-group .form-control { border-radius: 4px; border: 1px solid #dcdcdc; padding: 10px 12px; height: 42px; background: #fff; transition: all 0.2s; font-size: 14px; width: 100%; }
+	.admin-form-group .form-control:focus { border-color: #5d5386; box-shadow: 0 0 0 3px rgba(93, 83, 134, 0.08); outline: none; }
+	
+	.pass-wrapper { position: relative; width: 100%; }
+	.pass-wrapper input { padding-right: 45px !important; }
+	.toggle-password { position: absolute; right: 5px; top: 106%; transform: translateY(-50%); cursor: pointer !important; color: #888; z-index: 99; font-size: 16px; pointer-events: auto !important; }
+	.toggle-password:hover { color: #5d5386; }
 
-                            <p class="auth-desc">
-                                If you are already a member please fill the login form.
-                            </p>
+	.section-header { border-bottom: 2px solid #5d5386; margin: 30px 0 20px 0; display: inline-block; padding-bottom: 3px; }
+	.section-header h5 { margin: 0; font-weight: 800; color: #5d5386; font-size: 15px; text-transform: uppercase; letter-spacing: 1px; }
+	
+	.error-msg { color: #dc3545; font-size: 11px; font-weight: 600; margin-top: 4px; display: none; text-transform: none; letter-spacing: 0; }
+	.has-error .form-control { border-color: #dc3545 !important; }
+	.has-error .error-msg { display: block; }
+	
+	.image-upload-zone { border: 2px dashed #dcdcdc; border-radius: 10px; padding: 15px; text-align: center; background: #fafafa; transition: all 0.3s; cursor: pointer; margin-bottom: 20px; }
+	.image-upload-zone:hover { border-color: #5d5386; background: #f4f4f9; }
+	.preview-box { height: 110px; display: flex; align-items: center; justify-content: center; margin-bottom: 10px; }
+	.preview-box img { max-height: 100%; max-width: 100%; object-fit: contain; border-radius: 6px; }
+	
+	#referrer_name_display { display: block; font-size: 13px; margin-top: 6px; font-weight: 700; min-height: 18px; color: #28a745; }
+	.sign-btn .btn-golden-admin { width: auto; padding: 15px 60px; border-radius: 30px; font-size: 16px; min-width: 250px; }
+</style>
 
-							<a href="<?=SITEURL;?>login.php" class="btn btn-primary btn-lg btn-golden-admin">
-							Sign In
-							</a>
-                        </div>
-                    </div>  					
+<!-- Begin Container -->
+<div class="container-fluid no-padding h-100">
+    <div class="row flex-row h-100 bg-white">
+        <!-- Begin Left Content -->
+        <div class="col-xl-3 col-lg-5 col-md-5 col-sm-12 col-12 no-padding bg-golden-side">
+            <style>.bg-golden-side { background-color: #ECAD3D; }</style>
+            <div class="auth-left-panel">
+                <div class="auth-left-inner text-center">
+                    <img src="<?=SITELOGO;?>" class="auth-logo">
+                    <h1 class="auth-title"><?=SITE_NAME;?></h1>
+                    <p class="auth-desc">If you are already a member please fill the login form.</p>
+                    <a href="<?=SITEURL;?>login.php" class="btn btn-primary btn-lg btn-golden-admin">Sign In</a>
                 </div>
-                <!-- End Left Content -->
-                <!-- Begin Right Content -->
-                <div class="col-xl-9 col-lg-7 col-md-7 col-sm-12 col-12 my-auto no-padding mb-5">
-                    <!-- Begin Form -->
-                    <div class="authentication-form-2 mx-auto">
-                        <div class="tab-content" id="animate-tab-content">
-                            <!-- Begin Sign In -->
-                            <div role="tabpanel" class="tab-pane show active" id="singin" aria-labelledby="singin-tab">
-                                <h3><?php _e("Create an account"); ?></h3>
-                                <?php 
-                                    $message = (isset($message)) ? $message : "";
-                                    return_info_messages($message); ?>
-                                <div id="success_message_admin"></div>
+            </div>  					
+        </div>
+        
+        <!-- Begin Right Content -->
+        <div class="col-xl-9 col-lg-7 col-md-7 col-sm-12 col-12 my-auto no-padding mb-5">
+            <div class="authentication-form-2 mx-auto">
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane show active" id="singin">
+                        <h3 class="mb-4"><?php _e("Create an account"); ?></h3>
+                        <?php 
+                            $message = (isset($message)) ? $message : (isset($_GET['message']) ? $_GET['message'] : "");
+                            if(!empty($message) && !is_logged_in()) return_info_messages($message); 
+                        ?>
 
-								<form action="<?php $_SERVER['PHP_SELF']?>" class="form-signin" id="register_form" name="register" method="post">
-									<?php
-							    		$subscribers = $db->query("SELECT first_name,last_name,user_id, username FROM users WHERE user_type LIKE '%subscriber%' ORDER BY username ASC");
+                        <form action="" id="register_form" name="register" method="post" enctype="multipart/form-data" novalidate>
+                            <div class="section-header"><h5>Personal Details</h5></div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("First Name"); ?>*</label>
+                                        <input type="text" name="first_name" class="form-control" placeholder="Enter First Name" />
+                                        <div class="error-msg"><?php _e("This field is required"); ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Last Name"); ?>*</label>
+                                        <input type="text" name="last_name" class="form-control" placeholder="Enter Last Name" />
+                                        <div class="error-msg"><?php _e("This field is required"); ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Gender"); ?></label>
+                                        <select class="form-control" name="gender">
+                                            <option value=""><?php _e("Select Gender"); ?></option>
+                                            <option value="Male"><?php _e("Male"); ?></option>
+                                            <option value="Female"><?php _e("Female"); ?></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Date of Birth"); ?></label>
+                                        <input type="text" id="dob" name="date_of_birth" class="form-control" placeholder="Select Date" autocomplete="off" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Mobile"); ?>*</label>
+                                        <input type="text" name="mobile" class="form-control" placeholder="e.g. +923001234567" />
+                                        <div class="error-msg"><?php _e("This field is required"); ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Phone"); ?></label>
+                                        <input type="text" name="phone" class="form-control" placeholder="Optional Phone Number" />
+                                    </div>
+                                </div>
+                            </div>
 
-										foreach( $_fields_array as $_thefield ) {
-											$_fieldarr[$_thefield]['label']  = get_option( "accountform_setting_". $_thefield ."_field_label" );
-											$_fieldarr[$_thefield]['status'] = get_option( "accountform_setting_". $_thefield ."_registration_form" );
+                            <div class="section-header"><h5>Location Information</h5></div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Address 1"); ?></label>
+                                        <input type="text" name="address1" class="form-control" placeholder="Street Address" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Address 2"); ?></label>
+                                        <input type="text" name="address2" class="form-control" placeholder="Apartment, suite, etc." />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("City"); ?></label>
+                                        <input type="text" name="city" class="form-control" placeholder="e.g. New York" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("State"); ?></label>
+                                        <input type="text" name="state" class="form-control" placeholder="e.g. California" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Zip Code"); ?></label>
+                                        <input type="text" name="zip_code" class="form-control" placeholder="e.g. 10001" />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Country"); ?></label>
+                                        <select name="country" class="form-control">
+                                            <?php countries_dropdown('Pakistan'); ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
 
-											if ( $_fieldarr[$_thefield]['status'] != 'hide' ) {
-												?>
-												<div class="group material-input">
-													<input type="text" name="<?=$_thefield;?>" id="<?=$_thefield.'_id';?>" class="form-control" />
-													<label for="<?=$_thefield.'_id';?>"><?=$_fieldarr[$_thefield]['label'];?></label>
-												</div>
-												<?php
-											}
-										}
-									?>
-									<?php echo return_additional_field_options( '', 'registration' ); ?>
-									<!-- <div class="group material-input">	
-										<input type="text" name="username" id="userName" class="form-control" required="required"/>
-										<label for="userName"><?php _e("Username"); ?>*</label>
-									</div> -->
-									<div class="group material-input">	
-										<input type="text" class="form-control" id="username" name="username"
-										value="<?php echo isset($_POST['edit_user']) ? $new_user->username : $auto_generated_user_name; ?>"
-										readonly />
-										<!-- <label for="userName"><?php _e("Username"); ?>*</label> -->
-									</div>									
+                            <div class="section-header"><h5>Account Security</h5></div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Username"); ?></label>
+                                        <input type="text" name="username" class="form-control" value="<?php echo $auto_generated_user_name; ?>" readonly />
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Email Address"); ?>*</label>
+                                        <input type="email" name="email" class="form-control" placeholder="example@mail.com" />
+                                        <div class="error-msg"><?php _e("This field is required"); ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Referrer Username"); ?></label>
+                                        <input type="text" id="referrer_username" class="form-control" autocomplete="off" placeholder="Search Referrer Username" value="<?php echo isset($_GET['ref']) ? htmlspecialchars($_GET['ref']) : ''; ?>" <?php echo isset($_GET['ref']) ? 'readonly' : ''; ?> />
+                                        <input type="hidden" name="referral_id" id="referral_id" value="0">
+                                        <span id="referrer_name_display"></span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Create Password"); ?>*</label>
+                                        <div class="pass-wrapper">
+                                            <input type="password" name="password" class="form-control" placeholder="Minimum 6 characters" />
+                                            <i class="toggle-password fa fa-fw fa-eye-slash"></i>
+                                        </div>
+                                        <div class="error-msg"><?php _e("This field is required"); ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Confirm Password"); ?>*</label>
+                                        <div class="pass-wrapper">
+                                            <input type="password" name="confirm_password" class="form-control" placeholder="Repeat your password" />
+                                            <i class="toggle-password fa fa-fw fa-eye-slash"></i>
+                                        </div>
+                                        <div class="error-msg" id="confirm_err"><?php _e("This field is required"); ?></div>
+                                    </div>
+                                </div>
+                            </div>
 
-																			
-									<div class="group material-input">	
-										<input type="text" name="email" id="email" class="form-control" required="required"/>
-										<label for="email"><?php _e("Email"); ?>*</label>
-									</div>
-									
-									<div class="group material-input">	
-										<input type="password" id="passWord" name="password" class="form-control" required="required"/><i class="toggle-password fa fa-fw fa-eye-slash"></i>
-										<label for="passWord"><?php _e("Password"); ?>*</label>
-									</div>
-									<div style="margin-bottom: 20px;">
-										<input type="text" id="referrer_username" class="form-control" autocomplete="off" placeholder="<?php _e("Enter Referral Username (Optional)"); ?>" />
-										<span id="referrer_name_display" style="display:block;margin-top:5px;font-weight:bold;font-size:14px;"></span>
-									</div>
-									<input type="hidden" name="referral_id" id="referral_id" value="0">
+                            <div class="section-header"><h5>Identification & Media</h5></div>
+                            <div class="row">
+                                <?php
+                                $upl_fields = [
+                                    'profile_image' => 'Profile Picture',
+                                    'nic_front' => 'NIC Front Side',
+                                    'nic_back' => 'NIC Back Side'
+                                ];
+                                foreach($upl_fields as $f_key => $f_label) : ?>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group mb-0">
+                                    <div class="image-upload-zone" id="zone_<?=$f_key?>" onclick="document.getElementById('input_<?=$f_key?>').click()">
+                                        <label><?php _e($f_label); ?></label>
+                                        <div class="preview-box">
+                                            <img id="preview_<?=$f_key?>" src="assets/images/thumb.png">
+                                        </div>
+                                        <input type="file" name="<?=$f_key?>" id="input_<?=$f_key?>" class="d-none" accept="image/*" onchange="showPreview(this, 'preview_<?=$f_key?>')">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"><?php _e("Upload Image"); ?></button>
+                                    </div>
+                                    <div class="error-msg text-center mb-3" style="margin-top:-15px"><?php _e("This photo is required"); ?></div>
+                                    </div>
+                                </div>
+                                <?php endforeach; ?>
+                            </div>
 
-									<script>
-										var subscribersData = {
-										<?php
-											if ($subscribers && $subscribers->num_rows > 0) {
-												$sub_arr = [];
-												while($u = $subscribers->fetch_assoc()){
-													$user_full_name = htmlspecialchars($u['first_name']) .' ' .htmlspecialchars($u['last_name']);
-													$sub_arr[] = '"' . htmlspecialchars(strtolower($u['username'])) . '": {"id": "' . htmlspecialchars($u['user_id']) . '", "name": "' . addslashes($user_full_name) . '"}';
-												}
-												echo implode(",\n\t\t\t\t\t\t\t\t\t\t\t", $sub_arr);
-											}
-										?>
-										};
+                            <div class="section-header"><h5>Extra Information</h5></div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Bank Details"); ?></label>
+                                        <textarea name="description" class="form-control" rows="3" placeholder="Enter Full Bank Details (Bank Name, Account Number, IBAN, etc.)"></textarea>
+                                    </div>
+                                </div>
+                            </div>
 
-										document.getElementById('referrer_username').addEventListener('input', function() {
-											var username = this.value.trim().toLowerCase();
-											var displaySpan = document.getElementById('referrer_name_display');
-											var hiddenId = document.getElementById('referral_id');
+                            <?php echo return_additional_field_options( '', 'registration' ); ?>
 
-											if(username && subscribersData[username]) {
-												var data = subscribersData[username];
-												displaySpan.textContent = username.toUpperCase() + ' - ' + data.name;
-												displaySpan.style.color = '#4CAF50';
-												hiddenId.value = data.id;
-											} else {
-												if(username.length > 0) {
-												    displaySpan.textContent = '<?php _e("User not found"); ?>';
-												    displaySpan.style.color = '#dc3545';
-												} else {
-												    displaySpan.textContent = '';
-												}
-												hiddenId.value = 0;
-											}
-										});
+                            <div class="row align-items-center mt-3">
+                                <div class="col-md-6">
+                                    <?php if(get_option('activate_captcha') == '1') : $sitekey = get_option('site_key'); ?>
+                                        <script type="text/javascript">
+                                            var onloadCallback = function() {
+                                                grecaptcha.render('recaptcha_div', { 'sitekey' : '<?=$sitekey?>' });
+                                            };
+                                        </script>
+                                        <div id="recaptcha_div"></div>
+                                        <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="col-md-12 text-right mt-4">
+                                   <div class="d-inline-block text-right">
+                                       <div class="styled-checkbox mb-1" id="policy_wrap">
+                                           <input type="checkbox" id="agreetopolicy" name="privacy_policy" value="1" />    
+                                           <label for="agreetopolicy" style="font-weight: 500;"><?php _e("I agree with the privacy policy"); ?></label>
+                                           <div class="error-msg"><?php _e("You must agree to proceed"); ?></div>
+                                       </div>
+                                       <p class="small mb-0" style="font-size: 13px;">
+                                           <span style="color: #888;"><?php _e("Forgot password?"); ?></span> 
+                                           <a href="forgot.php" style="color: #5d5386; font-weight: 700;"><?php _e("Recover Password"); ?></a>
+                                       </p>
+                                   </div>
+                               </div>
+                            </div>
 
-										// Referral Link & LocalStorage Logic (Improved)
-										window.addEventListener('DOMContentLoaded', (event) => {
-											const urlParams = new URLSearchParams(window.location.search);
-											const urlRef = urlParams.get('ref');
-											const successMsg = urlParams.get('message');
-											const referralInput = document.getElementById('referrer_username');
+                            <div class="sign-btn text-center mt-5">
+                                <input type="hidden" value="1" name="add_user" />
+                                <input type="hidden" name="user_type" value="<?php echo get_option('register_user_level'); ?>" />
+                                <button type="submit" class="btn btn-primary btn-lg btn-golden-admin"><?php _e("Register Now"); ?></button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-											// Clear localStorage only on successful registration
-											if (successMsg && successMsg.toLowerCase().includes('successful')) {
-												localStorage.removeItem('referral_code');
-											}
+<script>
+    function showPreview(input, previewId) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) { document.getElementById(previewId).src = e.target.result; }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    
+	jQuery(document).ready(function($) {
+		$('#register_form').on('submit', function(e) {
+			let isValid = true;
+			$('.admin-form-group, #policy_wrap').removeClass('has-error');
+			
+			// Regular Input Check
+			const requiredFields = ['first_name', 'last_name', 'email', 'mobile', 'password', 'confirm_password'];
+			requiredFields.forEach(name => {
+				const el = $(`[name="${name}"]`);
+				if(!el.val() || !el.val().trim()) {
+					el.closest('.admin-form-group').addClass('has-error');
+					isValid = false;
+				}
+			});
 
-											// 1. Capture ref from URL and save to localStorage
-											if (urlRef) {
-												localStorage.setItem('referral_code', urlRef);
-												// Clean URL by removing ?ref to keep it professional (optional)
-												// window.history.replaceState({}, document.title, window.location.pathname);
-											}
+			// Passwords Match check
+			const pass = $('[name="password"]').val();
+			const confirm = $('[name="confirm_password"]').val();
+			if(pass && confirm && pass !== confirm) {
+				$('[name="confirm_password"]').closest('.admin-form-group').addClass('has-error');
+				$('#confirm_err').text("Passwords do not match").show();
+				isValid = false;
+			}
 
-											// 2. Load from localStorage if exists
-											const storedRef = localStorage.getItem('referral_code');
-											if (storedRef && referralInput) {
-												referralInput.value = storedRef;
-												// Trigger input event to run existing lookup logic
-												referralInput.dispatchEvent(new Event('input'));
-												
-												// Make it readonly so it stays "selected" as requested
-												referralInput.readOnly = true;
-												referralInput.style.backgroundColor = '#e9ecef'; // Light grey look
-												referralInput.style.cursor = 'not-allowed';
-												
-												// Add a "Clear" option if they really want to change it? 
-												// For now keeping it locked for "Professional" feel.
-											}
-										});
-									</script>
+			// Image Verification
+			const imgFields = ['nic_front', 'nic_back'];
+			imgFields.forEach(key => {
+				const input = $('#input_'+key)[0];
+				if(!input.files || !input.files.length) {
+					$('#zone_'+key).closest('.admin-form-group').addClass('has-error');
+					isValid = false;
+				}
+			});
 
-									<?php 
-										//This is captcha code please do not remove it you can deactivate captcha by going admin section general settings. Else form will not work . on other page.
-										if(get_option('activate_captcha') == '1') { 
-												$sitekey = get_option('site_key'); // you got this from the signup page
-									?>
-										<script type="text/javascript">
-											var onloadCallback = function() {
-											grecaptcha.render('html_element', {
-												'sitekey' : '<?php echo $sitekey; ?>'
-											});
-											};
-										</script>
-										<div id="html_element" class="mb-3"></div>
-										<script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit"
-											async defer>
-										</script>
-									<?php } ?>
+			// Policy Check
+			if(!$('#agreetopolicy').is(':checked')) {
+				$('#policy_wrap').addClass('has-error');
+				isValid = false;
+			}
 
+			if(!isValid) {
+				e.preventDefault();
+				$('html, body').animate({ scrollTop: ($('.has-error').first().offset().top - 100) }, 500);
+				return false;
+			}
+		});
 
-									<div class="row mt-2">
-										<div class="col text-left">
-											<div class="styled-checkbox">
-											<input type="checkbox" id="agreetopolicy" name="privacy_policy" value="1" required="required" />    
-												<label for="agreetopolicy"><?php _e("You agree with our privacy policy"); ?></label>
-											</div>
-										</div>
-										<div class="col text-right">
-											<?php _e("Forgot password?"); ?> <a href="forgot.php"><?php _e("Recover Password"); ?></a>
-										</div>
-									</div>
+		// Clear error on input
+		$('.form-control').on('input change', function() {
+			$(this).closest('.admin-form-group').removeClass('has-error');
+		});
+	});
 
-									<div class="sign-btn text-center">
-										<input type="hidden" value="1" name="add_user" />
-										<!--Default register user is subscriber, you can change it to any other level you have created-->
-										<input type="hidden" name="user_type" value="<?php echo get_option('register_user_level'); ?>" />
-										<input type="submit" class="btn btn-primary btn-lg btn-golden-admin" value="<?php _e("Register"); ?>" />
-									</div>
-									<!--user type registration ends here.-->
-								</form>
+    var subscribersData = {
+    <?php
+        $subscribers = $db->query("SELECT first_name, last_name, user_id, username FROM users WHERE user_type LIKE '%subscriber%' ORDER BY username ASC");
+        if ($subscribers) {
+            $sub_list = [];
+            while($u = $subscribers->fetch_assoc()){
+                $name = addslashes($u['first_name'] . ' ' . $u['last_name']);
+                $sub_list[] = '"' . strtolower($u['username']) . '": {"id": "' . $u['user_id'] . '", "name": "' . $name . '"}';
+            }
+            echo implode(",\n", $sub_list);
+        }
+    ?>
+    };
+
+    document.getElementById('referrer_username').addEventListener('input', function() {
+        var username = this.value.trim().toLowerCase();
+        var display = document.getElementById('referrer_name_display');
+        var hidden = document.getElementById('referral_id');
+        if(username && subscribersData[username]) {
+            display.textContent = "VERIFIED: " + subscribersData[username].name;
+            display.style.color = '#28a745';
+            hidden.value = subscribersData[username].id;
+        } else {
+            display.textContent = username.length > 0 ? 'USER NOT FOUND' : '';
+            display.style.color = '#dc3545';
+            hidden.value = 0;
+        }
+    });
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const refInp = document.getElementById('referrer_username');
+        if (refInp && refInp.value) refInp.dispatchEvent(new Event('input'));
+    });
+</script>
 								<?php if(get_option('facebook_login') == '1') { ?>
 									<center><fb:login-button scope="public_profile,email" size="xlarge" onlogin="checkLoginState();">
 										<?php _e("Register With Facebook"); ?>

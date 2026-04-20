@@ -53,6 +53,7 @@
         <!-- select2 js -->
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
         <!--  -->
+        <!-- Font Awesome -->
         <link rel="stylesheet" href= "https://use.fontawesome.com/releases/v5.11.2/css/all.css" >
 
         <?php if(isset($datatables) && $datatables == "1"): ?>

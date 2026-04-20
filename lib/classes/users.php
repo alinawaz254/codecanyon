@@ -28,8 +28,13 @@ class Users
 	{
 		global $db;
 
-		if (empty($user_id) || empty($term) || empty($value)) {
+		if (empty($user_id) || empty($term)) {
 			return;
+		}
+
+		// Convert Date for DB if it's DOB
+		if($term == 'date_of_birth' && !empty($value)) {
+			$value = date("Y-m-d", strtotime($value));
 		}
 
 		//We have to update existing record. 
@@ -771,7 +776,12 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		
 		$address1 = $db->real_escape_string(trim($address1));
 		$address2 = $db->real_escape_string(trim($address2));
-		$description = $db->real_escape_string(trim($description));
+
+		if (isset($_SESSION['user_type']) && $_SESSION['user_type'] != 'admin') {
+			$description = $this->get_user_info($user_id, 'description');
+		} else {
+			$description = $db->real_escape_string(trim($description));
+		}
 
 		if ($email != $current_email) {
 			$query = "SELECT * from users WHERE email='" . $email . "'";
