@@ -795,11 +795,7 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		$address1 = $db->real_escape_string(trim($address1));
 		$address2 = $db->real_escape_string(trim($address2));
 
-		if (isset($_SESSION['user_type']) && $_SESSION['user_type'] != 'admin') {
-			$description = $this->get_user_info($user_id, 'description');
-		} else {
-			$description = $db->real_escape_string(trim($description));
-		}
+		$description = $db->real_escape_string(trim($description));
 
 		if ($email != $current_email) {
 			$query = "SELECT * from users WHERE email='" . $email . "'";
