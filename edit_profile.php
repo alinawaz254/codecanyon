@@ -47,7 +47,7 @@
 
 				// Convert Date for DB
 				if(!empty($date_of_birth)) $date_of_birth = date("Y-m-d", strtotime($date_of_birth));
-				$message = $new_user->edit_profile($_SESSION['user_id'], $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password_set, $pr_img, $description);
+				$message = $new_user->edit_profile($_SESSION['user_id'], $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password_set, $pr_img, $description, $bank_name, $account_holder, $account_number, $iban_no, $branch_name, $branch_code);
 				
 				$user_id = $_SESSION['user_id'];
 				
@@ -164,9 +164,9 @@
 						<?php endif; ?>
 
 						<?php if ( ! isset( $_fieldarr['gender']['status'] ) || $_fieldarr['gender']['status'] != 'hide' ) : ?>
-						<div class="col-md-4 mt-4">
+						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['gender']['label'])) ? $_fieldarr['gender']['label'] : _('Gender'); ?></label>
+								<label>Gender</label>
 								<select class="form-control" id="gender" name="gender">
 									<option value=""><?php _e("Select Gender"); ?></option>
 									<option value="Male" <?php if($new_user->gender == 'Male') { echo 'selected="selected"'; } ?>><?php _e("Male"); ?></option>
@@ -179,7 +179,7 @@
 						<?php if ( ! isset( $_fieldarr['date_of_birth']['status'] ) || $_fieldarr['date_of_birth']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['date_of_birth']['label'])) ? $_fieldarr['date_of_birth']['label'] : _('Date of birth'); ?></label>
+								<label>Date of birth</label>
 								<input type="text" id="dob" name="date_of_birth" class="form-control" value="<?php echo (!empty($new_user->date_of_birth)) ? date("m/d/Y", strtotime($new_user->date_of_birth)) : ''; ?>" autocomplete="off" />
 							</div>
 						</div>
@@ -188,7 +188,7 @@
 						<?php if ( ! isset( $_fieldarr['mobile']['status'] ) || $_fieldarr['mobile']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['mobile']['label'])) ? $_fieldarr['mobile']['label'] : _('Mobile'); ?></label>
+								<label>Mobile</label>
 								<input type="text" name="mobile" id="mobile" class="form-control" value="<?php echo $new_user->mobile; ?>" />
 							</div>
 						</div>
@@ -197,7 +197,7 @@
 						<?php if ( ! isset( $_fieldarr['phone']['status'] ) || $_fieldarr['phone']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['phone']['label'])) ? $_fieldarr['phone']['label'] : _('Phone'); ?></label>
+								<label>Phone</label>
 								<input type="text" name="phone" id="phone" class="form-control" value="<?php echo $new_user->phone; ?>" />
 							</div>
 						</div>
@@ -209,7 +209,7 @@
 						<?php if ( ! isset( $_fieldarr['address1']['status'] ) || $_fieldarr['address1']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['address1']['label'])) ? $_fieldarr['address1']['label'] : _('Address 1'); ?></label>
+								<label>Address 1</label>
 								<input type="text" name="address1" id="addOne" class="form-control" value="<?php echo $new_user->address1; ?>" />
 							</div>
 						</div>
@@ -218,7 +218,7 @@
 						<?php if ( ! isset( $_fieldarr['address2']['status'] ) || $_fieldarr['address2']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['address2']['label'])) ? $_fieldarr['address2']['label'] : _('Address 2'); ?></label>
+								<label>Address 2</label>
 								<input type="text" name="address2" id="addTwo" class="form-control" value="<?php echo $new_user->address2; ?>" />
 							</div>
 						</div>
@@ -227,7 +227,7 @@
 						<?php if ( ! isset( $_fieldarr['city']['status'] ) || $_fieldarr['city']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['city']['label'])) ? $_fieldarr['city']['label'] : _('City'); ?></label>
+								<label>City</label>
 								<input type="text" name="city" id="city" class="form-control" value="<?php echo $new_user->city; ?>" />
 							</div>
 						</div>
@@ -236,7 +236,7 @@
 						<?php if ( ! isset( $_fieldarr['state']['status'] ) || $_fieldarr['state']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['state']['label'])) ? $_fieldarr['state']['label'] : _('State'); ?></label>
+								<label>State</label>
 								<input type="text" name="state" id="state" class="form-control" value="<?php echo $new_user->state; ?>" />
 							</div>
 						</div>
@@ -245,7 +245,7 @@
 						<?php if ( ! isset( $_fieldarr['zip_code']['status'] ) || $_fieldarr['zip_code']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['zip_code']['label'])) ? $_fieldarr['zip_code']['label'] : _('Zip Code'); ?></label>
+								<label>Zip Code</label>
 								<input type="text" name="zip_code" id="zipcode" class="form-control" value="<?php echo $new_user->zip_code; ?>" />
 							</div>
 						</div>
@@ -254,7 +254,7 @@
 						<?php if ( ! isset( $_fieldarr['country']['status'] ) || $_fieldarr['country']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['country']['label'])) ? $_fieldarr['country']['label'] : _('Country'); ?></label>
+								<label>Country</label>
 								<select class="form-control" id="country" name="country">
 									<?php countries_dropdown($new_user->country); ?>
 								</select>
@@ -311,48 +311,68 @@
 						foreach($upl_fields as $f_key => $f_label) : 
 							$current_val = ($f_key == 'profile_image') ? $new_user->profile_image : $new_user->get_user_info($_SESSION['user_id'], $f_key);
 							$display_img = (!empty($current_val)) ? $current_val : 'assets/images/thumb.png';
+							$is_nic = ($f_key == 'nic_front' || $f_key == 'nic_back');
+							$can_edit_img = ($_SESSION['user_type'] == 'admin' || !$is_nic);
 						?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-							<div class="image-upload-zone" id="zone_<?=$f_key?>" onclick="document.getElementById('input_<?=$f_key?>').click()">
+							<div class="image-upload-zone <?php echo (!$can_edit_img) ? 'readonly-style' : ''; ?>" id="zone_<?=$f_key?>" <?php echo ($can_edit_img) ? 'onclick="document.getElementById(\'input_'.$f_key.'\').click()"' : ''; ?>>
 								<label><?php _e($f_label); ?></label>
 								<div class="preview-box">
 									<img id="preview_<?=$f_key?>" src="<?=$display_img?>">
 								</div>
+								<?php if($can_edit_img): ?>
 								<input type="file" name="<?=$f_key?>" id="input_<?=$f_key?>" class="d-none" accept="image/*" onchange="showPreview(this, 'preview_<?=$f_key?>')">
+								<?php endif; ?>
 								<?php if($f_key == 'profile_image'): ?>
 									<input type="hidden" name="profile_image" id="cropOutput" value="" />
 									<?php if(!empty($new_user->profile_image)): ?>
 										<input type="hidden" name="already_img" value="<?=$new_user->profile_image?>">
 									<?php endif; ?>
 								<?php endif; ?>
+								<?php if($can_edit_img): ?>
 								<button type="button" class="btn btn-sm btn-outline-secondary"><?php _e("Change Photo"); ?></button>
+								<?php endif; ?>
 							</div>
 							</div>
 						</div>
 						<?php endforeach; ?>
 					</div>
 
-					<div class="section-header"><h5>Extra Information</h5></div>
+					<div class="section-header"><h5>Bank Details</h5></div>
 					<div class="row">
+						<?php 
+						$bank_fields = [
+							'bank_name' => 'Bank Name',
+							'account_holder' => 'Account Holder Name',
+							'account_number' => 'Account Number',
+							'iban_no' => 'IBAN No',
+							'branch_name' => 'Branch Name',
+							'branch_code' => 'Branch Code'
+						];
+						foreach($bank_fields as $b_key => $b_label): 
+						?>
+						<div class="col-md-4">
+							<div class="form-group admin-form-group">
+								<label><?php _e($b_label); ?></label>
+								<input type="text" name="<?=$b_key?>" class="form-control <?php echo ($_SESSION['user_type'] != 'admin') ? 'readonly-style' : ''; ?>" value="<?php echo $new_user->$b_key; ?>" <?php echo ($_SESSION['user_type'] != 'admin') ? 'readonly' : ''; ?> />
+							</div>
+						</div>
+						<?php endforeach; ?>
+
 					    <div class="col-md-12">
+				            <?php if($_SESSION['user_type'] != 'admin'): ?>
+				                <div class="alert alert-warning mt-2 d-flex align-items-center" role="alert">
+				                    <i class="fa fa-info-circle me-2"></i>
+				                    <small>
+				                        <?php _e("Your bank details and NIC are managed by the admin. Please contact the administrator if you need any changes."); ?>
+				                    </small>
+				                </div>
+				            <?php endif; ?>					    	
 					        <div class="form-group admin-form-group">
-					            <label><?php _e("Bank Details"); ?></label>
+					            <label><?php _e("Additional Details"); ?></label>
 
-					            <textarea name="description" id="description"
-					                class="form-control bank-textarea <?php echo ($_SESSION['user_type'] != 'admin') ? 'readonly-style' : ''; ?>"
-					                rows="5"
-					                <?php echo ($_SESSION['user_type'] != 'admin') ? 'readonly' : ''; ?>><?php echo $new_user->description; ?>
-					            </textarea>
-
-					            <?php if($_SESSION['user_type'] != 'admin'): ?>
-					                <div class="alert alert-warning mt-2 d-flex align-items-center" role="alert">
-					                    <i class="fa fa-info-circle me-2"></i>
-					                    <small>
-					                        <?php _e("Your bank details are managed by the admin. Please contact the administrator if you need any changes."); ?>
-					                    </small>
-					                </div>
-					            <?php endif; ?>
+                                <textarea name="description" class="form-control bank-textarea" rows="2" placeholder="Enter any other additional details..."></textarea>
 
 					        </div>
 					    </div>

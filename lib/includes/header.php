@@ -631,7 +631,42 @@
             box-shadow: none;
             outline: none;
         }              
-            /* ===== end css ===== */           
+        /* Action buttons custom styles */
+        .action-btn-container {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            white-space: nowrap;
+        }
+        .action-btn {
+            padding: 2px 2px !important;
+            font-size: 12px !important;
+            font-weight: 500 !important;
+            color: #333 !important;
+            background: transparent !important;
+            border: none !important;
+            border-bottom: 2px solid transparent !important;
+            transition: all 0.2s ease !important;
+            cursor: pointer;
+            text-decoration: none !important;
+            display: inline-block;
+            line-height: 1.2;
+        }
+        .btn-edit:hover { border-bottom: 2px solid #ffc107 !important; color: #ffc107 !important; }
+        .btn-delete:hover { border-bottom: 2px solid #dc3545 !important; color: #dc3545 !important; }
+        .btn-message:hover { border-bottom: 2px solid #007bff !important; color: #007bff !important; }
+        .btn-details:hover { border-bottom: 2px solid #17a2b8 !important; color: #17a2b8 !important; }
+
+        /* Row hover border bottom effect for transactions/tables */
+        .table tbody tr {
+            border-bottom: 1px solid #eee !important;
+            transition: all 0.2s ease !important;
+        }
+        .table tbody tr:hover {
+            border-bottom: 2px solid #ECAD3D !important;
+            background-color: rgba(236, 173, 61, 0.03) !important;
+        }
+        /* ===== end css ===== */     
     </style>
     <body id="page-top" class="bg-white">
         <!-- Begin Preloader -->

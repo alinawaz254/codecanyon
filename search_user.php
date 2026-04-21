@@ -80,7 +80,8 @@ if(!empty($search_query)) {
                                 <td><strong>ADDRESS:</strong> <?php echo htmlspecialchars(trim($user_data['address1'].' '.$user_data['address2'])); ?></td>
                             </tr>
                             <tr>
-                                <td colspan="2"><strong>INVESTMENT:</strong> PKR <?php echo number_format($user_data['total_investment'], 2); ?></td>
+                                <td><strong>INVESTMENT:</strong> PKR <?php echo number_format($user_data['total_investment'], 2); ?></td>
+                                <td><strong>ACCOUNT NUMBER:</strong> <?php echo htmlspecialchars($user_data['account_number']); ?></td>
                             </tr>
                         </table>
                     </div>

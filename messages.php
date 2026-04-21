@@ -15,6 +15,10 @@
 		}
 	}
 	
+	if(isset($_GET['action']) && $_GET['action'] == 'clear_all') {
+		$message = $message_obj->clear_all_messages();
+	}
+	
 	$page_title = _("My Messages"); //You can edit this to change your page title.
 	$sub_title 	= _("Manage Your Messages");;
 	require_once("lib/includes/header.php"); //including header file.
@@ -90,6 +94,10 @@
 					class="btn btn-md btn-golden <?php echo isset($_GET['type']) ? 'btn-default' : 'btn-primary'; ?>" 
 					style="width:100%">
 						<?php _e("Inbox"); ?>
+					</a>
+					<div style="height:7px;"></div>
+					<a href="messages.php?action=clear_all" class="btn btn-md btn-golden btn-primary" style="width:100%" onclick="return confirm('<?php _e("Are you sure you want to clear all messages?"); ?>')">
+						<?php _e("Clear All"); ?>
 					</a>
 					<div style="height:7px;"></div>
 					<a href="messages.php?type=sent" class="btn btn-<?php if(isset($_GET['type'])){echo'primary';}else{echo'default';}?>" style="width:100%">

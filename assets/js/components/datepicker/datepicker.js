@@ -23,7 +23,7 @@
 		//single date
 		$('#date').daterangepicker({
 			singleDatePicker: true,
-		});
+		});	
 	});
 	
 })(jQuery);

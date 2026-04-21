@@ -35,14 +35,31 @@
 	<script src="assets/js/components/datepicker/datepicker.js"></script>
 	<script>
 	$(function() {
-	$('input[name="date_of_birth"]').daterangepicker({
-		singleDatePicker: true,
-		showDropdowns: true,
-		minYear: 1901,
-		maxYear: parseInt(moment().format('YYYY'),10)
-	}, function(start, end, label) {
-		var years = moment().diff(start, 'years');
-	});
+		$('input[name="date_of_birth"]').each(function() {
+			var $el = $(this);
+			var initialValue = $el.val();
+			$el.daterangepicker({
+				singleDatePicker: true,
+				showDropdowns: true,
+				autoUpdateInput: false,
+				minYear: 1901,
+				maxYear: parseInt(moment().format('YYYY'),10),
+				locale: {
+					format: 'MM/DD/YYYY'
+				}
+			});
+			if(initialValue) {
+				$el.val(initialValue);
+			}
+		});
+
+		$('input[name="date_of_birth"]').on('apply.daterangepicker', function(ev, picker) {
+			$(this).val(picker.startDate.format('MM/DD/YYYY'));
+		});
+
+		$('input[name="date_of_birth"]').on('cancel.daterangepicker', function(ev, picker) {
+			$(this).val('');
+		});
 	});
 	</script>
 	<?php endif; ?>

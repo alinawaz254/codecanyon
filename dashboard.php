@@ -60,7 +60,7 @@ require_once('lib/includes/header.php');
 
 .dashboard-video {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
 }
 

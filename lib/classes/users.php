@@ -23,6 +23,12 @@ class Users
 	public $status;
 	public $user_type;
 	public $referral_id;
+	public $bank_name;
+	public $account_holder;
+	public $account_number;
+	public $iban_no;
+	public $branch_name;
+	public $branch_code;
 
 	function update_user_row($user_id, $term, $value)
 	{
@@ -125,9 +131,16 @@ class Users
 		return isset($row[$term]) ? $row[$term] : "";
 	}//get user email ends here.
 
-	function register_user($first_name, $last_name, $user_type, $username, $email, $password, $referral_id)
+	function register_user($first_name, $last_name, $user_type, $username, $email, $password, $referral_id, $bank_name = '', $account_holder = '', $account_number = '', $iban_no = '', $branch_name = '', $branch_code = '')
 	{
 		global $db;
+		
+		$bank_name = $db->real_escape_string($bank_name);
+		$account_holder = $db->real_escape_string($account_holder);
+		$account_number = $db->real_escape_string($account_number);
+		$iban_no = $db->real_escape_string($iban_no);
+		$branch_name = $db->real_escape_string($branch_name);
+		$branch_code = $db->real_escape_string($branch_code);
 
 		if ($referral_id == 0) {
 			$search = $db->query("SELECT user_id FROM users WHERE username LIKE '%BIZ0000%'");
@@ -183,7 +196,7 @@ class Users
 
 		$user_type = get_option('register_user_level');
 		//adding user into database
-		$query = "INSERT INTO users(first_name,last_name,username,email,password,activation_key,date_register,user_type,status,referral_id) VALUES ('$first_name', '$last_name', '$username', '$email', '$password', '$activation_key', '$registration_date', '$user_type', '$status','$referral_id')";
+		$query = "INSERT INTO users(first_name,last_name,username,email,password,activation_key,date_register,user_type,status,referral_id, bank_name, account_holder, account_number, iban_no, branch_name, branch_code) VALUES ('$first_name', '$last_name', '$username', '$email', '$password', '$activation_key', '$registration_date', '$user_type', '$status','$referral_id', '$bank_name', '$account_holder', '$account_number', '$iban_no', '$branch_name', '$branch_code')";
 		$result = $db->query($query) or die($db->error);
 		$user_id = $db->insert_id;
 		//Email to user
@@ -592,13 +605,11 @@ class Users
 				$content .= $status ? ucfirst($status) : null;
 				$content .= '</td><td>';
 				$content .= ucfirst($user_type);
-				$content .= '</td><td>';
+				$content .= '</td><td><div class="action-btn-container">';
 				if ($user_type == 'subscriber') {
-					$content .= '<button class="btn btn-default btn-sm pull-left" data-toggle="modal" data-target="#details_' . $user_id . '">Details</button>';
-				} else {
-					$content .= '<button class="btn btn-default btn-sm pull-left" disabled>No Details</button>';
+					$content .= '<button class="action-btn btn-details" data-toggle="modal" data-target="#details_' . $user_id . '">' . _("Details") . '</button>';
 				}
-				$content .= '<button class="btn btn-default btn-sm pull-left" style="margin-right:5px;" data-toggle="modal" data-target="#modal_' . $user_id . '">' . _("Message") . '</button>';
+				$content .= '<button class="action-btn btn-message" data-toggle="modal" data-target="#modal_' . $user_id . '">' . _("Message") . '</button>';
 				$content .= '<!-- Modal -->
 <script type="text/javascript">
 $(function(){
@@ -616,10 +627,10 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 <div class="modal fade" id="modal_' . $user_id . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <form id="message_form_' . $user_id . '" method="post" name="send_message">
-	<div class="modal-content">
-      <div class="modal-header">
+	<div class="modal-content investment-modal">
+      <div class="modal-header investment-header">
         <h4 class="modal-title" id="myModalLabel">' . _("Send Message") . '</h4>
-		<button type="button" class="close" data-bs-dismiss="modal" aria-hidden="true">&times;</button>
+		<button type="button" class="btn-close-investment" data-dismiss="modal" aria-hidden="true">&times;</button>
       </div>
 	  
       <div class="modal-body">
@@ -642,9 +653,9 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 	  <input type="hidden" name="from" value="' . $_SESSION['user_id'] . '" />
 	  <input type="hidden" name="user_id" value="' . $user_id . '" />
 	  <input type="hidden" name="single_form" value="1" />
-      <div class="modal-footer">
+      <div class="modal-footer investment-footer mb-5">
         <button type="button" class="btn btn-default" data-dismiss="modal">' . _("Close") . '</button>
-		<input type="submit" value="' . _("Send Message") . '" class="btn btn-primary" />
+		<input type="submit" value="' . _("Send Message") . '" class="btn btn-golden btn-md" />
       </div>
     </div><!-- /.modal-content -->
    </form>
@@ -723,15 +734,15 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 
 			';
 				}
-				$content .= '<form method="post" name="edit" action="manage_users.php">';
+				$content .= '<form method="post" name="edit" action="manage_users.php" class="d-inline">';
 				$content .= '<input type="hidden" name="edit_user" value="' . $user_id . '">';
-				$content .= '<input type="submit" style="margin-right:5px;" class="btn btn-default btn-sm pull-left" value="' . _("Edit") . '">';
+				$content .= '<input type="submit" class="action-btn btn-edit" value="' . _("Edit") . '">';
 				$content .= '</form>';
-				$content .= '<form method="post" name="delete" onsubmit="return confirm_delete();" action="">';
+				$content .= '<form method="post" name="delete" onsubmit="return confirm_delete();" action="" class="d-inline">';
 				$content .= '<input type="hidden" name="delete_user" value="' . $user_id . '">';
-				$content .= '<input type="submit" class="btn btn-default btn-sm pull-left" value="' . _("Delete") . '">';
+				$content .= '<input type="submit" class="action-btn btn-delete" value="' . _("Delete") . '">';
 				$content .= '</form>';
-				$content .= '</td>';
+				$content .= '</div></td>';
 				$content .= '</tr>';
 				unset($class);
 			}//loop ends here.
@@ -760,7 +771,7 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		}
 	}//prints total registered users.
 
-	function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description)
+	function edit_profile($user_id, $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $bank_name = '', $account_holder = '', $account_number = '', $iban_no = '', $branch_name = '', $branch_code = '')
 	{
 		global $db;
 
@@ -773,6 +784,13 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		$username = trim($username);
 		$mobile = trim($mobile);
 		$phone = trim($phone);
+		
+		$bank_name = $db->real_escape_string($bank_name);
+		$account_holder = $db->real_escape_string($account_holder);
+		$account_number = $db->real_escape_string($account_number);
+		$iban_no = $db->real_escape_string($iban_no);
+		$branch_name = $db->real_escape_string($branch_name);
+		$branch_code = $db->real_escape_string($branch_code);
 		
 		$address1 = $db->real_escape_string(trim($address1));
 		$address2 = $db->real_escape_string(trim($address2));
@@ -829,7 +847,13 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 					username = "' . $username . '",
 					email = "' . $email . '",
 					profile_image = "' . $profile_image . '",
-					description = "' . $description . '"
+					description = "' . $description . '",
+					bank_name = "' . $bank_name . '",
+					account_holder = "' . $account_holder . '",
+					account_number = "' . $account_number . '",
+					iban_no = "' . $iban_no . '",
+					branch_name = "' . $branch_name . '",
+					branch_code = "' . $branch_code . '"
 			WHERE user_id="' . $user_id . '"';
 		} else {
 
@@ -860,7 +884,13 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 					email = "' . $email . '",
 					password = "' . $password . '",
 					profile_image = "' . $profile_image . '",
-					description = "' . $description . '"
+					description = "' . $description . '",
+					bank_name = "' . $bank_name . '",
+					account_holder = "' . $account_holder . '",
+					account_number = "' . $account_number . '",
+					iban_no = "' . $iban_no . '",
+					branch_name = "' . $branch_name . '",
+					branch_code = "' . $branch_code . '"
 			WHERE user_id="' . $user_id . '"';
 		}
 		$result = $db->query($query) or die($db->error);
@@ -934,9 +964,15 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		$this->status = $row['status'] ?? 'N\A';
 		$this->user_type = $row['user_type'] ?? 'N\A';
 		$this->referral_id = $row['referral_id'] ?? 'N\A';
+		$this->bank_name = $row['bank_name'] ?? '';
+		$this->account_holder = $row['account_holder'] ?? '';
+		$this->account_number = $row['account_number'] ?? '';
+		$this->iban_no = $row['iban_no'] ?? '';
+		$this->branch_name = $row['branch_name'] ?? '';
+		$this->branch_code = $row['branch_code'] ?? '';
 	}//level set ends here.
 
-	function update_user($user_id, $user_type_ses, $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type, $referral_id)
+	function update_user($user_id, $user_type_ses, $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type, $referral_id, $bank_name = '', $account_holder = '', $account_number = '', $iban_no = '', $branch_name = '', $branch_code = '')
 	{
 		global $db;
 
@@ -1010,6 +1046,12 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 					email = "' . $email . '",
 					profile_image = "' . $profile_image . '",
 					description = "' . $description . '",
+					bank_name = "' . $bank_name . '",
+					account_holder = "' . $account_holder . '",
+					account_number = "' . $account_number . '",
+					iban_no = "' . $iban_no . '",
+					branch_name = "' . $branch_name . '",
+					branch_code = "' . $branch_code . '",
 					status = "' . $status . '",
 					user_type = "' . $user_type . '",
 					referral_id = "' . $referral_id . '"
@@ -1195,7 +1237,7 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		return _("Password recovery email sent please check mail for details.");
 	}//forgot password function endsh ere.
 
-	function add_user($first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type, $referral_id)
+	function add_user($first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type, $referral_id, $bank_name = '', $account_holder = '', $account_number = '', $iban_no = '', $branch_name = '', $branch_code = '')
 	{
 		global $db;
 
@@ -1211,9 +1253,15 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 			}
 		}
 
-		$address1 = $db->real_escape_string($address1);
 		$address2 = $db->real_escape_string($address2);
 		$description = $db->real_escape_string($description);
+
+		$bank_name = $db->real_escape_string($bank_name);
+		$account_holder = $db->real_escape_string($account_holder);
+		$account_number = $db->real_escape_string($account_number);
+		$iban_no = $db->real_escape_string($iban_no);
+		$branch_name = $db->real_escape_string($branch_name);
+		$branch_code = $db->real_escape_string($branch_code);
 
 		//Check if user already exist
 		$query = "SELECT * from users WHERE email='" . $email . "'";
@@ -1277,7 +1325,7 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		// die(strlen($count) . " $auto_generated_user_name");
 		// $auto_generated_username = 'BIZ' . count();
 		//Running Query to add user.
-		$query = "INSERT into users(first_name, last_name, gender, date_of_birth, address1, address2, city, state, country, zip_code, mobile, phone, username, email, password, profile_image, description, status, activation_key, date_register, user_type, referral_id) VALUES('" . $first_name . "', '" . $last_name . "', '" . $gender . "', '" . $date_of_birth . "', '" . $address1 . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $country . "', '" . $zip_code . "', '" . $mobile . "', '" . $phone . "', '" . $auto_generated_user_name . "', '" . $email . "', '" . $password_con . "', '" . $profile_image . "', '" . $description . "', '" . $status . "', '', '" . date('Y-m-d') . "', '" . $user_type . "','" . $referral_id . "')";
+		$query = "INSERT into users(first_name, last_name, gender, date_of_birth, address1, address2, city, state, country, zip_code, mobile, phone, username, email, password, profile_image, description, status, activation_key, date_register, user_type, referral_id, bank_name, account_holder, account_number, iban_no, branch_name, branch_code) VALUES('" . $first_name . "', '" . $last_name . "', '" . $gender . "', '" . $date_of_birth . "', '" . $address1 . "', '" . $address2 . "', '" . $city . "', '" . $state . "', '" . $country . "', '" . $zip_code . "', '" . $mobile . "', '" . $phone . "', '" . $auto_generated_user_name . "', '" . $email . "', '" . $password_con . "', '" . $profile_image . "', '" . $description . "', '" . $status . "', '', '" . date('Y-m-d') . "', '" . $user_type . "','" . $referral_id . "', '$bank_name', '$account_holder', '$account_number', '$iban_no', '$branch_name', '$branch_code')";
 		$result = $db->query($query) or die($db->error);
 		$user_id = $db->insert_id;
 

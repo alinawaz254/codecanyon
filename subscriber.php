@@ -91,7 +91,7 @@ $total_commission = $row['total_commission'] ?? 0;
 /* video full fit */
 .dashboard-video {
     width: 100%;
-    height: 100%;
+    height: auto;
     object-fit: cover;
 }
 

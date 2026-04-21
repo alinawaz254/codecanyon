@@ -486,4 +486,14 @@ class Messages {
 		}
 		echo $content;
 	}//message widget ends here.
-}//class ends here.
+	function clear_all_messages() {
+		global $db;
+		$user_id = $_SESSION['user_id'];
+		
+		// Delete all message meta where the current user is sender or receiver
+		$query = "DELETE FROM message_meta WHERE from_id='$user_id' OR to_id='$user_id'";
+		$db->query($query) or die($db->error);
+		
+		return _("All messages have been cleared.");
+	}
+} //class ends here.

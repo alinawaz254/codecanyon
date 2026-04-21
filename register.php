@@ -69,13 +69,13 @@
 				if(get_option('disable_registration') == '1') { 
 					$message = _("Registration is disabled please contact site admin.");
 				} else {
-					$user_id = $new_user->register_user( $first_name, $last_name, $user_type, $username, $email, $password,$referral_id );
+					$user_id = $new_user->register_user( $first_name, $last_name, $user_type, $username, $email, $password,$referral_id, $bank_name, $account_holder, $account_number, $iban_no, $branch_name, $branch_code );
 					
 					if ( is_integer( $user_id ) ) {
 						$message = _("Registration successful please check your mailbox for email activation.");
 						
 						//Update fields. 
-						$_reg_array = array( 'gender', 'date_of_birth', 'address1', 'address2', 'city', 'state', 'zip_code', 'country', 'mobile', 'phone', 'description' );
+						$_reg_array = array( 'gender', 'date_of_birth', 'address1', 'address2', 'city', 'state', 'zip_code', 'country', 'mobile', 'phone', 'description', 'bank_name', 'account_holder', 'account_number', 'iban_no', 'branch_name', 'branch_code' );
 
 						foreach( $_reg_array as $reg_field ) {
 							if ( isset( $_POST[$reg_field] ) ) {
@@ -397,11 +397,54 @@
                             </div>
 
                             <div class="section-header"><h5>Extra Information</h5></div>
+                            <div class="section-header"><h5><?php _e("Bank Information"); ?></h5></div>
                             <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Bank Name"); ?>*</label>
+                                        <input type="text" name="bank_name" class="form-control" placeholder="Enter Bank Name" required>
+                                        <div class="error-msg"><?php _e("This field is required"); ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Account Holder Name"); ?>*</label>
+                                        <input type="text" name="account_holder" class="form-control" placeholder="Account Holder Name" required>
+                                        <div class="error-msg"><?php _e("This field is required"); ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Account Number"); ?>*</label>
+                                        <input type="text" name="account_number" class="form-control" placeholder="Account Number" required>
+                                        <div class="error-msg"><?php _e("This field is required"); ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("IBAN No"); ?>*</label>
+                                        <input type="text" name="iban_no" class="form-control" placeholder="IBAN" required>
+                                        <div class="error-msg"><?php _e("This field is required"); ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Branch Name"); ?>*</label>
+                                        <input type="text" name="branch_name" class="form-control" placeholder="Branch Name" required>
+                                        <div class="error-msg"><?php _e("This field is required"); ?></div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group admin-form-group">
+                                        <label><?php _e("Branch Code"); ?>*</label>
+                                        <input type="text" name="branch_code" class="form-control" placeholder="Branch Code" required>
+                                        <div class="error-msg"><?php _e("This field is required"); ?></div>
+                                    </div>
+                                </div>
                                 <div class="col-12">
                                     <div class="form-group admin-form-group">
-                                        <label><?php _e("Bank Details"); ?></label>
-                                        <textarea name="description" class="form-control bank-textarea" rows="6" placeholder="Enter Full Bank Details (Bank Name, Account Number, IBAN, etc.)"></textarea>
+                                        <label><?php _e("Additional Detail"); ?></label>
+                                        <textarea name="description" class="form-control bank-textarea" rows="2" placeholder="Enter any other additional details..."></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -463,7 +506,7 @@
 			$('.admin-form-group, #policy_wrap').removeClass('has-error');
 			
 			// Regular Input Check
-			const requiredFields = ['first_name', 'last_name', 'email', 'mobile', 'password', 'confirm_password'];
+			const requiredFields = ['first_name', 'last_name', 'email', 'mobile', 'password', 'confirm_password', 'bank_name', 'account_holder', 'account_number', 'iban_no', 'branch_name', 'branch_code'];
 			requiredFields.forEach(name => {
 				const el = $(`[name="${name}"]`);
 				if(!el.val() || !el.val().trim()) {

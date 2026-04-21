@@ -51,7 +51,7 @@
 
 				// Convert Date for DB
 				if(!empty($date_of_birth)) $date_of_birth = date("Y-m-d", strtotime($date_of_birth));
-				$message = $new_user->update_user( $_POST['edit_user'], $_SESSION['user_type'], $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password_set, $pr_img, $description, $status, $user_type,$referral_id);
+				$message = $new_user->update_user( $_POST['edit_user'], $_SESSION['user_type'], $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password_set, $pr_img, $description, $status, $user_type,$referral_id, $bank_name, $account_holder, $account_number, $iban_no, $branch_name, $branch_code);
 				$user_id = $_POST['edit_user'];
 			}
 		}
@@ -77,7 +77,7 @@
 		}  else {
 			// Convert Date for DB
 			if(!empty($date_of_birth)) $date_of_birth = date("Y-m-d", strtotime($date_of_birth));
-			$received = $new_user->add_user( $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type,$referral_id);
+			$received = $new_user->add_user( $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type,$referral_id, $bank_name, $account_holder, $account_number, $iban_no, $branch_name, $branch_code);
 
 			$user_id = ( is_array($received) && isset( $received['user_id'] ) && ! empty( $received['user_id'] ) ) ? $received['user_id'] : '';
 			if(is_array($received) && isset($received['message'])) {
@@ -135,7 +135,7 @@
 	if ( isset( $_POST['edit_user'] ) ) { $page_title = _("Edit User"); } else { $page_title = _( "Add New User" ); } //page title set.
 	require_once("lib/includes/header.php"); //including header file.
 
-	$_fields_array = array( 'first_name', 'last_name', 'gender', 'date_of_birth', 'address1', 'address2', 'city', 'state', 'zip_code', 'country', 'mobile', 'phone', 'profile_image', 'description' );
+	$_fields_array = array( 'first_name', 'last_name', 'gender', 'date_of_birth', 'address1', 'address2', 'city', 'state', 'zip_code', 'country', 'mobile', 'phone', 'profile_image', 'description', 'bank_name', 'account_holder', 'account_number', 'iban_no', 'branch_name', 'branch_code' );
 
 	$_fieldarr = array();
 	foreach ( $_fields_array as $field ) {
@@ -242,9 +242,9 @@
 						<?php endif; ?>
 
 						<?php if ( ! isset( $_fieldarr['gender']['status'] ) || $_fieldarr['gender']['status'] != 'hide' ) : ?>
-						<div class="col-md-4 mt-4">
+						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['gender']['label'])) ? $_fieldarr['gender']['label'] : _('Gender'); ?></label>
+								<label>Gender</label>
 								<select class="form-control" id="gender" name="gender">
 									<option value=""><?php _e("Select Gender"); ?></option>
 									<option value="Male" <?php if($new_user->gender == 'Male') { echo 'selected="selected"'; } ?>><?php _e("Male"); ?></option>
@@ -257,7 +257,7 @@
 						<?php if ( ! isset( $_fieldarr['date_of_birth']['status'] ) || $_fieldarr['date_of_birth']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['date_of_birth']['label'])) ? $_fieldarr['date_of_birth']['label'] : _('Date of birth'); ?></label>
+								<label>Date of birth</label>
 								<input type="text" id="dob" name="date_of_birth" class="form-control" value="<?php echo (!empty($new_user->date_of_birth)) ? date("m/d/Y", strtotime($new_user->date_of_birth)) : ''; ?>" autocomplete="off" />
 							</div>
 						</div>
@@ -266,7 +266,7 @@
 						<?php if ( ! isset( $_fieldarr['mobile']['status'] ) || $_fieldarr['mobile']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['mobile']['label'])) ? $_fieldarr['mobile']['label'] : _('Mobile'); ?></label>
+								<label>Mobile</label>
 								<input type="text" name="mobile" id="mobile" class="form-control" value="<?php echo $new_user->mobile; ?>" placeholder="e.g. +923001234567" />
 								<div class="error-msg"><?php _e("This field is required"); ?></div>
 							</div>
@@ -276,7 +276,7 @@
 						<?php if ( ! isset( $_fieldarr['phone']['status'] ) || $_fieldarr['phone']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['phone']['label'])) ? $_fieldarr['phone']['label'] : _('Phone'); ?></label>
+								<label>Phone</label>
 								<input type="text" name="phone" id="phone" class="form-control" value="<?php echo $new_user->phone; ?>" placeholder="Enter Phone Number" />
 							</div>
 						</div>
@@ -288,7 +288,7 @@
 						<?php if ( ! isset( $_fieldarr['address1']['status'] ) || $_fieldarr['address1']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['address1']['label'])) ? $_fieldarr['address1']['label'] : _('Address 1'); ?></label>
+								<label>Address 1</label>
 								<input type="text" name="address1" id="address1" class="form-control" value="<?php echo $new_user->address1; ?>" placeholder="Street Address, P.O. Box, etc." />
 							</div>
 						</div>
@@ -297,7 +297,7 @@
 						<?php if ( ! isset( $_fieldarr['address2']['status'] ) || $_fieldarr['address2']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['address2']['label'])) ? $_fieldarr['address2']['label'] : _('Address 2'); ?></label>
+								<label>Address 2</label>
 								<input type="text" name="address2" id="address2" class="form-control" value="<?php echo $new_user->address2; ?>" placeholder="Apartment, suite, unit, building, floor, etc." />
 							</div>
 						</div>
@@ -306,7 +306,7 @@
 						<?php if ( ! isset( $_fieldarr['city']['status'] ) || $_fieldarr['city']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['city']['label'])) ? $_fieldarr['city']['label'] : _('City'); ?></label>
+								<label>City</label>
 								<input type="text" name="city" id="city" class="form-control" value="<?php echo $new_user->city; ?>" placeholder="e.g. New York" />
 							</div>
 						</div>
@@ -315,7 +315,7 @@
 						<?php if ( ! isset( $_fieldarr['state']['status'] ) || $_fieldarr['state']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['state']['label'])) ? $_fieldarr['state']['label'] : _('State'); ?></label>
+								<label>State</label>
 								<input type="text" name="state" id="state" class="form-control" value="<?php echo $new_user->state; ?>" placeholder="e.g. California" />
 							</div>
 						</div>
@@ -324,7 +324,7 @@
 						<?php if ( ! isset( $_fieldarr['zip_code']['status'] ) || $_fieldarr['zip_code']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['zip_code']['label'])) ? $_fieldarr['zip_code']['label'] : _('Zip Code'); ?></label>
+								<label>Zip Code</label>
 								<input type="text" name="zip_code" id="zip_code" class="form-control" value="<?php echo $new_user->zip_code; ?>" placeholder="e.g. 10001" />
 							</div>
 						</div>
@@ -333,7 +333,7 @@
 						<?php if ( ! isset( $_fieldarr['country']['status'] ) || $_fieldarr['country']['status'] != 'hide' ) : ?>
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
-								<label><?php echo (isset($_fieldarr['country']['label'])) ? $_fieldarr['country']['label'] : _('Country'); ?></label>
+								<label>Country</label>
 								<select name="country" class="form-control">
 									<?php countries_dropdown($new_user->country); ?>
 								</select>
@@ -438,12 +438,52 @@
 						<?php endforeach; ?>
 					</div>
 
+					<div class="section-header"><h5>Bank Details</h5></div>
+					<div class="row">
+						<div class="col-md-4">
+							<div class="form-group admin-form-group">
+								<label><?php _e("Bank Name"); ?></label>
+								<input type="text" name="bank_name" class="form-control" value="<?php echo $new_user->bank_name; ?>" placeholder="Bank Name" />
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group admin-form-group">
+								<label><?php _e("Account Holder Name"); ?></label>
+								<input type="text" name="account_holder" class="form-control" value="<?php echo $new_user->account_holder; ?>" placeholder="Account Holder" />
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group admin-form-group">
+								<label><?php _e("Account Number"); ?></label>
+								<input type="text" name="account_number" class="form-control" value="<?php echo $new_user->account_number; ?>" placeholder="Account Number" />
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group admin-form-group">
+								<label><?php _e("IBAN No"); ?></label>
+								<input type="text" name="iban_no" class="form-control" value="<?php echo $new_user->iban_no; ?>" placeholder="IBAN" />
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group admin-form-group">
+								<label><?php _e("Branch Name"); ?></label>
+								<input type="text" name="branch_name" class="form-control" value="<?php echo $new_user->branch_name; ?>" placeholder="Branch Name" />
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="form-group admin-form-group">
+								<label><?php _e("Branch Code"); ?></label>
+								<input type="text" name="branch_code" class="form-control" value="<?php echo $new_user->branch_code; ?>" placeholder="Branch Code" />
+							</div>
+						</div>
+					</div>
+
 					<div class="section-header"><h5>Extra Details</h5></div>
 					<div class="row">
 						<div class="col-12">
 							<div class="form-group admin-form-group">
-								<label><?php _e("Bank Details"); ?></label>
-								<textarea name="description" class="form-control bank-textarea" rows="3" placeholder="Enter Full Bank Details (Bank Name, Account Holder, Account Number, IBAN)"><?php echo $new_user->description; ?></textarea>
+								<label><?php _e("Additional Details"); ?></label>
+								<textarea name="description" class="form-control bank-textarea" rows="3" placeholder="Enter any other additional details..."><?php echo $new_user->description; ?></textarea>
 							</div>
 						</div>
 					</div>
