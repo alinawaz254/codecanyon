@@ -401,7 +401,7 @@
                                 <div class="col-12">
                                     <div class="form-group admin-form-group">
                                         <label><?php _e("Bank Details"); ?></label>
-                                        <textarea name="description" class="form-control" rows="3" placeholder="Enter Full Bank Details (Bank Name, Account Number, IBAN, etc.)"></textarea>
+                                        <textarea name="description" class="form-control bank-textarea" rows="6" placeholder="Enter Full Bank Details (Bank Name, Account Number, IBAN, etc.)"></textarea>
                                     </div>
                                 </div>
                             </div>

@@ -615,6 +615,22 @@
             background-color: #ECAD3D !important;
             color: #ffffff !important;
         }
+
+        .bank-textarea {
+            min-height: 150px !important;
+            resize: vertical !important;
+        }
+
+        .readonly-style {
+            background-color: #f5f5f5 !important;
+            cursor: not-allowed;
+            border-color: #ddd;
+        }
+
+        .readonly-style:focus {
+            box-shadow: none;
+            outline: none;
+        }              
             /* ===== end css ===== */           
     </style>
     <body id="page-top" class="bg-white">

@@ -335,15 +335,27 @@
 
 					<div class="section-header"><h5>Extra Information</h5></div>
 					<div class="row">
-						<div class="col-md-12">
-							<div class="form-group admin-form-group">
-								<label><?php _e("Bank Details"); ?></label>
-								<textarea name="description" id="description" class="form-control" rows="3" <?php echo ($_SESSION['user_type'] != 'admin') ? 'readonly' : ''; ?>><?php echo $new_user->description; ?></textarea>
-								<?php if($_SESSION['user_type'] != 'admin'): ?>
-									<small class="text-danger"><?php _e("Bank details can only be updated by administrator."); ?></small>
-								<?php endif; ?>
-							</div>
-						</div>
+					    <div class="col-md-12">
+					        <div class="form-group admin-form-group">
+					            <label><?php _e("Bank Details"); ?></label>
+
+					            <textarea name="description" id="description"
+					                class="form-control bank-textarea <?php echo ($_SESSION['user_type'] != 'admin') ? 'readonly-style' : ''; ?>"
+					                rows="5"
+					                <?php echo ($_SESSION['user_type'] != 'admin') ? 'readonly' : ''; ?>><?php echo $new_user->description; ?>
+					            </textarea>
+
+					            <?php if($_SESSION['user_type'] != 'admin'): ?>
+					                <div class="alert alert-warning mt-2 d-flex align-items-center" role="alert">
+					                    <i class="fa fa-info-circle me-2"></i>
+					                    <small>
+					                        <?php _e("Your bank details are managed by the admin. Please contact the administrator if you need any changes."); ?>
+					                    </small>
+					                </div>
+					            <?php endif; ?>
+
+					        </div>
+					    </div>
 					</div>
 
 					<?php echo return_additional_field_options( $_SESSION['user_id'], 'edit' ); ?>

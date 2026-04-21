@@ -443,7 +443,7 @@
 						<div class="col-12">
 							<div class="form-group admin-form-group">
 								<label><?php _e("Bank Details"); ?></label>
-								<textarea name="description" class="form-control" rows="3" placeholder="Enter Full Bank Details (Bank Name, Account Holder, Account Number, IBAN)"><?php echo $new_user->description; ?></textarea>
+								<textarea name="description" class="form-control bank-textarea" rows="3" placeholder="Enter Full Bank Details (Bank Name, Account Holder, Account Number, IBAN)"><?php echo $new_user->description; ?></textarea>
 							</div>
 						</div>
 					</div>
