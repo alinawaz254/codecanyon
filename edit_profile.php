@@ -369,12 +369,13 @@
 				                    </small>
 				                </div>
 				            <?php endif; ?>					    	
-					        <div class="form-group admin-form-group">
-					            <label><?php _e("Additional Details"); ?></label>
-
-                                <textarea name="description" class="form-control bank-textarea" rows="2" placeholder="Enter any other additional details..."></textarea>
-
-					        </div>
+							<div class="form-group admin-form-group">
+							    <label><?php _e("Additional Details"); ?></label>
+							    <textarea name="description" 
+					              class="form-control bank-textarea" 
+					              rows="2" 
+					              placeholder="Enter any other additional details..."><?php echo htmlspecialchars($new_user->description); ?></textarea>
+							</div>
 					    </div>
 					</div>
 
