@@ -902,12 +902,22 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		if (trim($old_data['gender']) != $gender) $changes[] = _("Gender");
 		if (isset($plain_password) && $plain_password != '') $changes[] = _("Password");
 		if (trim($old_data['address1']) != $address1 || trim($old_data['city']) != $city || trim($old_data['country']) != $country) $changes[] = _("Address Details");
+		
+		// Bank fields check
+		if (trim($old_data['bank_name']) != $bank_name || trim($old_data['account_number']) != $account_number) $changes[] = _("Bank details");
 
 		if (!empty($changes)) {
 			$subject = _("Notification: Your account profile has been updated");
 			$message = _("Hello") . " " . $first_name . ",<br /><br />";
 			$message .= _("We are writing to inform you that your profile has been successfully updated.") . "<br />";
-			$message .= _("The following fields were updated") . ": <strong>" . implode(", ", $changes) . "</strong><br />";
+			$message .= _("The following fields were updated") . ": <strong>" . implode(", ", $changes) . "</strong><br /><br />";
+			
+			$message .= "<strong>" . _("Updated Bank Details:") . "</strong><br />";
+			$message .= _("Bank Name") . ": " . $bank_name . "<br />";
+			$message .= _("Account Holder") . ": " . $account_holder . "<br />";
+			$message .= _("Account Number") . ": " . $account_number . "<br />";
+			$message .= _("IBAN") . ": " . $iban_no . "<br />";
+
 			$message .= "<br />" . _("If you did not make these changes, please contact our support team immediately.");
 			$message .= "<br /><br />" . _("Thank you.");
 			
@@ -968,7 +978,7 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		$this->branch_code = $row['branch_code'] ?? '';
 	}//level set ends here.
 
-	function update_user($user_id, $user_type_ses, $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type, $referral_id, $bank_name = '', $account_holder = '', $account_number = '', $iban_no = '', $branch_name = '', $branch_code = '')
+	function update_user($user_id, $user_type_ses, $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password, $profile_image, $description, $status, $user_type, $referral_id, $bank_name = '', $account_holder = '', $account_number = '', $iban_no = '', $branch_name = '', $branch_code = '', $nic_front = '', $nic_back = '')
 	{
 		global $db;
 
@@ -1048,6 +1058,8 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 					iban_no = "' . $iban_no . '",
 					branch_name = "' . $branch_name . '",
 					branch_code = "' . $branch_code . '",
+					nic_front = "' . (!empty($nic_front) ? $nic_front : $old_data['nic_front']) . '",
+					nic_back = "' . (!empty($nic_back) ? $nic_back : $old_data['nic_back']) . '",
 					status = "' . $status . '",
 					user_type = "' . $user_type . '",
 					referral_id = "' . $referral_id . '"
@@ -1082,6 +1094,14 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 					password = "' . $password . '",
 					profile_image = "' . $profile_image . '",
 					description = "' . $description . '",
+					bank_name = "' . $bank_name . '",
+					account_holder = "' . $account_holder . '",
+					account_number = "' . $account_number . '",
+					iban_no = "' . $iban_no . '",
+					branch_name = "' . $branch_name . '",
+					branch_code = "' . $branch_code . '",
+					nic_front = "' . (!empty($nic_front) ? $nic_front : $old_data['nic_front']) . '",
+					nic_back = "' . (!empty($nic_back) ? $nic_back : $old_data['nic_back']) . '",
 					status = "' . $status . '",
 					user_type = "' . $user_type . '",
 					referral_id = "' . $referral_id . '"
@@ -1096,17 +1116,36 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 			if (trim($old_data['email']) != trim($email)) $changes[] = _("Email Address");
 			if (isset($plain_password) && $plain_password != '') $changes[] = _("Password");
 			if (trim($old_data['status']) != trim($status)) $changes[] = _("Account Status");
+			if (trim($old_data['bank_name']) != $bank_name || trim($old_data['account_number']) != $account_number) $changes[] = _("Bank Details");
+			if (!empty($nic_front) || !empty($nic_back)) $changes[] = _("Identification Documents (NIC)");
+			if (trim($old_data['user_type']) != trim($user_type)) $changes[] = _("User Access Level");
 
 			if (!empty($changes)) {
-				$subject = _("Notification: Your account details have been modified");
-				$message = "Hello " . $old_data['first_name'] . ",<br /><br />";
-				$message .= _("This is an automated notification to inform you that your account details have been updated by the system administrator.") . "<br />";
-				$message .= _("Changes") . ": <strong>" . implode(", ", $changes) . "</strong><br />";
-				if (isset($plain_password) && $plain_password != '') {
-					$message .= _("New Password") . ": <strong>" . $plain_password . "</strong><br />";
+				$subject = _("Security Notification: Your account details have been updated");
+				$message = _("Hello") . " " . $first_name . ",<br /><br />";
+				$message .= _("This is an official notification that an administrator has updated your account profile information.") . "<br />";
+				$message .= _("Changes detected in") . ": <strong>" . implode(", ", $changes) . "</strong><br /><br />";
+				
+				if(isset($plain_password) && $plain_password != '') {
+					$message .= "<strong>" . _("New Security Credentials:") . "</strong><br />";
+					$message .= _("New Password") . ": <code style='background:#f4f4f4;padding:2px 5px;'>" . $plain_password . "</code><br /><br />";
 				}
-				$message .= "<br />" . _("Please keep this information secure.");
-				$message .= "<br /><br />" . _("Thank you.");
+
+				$message .= "<strong>" . _("Updated Bank Details:") . "</strong><br />";
+				$message .= _("Bank Name") . ": " . $bank_name . "<br />";
+				$message .= _("Account Holder") . ": " . $account_holder . "<br />";
+				$message .= _("Account Number") . ": " . $account_number . "<br />";
+				$message .= _("IBAN") . ": " . $iban_no . "<br /><br />";
+				
+				$message .= "<strong>" . _("Updated Identification Documents:") . "</strong><br />";
+				$cf = !empty($nic_front) ? $nic_front : $old_data['nic_front'];
+				$cb = !empty($nic_back) ? $nic_back : $old_data['nic_back'];
+				$message .= _("NIC Front") . ": <a href='".$cf."'>View Image</a><br />";
+				$message .= _("NIC Back") . ": <a href='".$cb."'>View Image</a><br />";
+
+				$message .= "<br />" . _("Please log in to your dashboard to review all changes.");
+				$message .= "<br /><br />" . _("Regards,") . "<br />" . get_option('site_name');
+
 				send_email($email, $subject, $message);
 			}
 

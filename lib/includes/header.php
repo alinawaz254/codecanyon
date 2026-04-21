@@ -657,6 +657,35 @@
         .btn-message:hover { border-bottom: 2px solid #007bff !important; color: #007bff !important; }
         .btn-details:hover { border-bottom: 2px solid #17a2b8 !important; color: #17a2b8 !important; }
 
+        /* Image View Modal styling */
+        #imgViewModal .modal-content {
+            background-color: transparent;
+            border: none;
+        }
+        #imgViewModal .modal-body {
+            padding: 0;
+            text-align: center;
+        }
+        #imgViewModal .modal-body img {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 8px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+        }
+        .btn-view-img {
+            margin-left: 5px;
+            background: #6c757d !important;
+            color: #fff !important;
+            border-radius: 4px !important;
+            padding: 4px 10px !important;
+            font-size: 11px !important;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .btn-view-img:hover {
+            background: #5a6268 !important;
+        }
+
         /* Row hover border bottom effect for transactions/tables */
         .table tbody tr {
             border-bottom: 1px solid #eee !important;

@@ -49,9 +49,21 @@
 					if(is_string($url)) $pr_img = $url;
 				}
 
+				// Handle NIC Uploads
+				$nic_front_url = '';
+				if(isset($_FILES['nic_front']) && $_FILES['nic_front']['size'] > 0) {
+					$url = wc_upload_image_return_url($_FILES['nic_front'], 'users');
+					if(is_string($url)) $nic_front_url = $url;
+				}
+				$nic_back_url = '';
+				if(isset($_FILES['nic_back']) && $_FILES['nic_back']['size'] > 0) {
+					$url = wc_upload_image_return_url($_FILES['nic_back'], 'users');
+					if(is_string($url)) $nic_back_url = $url;
+				}
+
 				// Convert Date for DB
 				if(!empty($date_of_birth)) $date_of_birth = date("Y-m-d", strtotime($date_of_birth));
-				$message = $new_user->update_user( $_POST['edit_user'], $_SESSION['user_type'], $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password_set, $pr_img, $description, $status, $user_type,$referral_id, $bank_name, $account_holder, $account_number, $iban_no, $branch_name, $branch_code);
+				$message = $new_user->update_user( $_POST['edit_user'], $_SESSION['user_type'], $first_name, $last_name, $gender, $date_of_birth, $address1, $address2, $city, $state, $country, $zip_code, $mobile, $phone, $username, $email, $password_set, $pr_img, $description, $status, $user_type,$referral_id, $bank_name, $account_holder, $account_number, $iban_no, $branch_name, $branch_code, $nic_front_url, $nic_back_url);
 				$user_id = $_POST['edit_user'];
 			}
 		}
@@ -106,22 +118,12 @@
 		}
 	}//add user processing ends here.
 	
-	// Handle Image updates on edit
+	// Handle Image updates on edit (Legacy block removed, now handled in update_user call)
+	/*
 	if(isset($_POST['edit_user']) && $_POST['edit_user'] != '' && isset($_POST['update_user'])) {
-		$user_id = $_POST['edit_user'];
-		if(isset($_FILES['profile_image']) && $_FILES['profile_image']['size'] > 0) {
-			$url = wc_upload_image_return_url($_FILES['profile_image'], 'users');
-			if(is_string($url)) $new_user->update_user_row($user_id, 'profile_image', $url);
-		}
-		if(isset($_FILES['nic_front']) && $_FILES['nic_front']['size'] > 0) {
-			$url = wc_upload_image_return_url($_FILES['nic_front'], 'users');
-			if(is_string($url)) $new_user->update_user_row($user_id, 'nic_front', $url);
-		}
-		if(isset($_FILES['nic_back']) && $_FILES['nic_back']['size'] > 0) {
-			$url = wc_upload_image_return_url($_FILES['nic_back'], 'users');
-			if(is_string($url)) $new_user->update_user_row($user_id, 'nic_back', $url);
-		}
+		...
 	}
+	*/
 	
 	//Additional fields update.
 	if ( isset( $user_id ) && ! empty( $user_id ) ) {
@@ -431,6 +433,9 @@
 								<input type="file" name="<?php echo $key; ?>" id="input_<?php echo $key; ?>" class="d-none" accept="image/*" onchange="showPreview(this, 'preview_<?php echo $key; ?>')">
 								<input type="hidden" name="already_<?php echo $key; ?>" value="<?php echo $img['val']; ?>">
 								<span class="btn btn-sm btn-outline-secondary"><?php _e("Change Image"); ?></span>
+								<?php if($img['val'] != ''): ?>
+									<span class="btn-view-img" onclick="event.stopPropagation(); viewImageModal('<?php echo $img['val']; ?>')"><?php _e("View"); ?></span>
+								<?php endif; ?>
 							</div>
 							<div class="error-msg text-center mb-3" style="margin-top:-15px"><?php _e("Identification photo is required"); ?></div>
 							</div>
@@ -616,6 +621,12 @@
         }
     });	
 
+    function viewImageModal(imgUrl) {
+        if(!imgUrl) return;
+        $('#modalImg').attr('src', imgUrl);
+        $('#imgViewModal').modal('show');
+    }
+
 	<?php
 	$ref_id = isset($new_user->referral_id) ? $new_user->referral_id : '0';
 	if($ref_id != '0') {
@@ -629,4 +640,19 @@
 
 <?php
 	require_once("lib/includes/footer.php");
+?>
+
+<!-- Image View Modal -->
+<div class="modal fade" id="imgViewModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close-investment" data-dismiss="modal" style="position: absolute; right: -15px; top: -15px; z-index: 9999;">&times;</button>
+                <img id="modalImg" src="" alt="Full View">
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+	exit();
 ?>
