@@ -344,7 +344,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group admin-form-group">
                                         <label><?php _e("Referrer Username"); ?></label>
-                                        <input type="text" id="referrer_username" class="form-control" autocomplete="off" placeholder="Search Referrer Username" value="<?php echo isset($_GET['ref']) ? htmlspecialchars($_GET['ref']) : ''; ?>" <?php echo isset($_GET['ref']) ? 'readonly' : ''; ?> />
+                                        <input type="text" id="referrer_username" class="form-control <?php echo isset($_GET['ref']) ? 'readonly-style' : ''; ?>" autocomplete="off" placeholder="Search Referrer Username" value="<?php echo isset($_GET['ref']) ? htmlspecialchars($_GET['ref']) : ''; ?>" <?php echo isset($_GET['ref']) ? 'readonly' : ''; ?> />
                                         <input type="hidden" name="referral_id" id="referral_id" value="0">
                                         <span id="referrer_name_display"></span>
                                     </div>
@@ -517,6 +517,7 @@
             $sub_list = [];
             while($u = $subscribers->fetch_assoc()){
                 $name = addslashes($u['first_name'] . ' ' . $u['last_name']);
+                $username = strtolower($u['username']);
                 $sub_list[] = '"' . strtolower($u['username']) . '": {"id": "' . $u['user_id'] . '", "name": "' . $name . '"}';
             }
             echo implode(",\n", $sub_list);
@@ -529,7 +530,7 @@
         var display = document.getElementById('referrer_name_display');
         var hidden = document.getElementById('referral_id');
         if(username && subscribersData[username]) {
-            display.textContent = "VERIFIED: " + subscribersData[username].name;
+            display.textContent = username.toUpperCase() + " - " + subscribersData[username].name;
             display.style.color = '#28a745';
             hidden.value = subscribersData[username].id;
         } else {

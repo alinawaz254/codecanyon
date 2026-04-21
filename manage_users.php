@@ -540,26 +540,42 @@
 		if ($subs) {
 			while($u = $subs->fetch_assoc()){
 				$fname = addslashes($u['first_name'] . ' ' . $u['last_name']);
+				$username = strtolower($u['username']);
 				$subArr[] = '"' . strtolower($u['username']) . '": {"id": "' . $u['user_id'] . '", "name": "' . $fname . '"}';
 			}
 			echo implode(",\n", $subArr);
 		}
 	?>
 	};
-	document.getElementById('referrer_username').addEventListener('input', function() {
-		var username = this.value.trim().toLowerCase();
-		var displaySpan = document.getElementById('referrer_name_display');
-		var hiddenId = document.getElementById('referral_id');
-		if(username && subscribersData[username]) {
-			displaySpan.textContent = "VERIFIED: " + subscribersData[username].name;
-			displaySpan.style.color = '#28a745';
-			hiddenId.value = subscribersData[username].id;
-		} else {
-			displaySpan.textContent = username.length > 0 ? 'USER NOT FOUND' : '';
-			displaySpan.style.color = '#dc3545';
-			hiddenId.value = 0;
-		}
-	});
+	// document.getElementById('referrer_username').addEventListener('input', function() {
+	// 	var username = this.value.trim().toLowerCase();
+	// 	var displaySpan = document.getElementById('referrer_name_display');
+	// 	var hiddenId = document.getElementById('referral_id');
+	// 	if(username && subscribersData[username]) {
+	// 		displaySpan.textContent = "VERIFIED: " + subscribersData[username].name;
+	// 		displaySpan.style.color = '#28a745';
+	// 		hiddenId.value = subscribersData[username].id;
+	// 	} else {
+	// 		displaySpan.textContent = username.length > 0 ? 'USER NOT FOUND' : '';
+	// 		displaySpan.style.color = '#dc3545';
+	// 		hiddenId.value = 0;
+	// 	}
+	// });
+    document.getElementById('referrer_username').addEventListener('input', function() {
+        var username = this.value.trim().toLowerCase();
+        var display = document.getElementById('referrer_name_display');
+        var hidden = document.getElementById('referral_id');
+        if(username && subscribersData[username]) {
+            display.textContent = username.toUpperCase() + " - " + subscribersData[username].name;
+            display.style.color = '#28a745';
+            hidden.value = subscribersData[username].id;
+        } else {
+            display.textContent = username.length > 0 ? 'USER NOT FOUND' : '';
+            display.style.color = '#dc3545';
+            hidden.value = 0;
+        }
+    });	
+
 	<?php
 	$ref_id = isset($new_user->referral_id) ? $new_user->referral_id : '0';
 	if($ref_id != '0') {
