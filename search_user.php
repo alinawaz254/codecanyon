@@ -9,7 +9,7 @@ authenticate_user('admin');
 $page_title = _("Search User");
 require_once("lib/includes/header.php");
 
-$search_query = isset($_POST['search']) ? trim($_POST['search']) : '';
+$search_query = isset($_REQUEST['search']) ? trim($_REQUEST['search']) : '';
 $user_data = null;
 $error = '';
 $referrals = null;
@@ -40,14 +40,27 @@ if(!empty($search_query)) {
 }
 ?>
 
+<style>
+    .search-link {
+        color: #333 !important;
+        font-weight: bold !important;
+        text-decoration: none !important;
+        transition: color 0.3s;
+    }
+    .search-link:hover {
+        color: #ff9800 !important;
+        text-decoration: none !important;
+    }
+</style>
+
 <div class="row mb-4">
     <div class="col-xl-12">
         <div class="widget has-shadow">
             <div class="widget-body">
-                <form method="POST" action="">
+                <form method="GET" action="">
                     <div class="row align-items-center">
                         <div class="col-md-10 mt-2">
-                            <input type="text" name="search" class="form-control" placeholder="Search by ID, Username, Email, Phone..." value="<?php echo htmlspecialchars($search_query); ?>" required>
+                            <input type="text" name="search" class="form-control" placeholder="Search by ID, Username, Email, Phone..." value="<?php echo htmlspecialchars((string) $search_query); ?>" required>
                         </div>
                         <div class="col-md-2 mt-2">
                             <button type="submit" class="btn btn-primary btn-block btn-golden w-100">Search</button>
@@ -72,16 +85,24 @@ if(!empty($search_query)) {
                     <div class="col-md-9">
                         <table class="table table-borderless">
                             <tr>
-                                <td><strong>NAME:</strong> <?php echo htmlspecialchars($user_data['first_name'].' '.$user_data['last_name']); ?></td>
-                                <td><strong>EMAIL:</strong> <?php echo htmlspecialchars($user_data['email']); ?></td>
+                                <td><strong>NAME:</strong> <?php echo htmlspecialchars((string) ($user_data['first_name'] . ' ' . $user_data['last_name'])); ?></td>
+                                <td><strong>EMAIL:</strong> <?php echo htmlspecialchars((string) $user_data['email']); ?></td>
                             </tr>
                             <tr>
-                                <td><strong>PHONE:</strong> <?php echo htmlspecialchars(!empty($user_data['phone']) ? $user_data['phone'] : $user_data['mobile']); ?></td>
-                                <td><strong>ADDRESS:</strong> <?php echo htmlspecialchars(trim($user_data['address1'].' '.$user_data['address2'])); ?></td>
+                                <td><strong>PHONE:</strong> <?php echo htmlspecialchars((string) (!empty($user_data['phone']) ? $user_data['phone'] : $user_data['mobile'])); ?></td>
+                                <td><strong>ADDRESS:</strong> <?php echo htmlspecialchars((string) trim($user_data['address1'] . ' ' . $user_data['address2'])); ?></td>
                             </tr>
                             <tr>
                                 <td><strong>INVESTMENT:</strong> PKR <?php echo number_format($user_data['total_investment'], 2); ?></td>
-                                <td><strong>ACCOUNT NUMBER:</strong> <?php echo htmlspecialchars($user_data['account_number']); ?></td>
+                                <td><strong>ACCOUNT NUMBER:</strong> <?php echo htmlspecialchars((string) $user_data['account_number']); ?><?php echo !empty($user_data['bank_name']) ? ' - ' . htmlspecialchars((string) $user_data['bank_name']) : ''; ?></td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <form method="POST" action="manage_users.php" target="_blank">
+                                        <input type="hidden" name="edit_user" value="<?php echo htmlspecialchars((string) $user_data['user_id']); ?>">
+                                        <button type="submit" class="btn btn-primary btn-sm btn-golden" style="margin-top: 5px; padding: 5px 25px;"><?php _e("Edit Profile"); ?></button>
+                                    </form>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -100,8 +121,9 @@ if(!empty($search_query)) {
 <div class="row">
     <div class="col-xl-12">
         <div class="widget has-shadow">
-            <div class="widget-header bordered no-actions d-flex align-items-center">
+            <div class="widget-header bordered no-actions d-flex align-items-center justify-content-between">
                 <h2>User Referrals Details</h2>
+                <button onclick="window.history.back();" class="btn btn-secondary btn-sm">Back</button>
             </div>
             <div class="widget-body">
                 <div class="table-responsive">
@@ -121,10 +143,19 @@ if(!empty($search_query)) {
                             <?php if($referrals && $referrals->num_rows > 0): ?>
                                 <?php while($ref = $referrals->fetch_assoc()): ?>
                                     <tr>
-                                        <td><?php echo htmlspecialchars($ref['username']); ?> - <?php echo htmlspecialchars($ref['first_name'].' '.$ref['last_name']); ?></td>
-                                        <td><?php echo htmlspecialchars(!empty($ref['phone']) ? $ref['phone'] : $ref['mobile']); ?></td>
-                                        <td><?php echo htmlspecialchars($ref['email']); ?></td>
-                                        <td><?php echo htmlspecialchars(trim($ref['address1'] . ' ' . $ref['address2'])); ?></td>
+                                        <td>
+                                            <a href="search_user.php?search=<?php echo urlencode((string) $ref['username']); ?>" class="search-link">
+                                                <?php echo htmlspecialchars((string) $ref['username']); ?>
+                                            </a> 
+                                            - <?php echo htmlspecialchars((string) ($ref['first_name'] . ' ' . $ref['last_name'])); ?>
+                                        </td>
+                                        <td><?php echo htmlspecialchars((string) (!empty($ref['phone']) ? $ref['phone'] : $ref['mobile'])); ?></td>
+                                        <td>
+                                            <a href="search_user.php?search=<?php echo urlencode((string) $ref['email']); ?>" class="search-link">
+                                                <?php echo htmlspecialchars((string) $ref['email']); ?>
+                                            </a>
+                                        </td>
+                                        <td><?php echo htmlspecialchars((string) trim($ref['address1'] . ' ' . $ref['address2'])); ?></td>
                                         <td>PKR <?php echo number_format($ref['total_investment'], 2); ?></td>
                                         <td>PKR <?php echo number_format($ref['team_investment'], 2); ?></td>
                                         <td><?php echo $ref['ref_count']; ?></td>
