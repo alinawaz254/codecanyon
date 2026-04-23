@@ -1141,8 +1141,8 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 				$message .= "<strong>" . _("Updated Identification Documents:") . "</strong><br />";
 				$cf = !empty($nic_front) ? $nic_front : $old_data['nic_front'];
 				$cb = !empty($nic_back) ? $nic_back : $old_data['nic_back'];
-				$message .= _("NIC Front") . ": <a href='".$cf."'>View Image</a><br />";
-				$message .= _("NIC Back") . ": <a href='".$cb."'>View Image</a><br />";
+				$message .= _("NIC Front");
+				$message .= _("NIC Back");
 
 				$message .= "<br />" . _("Please log in to your dashboard to review all changes.");
 				$message .= "<br /><br />" . _("Regards,") . "<br />" . get_option('site_name');
