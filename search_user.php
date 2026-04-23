@@ -103,7 +103,7 @@ if(!empty($search_query)) {
                             <tr>
                                 <td colspan="2">
                                     <div class="d-flex align-items-center mt-2">
-                                        <form method="POST" action="manage_users.php" target="_blank" class="mr-2 mb-0">
+                                        <form method="POST" action="manage_users.php" class="mr-2 mb-0">
                                             <input type="hidden" name="edit_user" value="<?php echo htmlspecialchars((string) $user_data['user_id']); ?>">
                                             <button type="submit" class="btn btn-primary btn-sm btn-golden" style="padding: 5px 25px;"><?php _e("Edit Profile"); ?></button>
                                         </form>
