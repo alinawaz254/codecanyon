@@ -267,6 +267,11 @@
 		});
 	
 
+		// Close other dropdowns when one is opened in side panel
+		$('.side-navbar .collapse').on('show.bs.collapse', function () {
+			$('.side-navbar .collapse').not(this).collapse('hide');
+		});
+
 		// $('#congratsModal').modal('show');
 	});
 	
