@@ -157,7 +157,9 @@ class Messages {
 			$content .= '</td><td>';
 			$content .= '<a href="messages.php?thread_id='.$subject.'">'.$subject_title.'</a><br />';
 			$content .= strip_tags($message_detail);
-			$content .= '</td></tr>';
+			$content .= '</td>';
+			$content .= '<td><a href="messages.php?action=delete&subject_id='.$subject.'&type=sent" class="text-danger" onclick="return confirm(\''._("Are you sure you want to delete this message?").'\')"><i class="fa fa-times"></i></a></td>';
+			$content .= '</tr>';
 		}
 		echo $content;		
 	}//ibox ends here.
@@ -223,7 +225,9 @@ class Messages {
 			$content .= '</td><td>';
 			$content .= '<a href="messages.php?thread_id='.$subject.'">'.$subject_title.'</a><br />';
 			$content .= $message_detail;
-			$content .= '</td></tr>';
+			$content .= '</td>';
+			$content .= '<td><a href="messages.php?action=delete&subject_id='.$subject.'" class="text-danger" onclick="return confirm(\''._("Are you sure you want to delete this message?").'\')"><i class="fa fa-times"></i></a></td>';
+			$content .= '</tr>';
 		}
 		echo $content;		
 	}//ibox ends here.
@@ -495,5 +499,36 @@ class Messages {
 		$db->query($query) or die($db->error);
 		
 		return _("All messages have been cleared.");
+	}
+
+	function delete_message($subject_id) {
+		global $db;
+		$user_id = $_SESSION['user_id'];
+		$subject_id = clean_input($subject_id);
+		
+		// Find all message IDs associated with this subject for the current user
+		$msg_ids_query = "SELECT message_id FROM message_meta WHERE subject_id = '$subject_id' AND (from_id = '$user_id' OR to_id = '$user_id')";
+		$res = $db->query($msg_ids_query) or die($db->error);
+		$msg_ids = [];
+		while($row = $res->fetch_assoc()) {
+			$msg_ids[] = $row['message_id'];
+		}
+		
+		if(!empty($msg_ids)) {
+			// Delete from messages table
+			$ids_str = implode(',', $msg_ids);
+			$db->query("DELETE FROM messages WHERE message_id IN ($ids_str)") or die($db->error);
+			
+			// Delete from message_meta
+			$db->query("DELETE FROM message_meta WHERE subject_id = '$subject_id' AND (from_id = '$user_id' OR to_id = '$user_id')") or die($db->error);
+			
+			// Optional: Delete from subjects if no more meta exists for this subject
+			$check_meta = $db->query("SELECT msg_meta_id FROM message_meta WHERE subject_id = '$subject_id'");
+			if($check_meta->num_rows == 0) {
+				$db->query("DELETE FROM subjects WHERE subject_id = '$subject_id'");
+			}
+		}
+		
+		return _("Message deleted successfully.");
 	}
 } //class ends here.

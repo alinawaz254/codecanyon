@@ -78,6 +78,16 @@
                     <li><a href="videos.php"><?php _e("Videos"); ?></a></li>
                     <li><a href="manage_video.php"><?php _e("Add Video"); ?></a></li>
                 </ul>
+            </li>
+            <li>
+                <a href="#dropdown-images" aria-expanded="false" data-bs-toggle="collapse">
+                <i class="la la-image"></i>
+                <span><?php _e("Images"); ?></span>
+                </a>
+                <ul id="dropdown-images" class="collapse list-unstyled pt-0">
+                    <li><a href="images.php"><?php _e("Images"); ?></a></li>
+                    <li><a href="manage_image.php"><?php _e("Add Image"); ?></a></li>
+                </ul>
             </li>                       
         </ul>
         <!-- <hr> -->
@@ -129,6 +139,13 @@
                 <i class="las la-wallet"></i>
                 <span><?php _e("Biz Wallet"); ?></span>
                 </a>
+            </li>
+            <li>
+                <a href="#dropdown-profile" aria-expanded="false" data-bs-toggle="collapse"><i class="la la-user"></i><span><?php _e("Profile"); ?></span></a>
+                <ul id="dropdown-profile" class="collapse list-unstyled pt-0">
+                    <li><a href="view_profile.php"><?php _e("View Profile"); ?></a></li>
+                    <li><a href="edit_profile.php"><?php _e("Edit Profile"); ?></a></li>
+                </ul>
             </li>             
         </ul>
 <!--         <hr>

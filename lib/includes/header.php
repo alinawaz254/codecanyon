@@ -633,15 +633,17 @@
         }              
         /* Action buttons custom styles */
         .action-btn-container {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            white-space: nowrap;
+            display: flex !important;
+            gap: 8px !important;
+            align-items: center !important;
+            white-space: nowrap !important;
+            flex-wrap: nowrap !important;
+            width: max-content;
         }
         .action-btn {
-            padding: 2px 2px !important;
-            font-size: 12px !important;
-            font-weight: 500 !important;
+            padding: 2px 4px !important;
+            font-size: 13px !important;
+            font-weight: 600 !important;
             color: #333 !important;
             background: transparent !important;
             border: none !important;
@@ -656,6 +658,17 @@
         .btn-delete:hover { border-bottom: 2px solid #dc3545 !important; color: #dc3545 !important; }
         .btn-message:hover { border-bottom: 2px solid #007bff !important; color: #007bff !important; }
         .btn-details:hover { border-bottom: 2px solid #17a2b8 !important; color: #17a2b8 !important; }
+
+        /* Ensure standard bootstrap inside container also align */
+        .action-btn-container form {
+            margin: 0 !important;
+            display: inline-flex !important;
+            align-items: center;
+        }
+
+        .action-btn-container .btn {
+            white-space: nowrap !important;
+        }
 
         /* Image View Modal styling */
         #imgViewModal .modal-content {

@@ -79,19 +79,17 @@ function list_plans(){
         <td>{$row['plan_name']}</td>
         <td>{$row['total_cycles']}</td>
         <td>{$row['commission']}%</td>
-        <td>
-
-        <form method='post' action='manage_investment_plan.php' style='display:inline'>
+        <td><div class='action-btn-container'>
+        <form method='post' action='manage_investment_plan.php'>
         <input type='hidden' name='edit_plan' value='{$row['plan_id']}'>
         <input type='submit' class='btn btn-primary btn-sm' value='Edit'>
         </form>
 
-        <form method='post' style='display:inline'>
+        <form method='post'>
         <input type='hidden' name='delete_plan' value='{$row['plan_id']}'>
         <input type='submit' class='btn btn-danger btn-sm' value='Delete'>
         </form>
-
-        </td>
+        </div></td>
         </tr>";
     }
 
@@ -307,25 +305,23 @@ function list_investments(){
         <td>{$row['plan_name']}</td>
         <td>{$row['amount']}</td>
         <td>{$row['issue_date']}</td>
-        <td>
-
+        <td><div class='action-btn-container'>
         <button class='btn btn-warning btn-sm'
         data-toggle='modal'
         data-target='#adminInvestmentModal_{$row['investment_id']}'>
         View
         </button>
 
-        <form method='post' action='manage_investment.php' style='display:inline'>
+        <form method='post' action='manage_investment.php'>
         <input type='hidden' name='edit_investment' value='{$row['investment_id']}'>
         <input type='submit' class='btn btn-info btn-sm' value='Edit'>
         </form>
 
-        <form method='post' style='display:inline'>
+        <form method='post'>
         <input type='hidden' name='delete_investment' value='{$row['investment_id']}'>
         <input type='submit' class='btn btn-danger btn-sm' value='Delete'>
         </form>
-
-        </td>
+        </div></td>
         </tr>";
 
 

@@ -143,16 +143,16 @@ $("#message_form_'.$level_id.'").on("submit", function(e){
    </form>
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->';			
-				$content .= '</td><td class="td-actions">';
-				$content .= '<form method="post" name="edit" class="inlineblockform" action="manage_user_level.php">';
+				$content .= '</td><td><div class="action-btn-container">';
+				$content .= '<form method="post" name="edit" action="manage_user_level.php">';
 				$content .= '<input type="hidden" name="edit_level" value="'.$level_id.'">';
 				$content .= '<button class="btn btn-default btn-sm"><i class="la la-edit edit"></i></button>';
 				$content .= '</form>';
-				$content .= '<form method="post" name="delete" class="inlineblockform" onsubmit="return confirm_delete();" action="">';
+				$content .= '<form method="post" name="delete" onsubmit="return confirm_delete();" action="">';
 				$content .= '<button class="btn btn-default btn-sm"><i class="la la-trash delete"></i></button>';
 				$content .= '<input type="hidden" name="delete_level" value="'.$level_id.'">';
 				$content .= '</form>';
-				$content .= '</td>';
+				$content .= '</div></td>';
 				$content .= '</tr>';
 				unset($class);
 			}//loop ends here.

@@ -734,6 +734,7 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 
 			';
 				}
+				$content .= '<a href="view_profile.php?user_id=' . $user_id . '" class="action-btn btn-details">' . _("View") . '</a>';
 				$content .= '<form method="post" name="edit" action="manage_users.php" class="d-inline">';
 				$content .= '<input type="hidden" name="edit_user" value="' . $user_id . '">';
 				$content .= '<input type="submit" class="action-btn btn-edit" value="' . _("Edit") . '">';

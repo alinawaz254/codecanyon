@@ -89,14 +89,10 @@ class Announcements {
 			$content .= $announcement_detail;
 			$content .= '</div>';
 
-			$content .= '<div class="widget-options"><ul class="pager wizard text-right">
-							<li class="previous d-inline-block disabled">';
+			$content .= '<div class="widget-options d-flex justify-content-end p-2"><div class="action-btn-container">';
 			$content .= '<form method="post" name="edit" action="manage_announcement.php">';
 			$content .= '<input type="hidden" name="edit_announcement" value="'.$announcement_id.'">';
 			$content .= '<input type="submit" class="btn btn-default btn-sm pull-left" value="'._("Edit").'">';
-			$content .= '</form>';
-			$content .= '</li>
-						<li class="next d-inline-block">';
 			$content .= '<form method="post" name="delete" onsubmit="return confirm_delete();" action="">';
 			$content .= '<input type="hidden" name="delete_announcement" value="'.$announcement_id.'">';
 			$content .= '<input type="submit" class="btn btn-default btn-sm pull-right" value="'._("Delete").'">';

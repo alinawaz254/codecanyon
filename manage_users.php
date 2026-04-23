@@ -433,9 +433,6 @@
 								<input type="file" name="<?php echo $key; ?>" id="input_<?php echo $key; ?>" class="d-none" accept="image/*" onchange="showPreview(this, 'preview_<?php echo $key; ?>')">
 								<input type="hidden" name="already_<?php echo $key; ?>" value="<?php echo $img['val']; ?>">
 								<span class="btn btn-sm btn-outline-secondary"><?php _e("Change Image"); ?></span>
-								<?php if($img['val'] != ''): ?>
-									<span class="btn-view-img" onclick="event.stopPropagation(); viewImageModal('<?php echo $img['val']; ?>')"><?php _e("View"); ?></span>
-								<?php endif; ?>
 							</div>
 							<div class="error-msg text-center mb-3" style="margin-top:-15px"><?php _e("Identification photo is required"); ?></div>
 							</div>
@@ -621,10 +618,6 @@
         }
     });	
 
-    function viewImageModal(imgUrl) {
-        if(!imgUrl) return;
-        $('#modalImg').attr('src', imgUrl);
-        $('#imgViewModal').modal('show');
     }
 
 	<?php
@@ -642,17 +635,6 @@
 	require_once("lib/includes/footer.php");
 ?>
 
-<!-- Image View Modal -->
-<div class="modal fade" id="imgViewModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-body">
-                <button type="button" class="btn-close-investment" data-dismiss="modal" style="position: absolute; right: -15px; top: -15px; z-index: 9999;">&times;</button>
-                <img id="modalImg" src="" alt="Full View">
-            </div>
-        </div>
-    </div>
-</div>
 <?php
 	exit();
 ?>

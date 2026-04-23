@@ -104,7 +104,15 @@ if(!empty($search_query)) {
                                     </form>
                                 </td>
                             </tr>
+                            <tr>
+                                <td colspan="2"><strong>IBAN NO:</strong> <?php echo htmlspecialchars($user_data['iban_no']); ?></td>
+                            </tr>
                         </table>
+                        <div class="mt-3">
+                            <a href="view_profile.php?user_id=<?php echo $user_data['user_id']; ?>" class="btn btn-golden-admin btn-sm">
+                                <i class="la la-user"></i> <?php _e("View Full Profile"); ?>
+                            </a>
+                        </div>
                     </div>
                     <div class="col-md-3 text-center">
                         <?php 

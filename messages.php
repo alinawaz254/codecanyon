@@ -18,6 +18,10 @@
 	if(isset($_GET['action']) && $_GET['action'] == 'clear_all') {
 		$message = $message_obj->clear_all_messages();
 	}
+
+	if(isset($_GET['action']) && $_GET['action'] == 'delete' && isset($_GET['subject_id'])) {
+		$message = $message_obj->delete_message($_GET['subject_id']);
+	}
 	
 	$page_title = _("My Messages"); //You can edit this to change your page title.
 	$sub_title 	= _("Manage Your Messages");;
@@ -125,6 +129,7 @@
 								<th><span class="hide"><?php _e("Pic"); ?></span></th>
 								<th><span class="hide"><?php _e("Message From"); ?></span></th>
 								<th><span class="hide"><?php _e("Message"); ?></span></th>
+								<th><?php _e("Action"); ?></th>
 							</tr>
 						</thead>
 						<tbody>

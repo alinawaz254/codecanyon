@@ -187,6 +187,12 @@
                         <?php endif; ?>
                         <li>
                             <a class="dropdown-item"
+                                href="view_profile.php">
+                                <?php _e("View Profile"); ?>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
                                 href="edit_profile.php?user_id=<?php echo $_SESSION['user_id']; ?>">
                                 <?php _e("Edit Profile"); ?>
                             </a>

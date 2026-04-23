@@ -189,24 +189,24 @@ class Transactions {
                 echo "</td>";
                 
                 echo "<td>" . date("Y-m-d H:i", strtotime($row['created_at'])) . "</td>";
-                echo "<td class='text-right'>";
+                echo "<td><div class='action-btn-container'>";
                 
                 // View Details Button
-                echo "<button class='btn btn-warning btn-sm mr-1'
+                echo "<button class='btn btn-warning btn-sm'
                         data-toggle='modal'
                         data-target='#transactionModal_" . $row['id'] . "'>
                         <i class='la la-eye'></i> " . _("View") . "
                       </button>";
                 
                 // Delete Form
-                echo "<form method='post' style='display:inline' onsubmit='return confirm(\"" . _("Are you sure you want to delete this transaction?") . "\");'>";
+                echo "<form method='post' onsubmit='return confirm(\"" . _("Are you sure you want to delete this transaction?") . "\");'>";
                 echo "<input type='hidden' name='delete_transaction' value='" . $row['id'] . "'>";
                 echo "<button type='submit' class='btn btn-danger btn-sm'>
                         <i class='la la-trash'></i> " . _("Delete") . "
                       </button>";
                 echo "</form>";
                 
-                echo "</td>";
+                echo "</div></td>";
                 echo "</tr>";
 
                 // Generate Modal for this transaction

@@ -95,6 +95,7 @@
 	require_once('classes/forms_submission.php');
 	require_once('classes/transactions.php');
 	require_once('classes/video.php');
+	require_once('classes/images.php');
 
 	$new_user 	= new Users;
 
@@ -147,6 +148,7 @@
 		$forms_obj        = new FORMS;
 		$transaction_obj  = new Transactions;
 		$video_obj        = new Video;
+		$image_obj        = new Images;
 		
 		if($new_user->get_user_info($_SESSION['user_id'], 'profile_image') == '') { 
 			$profile_img = 'assets/images/user-4.png';

@@ -123,13 +123,13 @@ function list_videos(){
             echo "<td>".date("Y-m-d H:i", strtotime($row['created_at']))."</td>";
 
             // ACTIONS
-            echo "<td class='text-right'>";
+            echo "<td><div class='action-btn-container'>";
 
-            echo "<a href='manage_video.php?edit=".$row['id']."' class='btn btn-sm btn-info mr-1'>
+            echo "<a href='manage_video.php?edit=".$row['id']."' class='btn btn-sm btn-info'>
                     Edit
                   </a>";
 
-            echo "<form method='post' style='display:inline' 
+            echo "<form method='post' 
                     onsubmit='return confirm(\"Delete this video?\")'>";
 
             echo "<input type='hidden' name='delete_video' value='".$row['id']."'>";
@@ -140,7 +140,7 @@ function list_videos(){
 
             echo "</form>";
 
-            echo "</td>";
+            echo "</div></td>";
 
             echo "</tr>";
         }

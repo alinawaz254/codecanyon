@@ -410,11 +410,11 @@ $today = date("Y-m-d");
                                         </thead>
 
                                         <tbody>
-                                            <?php
+                                             <?php
                                                 if ($has_details) {
                                                     // Loop through actual details from database
                                                     while ($detail = $details_result->fetch_assoc()) {
-                                                        $is_detail_expired = (strtotime($today) > strtotime($detail['comission_expiry_date']));  
+                                                        $is_detail_expired = (strtotime($today) >= strtotime($detail['comission_expiry_date']));  
 
                                                         // Define the two dates
                                                         $date1 = new DateTime(date('Y-m-d'));
@@ -422,38 +422,29 @@ $today = date("Y-m-d");
 
                                                         // Calculate the difference
                                                         $interval = $date1->diff($date2);
-
                                                         ?>
-                                            <tr <?php if ($is_detail_expired) ?>>
+                                            <tr>
                                                 <td class="info-value"><?php echo $detail['cycle']; ?></td>
                                                 <td class="info-value"><?php echo $detail['comission_expiry_date']; ?>
                                                 </td>
                                                 <td class="info-value">
                                                     <?php echo number_format($detail['comission'], 2); ?></td>
                                                 <td class="info-value">
-                                                    <?php if ($is_detail_expired  && $detail['is_claimed'] == 0): ?>
+                                                    <?php if ($detail['is_claimed'] == 1): ?>
+                                                        <span class="badge text-bg-success">Paid on
+                                                            <?php echo $detail['claimed_date'];?></span>
+                                                    <?php elseif ($is_detail_expired): ?>
                                                         <form action="<?php echo $_SERVER['PHP_SELF']?>"
                                                             name="claim_investment_form">
                                                             <input type="hidden" name="user_investment_detail_id"
                                                                 value="<?php echo $detail['id']; ?>">
                                                             <input class="text-white" type="submit" name="claim_ivestment"
-                                                                value="Claim Now"
-                                                                style="background: green;border-radius: 5%;">
+                                                                value="Ready to collect"
+                                                                style="background: #28a745; border: none; padding: 5px 10px; border-radius: 4px; font-weight: 600; cursor: pointer;">
                                                         </form>
-                                                    <?php elseif(($is_detail_expired && isset($detail['is_claimed']) && $detail['is_claimed'] == 1)): ?>
-                                                        <span class="badge text-bg-success">Paid on
-                                                            <?php echo $detail['claimed_date'];?></span>
-                                                        <?php else: ?>
-                                                            <?php if($is_detail_expired): ?>
-                                                            <span class="badge text-bg-success">
-                                                                Ready to collect
-                                                            </span>
-                                                            <?php else :?>
+                                                    <?php else: ?>
                                                             <span class="badge text-bg-danger">Unpaid
-                                                                <?php echo '('.$interval->days .' days left to claim)'; ?></span>
-                                                            <?php endif; ?>
-                                                        <span class="badge text-bg-danger">Unpaid
-                                                        <?php echo '('.$interval->days .' days left to claim)'; ?></span>
+                                                            <?php echo '('.$interval->days .' days left)'; ?></span>
                                                     <?php endif; ?>
                                                 </td>
                                             </tr>
