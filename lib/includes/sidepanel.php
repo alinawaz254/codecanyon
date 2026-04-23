@@ -8,7 +8,7 @@
     <!-- Begin Side Navbar -->
     <nav class="side-navbar box-scroll sidebar-scroll">
         <!-- Begin Main Navigation -->
-        <ul class="list-unstyled">
+        <ul class="list-unstyled" style="padding-bottom: 151px;">
             <li><a href="dashboard.php"><i class="la la-columns"></i><span><?php _e("Dashboard"); ?></span></a></li>
             <li><a href="#dropdown-users" aria-expanded="false" data-bs-toggle="collapse"><i class="la la-users"></i><span><?php _e("Users"); ?></span></a>
                 <ul id="dropdown-users" class="collapse list-unstyled pt-0">
@@ -110,7 +110,7 @@
     <!-- Begin Side Navbar -->
     <nav class="side-navbar box-scroll sidebar-scroll">
         <!-- Begin Main Navigation -->
-        <ul class="list-unstyled">
+        <ul class="list-unstyled" style="padding-bottom: 151px;">
             <li><a href="#dropdown-dashboard" aria-expanded="false" data-bs-toggle="collapse"><i class="la la-columns"></i><span><?php _e("Dashboard"); ?></span></a>
                 <ul id="dropdown-dashboard" class="collapse list-unstyled pt-0">
                     <li><a href="<?=$level_page;?>"><?php _e("Dashboard"); ?></a></li>
