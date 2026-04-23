@@ -377,9 +377,9 @@
             transition: background 0.3s ease;
         }
         .btn-outline-dark:hover {
-            color: #ecad3d;
-            background-color: #ececec36;
-            border-color: #2c304d;
+            color: #ffffff;
+            background-color: #000000;
+            border-color: #000000;
         }
         .btn-golden:hover {
             background-color : #252525 !important;
