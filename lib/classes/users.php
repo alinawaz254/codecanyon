@@ -1200,7 +1200,18 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 				// Silent fail
 			}
 
-			$message = _("Your Password has been reset please use new password to login.");
+			// Send Email Notification
+			$mailto = $row['email'];
+			$subject = _("Your password has been successfully reset");
+			$email_message = _("Hello") . " " . $row['first_name'] . ",<br /><br />";
+			$email_message .= _("This is a confirmation that your password for your account has been successfully reset.") . "<br />";
+			$email_message .= _("You can now log in using your new password.") . "<br /><br />";
+			$email_message .= _("If you did not make this change, please contact our support team immediately.") . "<br /><br />";
+			$email_message .= _("Thank you.");
+			
+			send_email($mailto, $subject, $email_message);
+
+			$message = 1;
 		} else {
 			$message = _("Your activation key is expired and password cannot be reset.");
 		}

@@ -23,6 +23,10 @@
 			} else {
 			   $confirmation_code = $_GET['confirmation_code'];
 			   $message = $new_user->reset_pass_user($_GET['user_id'],$confirmation_code,$password);
+			   if($message == 1) {
+				   header("Location: login.php?message=" . urlencode(_("Your Password has been reset please use new password to login.")));
+				   exit();
+			   }
 			}
 		}//reset Form reset password processing.
 	}//isset reset_ form
