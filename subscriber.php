@@ -251,28 +251,6 @@ window.addEventListener("load", function(){
     }
 
 });
-
-document.addEventListener("DOMContentLoaded", function () {
-
-    document.querySelectorAll(".video-box").forEach(box => {
-
-        let video = box.querySelector(".video-hover");
-
-        if (!video) return;
-
-        video.removeAttribute("controls");
-
-        box.addEventListener("mouseenter", () => {
-            video.setAttribute("controls", "controls");
-        });
-
-        box.addEventListener("mouseleave", () => {
-            video.removeAttribute("controls");
-        });
-
-    });
-
-});
 </script>
 
 <?php require_once("lib/includes/footer.php"); ?>

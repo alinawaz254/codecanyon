@@ -83,11 +83,11 @@
 									</form>
 								<?php else: ?>
 									<form action="<?php $_SERVER['PHP_SELF']?>" class="form-signin" id="reset_form" name="reset_form" method="post">
-										<div class="group material-input">
+										<div class="group material-input pass-wrapper">
 											<input type="password" name="password" class="form-control" placeholder="<?php _e("New Password"); ?>" required="required" />
 										</div>
 										
-										<div class="group material-input">
+										<div class="group material-input pass-wrapper">
 											<input type="password" name="match_password" class="form-control" placeholder="<?php _e("Confirm Password"); ?>" required="required"/>
 										</div>
 										

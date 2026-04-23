@@ -332,7 +332,7 @@ function list_videos(){
         if($row['video_file']){
 
             echo "<video class='dashboard-video video-hover'
-                    autoplay muted loop playsinline>
+                    autoplay muted loop playsinline controls>
                     <source src='uploads/videos/".$row['video_file']."'>
                 </video>";
 

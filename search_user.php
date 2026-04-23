@@ -96,23 +96,24 @@ if(!empty($search_query)) {
                                 <td><strong>INVESTMENT:</strong> PKR <?php echo number_format($user_data['total_investment'], 2); ?></td>
                                 <td><strong>ACCOUNT NUMBER:</strong> <?php echo htmlspecialchars((string) $user_data['account_number']); ?><?php echo !empty($user_data['bank_name']) ? ' - ' . htmlspecialchars((string) $user_data['bank_name']) : ''; ?></td>
                             </tr>
+
+                            <tr>
+                                <td colspan="2"><strong>IBAN NO:</strong> <?php echo isset($user_data['iban_no']) ?  htmlspecialchars($user_data['iban_no']) : ''; ?></td>
+                            </tr>
                             <tr>
                                 <td colspan="2">
-                                    <form method="POST" action="manage_users.php" target="_blank">
-                                        <input type="hidden" name="edit_user" value="<?php echo htmlspecialchars((string) $user_data['user_id']); ?>">
-                                        <button type="submit" class="btn btn-primary btn-sm btn-golden" style="margin-top: 5px; padding: 5px 25px;"><?php _e("Edit Profile"); ?></button>
-                                    </form>
+                                    <div class="d-flex align-items-center mt-2">
+                                        <form method="POST" action="manage_users.php" target="_blank" class="mr-2 mb-0">
+                                            <input type="hidden" name="edit_user" value="<?php echo htmlspecialchars((string) $user_data['user_id']); ?>">
+                                            <button type="submit" class="btn btn-primary btn-sm btn-golden" style="padding: 5px 25px;"><?php _e("Edit Profile"); ?></button>
+                                        </form>
+                                        <a href="view_profile.php?user_id=<?php echo $user_data['user_id']; ?>" class="btn btn-golden-admin btn-sm mx-2" style="padding: 5px 25px;">
+                                            <i class="la la-user"></i> <?php _e("View Full Profile"); ?>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="2"><strong>IBAN NO:</strong> <?php echo htmlspecialchars($user_data['iban_no']); ?></td>
-                            </tr>
                         </table>
-                        <div class="mt-3">
-                            <a href="view_profile.php?user_id=<?php echo $user_data['user_id']; ?>" class="btn btn-golden-admin btn-sm">
-                                <i class="la la-user"></i> <?php _e("View Full Profile"); ?>
-                            </a>
-                        </div>
                     </div>
                     <div class="col-md-3 text-center">
                         <?php 
