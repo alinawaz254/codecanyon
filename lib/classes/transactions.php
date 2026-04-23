@@ -46,8 +46,10 @@ class Transactions {
             $admin_query = $db->query("SELECT username FROM users WHERE user_id = " . ADMIN_ID);
             $admin = $admin_query->fetch_assoc()['username'] ?? 'Admin';
 
-            $user_query = $db->query("SELECT username FROM users WHERE user_id = $user_id");
-            $user = $user_query->fetch_assoc()['username'] ?? 'User';
+            $user_query = $db->query("SELECT username, email FROM users WHERE user_id = $user_id");
+            $user_data = $user_query->fetch_assoc();
+            $user = $user_data['username'] ?? 'User';
+            $user_email = $user_data['email'] ?? '';
 
             if($transaction_type == 2){
                 send_notification(
@@ -57,6 +59,47 @@ class Transactions {
                     "funded",
                     $transaction_id
                 );
+
+                if(!empty($user_email)) {
+                    $subject = "Funds Received - PKR " . number_format($amount, 2);
+                    $message = "
+                        <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e1e1e1; border-radius: 10px;'>
+                            <h2 style='color: #2c3e50; text-align: center;'>Account Credited</h2>
+                            <p>Dear <strong>$user</strong>,</p>
+                            <p>We are writing to notify you that your account has been successfully funded by the administrator.</p>
+                            
+                            <div style='background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;'>
+                                <table style='width: 100%;'>
+                                    <tr>
+                                        <td style='padding: 5px 0;'><strong>Amount:</strong></td>
+                                        <td style='padding: 5px 0;'>PKR " . number_format($amount, 2) . "</td>
+                                    </tr>
+                                    <tr>
+                                        <td style='padding: 5px 0;'><strong>Transaction ID:</strong></td>
+                                        <td style='padding: 5px 0;'>#$transaction_id</td>
+                                    </tr>
+                                    <tr>
+                                        <td style='padding: 5px 0;'><strong>Date:</strong></td>
+                                        <td style='padding: 5px 0;'>" . date('F j, Y, g:i a') . "</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            
+                            <p>The funds are now available in your account balance. You can log in to your dashboard to view your updated balance and transaction history.</p>
+                            
+                            <p style='text-align: center; margin-top: 30px;'>
+                                <a href='" . SITEURL . "' style='background-color: #d4af37; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;'>Login to Dashboard</a>
+                            </p>
+                            
+                            <hr style='border: 0; border-top: 1px solid #eee; margin: 30px 0;'>
+                            <p style='font-size: 12px; color: #7f8c8d; text-align: center;'>
+                                This is an automated message, please do not reply to this email.<br>
+                                &copy; " . date('Y') . " " . SITE_NAME . ". All rights reserved.
+                            </p>
+                        </div>
+                    ";
+                    send_email($user_email, $subject, $message);
+                }
             }
 
             return "Transaction added successfully.";

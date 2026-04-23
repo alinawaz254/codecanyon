@@ -39,6 +39,65 @@
       }
       
       if(mysqli_query($db, $update_sql)) {
+          // Send email notification to user
+          $info_query = "SELECT t.amount, u.username, u.email 
+                        FROM transactions t 
+                        JOIN users u ON t.user_id = u.user_id 
+                        WHERE t.id = $transaction_id";
+          $info_res = mysqli_query($db, $info_query);
+          
+          if($info_res && mysqli_num_rows($info_res) > 0) {
+              $info = mysqli_fetch_assoc($info_res);
+              $amount = $info['amount'];
+              $username = $info['username'];
+              $user_email = $info['email'];
+              
+              if(!empty($user_email)) {
+                  $subject = "Withdrawal Approved - PKR " . number_format($amount, 2);
+                  $message = "
+                      <div style='font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e1e1e1; border-radius: 10px;'>
+                          <h2 style='color: #27ae60; text-align: center;'>Withdrawal Request Approved</h2>
+                          <p>Dear <strong>$username</strong>,</p>
+                          <p>We are pleased to inform you that your withdrawal request has been reviewed and approved by the administrator.</p>
+                          
+                          <div style='background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;'>
+                              <table style='width: 100%;'>
+                                  <tr>
+                                      <td style='padding: 5px 0;'><strong>Approved Amount:</strong></td>
+                                      <td style='padding: 5px 0;'>PKR " . number_format($amount, 2) . "</td>
+                                  </tr>
+                                  <tr>
+                                      <td style='padding: 5px 0;'><strong>Transaction ID:</strong></td>
+                                      <td style='padding: 5px 0;'>#$transaction_id</td>
+                                  </tr>
+                                  <tr>
+                                      <td style='padding: 5px 0;'><strong>Date:</strong></td>
+                                      <td style='padding: 5px 0;'>" . date('F j, Y, g:i a') . "</td>
+                                  </tr>
+                                  <tr>
+                                      <td style='padding: 5px 0;'><strong>Status:</strong></td>
+                                      <td style='padding: 5px 0; color: #27ae60;'><strong>Approved</strong></td>
+                                  </tr>
+                              </table>
+                          </div>
+                          
+                          <p>The funds have been processed according to your withdrawal details.</p>
+                          
+                          <p style='text-align: center; margin-top: 30px;'>
+                              <a href='" . SITEURL . "' style='background-color: #d4af37; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-weight: bold;'>View Dashboard</a>
+                          </p>
+                          
+                          <hr style='border: 0; border-top: 1px solid #eee; margin: 30px 0;'>
+                          <p style='font-size: 12px; color: #7f8c8d; text-align: center;'>
+                              This is an automated message, please do not reply to this email.<br>
+                              &copy; " . date('Y') . " " . SITE_NAME . ". All rights reserved.
+                          </p>
+                      </div>
+                  ";
+                  send_email($user_email, $subject, $message);
+              }
+          }
+
           $success_message = _("Withdrawal request approved successfully.");
       } else {
           $error_message = _("Error approving withdrawal: ") . mysqli_error($db);
