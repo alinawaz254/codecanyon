@@ -168,7 +168,7 @@ $total_commission = $row['total_commission'] ?? 0;
             </div>
 
             <!-- My Referrals -->
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <a href="frontreferrals.php" class="f-links">
                     <div class="widget widget-12 has-shadow mb-3">
                         <div class="widget-body">
@@ -186,27 +186,9 @@ $total_commission = $row['total_commission'] ?? 0;
                 </a>
             </div>
 
-            <!-- My Notes -->
-            <div class="col-md-6">
-                <a href="notes.php" class="f-links">
-                    <div class="widget widget-12 has-shadow mb-3">
-                        <div class="widget-body">
-                            <div class="media">
-                                <div class="align-self-center mx-3">
-                                    <i class="la la-sticky-note"></i>
-                                </div>
-                                <div class="media-body align-self-center">
-                                    <div class="title">My Notes</div>
-                                    <div class="number"><?php echo $notes_count; ?> Notes</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            </div>
 
             <!-- Total Commission -->
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="widget widget-12 has-shadow mb-3">
                     <div class="widget-body">
                         <div class="media">
