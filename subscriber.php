@@ -32,68 +32,41 @@ if($row = $q->fetch_assoc()){
 $notes_count = $row['total'];
 }
 
-// My Commision
-$total_commission = 0;
-
-$q = $db->query("
-SELECT SUM(uid.comission) as total_commission
-FROM user_investment_details uid
-JOIN user_investments ui 
-ON ui.investment_id = uid.investment_id
-WHERE ui.user_id = '$user_id'
-");
-
-if($row = $q->fetch_assoc()){
-$total_commission = $row['total_commission'] ?? 0;
-}
+// Total Investments
+$investments_total = $transaction_obj->investement($user_id);
 ?>
 
 <style>
-.row.flex-row {
-    display: flex;
-    align-items: stretch;
-}
-
-/* CARDS ONE LINE SYSTEM */
-.dashboard-media-card {
-    display: flex;
-    flex-direction: column;
-}
-
-.widget.widget-12 {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
 /* ICON COLORS (PURPLE) */
 .widget-12 .media i {
     color: #5d5386 !important;
     font-size: 2.5rem;
 }
 
-/* VIDEO BOX (OPTIMIZED) */
+/* VIDEO/IMAGE BOX (MATCHING ADMIN DASHBOARD) */
 .video-box {
     width: 100%;
     aspect-ratio: 16 / 9;
+    max-height: 328px;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
     position: relative;
     background: #1a1a1a;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border: 1px solid rgba(0,0,0,0.05);
 }
 
 .dashboard-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 
 .video-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.1);
     opacity: 0;
     transition: 0.3s;
     pointer-events: none;
@@ -113,21 +86,73 @@ $total_commission = $row['total_commission'] ?? 0;
 .no-video-text {
     color: #999;
 }
+
+/* CARDS EQUAL HEIGHT & FULL WIDTH */
+.f-links {
+    display: block;
+    height: 100%;
+    text-decoration: none !important;
+}
+
+.widget.widget-12 {
+    height: 100%;
+    margin-bottom: 0 !important;
+    display: flex;
+    flex-direction: column;
+}
+
+.widget-12 .widget-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 1.5rem !important;
+}
+
+.widget-12 .media {
+    width: 100%;
+}
+
+/* REDUCE OUTER MARGINS AND WIDEN CARDS */
+.container-fluid {
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+}
+
+.tight-row {
+    margin-left: -5px;
+    margin-right: -5px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tight-row > [class*='col-'] {
+    padding-left: 5px;
+    padding-right: 5px;
+    display: flex; /* Ensures children stretch */
+}
+
+.tight-row > [class*='col-'] > * {
+    width: 100%; /* Ensures link/widget takes full width */
+}
 </style>
 
-<div class="row mb-4">
-    <!-- 1. VIDEO -->
-    <div class="col-xl-3 col-md-6 mb-3 dashboard-media-card">
+<!-- MEDIA ROW -->
+<div class="row mb-4 tight-row">
+    <!-- VIDEO COLUMN (col-6) -->
+    <div class="col-md-6 mb-3">
         <?php $video_obj->show_dashboard_videos(1); ?>
     </div>
     
-    <!-- 2. IMAGE -->
-    <div class="col-xl-3 col-md-6 mb-3 dashboard-media-card">
+    <!-- IMAGE COLUMN (col-6) -->
+    <div class="col-md-6 mb-3">
         <?php $image_obj->show_dashboard_images(1); ?>
     </div>
+</div>
 
-    <!-- 3. MY INVESTMENTS -->
-    <div class="col-xl-2 col-md-4 mb-3">
+<!-- STAT CARDS ROW (Equally fulfilling the row below media) -->
+<div class="row mb-4 tight-row">
+    <!-- 1. MY INVESTMENTS -->
+    <div class="col-md-4 mb-3">
         <a href="frontinvestments.php" class="f-links">
             <div class="widget widget-12 has-shadow">
                 <div class="widget-body">
@@ -136,8 +161,8 @@ $total_commission = $row['total_commission'] ?? 0;
                             <i class="la la-money"></i>
                         </div>
                         <div class="media-body align-self-center">
-                            <div class="title">Investments</div>
-                            <div class="number"><?php echo $investment_count; ?></div>
+                            <div class="title">My Investments</div>
+                            <div class="number"><?php echo $investment_count; ?> Investments</div>
                         </div>
                     </div>
                 </div>
@@ -145,8 +170,8 @@ $total_commission = $row['total_commission'] ?? 0;
         </a>
     </div>
 
-    <!-- 4. MY REFERRALS -->
-    <div class="col-xl-2 col-md-4 mb-3">
+    <!-- 2. MY REFERRALS -->
+    <div class="col-md-4 mb-3">
         <a href="frontreferrals.php" class="f-links">
             <div class="widget widget-12 has-shadow">
                 <div class="widget-body">
@@ -155,8 +180,8 @@ $total_commission = $row['total_commission'] ?? 0;
                             <i class="la la-users"></i>
                         </div>
                         <div class="media-body align-self-center">
-                            <div class="title">Referrals</div>
-                            <div class="number"><?php echo $referral_count; ?></div>
+                            <div class="title">My Referrals</div>
+                            <div class="number"><?php echo $referral_count; ?> Referrals</div>
                         </div>
                     </div>
                 </div>
@@ -164,8 +189,8 @@ $total_commission = $row['total_commission'] ?? 0;
         </a>
     </div>
 
-    <!-- 5. TOTAL INVESTMENTS -->
-    <div class="col-xl-2 col-md-4 mb-3">
+    <!-- 3. TOTAL INVESTMENTS -->
+    <div class="col-md-4 mb-3">
         <a href="frontinvestments.php" class="f-links">
             <div class="widget widget-12 has-shadow">
                 <div class="widget-body">
@@ -174,8 +199,8 @@ $total_commission = $row['total_commission'] ?? 0;
                             <i class="la la-wallet"></i>
                         </div>
                         <div class="media-body align-self-center">
-                            <div class="title">Total</div>
-                            <div class="number">PKR <?php echo number_format($transaction_obj->investement($user_id),0); ?></div>
+                            <div class="title">Total Investments</div>
+                            <div class="number">PKR <?php echo number_format($investments_total, 0); ?></div>
                         </div>
                     </div>
                 </div>
@@ -184,6 +209,7 @@ $total_commission = $row['total_commission'] ?? 0;
     </div>
 </div>
 
+<!-- WELCOME ROW -->
 <div class="row mt-4">
     <div class="col-xl-12">
         <div class="widget has-shadow">
