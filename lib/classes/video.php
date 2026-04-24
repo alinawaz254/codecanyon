@@ -53,7 +53,7 @@ function list_videos(){
 
             if($row['video_file']){
 
-                echo "<video width='120' height='80' controls>
+                echo "<video width='120' height='68' controls>
                         <source src='uploads/videos/".$row['video_file']."'>
                     </video>";
 
@@ -94,7 +94,7 @@ function list_videos(){
                     $video_id = $m[1] ?? '';
 
                     if($video_id){
-                        echo "<iframe width='120' height='80'
+                        echo "<iframe width='120' height='68'
                                 src='https://player.vimeo.com/video/".$video_id."'
                                 frameborder='0'
                                 allowfullscreen>
@@ -107,7 +107,7 @@ function list_videos(){
                 // ================= DIRECT VIDEO =================
                 else {
 
-                    echo "<video width='120' height='80' controls>
+                    echo "<video width='120' height='68' controls>
                             <source src='".$url."'>
                         </video>";
                 }

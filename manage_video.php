@@ -177,11 +177,12 @@ require_once("lib/includes/header.php");
                             </div>
 
                             <!-- FILE -->
-                            <div class="col-md-6 mb-4" id="upload_box">
-                                <label>Upload Video</label>
-                                <input type="file" name="video_file" class="form-control">
-                                <small class="text-muted">Allowed: mp4, mov, avi, webm</small>
-                            </div>
+                             <div class="col-md-6 mb-4" id="upload_box">
+                                 <label>Upload Video</label>
+                                 <input type="file" name="video_file" class="form-control">
+                                 <small class="text-muted d-block">Allowed: mp4, mov, avi, webm</small>
+                                 <small class="text-muted">Recommended: <b>1280 x 720 (16:9)</b> for a perfect fit.</small>
+                             </div>
 
                             <!-- URL -->
                             <div class="col-md-6 mb-4" id="url_box" style="display:none;">

@@ -42,9 +42,9 @@ class Images {
                 echo "<td><strong>".htmlspecialchars($row['title'])."</strong></td>";
                 echo "<td>";
                 if($row['image_file']){
-                    echo "<img src='assets/upload/images/".$row['image_file']."' style='width:120px; height:80px; object-fit:cover; border-radius:4px;'>";
+                    echo "<img src='assets/upload/images/".$row['image_file']."' style='width:120px; height:68px; object-fit:cover; border-radius:4px;'>";
                 } elseif($row['image_url']){
-                    echo "<img src='".$row['image_url']."' style='width:120px; height:80px; object-fit:cover; border-radius:4px;'>";
+                    echo "<img src='".$row['image_url']."' style='width:120px; height:68px; object-fit:cover; border-radius:4px;'>";
                 } else {
                     echo "<span class='text-muted'>No Image</span>";
                 }

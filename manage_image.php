@@ -84,6 +84,7 @@ require_once("lib/includes/header.php");
                             <div class="col-md-6 mb-4">
                                 <label>Upload Image *</label>
                                 <input type="file" name="image_file" class="form-control" <?= !$edit_data ? 'required' : '' ?>>
+                                <small class="text-muted">Recommended Size: <b>1280 x 720 (16:9)</b> for a perfect fit.</small>
                                 <?php if($edit_data && $edit_data['image_file']): ?>
                                     <small class="text-muted">Current: <a href="assets/upload/images/<?= $edit_data['image_file'] ?>" target="_blank"><?= $edit_data['image_file'] ?></a></small>
                                 <?php endif; ?>

@@ -67,17 +67,20 @@ require_once('lib/includes/header.php');
 /* VIDEO/IMAGE BOX */
 .video-box {
     width: 100%;
-    height: 100%;
-    max-height: 328px !important;    
-    border-radius: 6px;
+    aspect-ratio: 16 / 9;
+    max-height: 328px;
+    border-radius: 8px;
     overflow: hidden;
     position: relative;
-    background: #f8f9fa;
+    background: #1a1a1a;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    border: 1px solid rgba(0,0,0,0.05);
 }
 .dashboard-video {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    display: block;
 }
 .video-box:hover .video-overlay {
     opacity: 1;
