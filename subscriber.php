@@ -149,7 +149,7 @@ $total_commission = $row['total_commission'] ?? 0;
         <div class="row flex-row h-100">
 
             <!-- My Investments -->
-            <div class="col-md-6 mb-3">
+            <div class="col-md-4 mb-3">
                 <a href="frontinvestments.php" class="f-links">
                     <div class="widget widget-12 has-shadow mb-3">
                         <div class="widget-body">
