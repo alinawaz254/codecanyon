@@ -125,17 +125,25 @@ $total_commission = $row['total_commission'] ?? 0;
 
 <div class="row flex-row h-100">
 
-    <div class="col-xl-4 col-md-4 d-flex">
-            <div class="widget-body p-0 w-100 d-flex">
-
+    <!-- MEDIA ROW -->
+    <div class="row equal-row mb-4">
+        <!-- VIDEO COLUMN -->
+        <div class="col-xl-6 col-md-6 mb-3">
+            <div class="w-100">
                 <?php
-                    $video = new Video();
-                    $video->show_dashboard_videos(1); // single video
+                    $video_obj->show_dashboard_videos(1);
                 ?>
-
             </div>
+        </div>
+        <!-- IMAGE COLUMN -->
+        <div class="col-xl-6 col-md-6 mb-3">
+            <div class="w-100">
+                <?php
+                    $image_obj->show_dashboard_images(1);
+                ?>
+            </div>
+        </div>
     </div>
-
     <div class="col-xl-8 col-md-8">
 
         <div class="row flex-row h-100">

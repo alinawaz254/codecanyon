@@ -123,7 +123,7 @@
                     <li><a href="messages.php?type=sent"><?php _e("Sent Items"); ?></a></li>
                 </ul>
             </li>
-            <li><a href="notes.php"><i class="la la-sticky-note"></i><span><?php _e("My Notes"); ?></span></a></li>
+            <!-- <li><a href="notes.php"><i class="la la-sticky-note"></i><span><?php _e("My Notes"); ?></span></a></li> -->
             <li><a href="frontinvestments.php"><i class="la la-money"></i><span><?php _e("My Investments"); ?></span></a></li>
             <li><a href="frontreferrals.php"><i class="la la-list"></i><span><?php _e("My Referrals"); ?></span></a></li>
             <li><a href="frontrewards.php"><i class="la la-gift"></i><span><?php _e("My Rewards"); ?></span></a></li>
