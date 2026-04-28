@@ -150,6 +150,9 @@
 		$video_obj        = new Video;
 		$image_obj        = new Images;
 		
+		// Expire old withdrawal requests (older than 36 hours)
+		$transaction_obj->expire_requests();
+
 		if($new_user->get_user_info($_SESSION['user_id'], 'profile_image') == '') { 
 			$profile_img = 'assets/images/user-4.png';
 		} else { 

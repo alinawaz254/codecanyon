@@ -18,7 +18,7 @@ if(isset($_POST['send'])){
     $identity = trim($_POST['email'] ?? '');
     $amount = floatval($_POST['amount'] ?? 0);
 
-    $balance = $transactions_obj->get_balance($user_id);
+    $balance = $transactions_obj->get_available_balance($user_id);
 
     if(empty($identity) || $amount <= 0){
         header("Location: wallet_transfer.php?error=invalid");

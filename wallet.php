@@ -54,10 +54,18 @@ $transactions = $db->query("
                     <!-- TOTAL WALLET -->
                     <div class="col-md-4 mb-3">
                         <div class="card shadow-sm p-4">
-                            <h6>Total Wallet Amount</h6>
+                            <h6>Available Balance</h6>
                             <strong class="text-success">
                                 <?php echo $transaction_obj->display_balance($user_id); ?>
                             </strong>
+                            <?php 
+                            $pending = $transaction_obj->get_pending_withdrawal_amount($user_id);
+                            if($pending > 0): 
+                            ?>
+                            <div class="mt-2">
+                                <small class="text-muted">On Hold Balance: PKR <?php echo number_format($pending, 2); ?></small>
+                            </div>
+                            <?php endif; ?>
                         </div>
                     </div>
 

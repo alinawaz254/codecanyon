@@ -65,7 +65,7 @@ if(isset($_POST['verify'])){
         exit;
     }
 
-    $balance = $transaction_obj->get_balance($user_id);
+    $balance = $transaction_obj->get_available_balance($user_id);
 
     if($_SESSION['withdrawl_amount'] > $balance){
         header("Location: withdrawl_verify.php?error=balance");

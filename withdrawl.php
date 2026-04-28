@@ -150,8 +150,16 @@
                             echo "<tr><td colspan='5' class='text-center text-danger'>Database error: " . mysqli_error($db) . "</td></tr>";
                         } else if(mysqli_num_rows($result) > 0) {
                             while($withdrawal = mysqli_fetch_assoc($result)) {
-                                $status = ($withdrawal['is_approved'] == 1) ? 'Approved' : 'Pending';
-                                $status_class = ($withdrawal['is_approved'] == 1) ? 'badge text-success' : 'badge text-warning';
+                                if ($withdrawal['is_approved'] == 1) {
+                                    $status = 'Approved';
+                                    $status_class = 'badge text-success';
+                                } elseif ($withdrawal['is_approved'] == 2) {
+                                    $status = 'Expired';
+                                    $status_class = 'badge text-danger';
+                                } else {
+                                    $status = 'Pending';
+                                    $status_class = 'badge text-warning';
+                                }
                                 ?>
                                 <tr>
                                     <td><?php echo htmlspecialchars(wc_get_user_display_name($withdrawal['username'] ?? 'N/A', $withdrawal['first_name'] ?? '', $withdrawal['last_name'] ?? '')); ?></td>

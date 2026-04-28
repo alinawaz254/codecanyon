@@ -498,33 +498,8 @@ class Transactions {
     {
         global $db;
 
-        $investment_sql = $db->query("SELECT amount FROM user_investments WHERE user_id = '$user_id'");
-
-        $sql = "
-            SELECT 
-                COALESCE(SUM(
-                    CASE 
-                        WHEN transaction_type = 1 THEN -amount     
-                        WHEN transaction_type = 2 THEN amount     
-                        WHEN transaction_type = 3 THEN amount    
-                        WHEN transaction_type = 4 THEN -amount     
-                        WHEN transaction_type = 5 THEN amount
-                        WHEN transaction_type = 6 THEN amount  
-                        WHEN transaction_type = 7 THEN amount  
-                    END
-                ),0) AS balance
-            FROM transactions
-            WHERE user_id = ?
-            AND is_approved = 1
-        ";
-
-        $stmt = $db->prepare($sql);
-        $stmt->bind_param("i", $user_id);
-        $stmt->execute();
-
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-        $balance = (float)$row['balance'];
+        $balance = $this->get_available_balance($user_id);
+        
         // Prevent negative balance display
         if ($balance < 0) {
             $balance = 0;
@@ -637,6 +612,12 @@ class Transactions {
             return false;
         }
 
+        // Check available balance before proceeding
+        $available_balance = $this->get_available_balance($sender_id);
+        if($amount > $available_balance){
+            return false;
+        }
+
         $db->begin_transaction();
 
         try {
@@ -694,6 +675,12 @@ class Transactions {
             return false;
         }
 
+        // Check available balance before proceeding
+        $available_balance = $this->get_available_balance($user_id);
+        if($amount > $available_balance){
+            return false;
+        }
+
         $result = $db->query("SELECT username FROM users WHERE user_id = $user_id");
 
         $username = 'User';
@@ -736,5 +723,34 @@ class Transactions {
             return false;
         }
     }  
+
+    function get_pending_withdrawal_amount($user_id)
+    {
+        global $db;
+        $sql = "SELECT COALESCE(SUM(amount), 0) as pending_amount FROM transactions WHERE user_id = ? AND transaction_type = 1 AND is_approved = 0";
+        $stmt = $db->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+        return (float)$row['pending_amount'];
+    }
+
+    function get_available_balance($user_id)
+    {
+        $total_balance = $this->get_balance($user_id);
+        $pending_withdrawals = $this->get_pending_withdrawal_amount($user_id);
+        return $total_balance - $pending_withdrawals;
+    }
+
+    function expire_requests()
+    {
+        global $db;
+        // Expire withdrawal requests older than 36 hours (transaction_type = 1, is_approved = 0)
+        // We use is_approved = 2 to mark as Expired
+        $sql = "UPDATE transactions SET is_approved = 2, updated_at = NOW(), description = CONCAT(description, ' (Expired after 36h)') 
+                WHERE transaction_type = 1 AND is_approved = 0 AND created_at < DATE_SUB(NOW(), INTERVAL 36 HOUR)";
+        $db->query($sql);
+    }
 }
 ?>
