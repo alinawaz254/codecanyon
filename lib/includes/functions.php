@@ -186,10 +186,11 @@
 			send_mail_smtp( $mailto, $subject, $message );
 		} else {
 			//getting set email addresses from database.
-			$from_email = get_option('email_from');
+			// $from_email = get_option('email_from');
+			$from_email = 'BizProMax';
 			$reply_to = get_option('email_to');
 	
-            $mailheaders = "From: BizProMax";
+            $mailheaders = "From:".$from_email;
             $mailheaders .="Reply-To:".$reply_to;
 			$from = $from_email;
 			$filename = '';
