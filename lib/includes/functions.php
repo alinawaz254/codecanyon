@@ -188,7 +188,8 @@
 			//getting set email addresses from database.
 			// $from_email = get_option('email_from');
 			$from_email = 'BizProMax';
-			$reply_to = get_option('email_to');
+			$reply_to = 'BizProMax';
+			// $reply_to = get_option('email_to');
 	
             $mailheaders = "From:".$from_email;
             $mailheaders .="Reply-To:".$reply_to;
