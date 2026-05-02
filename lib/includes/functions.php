@@ -189,13 +189,10 @@
 			$from_email = get_option('email_from');
 			$reply_to = get_option('email_to');
 	
-            $mailheaders = "From: BizProMax <".$from_email.">";
-            $mailheaders .="Reply-To: BizProMax <".$reply_to.">";
-			$from = $from_email;
 			$filename = '';
 			$fileatt_type = '';
 			
-			$headers = "FROM : ".$from;
+			$headers = "From: BizProMax <".$from_email.">";
 			$semi_rand = md5(time());
 			$mime_boundary = "==Multipart_Boundary_x{$semi_rand}x";
 			
