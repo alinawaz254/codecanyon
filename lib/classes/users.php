@@ -443,45 +443,45 @@ class Users
 			$query = 'DELETE from users WHERE user_id="' . $user_id . '"';
 			$result = $db->query($query) or die($db->error);
 
-			if ($result) {
-				// Re-sequence subscriber usernames
-				$all_users = "SELECT user_id FROM users WHERE user_type LIKE '%subscriber%' ORDER BY user_id ASC";
-				$users_result = $db->query($all_users);
+			// if ($result) {
+			// 	// Re-sequence subscriber usernames
+			// 	$all_users = "SELECT user_id FROM users WHERE user_type LIKE '%subscriber%' ORDER BY user_id ASC";
+			// 	$users_result = $db->query($all_users);
 				
-				if ($users_result && $users_result->num_rows > 0) {
-					$count = 0;
-					while ($row = $users_result->fetch_assoc()) {
-						$auto_generated_user_name = 'BIZ';
+			// 	if ($users_result && $users_result->num_rows > 0) {
+			// 		$count = 0;
+			// 		while ($row = $users_result->fetch_assoc()) {
+			// 			$auto_generated_user_name = 'BIZ';
 
-						if (strlen($count) == 1) {
-							if (($count + 1) == 10) {
-								$auto_generated_user_name .= '00' . ($count + 1);
-							} else {
-								$auto_generated_user_name .= '000' . ($count + 1);
-							}
-						} elseif (strlen($count) == 2) {
-							if (($count + 1) == 100) {
-								$auto_generated_user_name .= '0' . ($count + 1);
-							} else {
-								$auto_generated_user_name .= '00' . ($count + 1);
-							}
-						} elseif (strlen($count) == 3) {
-							if (($count + 1) == 1000) {
-								$auto_generated_user_name .= ($count + 1);
-							} else {
-								$auto_generated_user_name .= '0' . ($count + 1);
-							}
-						} elseif (strlen($count) == 4) {
-							$auto_generated_user_name .= ($count + 1);
-						}
+			// 			if (strlen($count) == 1) {
+			// 				if (($count + 1) == 10) {
+			// 					$auto_generated_user_name .= '00' . ($count + 1);
+			// 				} else {
+			// 					$auto_generated_user_name .= '000' . ($count + 1);
+			// 				}
+			// 			} elseif (strlen($count) == 2) {
+			// 				if (($count + 1) == 100) {
+			// 					$auto_generated_user_name .= '0' . ($count + 1);
+			// 				} else {
+			// 					$auto_generated_user_name .= '00' . ($count + 1);
+			// 				}
+			// 			} elseif (strlen($count) == 3) {
+			// 				if (($count + 1) == 1000) {
+			// 					$auto_generated_user_name .= ($count + 1);
+			// 				} else {
+			// 					$auto_generated_user_name .= '0' . ($count + 1);
+			// 				}
+			// 			} elseif (strlen($count) == 4) {
+			// 				$auto_generated_user_name .= ($count + 1);
+			// 			}
 						
-						$update_query = "UPDATE users SET username = '" . $auto_generated_user_name . "' WHERE user_id = '" . $row['user_id'] . "'";
-						$db->query($update_query);
+			// 			$update_query = "UPDATE users SET username = '" . $auto_generated_user_name . "' WHERE user_id = '" . $row['user_id'] . "'";
+			// 			$db->query($update_query);
 						
-						$count++;
-					}
-				}
-			}
+			// 			$count++;
+			// 		}
+			// 	}
+			// }
 
 			$message = _("User deleted successfuly");
 
@@ -1386,30 +1386,26 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		$all_users = "SELECT * FROM users WHERE user_type LIKE '%subscriber%'";
 		$result = $db->query($all_users);
 		$count = $result->num_rows;
-		$auto_generated_user_name = 'BIZ';
+		$prefix = 'BIZ';
+		$auto_generated_user_name = '';
 
+		do {
+		    // this line handles ALL cases (1, 10, 100, 1000...)
+		    $auto_generated_user_name = $prefix . str_pad($count, 4, '0', STR_PAD_LEFT);
 
-		if (strlen($count) == 1) {
-			if (($count + 1) == 10) {
-				$auto_generated_user_name .= '00' . ($count + 1);
-			} else {
-				$auto_generated_user_name .= '000' . ($count + 1);
-			}
-		} elseif (strlen($count) == 2) {
-			if (($count + 1) == 100) {
-				$auto_generated_user_name .= '0' . ($count + 1);
-			} else {
-				$auto_generated_user_name .= '00' . ($count + 1);
-			}
-		} elseif (strlen($count) == 3) {
-			if (($count + 1) == 1000) {
-				$auto_generated_user_name .= ($count + 1);
-			} else {
-				$auto_generated_user_name .= '0' . ($count + 1);
-			}
-		} elseif (strlen($count) == 4) {
-			$auto_generated_user_name .= ($count + 1);
-		}
+		    $stmt = $conn->prepare("SELECT 1 FROM users WHERE username = ? LIMIT 1");
+		    $stmt->bind_param("s", $auto_generated_user_name);
+		    $stmt->execute();
+		    $stmt->store_result();
+
+		    $exists = $stmt->num_rows > 0;
+
+		    if ($exists) {
+		        $count++; 
+		    }
+
+		} while ($exists);
+
 
 		// die(strlen($count) . " $auto_generated_user_name");
 		// $auto_generated_username = 'BIZ' . count();

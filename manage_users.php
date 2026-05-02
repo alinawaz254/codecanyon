@@ -349,7 +349,7 @@
 						<div class="col-md-4">
 							<div class="form-group admin-form-group">
 								<label><?php _e("Username"); ?>*</label>
-								<input type="text" name="username" class="form-control" value="<?php echo isset($_POST['edit_user']) ? $new_user->username : $auto_generated_user_name; ?>" readonly placeholder="Auto-generated" />
+								<input type="text" name="username" class="form-control" value="<?php echo isset($_POST['edit_user']) ? $new_user->username : $auto_generated_user_name; ?>"  placeholder="Auto-generated" />
 							</div>
 						</div>
 						<div class="col-md-4">

@@ -142,30 +142,26 @@
 		$all_users = "SELECT * FROM users WHERE user_type LIKE '%subscriber%'";
 		$result    = $db->query($all_users);
 		$count     = $result->num_rows;
+		$auto_generated_user_name = '';
+		$prefix = 'BIZ';
 
-		$auto_generated_user_name = 'BIZ';
+		do {
+		    // this line handles ALL cases (1, 10, 100, 1000...)
+		    $auto_generated_user_name = $prefix . str_pad($count, 4, '0', STR_PAD_LEFT);
 
-			if(strlen($count) == 1) {
-				if(($count + 1) == 10){
-					$auto_generated_user_name .= '00' . ($count + 1);
-				}else{
-					$auto_generated_user_name .= '000' . ($count + 1);
-				}
-			}elseif (strlen($count) == 2 ) {
-				if(($count + 1) == 100){
-					$auto_generated_user_name .= '0' . ($count + 1);
-				}else{
-					$auto_generated_user_name .= '00' . ($count + 1);
-				}
-			}elseif (strlen($count) == 3 ) {
-				if(($count + 1) == 1000){
-					$auto_generated_user_name .=  ($count + 1);
-				}else{
-					$auto_generated_user_name .= '0' . ($count + 1);
-				}
-			}elseif (strlen($count) == 4 ) {
-				$auto_generated_user_name .= ($count + 1);
-			}
+		    $stmt = $conn->prepare("SELECT 1 FROM users WHERE username = ? LIMIT 1");
+		    $stmt->bind_param("s", $auto_generated_user_name);
+		    $stmt->execute();
+		    $stmt->store_result();
+
+		    $exists = $stmt->num_rows > 0;
+
+		    if ($exists) {
+		        $count++; 
+		    }
+
+		} while ($exists);
+
 	}	
 ?>
 <style>
