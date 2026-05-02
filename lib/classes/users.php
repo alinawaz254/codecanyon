@@ -1393,7 +1393,7 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		    // this line handles ALL cases (1, 10, 100, 1000...)
 		    $auto_generated_user_name = $prefix . str_pad($count, 4, '0', STR_PAD_LEFT);
 
-		    $stmt = $conn->prepare("SELECT 1 FROM users WHERE username = ? LIMIT 1");
+		    $stmt = $db->prepare("SELECT 1 FROM users WHERE username = ? LIMIT 1");
 		    $stmt->bind_param("s", $auto_generated_user_name);
 		    $stmt->execute();
 		    $stmt->store_result();
