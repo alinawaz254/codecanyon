@@ -204,6 +204,7 @@ class Users
 
 		$email_message = _("Thank you for joining us.") . "<br />";
 		$email_message .= _("Your username is") . ": <strong> " . $username . '</strong><br>';
+		$email_message .= _("Your Password is") . ": <strong> " . $plain_password . '</strong><br>';
 		$email_message .= _("Please click the link below to verify your email address and activate your account.") . "<br />";
 		$email_message .= "<a href='" . $site_url . "login.php?confirmation_code=" . $activation_key . "&user_id=" . $user_id . "'>" . _("Confirm Email Address") . "</a>";
 		$email_message .= "<br><br>" . _("Thank you again. Please contact us if you need any assistance.");
@@ -1382,7 +1383,7 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 		$email_message = _("Your account has been successfully created by the administrator.") . "<br />";
 		$email_message .= _("Please use the following credentials to access your account:");
 		$email_message .= "<br><br><strong>" . _("Email address") . ":</strong> " . $email;
-		$email_message .= "<br><strong>" . _("Temporary Password") . ":</strong> " . $password;
+		$email_message .= "<br><strong>" . _("Password") . ":</strong> " . $password;
 		$email_message .= "<br><br><a href='" . $site_url . "'>" . _("Log in to your account") . "</a><br>";
 
 		$message = $email_message;
