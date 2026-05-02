@@ -190,7 +190,7 @@
 			$reply_to = get_option('email_to');
 	
             $mailheaders = "From : BizProMax <".$from_email.">";
-            $mailheaders .="Reply-To :".$reply_to;
+            $mailheaders .="Reply-To : BizProMax <".$reply_to.">";
 			$from = $from_email;
 			$filename = '';
 			$fileatt_type = '';
