@@ -191,8 +191,8 @@
 	
 			$filename = '';
 			$fileatt_type = '';
-			
-			$headers = "From: BizProMax <".$from_email.">";
+			$headers  = "From: \"BizProMax\" <".$from_email.">\r\n";
+			// $headers = "From: BizProMax <".$from_email.">";
 			$semi_rand = md5(time());
 			$mime_boundary = "==Multipart_Boundary_x{$semi_rand}x";
 			
