@@ -188,9 +188,9 @@
 			//getting set email addresses from database.
 			$from_email = get_option('email_from');
 			$reply_to = get_option('email_to');
-			
-			$mailheaders = "BizProMax <".$from_email.">";
-			$mailheaders .="Reply-To:BizProMax <".$reply_to.">";
+	
+            $mailheaders = "From:".$from_email;
+            $mailheaders .="Reply-To:".$reply_to;
 			$from = $from_email;
 			$filename = '';
 			$fileatt_type = '';
