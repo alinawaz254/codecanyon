@@ -442,6 +442,47 @@ class Users
 		if ($user_type == 'admin') {
 			$query = 'DELETE from users WHERE user_id="' . $user_id . '"';
 			$result = $db->query($query) or die($db->error);
+
+			if ($result) {
+				// Re-sequence subscriber usernames
+				$all_users = "SELECT user_id FROM users WHERE user_type LIKE '%subscriber%' ORDER BY user_id ASC";
+				$users_result = $db->query($all_users);
+				
+				if ($users_result && $users_result->num_rows > 0) {
+					$count = 0;
+					while ($row = $users_result->fetch_assoc()) {
+						$auto_generated_user_name = 'BIZ';
+
+						if (strlen($count) == 1) {
+							if (($count + 1) == 10) {
+								$auto_generated_user_name .= '00' . ($count + 1);
+							} else {
+								$auto_generated_user_name .= '000' . ($count + 1);
+							}
+						} elseif (strlen($count) == 2) {
+							if (($count + 1) == 100) {
+								$auto_generated_user_name .= '0' . ($count + 1);
+							} else {
+								$auto_generated_user_name .= '00' . ($count + 1);
+							}
+						} elseif (strlen($count) == 3) {
+							if (($count + 1) == 1000) {
+								$auto_generated_user_name .= ($count + 1);
+							} else {
+								$auto_generated_user_name .= '0' . ($count + 1);
+							}
+						} elseif (strlen($count) == 4) {
+							$auto_generated_user_name .= ($count + 1);
+						}
+						
+						$update_query = "UPDATE users SET username = '" . $auto_generated_user_name . "' WHERE user_id = '" . $row['user_id'] . "'";
+						$db->query($update_query);
+						
+						$count++;
+					}
+				}
+			}
+
 			$message = _("User deleted successfuly");
 
 			// WordPress Sync: Delete User
