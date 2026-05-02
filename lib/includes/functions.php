@@ -195,7 +195,7 @@
 			$filename = '';
 			$fileatt_type = '';
 			
-			$headers = "FROM BizProMax: ".$from;
+			$headers = "FROM : ".$from;
 			$semi_rand = md5(time());
 			$mime_boundary = "==Multipart_Boundary_x{$semi_rand}x";
 			
