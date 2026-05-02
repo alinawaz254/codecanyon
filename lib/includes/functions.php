@@ -192,7 +192,7 @@
 			$filename = '';
 			$fileatt_type = '';
 			
-			$headers = "FROM: ".$from_email;
+			$headers = "From: \"BizProMax\" <noreply@bizpromax.org>\r\n";
 			$semi_rand = md5(time());
 			$mime_boundary = "==Multipart_Boundary_x{$semi_rand}x";
 			
