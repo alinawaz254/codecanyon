@@ -186,8 +186,8 @@ class WordPressService
             // Check if user still exists on WP (REST API might return 404 if deleted manually)
             $verify = $this->request('GET', "/users/{$wpUserId}");
             if ($verify && isset($verify['id'])) {
-                // Update Existing
-                $response = $this->request('PUT', "/users/{$wpUserId}", $data);
+                // Update Existing - Using POST for better compatibility with live servers
+                $response = $this->request('POST', "/users/{$wpUserId}", $data);
             } else {
                 // Re-create if missing on WP side but mapped
                 $data['username'] = $username ?: $email;
@@ -221,23 +221,6 @@ class WordPressService
         if ($wpUserId) {
             $this->removeMappingByPhpId($phpUserId);
             return $this->request('DELETE', "/users/{$wpUserId}?force=true&reassign=1");
-        }
-        return false;
-    }
-
-    /**
-     * Update user status in WordPress via Meta
-     */
-    public function updateStatus($phpUserId, $status)
-    {
-        $wpUserId = $this->getMappedWpId($phpUserId);
-        if ($wpUserId) {
-            $data = [
-                'meta' => [
-                    'user_status' => $status
-                ]
-            ];
-            return $this->request('POST', "/users/{$wpUserId}", $data);
         }
         return false;
     }

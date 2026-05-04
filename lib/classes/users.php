@@ -1199,9 +1199,6 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 				// Use the captured $plain_password from line 951
 				$wpService->syncUser($user_id, $email, (isset($plain_password) ? $plain_password : ''), $username, $first_name, $last_name, $description, $status);
 
-				// Sync Status
-				$wpService->updateStatus($user_id, $status);
-
 			} catch (Exception $e) {
 				// Silent fail
 			}
@@ -1277,10 +1274,10 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 				$query = 'UPDATE users SET status="' . $status . '",activation_key="" WHERE user_id="' . $user_id . '"';
 				$row = $db->query($query) or die($db->error);
 
-				// WordPress Sync: Status Update on Confirmation
+				// WordPress Sync: Profile and Status Update on Confirmation
 				try {
 					$wpService = new WordPressService();
-					$wpService->updateStatus($user_id, $status);
+					$wpService->syncUser($user_id, null, null, null, '', '', '', $status);
 				} catch (Exception $e) {
 					// Silent fail
 				}
