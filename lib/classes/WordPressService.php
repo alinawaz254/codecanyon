@@ -66,7 +66,15 @@ class WordPressService
         $query = "DELETE FROM php_users_wp_map WHERE php_user_id = $id";
         return $db->query($query);
     }
+    public function deleteMapping($phpUserId)
+    {
+        global $db;
 
+        $db->query("
+            DELETE FROM php_users_wp_map
+            WHERE php_user_id = $phpUserId
+        ");
+    }
     /**
      * Sync User to WordPress (Create or Update)
      */
@@ -98,13 +106,24 @@ class WordPressService
             if ($response && isset($response['id'])) {
                 return $response['id'];
             }
-        }elseif($wpUserId > 0 && empty($existingId)){
-            if (!$username){
-                $username = $email; // Fallback
+        }elseif($wpUserId > 0 && empty($existingId)) {
+            $check = $this->request('GET', "/users/{$wpUserId}");
+            
+            if (!$check || !isset($check['id'])) {
+                $this->deleteMapping($phpUserId);
+            }
+
+            if (!$username) {
+                $username = $email;
                 $data['username'] = $username;
             }
 
             $response = $this->request('POST', "/users", $data);
+
+            if ($response && isset($response['id'])) {
+                $this->saveMapping($phpUserId, $response['id']);
+                return $response['id'];
+            }
         }else {
             // Check if user already exists by email but isn't mapped
             if ($existingId > 0 && empty($wpUserId)) {
