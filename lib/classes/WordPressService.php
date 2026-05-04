@@ -78,11 +78,8 @@ class WordPressService
     /**
      * Sync User to WordPress (Create or Update)
      */
-     public function syncUser($phpUserId, $email, $password = null, $username = null, $firstName = '', $lastName = '', $description = '', $status = 'activate')
+    public function syncUser($phpUserId, $email, $password = null, $username = null, $firstName = '', $lastName = '', $description = '', $status = 'activate')
     {
-        $wpUserId            = $this->getMappedWpId($phpUserId);
-        $existingUserByEmail = $this->findWpUserId($email);
-        
         // Prepare user data
         $data = [
             'email' => $email,
@@ -100,52 +97,60 @@ class WordPressService
             $data['password'] = $password;
         }
         
-        // CASE 1: User is mapped and email matches existing WP user
-        if ($wpUserId && $existingUserByEmail && $wpUserId == $existingUserByEmail) {
-            // Update existing user
-            $response = $this->request('PUT', "/users/{$wpUserId}", $data);
-            return ($response && isset($response['id'])) ? $response['id'] : false;
-        }
+        // Check if we have a mapping
+        $mappedWpId = $this->getMappedWpId($phpUserId);
         
-        // CASE 2: User is mapped but email doesn't match (email changed)
-        if ($wpUserId && (!$existingUserByEmail || $wpUserId != $existingUserByEmail)) {
-            // Verify mapped user still exists
-            $check = $this->request('GET', "/users/{$wpUserId}");
-            
-            if ($check && isset($check['id'])) {
-                // Update the existing mapped user with new email
-                $response = $this->request('PUT', "/users/{$wpUserId}", $data);
-                if ($response && isset($response['id'])) {
-                    return $response['id'];
-                }
+        // Check if user exists in WordPress by email
+        $wpUserByEmail = $this->findWpUserId($email);
+        
+        // SCENARIO 1: User exists in WordPress (either by mapping or email lookup)
+        $wpUserId = null;
+        
+        if ($mappedWpId) {
+            // Verify the mapped user actually exists in WordPress
+            $verify = $this->request('GET', "/users/{$mappedWpId}");
+            if ($verify && isset($verify['id'])) {
+                $wpUserId = $mappedWpId;
             } else {
-                // Mapped user no longer exists, remove mapping
+                // Stale mapping - delete it
                 $this->deleteMapping($phpUserId);
-                $wpUserId = null;
             }
         }
         
-        // CASE 3: No mapping but email exists in WordPress
-        if (!$wpUserId && $existingUserByEmail) {
-            // Link existing WP user to this PHP user
-            $this->saveMapping($phpUserId, $existingUserByEmail);
-            // Update with new data
-            $response = $this->request('PUT', "/users/{$existingUserByEmail}", $data);
-            return ($response && isset($response['id'])) ? $response['id'] : false;
+        if (!$wpUserId && $wpUserByEmail) {
+            // User exists by email but wasn't mapped
+            $wpUserId = $wpUserByEmail;
+            // Save the mapping for next time
+            $this->saveMapping($phpUserId, $wpUserId);
         }
         
-        // CASE 4: Create new user
-        $data['username'] = $username ?: $email;
+        // SCENARIO 2: User exists in WordPress - UPDATE them
+        if ($wpUserId) {
+            $response = $this->request('POST', "/users/{$wpUserId}", $data);
+            if ($response && isset($response['id'])) {
+                return $response['id'];
+            }
+            return false;
+        }
+        
+        // SCENARIO 3: User does NOT exist in WordPress - CREATE them
+        if (!$username) {
+            $username = $email;
+        }
+        $data['username'] = $username;
+        
         $response = $this->request('POST', "/users", $data);
         
         if ($response && isset($response['id'])) {
+            // Save the mapping for future syncs
             $this->saveMapping($phpUserId, $response['id']);
             return $response['id'];
         }
         
+        // Log the failure
+        $this->logSyncAttempt('POST', '/users', $data, 0, json_encode($response), 'User creation failed');
         return false;
     }
-
     /**
      * Delete a user in WordPress
      */
