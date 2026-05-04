@@ -78,9 +78,92 @@ class WordPressService
     /**
      * Sync User to WordPress (Create or Update)
      */
-    public function syncUser($phpUserId, $email, $password = null, $username = null, $firstName = '', $lastName = '', $description = '', $status = 'activate')
+    /**
+     * Sync User to WordPress (Create or Update)
+     * Handles: 
+     * 1. Create on both sides if user exists nowhere.
+     * 2. Create on missing side if user exists on only one side.
+     * 3. Update both sides if details differ.
+     */
+    public function syncUser($phpUserId = null, $email = null, $password = null, $username = null, $firstName = '', $lastName = '', $description = '', $status = 'activate')
     {
-        // Prepare user data
+        global $db;
+        
+        // 1. Identify Local User
+        if (!$phpUserId && $email) {
+            $email_esc = $db->real_escape_string($email);
+            $res = $db->query("SELECT user_id FROM users WHERE email = '$email_esc' LIMIT 1");
+            if ($res && $row = $res->fetch_assoc()) {
+                $phpUserId = intval($row['user_id']);
+            }
+        }
+
+        // If we still don't have an email but have a PHP ID, fetch details
+        if ($phpUserId && !$email) {
+            $res = $db->query("SELECT email, username, first_name, last_name, status FROM users WHERE user_id = " . intval($phpUserId));
+            if ($res && $row = $res->fetch_assoc()) {
+                $email = $row['email'];
+                $username = $username ?: $row['username'];
+                $firstName = $firstName ?: $row['first_name'];
+                $lastName = $lastName ?: $row['last_name'];
+                $status = $status ?: $row['status'];
+            }
+        }
+
+        if (!$email) return false;
+
+        // 2. Identify WordPress User
+        $wpUserId = null;
+        if ($phpUserId) {
+            $wpUserId = $this->getMappedWpId($phpUserId);
+        }
+        
+        if (!$wpUserId) {
+            $wpUserId = $this->findWpUserId($email);
+        }
+
+        // 3. Create Locally if missing
+        if (!$phpUserId) {
+            $u_name = $username ?: $email;
+            $f_name = $firstName ?: '';
+            $l_name = $lastName ?: '';
+            $u_status = $status ?: 'activate';
+            $reg_date = date('Y-m-d');
+            $u_type = get_option('register_user_level') ?: 'subscriber';
+            
+            // If we found it on WP, try to pull more details
+            if ($wpUserId) {
+                $wpUser = $this->request('GET', "/users/{$wpUserId}?context=edit");
+                if ($wpUser) {
+                    $u_name = $wpUser['username'] ?: $u_name;
+                    $f_name = $wpUser['first_name'] ?: $f_name;
+                    $l_name = $wpUser['last_name'] ?: $l_name;
+                }
+            }
+
+            // Password handling
+            $plain_pass = $password ?: bin2hex(random_bytes(8));
+            $password_hash_type = get_option('password_hash');
+            if ($password_hash_type == "argon2") {
+                $hashed_pass = password_hash($plain_pass, PASSWORD_DEFAULT, ['cost' => 12]);
+            } else {
+                $hashed_pass = md5($plain_pass);
+            }
+            
+            $u_name_esc = $db->real_escape_string($u_name);
+            $email_esc = $db->real_escape_string($email);
+            $f_name_esc = $db->real_escape_string($f_name);
+            $l_name_esc = $db->real_escape_string($l_name);
+            
+            $insert_query = "INSERT INTO users (first_name, last_name, username, email, password, date_register, user_type, status) 
+                            VALUES ('$f_name_esc', '$l_name_esc', '$u_name_esc', '$email_esc', '$hashed_pass', '$reg_date', '$u_type', '$u_status')";
+            $db->query($insert_query);
+            $phpUserId = $db->insert_id;
+        }
+
+        if (!$phpUserId) return false;
+
+        // 4. Prepare WordPress Data
         $data = [
             'email' => $email,
             'first_name' => $firstName,
@@ -96,50 +179,36 @@ class WordPressService
         if ($password) {
             $data['password'] = $password;
         }
-        
-        // Check for existing WordPress user
-        $mappedWpId = $this->getMappedWpId($phpUserId);
-        $wpUserByEmail = $this->findWpUserId($email);
-        
-        $wpUserId = null;
-        
-        if ($mappedWpId) {
-            $verify = $this->request('GET', "/users/{$mappedWpId}");
-            if ($verify && isset($verify['id'])) {
-                $wpUserId = $mappedWpId;
-            } else {
-                $this->deleteMapping($phpUserId);
-            }
-        }
-        
-        if (!$wpUserId && $wpUserByEmail) {
-            $wpUserId = $wpUserByEmail;
-            $this->saveMapping($phpUserId, $wpUserId);
-        }
-        
-        // UPDATE EXISTING USER
+
+        // 5. Create or Update WordPress
         if ($wpUserId) {
-            // FIX: Use PUT for updates instead of POST
-            $response = $this->request('PUT', "/users/{$wpUserId}", $data);
-            if ($response && isset($response['id'])) {
-                return $response['id'];
+            // Check if user still exists on WP (REST API might return 404 if deleted manually)
+            $verify = $this->request('GET', "/users/{$wpUserId}");
+            if ($verify && isset($verify['id'])) {
+                // Update Existing
+                $response = $this->request('PUT', "/users/{$wpUserId}", $data);
+            } else {
+                // Re-create if missing on WP side but mapped
+                $data['username'] = $username ?: $email;
+                $response = $this->request('POST', "/users", $data);
             }
-            return false;
+        } else {
+            // Create New on WP side
+            $data['username'] = $username ?: $email;
+            $response = $this->request('POST', "/users", $data);
         }
-        
-        // CREATE NEW USER
-        if (!$username) {
-            $username = $email;
-        }
-        $data['username'] = $username;
-        
-        $response = $this->request('POST', "/users", $data);
-        
+
+        // 6. Finalize Sync & Mapping
         if ($response && isset($response['id'])) {
-            $this->saveMapping($phpUserId, $response['id']);
-            return $response['id'];
+            $wpUserId = $response['id'];
+            $this->saveMapping($phpUserId, $wpUserId);
+            
+            // Mark as synced locally
+            $db->query("UPDATE users SET wp_synced = 1 WHERE user_id = $phpUserId");
+            
+            return $wpUserId;
         }
-        
+
         return false;
     }
     /**
