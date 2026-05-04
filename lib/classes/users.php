@@ -1406,7 +1406,9 @@ $("#message_form_' . $user_id . '").on("submit", function(e){
 
 		} while ($exists);
 
-
+		if($username != $auto_generated_user_name){
+			$auto_generated_user_name = $username;
+		}
 		// die(strlen($count) . " $auto_generated_user_name");
 		// $auto_generated_username = 'BIZ' . count();
 		//Running Query to add user.
