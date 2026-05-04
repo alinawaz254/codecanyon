@@ -73,6 +73,7 @@ class WordPressService
     public function syncUser($phpUserId, $email, $password = null, $username = null, $firstName = '', $lastName = '', $description = '', $status = 'activate')
     {
         $wpUserId = $this->getMappedWpId($phpUserId);
+        $existingId = $this->findWpUserId($email);
 
         $data = [
             'email' => $email,
@@ -90,26 +91,33 @@ class WordPressService
             $data['password'] = $password;
         }
 
-        if ($wpUserId) {
+        if ($wpUserId > 0 && $existingId > 0) {
             // Update Existing User;
             $response = $this->request('POST', "/users/{$wpUserId}", $data);
 
             if ($response && isset($response['id'])) {
                 return $response['id'];
             }
-        } else {
+        }elseif($wpUserId > 0 && empty($existingId)){
+            if (!$username){
+                $username = $email; // Fallback
+                $data['username'] = $username;
+            }
+
+            $response = $this->request('POST', "/users", $data);
+        }else {
             // Check if user already exists by email but isn't mapped
-            $existingId = $this->findWpUserId($email);
-            if ($existingId) {
+            if ($existingId > 0 && empty($wpUserId)) {
                 $this->saveMapping($phpUserId, $existingId);
                 // Now update them with fresh data
                 return $this->syncUser($phpUserId, $email, $password, $username, $firstName, $lastName, $description, $status);
             }
 
             // Create New User
-            if (!$username)
-                $username = $email; // Fallback
-            $data['username'] = $username;
+            if (!$username){
+                $username = $email;
+                $data['username'] = $username;
+            }
 
             $response = $this->request('POST', "/users", $data);
             if ($response && isset($response['id'])) {
