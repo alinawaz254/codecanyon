@@ -88,6 +88,7 @@ class WordPressService
     public function syncUser($phpUserId = null, $email = null, $password = null, $username = null, $firstName = '', $lastName = '', $description = '', $status = 'activate')
     {
         global $db;
+        $this->logMessage("Starting syncUser for PHP User ID: " . ($phpUserId ?: 'New') . " | Email: $email | Username: $username");
         
         // 1. Identify Local User
         if (!$phpUserId && $email) {
@@ -285,7 +286,7 @@ class WordPressService
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, $method);
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 2);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 15);
 
         if ($data && ($method === 'POST' || $method === 'PUT' || $method === 'PATCH')) {
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
@@ -314,6 +315,14 @@ class WordPressService
         if ($error)
             $logEntry .= "cURL Error: $error\n";
         $logEntry .= "Response: $response\n";
+        $logEntry .= str_repeat('-', 50) . "\n";
+        file_put_contents($this->logFile, $logEntry, FILE_APPEND);
+    }
+
+    private function logMessage($message)
+    {
+        $timestamp = date('Y-m-d H:i:s');
+        $logEntry = "[$timestamp] INFO: $message\n";
         $logEntry .= str_repeat('-', 50) . "\n";
         file_put_contents($this->logFile, $logEntry, FILE_APPEND);
     }
