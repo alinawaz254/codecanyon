@@ -97,43 +97,37 @@ class WordPressService
             $data['password'] = $password;
         }
         
-        // Check if we have a mapping
+        // Check for existing WordPress user
         $mappedWpId = $this->getMappedWpId($phpUserId);
-        
-        // Check if user exists in WordPress by email
         $wpUserByEmail = $this->findWpUserId($email);
         
-        // SCENARIO 1: User exists in WordPress (either by mapping or email lookup)
         $wpUserId = null;
         
         if ($mappedWpId) {
-            // Verify the mapped user actually exists in WordPress
             $verify = $this->request('GET', "/users/{$mappedWpId}");
             if ($verify && isset($verify['id'])) {
                 $wpUserId = $mappedWpId;
             } else {
-                // Stale mapping - delete it
                 $this->deleteMapping($phpUserId);
             }
         }
         
         if (!$wpUserId && $wpUserByEmail) {
-            // User exists by email but wasn't mapped
             $wpUserId = $wpUserByEmail;
-            // Save the mapping for next time
             $this->saveMapping($phpUserId, $wpUserId);
         }
         
-        // SCENARIO 2: User exists in WordPress - UPDATE them
+        // UPDATE EXISTING USER
         if ($wpUserId) {
-            $response = $this->request('POST', "/users/{$wpUserId}", $data);
+            // FIX: Use PUT for updates instead of POST
+            $response = $this->request('PUT', "/users/{$wpUserId}", $data);
             if ($response && isset($response['id'])) {
                 return $response['id'];
             }
             return false;
         }
         
-        // SCENARIO 3: User does NOT exist in WordPress - CREATE them
+        // CREATE NEW USER
         if (!$username) {
             $username = $email;
         }
@@ -142,13 +136,10 @@ class WordPressService
         $response = $this->request('POST', "/users", $data);
         
         if ($response && isset($response['id'])) {
-            // Save the mapping for future syncs
             $this->saveMapping($phpUserId, $response['id']);
             return $response['id'];
         }
         
-        // Log the failure
-        $this->logSyncAttempt('POST', '/users', $data, 0, json_encode($response), 'User creation failed');
         return false;
     }
     /**
