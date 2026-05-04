@@ -78,6 +78,7 @@ class WordPressService
             'email' => $email,
             'first_name' => $firstName,
             'last_name' => $lastName,
+            'nickname'  => $username,
             'description' => $description,
             'roles' => [$this->defaultRole],
             'meta' => [
@@ -85,12 +86,15 @@ class WordPressService
             ]
         ];
 
+  
+
         if ($password)
-            $data['password'] = $password;
+            $data['password'] = password_hash($password,PASSWORD_DEFAULT);
 
         if ($wpUserId) {
             // Update Existing User
             $response = $this->request('POST', "/users/{$wpUserId}", $data);
+
             if ($response && isset($response['id'])) {
                 return $response['id'];
             }
