@@ -247,7 +247,7 @@
 		if ( empty( get_option('email_from') ) ) {
 			$error = _( 'Missing email from' );
 		}
-		$mail->setFrom("BizProMax <". get_option('email_from') . ">", '');
+		$mail->setFrom(get_option('email_from'), 'BizProMax');
 
 		if ( ! empty( get_option('email_to') ) ) {
 			$mail->addReplyTo(get_option('email_to'), '');
